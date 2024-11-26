@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1015218922314-9b89t5kn21898ihoh4peq4g8bv540cb9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1015218922314-9b89t5kn21898ihoh4peq4g8bv540cb9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCR_8s7-FuXEClCd3aR0nCoyj250ZBy2Nc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1015218922314</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>dev.maryam.YellaEvent</string>
+	<key>PROJECT_ID</key>
+	<string>yellaevent</string>
+	<key>STORAGE_BUCKET</key>
+	<string>yellaevent.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1015218922314:ios:55270eac7f66fda61c17b3</string>
+</dict>
+</plist>
