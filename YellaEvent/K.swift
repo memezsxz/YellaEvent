@@ -7,7 +7,7 @@
 
 struct K {
     static let appName = "Yella Event"
-    
+    static let bundleUserID = "dev.maryam.yellaevent.userid"
     
     struct BrandColors {
         static let purple = "BrandPurple"
@@ -15,24 +15,26 @@ struct K {
         static let darkPurple = "BrandDarkPurple"
         static let blue = "BrandBlue"
         static let backgroundGray = "BackgroundGray"
-        
     }
     
     
     struct FStore {
         struct Users {
             static let collectionName = "users"
-            static let id = "id"
+            static let userID = "userID"
             static let firstName = "firstName"
             static let lastName = "lastName"
+            static let email = "email"
             static let dob = "dob"
+            static let dateCreated = "dateCreated"
             static let phoneNumber = "phoneNumber"
+            static let profileImageURL = "profileImageURL"
             static let badgesArray = "badgesArray" // array of ids to the badges they have
             static let type = "type"
         }
         struct Events {
             static let collectionName = "events"
-            static let id = "id"
+            static let eventID = "eventID"
             static let organizerID = "organizerID"
             static let name = "name"
             static let description = "description"
@@ -51,16 +53,17 @@ struct K {
             static let maximumTickets = "maximumTickets"
             static let price = "price"
             
-            static let coverImageURL = "coverImageURL"
+//            static let coverImageURL = "coverImageURL" // the first value in the meadiaArray
             static let mediaArray = "mediaArray" // references to the paths of uploaded photos
+//            static let badgeID = "badgeID"  // we might not need
         }
         
         struct Tickets {
             static let collectionName = "tickets"
-            static let id = "id"
+            static let ticketID = "ticketID"
             static let eventID = "eventID"
             static let userID = "userID"
-            static let attendanceStatus = "attendanceStatus"
+            static let didAttend = "didAttend" // bool
             static let price = "price"
         }
         
@@ -68,21 +71,22 @@ struct K {
             static let collectionName = "ratings"
             static let userID = "userID"
             static let eventID = "eventID"
+            static let organizerID = "organizerID"
             static let rating = "rating"
         }
         
         struct Badges {
             static let collectionName = "badges"
-            static let id = "id"
+            static let badgeID = "badgeID"
             static let image = "image"
             static let eventID = "eventID" // maybe we want to delete the event, but we do not want the badge to be removed from users // delete or not?
             static let eventName = "eventName"
-            static let catigory = "category"
+            static let catigoryID = "catigoryID"
         }
         
         struct Categories {
             static let collectionName = "categories"
-            static let id = "id"
+            static let categoryID = "categoryID"
             static let name = "name"
             static let icon = "icon"
         }
