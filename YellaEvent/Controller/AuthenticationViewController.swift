@@ -14,6 +14,7 @@ class AuthenticationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // dummy code -- save id in userdefaults at K.bundleUserID
         // and remove on logout
 
