@@ -41,6 +41,9 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Log out">
                                     <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="21"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="mCc-1a-1pz" kind="presentation" modalPresentationStyle="fullScreen" id="nqa-oC-y2P"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bPp-ps-aXH">
                                 <rect key="frame" x="19.666666666666657" y="416.66666666666669" width="353.66666666666674" height="162.00000000000006"/>
@@ -228,6 +231,16 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="127" y="-2"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="Br9-ZN-zXT">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="mCc-1a-1pz" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="yHW-D2-Dgl"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pKa-Df-t3u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="126" y="457"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6xf-mh-DXP">

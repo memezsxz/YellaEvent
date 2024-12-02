@@ -41,6 +41,9 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Log out">
                                     <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="21"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="kzR-mu-cad" kind="presentation" modalPresentationStyle="fullScreen" id="WCE-co-8ev"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4ot-dG-cUr">
                                 <rect key="frame" x="19.666666666666657" y="416.66666666666669" width="353.66666666666674" height="162.00000000000006"/>
@@ -385,7 +388,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLy-PJ-Ns9">
-                                                <rect key="frame" x="170" y="119.99999999999999" width="53.333333333333371" height="38.333333333333329"/>
+                                                <rect key="frame" x="170" y="119.99999999999999" width="53.333333333333343" height="38.333333333333329"/>
                                                 <color key="tintColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Edit"/>
@@ -469,6 +472,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kJ9-eW-Dqo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-973" y="737"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="oUX-ga-oaT">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="kzR-mu-cad" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="HyL-yr-Os6"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IRf-pO-fwN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="120" y="512"/>
         </scene>
     </scenes>
     <resources>
