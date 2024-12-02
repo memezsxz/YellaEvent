@@ -278,6 +278,7 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="qat-Fz-xIf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="BIgImageProfile" destination="cPG-mg-g85" id="Xnq-gg-qgC"/>
                         <outletCollection property="roundedViews" destination="SLm-aP-QMJ" collectionClass="NSMutableArray" id="aSa-1D-WeD"/>
                         <outletCollection property="roundedViews" destination="F16-Dc-n4S" collectionClass="NSMutableArray" id="902-BM-HPa"/>
                         <outletCollection property="roundedViews" destination="1O8-bf-QCK" collectionClass="NSMutableArray" id="1T8-7a-M5o"/>

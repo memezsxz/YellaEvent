@@ -8,14 +8,15 @@
 import UIKit
 
 class CustomerProfileViewController: UIViewController {
-
+    
     // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
     
+    @IBOutlet weak var BIgImageProfile: UIImageView!
     
     
     
-// Edit Profile Page section
+    // Edit Profile Page section
     
     //Outlet
     @IBOutlet weak var txtFullName: UITextField!
@@ -23,7 +24,7 @@ class CustomerProfileViewController: UIViewController {
     @IBOutlet weak var txtDateOfBirth: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
-
+    
     //Actions
     @IBAction func ChangeImageTapped(_ sender: UIButton) {
         changeTheUserImage(sender)
@@ -44,16 +45,62 @@ class CustomerProfileViewController: UIViewController {
     
     
     
-    override func viewDidLoad() {
+    override func viewDidLoad(){
         super.viewDidLoad()
+        
+        
+        UserDefaults.standard.set("lN1LrxyBfnNjr45KRmz5VPc4cw13", forKey: K.bundleUserID) // this will be removed after seting the application
+        
+            
+        
+        Task {
+            let us = try await UsersManager.getInstence().getUser(userId: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+            
+            PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+                
+                switch result {
+                case .success(let image):
+                    self.BIgImageProfile?.image = image
+                case .failure(let error):
+                    self.BIgImageProfile?.image = UIImage(named: "DefaultImageProfile")
+                }
+                
+            })
+        }
+        
+        
     }
     
-
-
-
-        
+   
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        Task {
+            do {
+                let userId = UserDefaults.standard.string(forKey: K.bundleUserID) ?? ""
+                let us = try await UsersManager.getInstence().getUser(userId: userId)
+                
+                txtFullName?.text = "\(us.firstName) \(us.lastName)"
+                txtEmail?.text = us.email
+                
+                txtPhoneNumber?.text = String(us.phoneNumber)
+                            
+                            // Format and set date of birth
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .medium
+                dateFormatter.timeStyle = .none
+                txtDateOfBirth?.text = dateFormatter.string(from: us.dob)
+                
+            } catch {
+                print("Failed to fetch user: \(error)")
+                // Handle error appropriately, such as showing an alert to the user
+            }
+        }
+    }
+    
+    
+    
+    
+    
 } //end of the class
 
 
