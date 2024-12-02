@@ -12,10 +12,19 @@
         <!--Search-->
         <scene sceneID="2Pf-iE-rAU">
             <objects>
-                <viewController id="SNT-Cq-tUl" customClass="CustomerSearchViewController" customModule="MP_Project" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="SNT-Cq-tUl" customClass="CustomerSearchViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gmx-dp-EV0">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is the search screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EOQ-xs-400">
+                                <rect key="frame" x="102" y="320" width="189" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="3CH-G1-Uku"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
