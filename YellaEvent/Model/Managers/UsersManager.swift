@@ -94,15 +94,14 @@ final class UsersManager {
         return try convertToUsers(snapshot: snapshot)
     }
     
-func getUsersOfType(_ userType: UserType) async throws -> [User] {
+    func getUsersOfType(_ userType: UserType) async throws -> [User] {
         
         let snapshot = try await userCollection
             .whereField(K.FStore.Users.type, isEqualTo:userType.rawValue)
             .order(by: K.FStore.Users.firstName)
             .order(by: K.FStore.Users.lastName)
             .getDocuments()
-    return try convertToUsers(snapshot: snapshot)
-
+        return try convertToUsers(snapshot: snapshot)
     }
     
     private func convertToUsers(snapshot: QuerySnapshot) throws -> [User] {

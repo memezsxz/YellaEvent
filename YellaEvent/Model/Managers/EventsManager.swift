@@ -23,16 +23,12 @@ class EventsManager {
     // always kill when view is disapeard
     static func killInstence() {
         guard instence != nil else { return }
-        
-        for listener in instence!.listeners.values {
-            listener.remove()
-        }
-        
+        instence?.listener?.remove()
         instence = nil
     }
     
     private let eventsCollection = Firestore.firestore().collection(K.FStore.Events.collectionName)
-    private var listeners: [String : ListenerRegistration] = [:]
+    private var listener: ListenerRegistration?
     
     private let encoder : Firestore.Encoder = {
         let encoder = Firestore.Encoder()
@@ -64,9 +60,41 @@ class EventsManager {
     func updateEvent(eventID: String, fields: [String: Any]) async throws {
         try await eventDocument(eventID: eventID).updateData(fields)
     }
-
+    
     func updateEvent(eventID: String, event: Event) async throws {
         try await eventDocument(eventID: eventID).updateData(encoder.encode(event))
     }
-
+    
+    func getOrganizerEvents(organizerID: String, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+        self.listener?.remove()
+        self.listener = eventsCollection
+            .whereField(K.FStore.Events.organizerID, isEqualTo: organizerID)
+            .order(by: K.FStore.Events.startDate)
+            .addSnapshotListener(listener)
+    }
+    
+    func getAllEvents(organizerID: String, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+        self.listener?.remove()
+        self.listener = eventsCollection
+            .order(by: K.FStore.Events.startDate)
+            .addSnapshotListener(listener)
+    }
+    
+    func deleteEvent(eventID: String) async throws {
+        try await eventDocument(eventID: eventID).delete()
+    }
+    
+    func banEvent(event: Event, description : String) async throws {
+        try Firestore.firestore().collection(K.FStore.EventBans.collectionName).addDocument(from: EventBan(eventID: event.eventID, descroption: description, adminID: UserDefaults.standard.string(forKey: K.bundleUserID)!, organizerID: event.organizerID))
+    }
+    
+    func getEventRating(eventID: String) async throws -> Double {
+        var count = 0.0
+        var sum = 0.0
+        try await Firestore.firestore().collection(K.FStore.Rattings.collectionName).whereField(K.FStore.EventBans.eventID, isEqualTo: eventID).getDocuments().documents.forEach { doc in
+            sum +=  try doc.data(as: Ratting.self).rating
+            count += 1
+        }
+        return sum / count
+    }
 }
