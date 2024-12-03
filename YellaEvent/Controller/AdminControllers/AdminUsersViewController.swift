@@ -9,12 +9,25 @@ import UIKit
 
 class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-
+//Test
+    
+    
+//Users List page outlet
     @IBOutlet weak var addOrganizer: UIBarButtonItem!
     @IBOutlet weak var userListSections: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
 
+//Create Organizer Outlet
+    
+
+    
+////shard values
+//let accountDuration = ["Never Expire", "One Day", "One Week", "Two Weeks", "One Month", "One Year", "Custom Duration"]
+    
+//    let pickerView = UIPickerView()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -32,7 +45,7 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
         }else{
             addOrganizer.isHidden = true
         }
-        updateSegment()
+        updateView()
         
     }
     
@@ -73,45 +86,52 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
         }else{
             addOrganizer.isHidden = true
         }
-        updateSegment()
+        updateView()
+        
     }
     
     
+    func updateView(){
+        
+        updateSegment()
+        tableView.reloadData()
+    }
     
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // the number of the users
-        let section = userListSections.selectedSegmentIndex
-        var num = 0
-        // depanding on the tab I should return the nuber of users
-        switch section {
-        case 0:
-            num = 1
-        case 1:
-            num =  1
-        case 2:
-            num = 0
-        case 3:
-            num = 0
-        default:
-            break
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            // the number of the users
+            let section = userListSections.selectedSegmentIndex
+            var num = 0
+            // depanding on the tab I should return the nuber of users
+            switch section {
+            case 0:
+                num = 2
+            case 1:
+                num =  4
+            case 2:
+                num = 2
+            case 3:
+                num = 1
+            default:
+                break
+            }
+            
+            
+            return num
         }
         
-        
-        return num
-    }
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            // custmize the cell
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! AdminUserManagmentTableViewCell
+            
+            // chnage the name to the user name and the email to the user email
+            cell.setupcell(username: "Fatima", email: "Fatima45@gmail.com")
+            
+            return cell
+        }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // custmize the cell
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell") as! AdminUserManagmentTableViewCell
-        
-        // chnage the name to the user name and the email to the user email
-        cell.setupcell(username: "Fatima", email: "Fatima45@gmail.com")
-        
-        return cell
-    }
-    
+ 
+
     
     /*
     // MARK: - Navigation
@@ -124,3 +144,9 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
     */
 
 }
+
+//create organizer functions
+//extension AdminUsersViewController{
+//    
+//    
+//}

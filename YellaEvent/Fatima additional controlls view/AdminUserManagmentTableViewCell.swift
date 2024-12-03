@@ -9,6 +9,8 @@ import UIKit
 
 class AdminUserManagmentTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var cellview: UIView!
+    
     @IBOutlet weak var txtUserName: UILabel!
     
     @IBOutlet weak var txtUserEmail: UILabel!
@@ -16,6 +18,7 @@ class AdminUserManagmentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
 
     func setupcell(username: String, email : String){

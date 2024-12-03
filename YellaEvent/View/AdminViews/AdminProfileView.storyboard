@@ -167,13 +167,13 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hKq-hQ-Cp4">
                                 <rect key="frame" x="30" y="297" width="333" height="69.666666666666686"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PQX-hO-Tos">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="PQX-hO-Tos">
                                         <rect key="frame" x="0.0" y="0.0" width="333" height="34.666666666666664"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="29"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scW-nK-owl">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scW-nK-owl">
                                         <rect key="frame" x="113.33333333333334" y="42.666666666666686" width="106.33333333333334" height="27"/>
                                         <color key="backgroundColor" red="0.29411764709999999" green="0.2666666667" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -216,6 +216,11 @@
                     <tabBarItem key="tabBarItem" title="Profile" image="person.crop.circle" catalog="system" selectedImage="person.crop.circle.fill" id="2Kf-jn-mVc"/>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="IBK-y8-rSI"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outletCollection property="roundedViews" destination="bfU-Li-Ikg" collectionClass="NSMutableArray" id="29Z-P7-anF"/>
+                        <outletCollection property="roundedViews" destination="Ydu-o1-MSI" collectionClass="NSMutableArray" id="CYR-U1-Caj"/>
+                        <outletCollection property="roundedViews" destination="6Tt-3u-sj5" collectionClass="NSMutableArray" id="yPz-gW-Pg3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOp-86-ZYZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="dea-Or-8sh" userLabel="Profile Settings Button">
@@ -371,7 +376,8 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUu-Yd-eZ6">
-                                                <rect key="frame" x="29.333333333333343" y="681.33333333333337" width="334.33333333333326" height="46"/>
+                                                <rect key="frame" x="29.333333333333343" y="681.33333333333337" width="334.33333333333326" height="53.666666666666629"/>
+                                                <color key="backgroundColor" name="BrandPurple"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title=" Save Profile">
                                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
@@ -382,18 +388,12 @@
                                                         <integer key="value" value="10"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="SaveButtonTapped:" destination="Thh-Nc-EVs" eventType="touchUpInside" id="mRC-2N-B0C"/>
-                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLy-PJ-Ns9">
                                                 <rect key="frame" x="170" y="119.99999999999999" width="53.333333333333343" height="38.333333333333329"/>
                                                 <color key="tintColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Edit"/>
-                                                <connections>
-                                                    <action selector="chnageImage:" destination="Thh-Nc-EVs" eventType="touchUpInside" id="SCp-JO-hgc"/>
-                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0h-69-027">
                                                 <rect key="frame" x="0.0" y="10.000000000000004" width="393" height="50.333333333333343"/>
@@ -416,7 +416,7 @@
                                             <constraint firstItem="l0h-69-027" firstAttribute="leading" secondItem="BfM-RA-NjH" secondAttribute="leading" id="dp3-YU-hAm"/>
                                             <constraint firstAttribute="trailing" secondItem="l0h-69-027" secondAttribute="trailing" id="dzF-ne-U9E"/>
                                             <constraint firstItem="dPv-eP-uaQ" firstAttribute="centerX" secondItem="BfM-RA-NjH" secondAttribute="centerX" id="fYg-83-J02"/>
-                                            <constraint firstItem="PUu-Yd-eZ6" firstAttribute="height" secondItem="BfM-RA-NjH" secondAttribute="height" multiplier="0.06" id="jTb-cx-S92"/>
+                                            <constraint firstItem="PUu-Yd-eZ6" firstAttribute="height" secondItem="BfM-RA-NjH" secondAttribute="height" multiplier="0.07" id="jTb-cx-S92"/>
                                             <constraint firstItem="vdU-44-Pi5" firstAttribute="centerX" secondItem="BfM-RA-NjH" secondAttribute="centerX" id="oWZ-bh-AF7"/>
                                             <constraint firstItem="PUu-Yd-eZ6" firstAttribute="width" secondItem="BfM-RA-NjH" secondAttribute="width" multiplier="0.85" id="pLt-Te-Xzr"/>
                                             <constraint firstItem="l0h-69-027" firstAttribute="top" secondItem="BfM-RA-NjH" secondAttribute="top" constant="10" id="yzJ-jd-Lto"/>
@@ -445,11 +445,7 @@
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="nLG-fB-GoI"/>
                     <connections>
-                        <outlet property="txtEmail" destination="ilr-lk-Wgj" id="Hwr-YI-DEr"/>
-                        <outlet property="txtFullName" destination="38j-KT-SjY" id="Jrb-PM-3qh"/>
-                        <outlet property="txtPassword" destination="1fH-lX-qMZ" id="V2s-Ds-RjM"/>
-                        <outlet property="txtPhoneNumber" destination="f3a-9S-uic" id="gAG-yu-nlp"/>
-                        <outlet property="userPhoto" destination="dPv-eP-uaQ" id="y3e-TB-2v6"/>
+                        <outletCollection property="roundedViews" destination="dPv-eP-uaQ" collectionClass="NSMutableArray" id="Cj0-8z-ea8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gi7-AO-nEw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
