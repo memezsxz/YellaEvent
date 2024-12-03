@@ -255,10 +255,10 @@
             </objects>
             <point key="canvasLocation" x="-972" y="-2"/>
         </scene>
-        <!--Edit Profile View Controller-->
+        <!--Admin Profile View Controller-->
         <scene sceneID="rYT-x6-riV">
             <objects>
-                <viewController id="Thh-Nc-EVs" customClass="EditProfileViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Thh-Nc-EVs" customClass="AdminProfileViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0fe-gh-Com">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -372,7 +372,6 @@
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUu-Yd-eZ6">
                                                 <rect key="frame" x="29.333333333333343" y="681.33333333333337" width="334.33333333333326" height="46"/>
-                                                <color key="backgroundColor" red="0.51764705879999995" green="0.36862745099999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title=" Save Profile">
                                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
