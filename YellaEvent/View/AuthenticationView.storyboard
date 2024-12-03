@@ -715,6 +715,9 @@
                                         <color key="tintColor" name="BrandPurple"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Skip" cornerStyle="large">
+                                            <backgroundConfiguration key="background">
+                                                <color key="strokeColor" name="BrandBlue"/>
+                                            </backgroundConfiguration>
                                             <fontDescription key="titleFontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
                                             <color key="baseForegroundColor" name="BrandBlue"/>
                                             <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -745,7 +748,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="BzX-UT-c1r"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BackgroundGray"/>
                         <constraints>
                             <constraint firstItem="MgT-QF-SI2" firstAttribute="centerY" secondItem="OSJ-ar-KqP" secondAttribute="centerY" constant="324" id="GIO-hq-oVC"/>
                             <constraint firstItem="MgT-QF-SI2" firstAttribute="centerX" secondItem="OSJ-ar-KqP" secondAttribute="centerX" id="gB1-LZ-tdw"/>
