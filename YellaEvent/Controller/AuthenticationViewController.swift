@@ -10,7 +10,6 @@ import FirebaseAuth
 
 class AuthenticationViewController: UIViewController {
     
-    @IBOutlet weak var ju: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         

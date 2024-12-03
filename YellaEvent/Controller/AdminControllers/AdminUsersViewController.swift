@@ -8,27 +8,29 @@
 import UIKit
 import FirebaseFirestore
 
-class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AdminUsersViewController: UIViewController {
     
-//Test
+    //Test
     
     
-//Users List page outlet
+    //Users List page outlet
     @IBOutlet weak var addOrganizer: UIBarButtonItem!
     @IBOutlet weak var userListSections: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var searchbar: UISearchBar!
     var users : [User] = []
-
-//Create Organizer Outlet
+    var currentSegment : UserType?
     
-
+    //Create Organizer Outlet
     
-////shard values
-//let accountDuration = ["Never Expire", "One Day", "One Week", "Two Weeks", "One Month", "One Year", "Custom Duration"]
     
-//    let pickerView = UIPickerView()
-
+    
+    ////shard values
+    //let accountDuration = ["Never Expire", "One Day", "One Week", "Two Weeks", "One Month", "One Year", "Custom Duration"]
+    
+    //    let pickerView = UIPickerView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +39,10 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
         // Do any additional setup after loading the view.
         tableView.register(UINib(nibName: "MainTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "MainTableViewCell")
         
-//        Task {
-//            try await UsersManager.getInstence().createNewUser(user: User(id: "3232", firstName: "3223", lastName: "2323", email: "323@232.com", dob: Date.now, dateCreated: Date.now, phoneNumber: 323232, badgesArray: [], profileImageURL: "sds", type: .organizer))
-//        }
+        searchbar.delegate = self
+        //        Task {
+        //            try await UsersManager.getInstence().createNewUser(user: User(id: "3232", firstName: "3223", lastName: "2323", email: "323@232.com", dob: Date.now, dateCreated: Date.now, phoneNumber: 323232, badgesArray: [], profileImageURL: "sds", type: .organizer))
+        //        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,9 +55,21 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
             addOrganizer.isHidden = true
         }
         usersUpdate()
-        
     }
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
+}
+
+// MARK: - Segment
+extension AdminUsersViewController {
     // function to change the segment text color
     func updateSegment(){
         
@@ -68,10 +83,10 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
             .font: UIFont.boldSystemFont(ofSize: 14) // Customize font size for selected
         ]
         
-        // loop over the segment items 
+        // loop over the segment items
         for i in 0...userListSections.numberOfSegments{
             
-
+            
             //if the tab selected the text could should be white
             if userListSections.selectedSegmentIndex == i {
                 userListSections.setTitleTextAttributes(textAttributesSelected, for: .selected)
@@ -96,47 +111,33 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-//    func updateView(){
-//        usersUpdate()
-//        tableView.reloadData()
-//    }
+    //    func updateView(){
+    //        usersUpdate()
+    //        tableView.reloadData()
+    //    }
+}
+
+
+// MARK: - Table View
+extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users.count
+    }
     
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            // the number of the users
-//            let section = userListSections.selectedSegmentIndex
-//            var num = 0
-//            // depanding on the tab I should return the nuber of users
-//            switch section {
-//            case 0:
-//                num = 2
-//            case 1:
-//                num =  4
-//            case 2:
-//                num = 2
-//            case 3:
-//                num = 1
-//            default:
-//                break
-//            }
-            
-            
-            return users.count
-        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // custmize the cell
         
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            // custmize the cell
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell") as! MainTableViewCell
-            let user = users[indexPath.row]
-            // chnage the name to the user name and the email to the user email
-            
-            cell.title.text = user.firstName + " " + user.lastName
-            cell.subtext.text = user.email
-            
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell") as! MainTableViewCell
+        let user = users[indexPath.row]
+        // chnage the name to the user name and the email to the user email
+        
+        cell.title.text = user.firstName + " " + user.lastName
+        cell.subtext.text = user.email
+        
+        return cell
+    }
     
- 
+    
     func usersUpdate() {
         let section = userListSections.selectedSegmentIndex
         switch section {
@@ -144,29 +145,33 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
             Task {
                 UsersManager.getInstence().getAllUsers(listener: listner())
             }
+            currentSegment = nil
         case 1:
             Task {
                 UsersManager.getInstence().addUsersListener(userType: .customer, listener: listner())
             }
+            currentSegment = .customer
         case 2:
             Task {
                 UsersManager.getInstence().addUsersListener(userType: .organizer, listener: listner())
             }
+            currentSegment = .organizer
         case 3:
             Task {
                 UsersManager.getInstence().addUsersListener(userType: .admin, listener: listner())
             }
+            currentSegment = .admin
         default:
             break
         }
     }
-
+    
     func listner()  -> ((QuerySnapshot?, (any Error)?) -> Void)  {
         updateSegment()
         users.removeAll()
-
+        
         return { snapshot, error in
-
+            
             guard error == nil else {
                 // fatima add error handeling here
                 print("Error: \(error!)")
@@ -174,13 +179,12 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             guard let snapshot = snapshot else {
-                        print("No data available.")
-                        return
+                print("No data available.")
+                return
             }
             
             for doc in snapshot.documents {
                 do {
-                    
                     let user = try doc.data(as: User.self)
                     self.users.append(user)
                 } catch {
@@ -193,21 +197,41 @@ class AdminUsersViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
     }
-    
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension AdminUsersViewController : UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            usersUpdate()
+            return
+        }
+        let section = userListSections.selectedSegmentIndex
+        var searchArray : [User] = []
+
+        Task {
+            
+            if currentSegment == nil {
+                searchArray = try await UsersManager.getInstence().getAllUsers()
+            } else {
+                searchArray = try await UsersManager.getInstence().getUsersOfType(currentSegment!)
+            }
+            
+            users = searchArray.filter { user in
+                user.firstName.lowercased().starts(with: searchText.lowercased()) ||
+                user.lastName.lowercased().starts(with: searchText.lowercased()) ||
+                user.email.lowercased().starts(with: searchText.lowercased())
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
-    */
-
 }
 
 //create organizer functions
 //extension AdminUsersViewController{
-//    
-//    
+//
+//
 //}
+

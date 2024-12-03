@@ -16,7 +16,7 @@ class test: UIViewController {
 //    let formatter = ISO8601DateFormatter()
 //    //
 //    //    let manager =         UsersManager()
-//    let db = Firestore.firestore()
+    let db = Firestore.firestore()
 //    
 //    @IBOutlet weak var photo: UIImageView!
 //    let dateFormatter : DateFormatter = {
@@ -106,6 +106,31 @@ class test: UIViewController {
         ////            }
         ////        }
         
+        let users = [User]()
+        let org = [User]()
+
+        db.collection(K.FStore.Users.collectionName).addSnapshotListener {
+            snapshot, error in
+            guard error == nil else {return}
+            
+//            if snapshot?.documents.isEmpty ?? true {return}
+            
+            for doc in snapshot!.documents {
+                Task {
+                    let user =   try doc.data(as: User.self) as User
+//                    switch (user.type) {
+//                    case .admin:
+//                        
+//                    case .customer:
+//                        
+//                    case .organizer:
+//                        org.append(user)
+//                    }
+
+                }
+                
+            }
+        }
     }
     /*
      // MARK: - Navigation
@@ -144,6 +169,10 @@ class test: UIViewController {
         //
         //
         //                }}
+        
+        
+        
+        
     }
     
     
