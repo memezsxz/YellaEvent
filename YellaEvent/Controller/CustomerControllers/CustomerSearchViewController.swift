@@ -10,6 +10,10 @@ import UIKit
 class CustomerSearchViewController: UIViewController {
   
     
+    @IBOutlet weak var priceSlider: UISlider!
+    @IBOutlet weak var priceTextField: UITextField!
+    @IBOutlet weak var ageTextField: UITextField!
+    @IBOutlet weak var ageSlider: UISlider!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,9 +24,29 @@ class CustomerSearchViewController: UIViewController {
         super.viewDidLoad()
         
         filteredSearch = prevSearch
-        tableView.delegate = self
-        tableView.dataSource = self
+        if tableView != nil {
+            tableView.delegate = self
+            tableView.dataSource = self
+        } else{
+            priceTextField.text = String(Int( priceSlider.value))
+            ageTextField.text = String(Int( ageSlider.value))
+        }
+        
     }
+    
+    
+    @IBAction func sliderChanges(_ sender: Any) {
+        priceTextField.text = String(Int( priceSlider.value))
+    }
+    
+    @IBAction func ageSliderChange(_ sender: Any) {
+        ageTextField.text = String(Int( ageSlider.value))
+    }
+    
+    
+    @IBAction func fliteringunwind(_ unwindSegue: UIStoryboardSegue) {
+    }
+    
 }
 
 
