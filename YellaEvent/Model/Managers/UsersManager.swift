@@ -11,7 +11,6 @@ final class UsersManager {
     private static var instence : UsersManager?
     private init() {}
     
-    
     static func getInstence () -> UsersManager {
         if instence == nil {
             instence = UsersManager()
@@ -22,17 +21,13 @@ final class UsersManager {
     // always kill when view is disapeard
     static func killInstence() {
         guard instence != nil else { return }
-        
-        for listener in instence!.listeners.values {
-            listener.remove()
-        }
-        
+        instence?.listener?.remove()
         instence = nil
     }
     
     private let userCollection = Firestore.firestore().collection(K.FStore.Users.collectionName)
-    private var listeners: [String : ListenerRegistration] = [:]
-    
+    private var listener: ListenerRegistration?
+
     private let encoder : Firestore.Encoder = {
         let encoder = Firestore.Encoder()
         encoder.keyEncodingStrategy = .useDefaultKeys
@@ -64,7 +59,7 @@ final class UsersManager {
         try await userDocument(userId: userId).updateData(fields)
     }
     
-    func updateUser(user: User) async throws {
+    func updateUser(user : User) async throws {
         try await userDocument(userId: user.userID).updateData(encoder.encode(user))
     }
     
@@ -75,12 +70,25 @@ final class UsersManager {
     
     // important -- better add a listner snapshot
     
+    func addUsersListener(userType: UserType, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+            
+        self.listener?.remove()
+        self.listener = userCollection
+            .whereField(K.FStore.Users.type, isEqualTo:userType.rawValue)
+            .order(by: K.FStore.Users.firstName)
+            .order(by: K.FStore.Users.lastName)
+            .addSnapshotListener(listener)
+        }
     
-    
+    func getAllUsers(listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+        
+        self.listener?.remove()
+        self.listener = userCollection.order(by: K.FStore.Users.firstName).order(by: K.FStore.Users.lastName).addSnapshotListener(listener)
+        }
     
 //    func getAllUsers() async throws -> [User] {
 //        return try await userCollection
-//            .order(by: K.FStore.Users.dateCreated).getDocuments().documents.compactMap
+//            .order(by: K.FStore.Users.firstName).order(by: K.FStore.Users.lastName).getDocuments().documents.compactMap
 //        { document in
 //            try document.data(as: User.self)
 //        }
@@ -88,7 +96,7 @@ final class UsersManager {
 //    
 //    func getAllOrganizers() async throws -> [User] {
 //        return try await userCollection
-//            .whereField(K.FStore.Users.type, isEqualTo: UserType.organizer.rawValue)
+//            .whereField(K.FStore.Users.type, isEqualTo: String( describing:  UserType.organizer))
 //            .order(by: K.FStore.Users.dateCreated).getDocuments().documents.compactMap
 //        { document in
 //            try document.data(as: User.self)
@@ -102,11 +110,11 @@ final class UsersManager {
 //    }
     
     // use documentID as the listener ideantifier
-    func addListener(documentID: String, listener: ListenerRegistration) {
-        listeners[documentID] = listener
-        }
-
-    func removeListener(documentID: String) {
-        listeners.removeValue(forKey: documentID)
-    }
+//    func addListener(documentID: String, listener: ListenerRegistration) {
+//        listeners[documentID] = listener
+//        }
+//
+//    func removeListener(documentID: String) {
+//        listeners.removeValue(forKey: documentID)
+//    }
 }
