@@ -64,6 +64,10 @@ final class UsersManager {
         try await userDocument(userId: userId).updateData(fields)
     }
     
+    func updateUser(user: User) async throws {
+        try await userDocument(userId: user.userID).updateData(encoder.encode(user))
+    }
+    
 //    func updateUser(user: User, fields: [String: Any]) async throws {
 //        try await userDocument(userId: user.id).updateData(fields)
 //    }
@@ -84,7 +88,7 @@ final class UsersManager {
 //    
 //    func getAllOrganizers() async throws -> [User] {
 //        return try await userCollection
-//            .whereField(K.FStore.Users.type, isEqualTo: String( describing:  UserType.organizer))
+//            .whereField(K.FStore.Users.type, isEqualTo: UserType.organizer.rawValue)
 //            .order(by: K.FStore.Users.dateCreated).getDocuments().documents.compactMap
 //        { document in
 //            try document.data(as: User.self)

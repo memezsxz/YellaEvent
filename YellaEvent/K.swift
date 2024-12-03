@@ -30,6 +30,8 @@ struct K {
             static let phoneNumber = "phoneNumber"
             static let profileImageURL = "profileImageURL"
             static let badgesArray = "badgesArray" // array of ids to the badges they have
+            static let startDate = "startDate"
+            static let endDate = "endDate"
             static let type = "type"
         }
         struct Events {
