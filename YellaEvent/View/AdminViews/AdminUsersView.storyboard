@@ -81,6 +81,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addOrganizer" destination="Ple-4Y-bCR" id="8RA-Qm-7QM"/>
+                        <outlet property="searchbar" destination="gSe-iV-ePm" id="biv-Tl-9PM"/>
                         <outlet property="tableView" destination="YA0-eY-7S3" id="nTh-b1-GTW"/>
                         <outlet property="userListSections" destination="dJf-uT-sma" id="F0E-C7-EN5"/>
                         <segue destination="DIJ-Ko-ZSr" kind="show" identifier="ViewCustomerPage" id="RXT-y1-tj3"/>
