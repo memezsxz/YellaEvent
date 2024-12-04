@@ -49,7 +49,8 @@ class EventsManager {
     
     func createNewEvent(event: Event) async throws {
         Task {
-            try eventDocument(eventID: event.eventID).setData(encoder.encode(event), merge: false)
+            let doc = try eventsCollection.addDocument(data: encoder.encode(event))
+            doc.updateData([K.FStore.Events.eventID: doc.documentID])
         }
     }
     
