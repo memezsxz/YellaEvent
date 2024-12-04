@@ -28,17 +28,17 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="y32-Lz-mOq">
-                                <rect key="frame" x="40.333333333333329" y="3.6666666666666679" width="218.66666666666669" height="37"/>
+                                <rect key="frame" x="40.333333333333329" y="3" width="218.66666666666669" height="38.333333333333329"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6A-rb-3it">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q6A-rb-3it">
                                         <rect key="frame" x="0.0" y="0.0" width="218.66666666666666" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                         <color key="textColor" name="BrandDarkPurple"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRZ-8W-gAS">
-                                        <rect key="frame" x="0.0" y="21.333333333333332" width="218.66666666666666" height="15.666666666666668"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <rect key="frame" x="0.0" y="21.333333333333332" width="218.66666666666666" height="16.999999999999996"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" name="BrandDarkPurple"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -72,7 +72,7 @@
                 <outlet property="subtext" destination="ZRZ-8W-gAS" id="JDO-8U-stO"/>
                 <outlet property="title" destination="q6A-rb-3it" id="x4o-HM-hsd"/>
             </connections>
-            <point key="canvasLocation" x="56.488549618320612" y="20.422535211267608"/>
+            <point key="canvasLocation" x="56.395348837209305" y="20.058139534883718"/>
         </tableViewCell>
     </objects>
     <resources>
