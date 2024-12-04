@@ -37,12 +37,12 @@ class AdminUsersViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         // Do any additional setup after loading the view.
-        tableView.register(UINib(nibName: "MainTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "MainTableViewCell")
+        tableView.register(UINib(nibName: "UsersTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "UsersTableViewCell")
         
         searchbar.delegate = self
-        //        Task {
-        //            try await UsersManager.getInstence().createNewUser(user: User(id: "3232", firstName: "3223", lastName: "2323", email: "323@232.com", dob: Date.now, dateCreated: Date.now, phoneNumber: 323232, badgesArray: [], profileImageURL: "sds", type: .organizer))
-        //        }
+//                Task {
+//                    try await UsersManager.getInstence().createNewUser(user: User(id: "202200805", firstName: "gtgggggggggggg", lastName: "hhhhhhhhhhghghg", email: "323jhjhyubyuybyh_ghg0000@232.com", dob: Date.now, dateCreated: Date.now, phoneNumber: 323232, badgesArray: [], profileImageURL: "sds", type: .organizer))
+//                }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,7 +127,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // custmize the cell
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell") as! MainTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UsersTableViewCell") as! UsersTableViewCell
         let user = users[indexPath.row]
         // chnage the name to the user name and the email to the user email
         
@@ -137,6 +137,11 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.width / 6
+    }
+
     
     func usersUpdate() {
         let section = userListSections.selectedSegmentIndex
@@ -182,6 +187,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
                 print("No data available.")
                 return
             }
+            self.users = []
             
             for doc in snapshot.documents {
                 do {
