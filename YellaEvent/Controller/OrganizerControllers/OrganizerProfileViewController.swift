@@ -9,11 +9,25 @@ import UIKit
 
 class OrganizerProfileViewController: UIViewController {
 
+    @IBOutlet var roundedViews: [UIView]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
+    //function to make the provided list of views circle
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        for view in roundedViews{
+            view.layer.cornerRadius = view.frame.height / 2
+            view.clipsToBounds = true
+        }
+        
+    }
+    
     
 
     /*
