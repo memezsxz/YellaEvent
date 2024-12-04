@@ -51,7 +51,7 @@ final class UsersManager {
         }
     }
     
-    func getUser(userId: String) async throws -> User{
+    func getUser(userId: String) async throws -> User {
         try await userDocument(userId: userId).getDocument(as : User.self)
     }
     
@@ -111,6 +111,26 @@ final class UsersManager {
         }
         return users
     }
+    
+    public func searchUsers(userType: UserType?, searchText: String) async throws -> [User] {
+        let array = switch userType {
+        case .admin:
+             try await getUsersOfType(.admin)
+        case .customer:
+             try await getUsersOfType(.customer)
+        case .organizer:
+             try await getUsersOfType(.organizer)
+        case nil:
+             try await getAllUsers()
+        }
+        
+        return array.filter { user in
+            user.firstName.lowercased().starts(with: searchText.lowercased()) ||
+            user.lastName.lowercased().starts(with: searchText.lowercased()) ||
+            user.email.lowercased().starts(with: searchText.lowercased())
+        }
+    }
+    
     //    func searchText(text: String) async throws -> [User] {
     //        self.listener?.remove()
     //        do {

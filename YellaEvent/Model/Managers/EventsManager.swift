@@ -73,7 +73,11 @@ class EventsManager {
             .addSnapshotListener(listener)
     }
     
-    func getAllEvents(organizerID: String, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+    func getOrganizer(organizerID: String) async throws -> User {
+       try await UsersManager.getInstence().getUser(userId: organizerID)
+    }
+    
+    func getAllEvents (listener: @escaping (QuerySnapshot?, Error?) -> Void) {
         self.listener?.remove()
         self.listener = eventsCollection
             .order(by: K.FStore.Events.startDate)
