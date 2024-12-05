@@ -12,7 +12,24 @@ import Firebase
 import FirebaseStorage
 import UniformTypeIdentifiers
 
-class test: UIViewController {
+class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var tableView: UITableView!
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        events.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EventSummaryTableViewCell", for: indexPath) as! EventSummaryTableViewCell
+//        cell.convert(event)
+        
+        cell.setup(with: events[indexPath.row])
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+      return  tableView.frame.width / 2
+    }
 //    let formatter = ISO8601DateFormatter()
 //    //
 //    //    let manager =         UsersManager()
@@ -27,10 +44,36 @@ class test: UIViewController {
 //    
 //    let imagePicker = UIImagePickerController()
 //    var selectedImage: UIImage?
-//    
+//
+    var events : [Event] = []
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
+        Task {
+            EventsManager.getInstence().getAllEvents(listener: { snapshot, error in
+                guard let snapshot else { return }
+                self.events = []
+                for doc in snapshot.documents {
+                    do {
+                        self.events.append(try doc.data(as: Event.self))
+                    } catch {
+                        print(error)
+                    }
+                }
+                DispatchQueue.main.async {
+//                    print(self.events)
+                    print("self.events")
+                    self.tableView.reloadData()
+                }
+            })
+            
+            
+        }
         //        if UserDefaults.standard.string(forKey: "dev.maryam.yellaevent.userid") == nil {
         //            Auth.auth().signIn(withEmail: "retyyu@fxdscdsgfgdsdxzgx.com", password: "pxzcass2102") { [weak self] authResult, error in
         //                guard let strongSelf = self else { return }
@@ -106,18 +149,18 @@ class test: UIViewController {
         ////            }
         ////        }
         
-        let users = [User]()
-        let org = [User]()
-
-        db.collection(K.FStore.Users.collectionName).addSnapshotListener {
-            snapshot, error in
-            guard error == nil else {return}
-            
+//        let users = [User]()
+//        let org = [User]()
+//
+//        db.collection(K.FStore.Users.collectionName).addSnapshotListener {
+//            snapshot, error in
+//            guard error == nil else {return}
+//            
 //            if snapshot?.documents.isEmpty ?? true {return}
             
-            for doc in snapshot!.documents {
-                Task {
-                    let user =   try doc.data(as: User.self) as User
+//            for doc in snapshot!.documents {
+//                Task {
+//                    let user =   try doc.data(as: User.self) as User
 //                    switch (user.type) {
 //                    case .admin:
 //                        
@@ -126,11 +169,10 @@ class test: UIViewController {
 //                    case .organizer:
 //                        org.append(user)
 //                    }
-
-                }
-                
-            }
-        }
+//                }
+//                
+//            }
+//        }
     }
     /*
      // MARK: - Navigation

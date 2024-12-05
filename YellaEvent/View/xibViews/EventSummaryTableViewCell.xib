@@ -76,7 +76,7 @@
                                 <rect key="frame" x="228" y="10" width="76" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Catogary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yzh-YF-uBs">
-                                        <rect key="frame" x="12" y="3.0000000000000018" width="52" height="13.999999999999998"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="76" height="20"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -84,8 +84,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.023529411764705882" green="0.58039215686274503" blue="0.61960784313725492" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="Yzh-YF-uBs" firstAttribute="top" secondItem="JjF-om-Uns" secondAttribute="top" constant="3" id="2vT-2a-9Gr"/>
-                                    <constraint firstItem="Yzh-YF-uBs" firstAttribute="leading" secondItem="JjF-om-Uns" secondAttribute="leading" constant="12" id="WRS-as-i8V"/>
+                                    <constraint firstItem="Yzh-YF-uBs" firstAttribute="top" secondItem="JjF-om-Uns" secondAttribute="top" id="2vT-2a-9Gr"/>
+                                    <constraint firstAttribute="bottom" secondItem="Yzh-YF-uBs" secondAttribute="bottom" id="3UG-va-Qmq"/>
+                                    <constraint firstItem="Yzh-YF-uBs" firstAttribute="leading" secondItem="JjF-om-Uns" secondAttribute="leading" id="WRS-as-i8V"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yzh-YF-uBs" secondAttribute="trailing" id="iKy-5w-AYl"/>
                                     <constraint firstItem="Yzh-YF-uBs" firstAttribute="centerX" secondItem="JjF-om-Uns" secondAttribute="centerX" id="jSU-70-Saf"/>
                                     <constraint firstItem="Yzh-YF-uBs" firstAttribute="centerY" secondItem="JjF-om-Uns" secondAttribute="centerY" id="rJR-Aj-eIG"/>
                                 </constraints>

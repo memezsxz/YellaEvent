@@ -204,7 +204,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L0V-WG-0gj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Vcs-cO-FIk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1595.5223880597014" y="-106.40732265446223"/>
+            <point key="canvasLocation" x="1609" y="-114"/>
         </scene>
         <!--Search-->
         <scene sceneID="ryp-h9-kjW">
