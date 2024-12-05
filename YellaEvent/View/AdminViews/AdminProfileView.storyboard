@@ -375,20 +375,6 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUu-Yd-eZ6">
-                                                <rect key="frame" x="29.333333333333343" y="681.33333333333337" width="334.33333333333326" height="53.666666666666629"/>
-                                                <color key="backgroundColor" name="BrandPurple"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title=" Save Profile">
-                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
-                                                    <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </buttonConfiguration>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLy-PJ-Ns9">
                                                 <rect key="frame" x="170" y="119.99999999999999" width="53.333333333333343" height="38.333333333333329"/>
                                                 <color key="tintColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -401,14 +387,23 @@
                                                 <color key="textColor" name="BrandDarkPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1o-gQ-2HW">
+                                                <rect key="frame" x="40" y="664" width="313" height="59.666666666666629"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title=" Save Profile" cornerStyle="medium">
+                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="baseBackgroundColor" name="BrandPurple"/>
+                                                </buttonConfiguration>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="l0h-69-027" firstAttribute="centerX" secondItem="BfM-RA-NjH" secondAttribute="centerX" id="6IC-nu-nwK"/>
                                             <constraint firstItem="OLy-PJ-Ns9" firstAttribute="centerY" secondItem="dPv-eP-uaQ" secondAttribute="centerY" id="8PH-OA-hdz"/>
                                             <constraint firstItem="dPv-eP-uaQ" firstAttribute="width" secondItem="BfM-RA-NjH" secondAttribute="width" multiplier="0.3" id="DXo-4M-Kh7"/>
-                                            <constraint firstItem="PUu-Yd-eZ6" firstAttribute="top" secondItem="vdU-44-Pi5" secondAttribute="bottom" constant="64.670000000000002" id="HhO-li-fud"/>
-                                            <constraint firstItem="PUu-Yd-eZ6" firstAttribute="centerX" secondItem="BfM-RA-NjH" secondAttribute="centerX" id="PIV-Gj-NY1"/>
+                                            <constraint firstItem="A1o-gQ-2HW" firstAttribute="height" secondItem="BfM-RA-NjH" secondAttribute="height" multiplier="0.078" id="F7v-ib-meV"/>
+                                            <constraint firstAttribute="trailing" secondItem="A1o-gQ-2HW" secondAttribute="trailing" constant="40" id="OTc-qO-tMY"/>
+                                            <constraint firstItem="A1o-gQ-2HW" firstAttribute="leading" secondItem="BfM-RA-NjH" secondAttribute="leading" constant="40" id="Pws-sw-hy2"/>
                                             <constraint firstItem="dPv-eP-uaQ" firstAttribute="top" secondItem="l0h-69-027" secondAttribute="bottom" constant="20" id="UU8-2m-M3P"/>
                                             <constraint firstItem="vdU-44-Pi5" firstAttribute="width" secondItem="BfM-RA-NjH" secondAttribute="width" multiplier="0.9" id="aAa-DO-Mtn"/>
                                             <constraint firstItem="vdU-44-Pi5" firstAttribute="top" secondItem="dPv-eP-uaQ" secondAttribute="bottom" constant="45" id="cgp-aS-OPM"/>
@@ -416,9 +411,9 @@
                                             <constraint firstItem="l0h-69-027" firstAttribute="leading" secondItem="BfM-RA-NjH" secondAttribute="leading" id="dp3-YU-hAm"/>
                                             <constraint firstAttribute="trailing" secondItem="l0h-69-027" secondAttribute="trailing" id="dzF-ne-U9E"/>
                                             <constraint firstItem="dPv-eP-uaQ" firstAttribute="centerX" secondItem="BfM-RA-NjH" secondAttribute="centerX" id="fYg-83-J02"/>
-                                            <constraint firstItem="PUu-Yd-eZ6" firstAttribute="height" secondItem="BfM-RA-NjH" secondAttribute="height" multiplier="0.07" id="jTb-cx-S92"/>
+                                            <constraint firstItem="A1o-gQ-2HW" firstAttribute="centerX" secondItem="BfM-RA-NjH" secondAttribute="centerX" id="hB8-G0-Nbl"/>
+                                            <constraint firstItem="A1o-gQ-2HW" firstAttribute="top" secondItem="vdU-44-Pi5" secondAttribute="bottom" constant="47.329999999999998" id="oIL-Um-emb"/>
                                             <constraint firstItem="vdU-44-Pi5" firstAttribute="centerX" secondItem="BfM-RA-NjH" secondAttribute="centerX" id="oWZ-bh-AF7"/>
-                                            <constraint firstItem="PUu-Yd-eZ6" firstAttribute="width" secondItem="BfM-RA-NjH" secondAttribute="width" multiplier="0.85" id="pLt-Te-Xzr"/>
                                             <constraint firstItem="l0h-69-027" firstAttribute="top" secondItem="BfM-RA-NjH" secondAttribute="top" constant="10" id="yzJ-jd-Lto"/>
                                         </constraints>
                                     </view>
@@ -496,7 +491,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

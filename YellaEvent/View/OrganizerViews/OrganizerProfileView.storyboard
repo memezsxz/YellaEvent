@@ -35,7 +35,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHI-Cs-XFV">
-                                <rect key="frame" x="149.33333333333334" y="628.66666666666663" width="94.666666666666657" height="39.333333333333371"/>
+                                <rect key="frame" x="149.33333333333337" y="628.66666666666663" width="94.666666666666629" height="39.333333333333371"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Log out">
@@ -52,7 +52,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="353.66666666666669" height="73"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowshape.right.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="jr6-B4-aUX">
-                                                <rect key="frame" x="309.33333333333331" y="0.6666666666666714" width="34.333333333333314" height="72"/>
+                                                <rect key="frame" x="309.33333333333326" y="0.6666666666666714" width="34.333333333333371" height="72"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="15"/>
                                             </imageView>
@@ -110,7 +110,7 @@
                                         <rect key="frame" x="0.0" y="89" width="353.66666666666669" height="73"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowshape.right.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KP7-57-MLM">
-                                                <rect key="frame" x="309.33333333333331" y="0.6666666666666714" width="34.333333333333314" height="72"/>
+                                                <rect key="frame" x="309.33333333333326" y="0.6666666666666714" width="34.333333333333371" height="72"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="15"/>
                                             </imageView>
@@ -386,20 +386,6 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1mS-CS-uZJ">
-                                                <rect key="frame" x="29.333333333333343" y="681.33333333333337" width="334.33333333333326" height="51.666666666666629"/>
-                                                <color key="backgroundColor" name="BrandPurple"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title=" Save Profile">
-                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
-                                                    <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </buttonConfiguration>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVb-aO-zaf">
                                                 <rect key="frame" x="59" y="788" width="275" height="39.333333333333371"/>
                                                 <color key="tintColor" systemColor="systemRedColor"/>
@@ -420,6 +406,14 @@
                                                 <color key="textColor" name="BrandDarkPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sSf-z9-9dC">
+                                                <rect key="frame" x="40" y="691" width="313" height="56.666666666666629"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title=" Save Profile" cornerStyle="medium">
+                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="baseBackgroundColor" name="BrandPurple"/>
+                                                </buttonConfiguration>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -427,21 +421,22 @@
                                             <constraint firstItem="z6t-f6-ddn" firstAttribute="centerX" secondItem="hJb-2t-ryh" secondAttribute="centerX" id="4qb-WM-r9U"/>
                                             <constraint firstItem="GSZ-di-Kr9" firstAttribute="centerX" secondItem="hJb-2t-ryh" secondAttribute="centerX" id="7uT-Jm-1sR"/>
                                             <constraint firstItem="iM7-y4-sgj" firstAttribute="centerY" secondItem="GSZ-di-Kr9" secondAttribute="centerY" id="8J4-yX-rd0"/>
-                                            <constraint firstItem="1mS-CS-uZJ" firstAttribute="centerX" secondItem="hJb-2t-ryh" secondAttribute="centerX" id="AYy-kV-FBg"/>
-                                            <constraint firstItem="SVb-aO-zaf" firstAttribute="top" secondItem="1mS-CS-uZJ" secondAttribute="bottom" constant="55" id="IZy-gc-M8h"/>
                                             <constraint firstItem="cpn-YA-m4w" firstAttribute="centerX" secondItem="hJb-2t-ryh" secondAttribute="centerX" id="JbO-4t-T0U"/>
+                                            <constraint firstItem="sSf-z9-9dC" firstAttribute="height" secondItem="hJb-2t-ryh" secondAttribute="height" multiplier="0.066" id="KI1-1f-9F0"/>
+                                            <constraint firstAttribute="trailing" secondItem="sSf-z9-9dC" secondAttribute="trailing" constant="40" id="NF1-qC-Dqr"/>
+                                            <constraint firstItem="sSf-z9-9dC" firstAttribute="top" secondItem="cpn-YA-m4w" secondAttribute="bottom" constant="74.329999999999998" id="Ooa-qm-EPJ"/>
                                             <constraint firstItem="GSZ-di-Kr9" firstAttribute="top" secondItem="z6t-f6-ddn" secondAttribute="bottom" constant="20" id="TCb-NT-xHc"/>
                                             <constraint firstItem="iM7-y4-sgj" firstAttribute="centerX" secondItem="GSZ-di-Kr9" secondAttribute="centerX" id="X7R-eI-2vd"/>
                                             <constraint firstItem="GSZ-di-Kr9" firstAttribute="width" secondItem="hJb-2t-ryh" secondAttribute="width" multiplier="0.3" id="XwJ-Iz-sUC"/>
-                                            <constraint firstItem="1mS-CS-uZJ" firstAttribute="width" secondItem="hJb-2t-ryh" secondAttribute="width" multiplier="0.85" id="YLY-Cb-gDf"/>
                                             <constraint firstItem="SVb-aO-zaf" firstAttribute="centerX" secondItem="hJb-2t-ryh" secondAttribute="centerX" id="Z7g-MP-nhQ"/>
-                                            <constraint firstItem="1mS-CS-uZJ" firstAttribute="top" secondItem="cpn-YA-m4w" secondAttribute="bottom" constant="64.670000000000002" id="Zr1-Y8-69E"/>
                                             <constraint firstItem="cpn-YA-m4w" firstAttribute="width" secondItem="hJb-2t-ryh" secondAttribute="width" multiplier="0.9" id="abo-2t-XM8"/>
                                             <constraint firstItem="z6t-f6-ddn" firstAttribute="leading" secondItem="hJb-2t-ryh" secondAttribute="leading" id="d8g-0Q-AJO"/>
+                                            <constraint firstItem="sSf-z9-9dC" firstAttribute="centerX" secondItem="hJb-2t-ryh" secondAttribute="centerX" id="dE8-xb-saV"/>
                                             <constraint firstItem="SVb-aO-zaf" firstAttribute="width" secondItem="hJb-2t-ryh" secondAttribute="width" multiplier="0.7" id="e2j-jW-ouM"/>
                                             <constraint firstAttribute="trailing" secondItem="z6t-f6-ddn" secondAttribute="trailing" id="hQp-qh-810"/>
+                                            <constraint firstItem="SVb-aO-zaf" firstAttribute="top" secondItem="sSf-z9-9dC" secondAttribute="bottom" constant="40.329999999999998" id="iMA-I9-ep3"/>
                                             <constraint firstItem="z6t-f6-ddn" firstAttribute="top" secondItem="hJb-2t-ryh" secondAttribute="top" constant="10" id="ibb-Pe-jSM"/>
-                                            <constraint firstItem="1mS-CS-uZJ" firstAttribute="height" secondItem="hJb-2t-ryh" secondAttribute="height" multiplier="0.06" id="z95-wP-MJL"/>
+                                            <constraint firstItem="sSf-z9-9dC" firstAttribute="leading" secondItem="hJb-2t-ryh" secondAttribute="leading" constant="40" id="k8f-tR-RTF"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -508,7 +503,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

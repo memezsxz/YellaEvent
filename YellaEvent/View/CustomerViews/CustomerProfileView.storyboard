@@ -502,24 +502,6 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FB3-uX-fIG">
-                                                <rect key="frame" x="29.333333333333343" y="782" width="334.33333333333326" height="57.333333333333371"/>
-                                                <color key="backgroundColor" name="BrandPurple"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title=" Save Profile">
-                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
-                                                    <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </buttonConfiguration>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="SaveButtonTaped:" destination="Ikn-St-sM2" eventType="touchUpInside" id="sCZ-TR-FLO"/>
-                                                    <action selector="SaveButtonTapped:" destination="Ikn-St-sM2" eventType="touchUpInside" id="EFG-HZ-5pi"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Olw-vJ-4h2">
                                                 <rect key="frame" x="59" y="894.33333333333337" width="275" height="39.333333333333371"/>
                                                 <color key="tintColor" systemColor="systemRedColor"/>
@@ -546,28 +528,37 @@
                                                 <color key="textColor" name="BrandDarkPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfy-yo-pTw">
+                                                <rect key="frame" x="40" y="792" width="313" height="57.333333333333371"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title=" Save Profile" cornerStyle="medium">
+                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="baseBackgroundColor" name="BrandPurple"/>
+                                                </buttonConfiguration>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="YQy-7C-gBJ" firstAttribute="top" secondItem="yfS-55-VZm" secondAttribute="bottom" constant="20" id="3uT-uk-tgP"/>
                                             <constraint firstItem="yfS-55-VZm" firstAttribute="centerX" secondItem="POA-Fa-THq" secondAttribute="centerX" id="4ZB-Qh-mzT"/>
+                                            <constraint firstAttribute="trailing" secondItem="nfy-yo-pTw" secondAttribute="trailing" constant="40" id="6BY-HS-a1u"/>
                                             <constraint firstItem="qbn-HP-VWg" firstAttribute="height" secondItem="YQy-7C-gBJ" secondAttribute="height" id="CAL-T4-VFd"/>
                                             <constraint firstItem="yfS-55-VZm" firstAttribute="top" secondItem="POA-Fa-THq" secondAttribute="top" constant="10" id="Ews-5X-0MN"/>
                                             <constraint firstItem="yfS-55-VZm" firstAttribute="leading" secondItem="POA-Fa-THq" secondAttribute="leading" id="FQL-UE-DQ6"/>
                                             <constraint firstItem="1yG-IM-XRn" firstAttribute="width" secondItem="POA-Fa-THq" secondAttribute="width" multiplier="0.9" id="GgH-c2-RfH"/>
-                                            <constraint firstItem="FB3-uX-fIG" firstAttribute="centerX" secondItem="POA-Fa-THq" secondAttribute="centerX" id="Idy-a3-e2s"/>
-                                            <constraint firstItem="Olw-vJ-4h2" firstAttribute="top" secondItem="FB3-uX-fIG" secondAttribute="bottom" constant="55" id="LZ8-34-Fr6"/>
+                                            <constraint firstItem="nfy-yo-pTw" firstAttribute="centerX" secondItem="POA-Fa-THq" secondAttribute="centerX" id="Goh-zb-MrW"/>
                                             <constraint firstItem="Olw-vJ-4h2" firstAttribute="centerX" secondItem="POA-Fa-THq" secondAttribute="centerX" id="Pgm-zm-l4f"/>
                                             <constraint firstItem="Olw-vJ-4h2" firstAttribute="width" secondItem="POA-Fa-THq" secondAttribute="width" multiplier="0.7" id="Ppk-F1-Nw2"/>
-                                            <constraint firstItem="FB3-uX-fIG" firstAttribute="height" secondItem="POA-Fa-THq" secondAttribute="height" multiplier="0.06" id="TBu-9m-W89"/>
+                                            <constraint firstItem="nfy-yo-pTw" firstAttribute="leading" secondItem="POA-Fa-THq" secondAttribute="leading" constant="40" id="Rl1-nF-RxV"/>
                                             <constraint firstItem="YQy-7C-gBJ" firstAttribute="centerX" secondItem="POA-Fa-THq" secondAttribute="centerX" id="UoQ-nI-etf"/>
                                             <constraint firstItem="1yG-IM-XRn" firstAttribute="centerX" secondItem="POA-Fa-THq" secondAttribute="centerX" id="cBd-B1-HLc"/>
-                                            <constraint firstItem="FB3-uX-fIG" firstAttribute="width" secondItem="POA-Fa-THq" secondAttribute="width" multiplier="0.85" id="gGv-B3-sai"/>
+                                            <constraint firstItem="Olw-vJ-4h2" firstAttribute="top" secondItem="nfy-yo-pTw" secondAttribute="bottom" constant="45" id="d8q-oS-My3"/>
                                             <constraint firstItem="qbn-HP-VWg" firstAttribute="width" secondItem="YQy-7C-gBJ" secondAttribute="width" id="iVJ-cR-ePE"/>
-                                            <constraint firstItem="FB3-uX-fIG" firstAttribute="top" secondItem="1yG-IM-XRn" secondAttribute="bottom" constant="64.670000000000002" id="koy-Fn-HEa"/>
                                             <constraint firstItem="qbn-HP-VWg" firstAttribute="centerY" secondItem="YQy-7C-gBJ" secondAttribute="centerY" id="n2y-p8-9SO"/>
+                                            <constraint firstItem="nfy-yo-pTw" firstAttribute="height" secondItem="POA-Fa-THq" secondAttribute="height" multiplier="0.06" id="q07-qL-hlP"/>
                                             <constraint firstAttribute="trailing" secondItem="yfS-55-VZm" secondAttribute="trailing" id="rQQ-g6-JOt"/>
                                             <constraint firstItem="qbn-HP-VWg" firstAttribute="centerX" secondItem="YQy-7C-gBJ" secondAttribute="centerX" id="tyl-JT-RWG"/>
+                                            <constraint firstItem="nfy-yo-pTw" firstAttribute="top" secondItem="1yG-IM-XRn" secondAttribute="bottom" constant="74.670000000000002" id="uOx-mC-bZO"/>
                                             <constraint firstItem="1yG-IM-XRn" firstAttribute="top" secondItem="YQy-7C-gBJ" secondAttribute="bottom" constant="45" id="vVL-ZW-L9v"/>
                                             <constraint firstItem="YQy-7C-gBJ" firstAttribute="width" secondItem="POA-Fa-THq" secondAttribute="width" multiplier="0.3" id="yLY-U7-vNg"/>
                                         </constraints>
@@ -649,7 +640,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

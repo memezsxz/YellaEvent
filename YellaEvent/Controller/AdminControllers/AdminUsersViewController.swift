@@ -71,33 +71,33 @@ class AdminUsersViewController: UIViewController {
 // MARK: - Segment
 extension AdminUsersViewController {
     // function to change the segment text color
-    func updateSegment(){
-        
-        let textAttributesNormal: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.brandDarkPurple, // Non-selected text color
-            .font: UIFont.systemFont(ofSize: 14) // Customize font size
-        ]
-        
-        let textAttributesSelected: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white, // Selected text color
-            .font: UIFont.boldSystemFont(ofSize: 14) // Customize font size for selected
-        ]
-        
-        // loop over the segment items
-        for i in 0...userListSections.numberOfSegments{
-            
-            
-            //if the tab selected the text could should be white
-            if userListSections.selectedSegmentIndex == i {
-                userListSections.setTitleTextAttributes(textAttributesSelected, for: .selected)
-            }
-            //if the tab not selected the text must be brandDarkPurple (defind color in the assets)
-            else{
-                userListSections.setTitleTextAttributes(textAttributesNormal, for: .normal)
-            }
-        }
-        
-    }
+//    func updateSegment(){
+//        
+//        let textAttributesNormal: [NSAttributedString.Key: Any] = [
+//            .foregroundColor: UIColor.brandDarkPurple, // Non-selected text color
+//            .font: UIFont.systemFont(ofSize: 14) // Customize font size
+//        ]
+//        
+//        let textAttributesSelected: [NSAttributedString.Key: Any] = [
+//            .foregroundColor: UIColor.white, // Selected text color
+//            .font: UIFont.boldSystemFont(ofSize: 14) // Customize font size for selected
+//        ]
+//        
+//        // loop over the segment items
+//        for i in 0...userListSections.numberOfSegments{
+//            
+//            
+//            //if the tab selected the text could should be white
+//            if userListSections.selectedSegmentIndex == i {
+//                userListSections.setTitleTextAttributes(textAttributesSelected, for: .selected)
+//            }
+//            //if the tab not selected the text must be brandDarkPurple (defind color in the assets)
+//            else{
+//                userListSections.setTitleTextAttributes(textAttributesNormal, for: .normal)
+//            }
+//        }
+//        
+//    }
     
     
     
@@ -172,7 +172,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     }
     
     func listner()  -> ((QuerySnapshot?, (any Error)?) -> Void)  {
-        updateSegment()
+//        updateSegment()
         users.removeAll()
         
         return { snapshot, error in
