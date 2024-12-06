@@ -4,6 +4,7 @@
 //
 //  Created by meme on 25/11/2024.
 //
+// edit_Fatima include the places where I need to edit the code in
 
 import UIKit
 
@@ -14,8 +15,8 @@ class CustomerProfileViewController: UIViewController {
     @IBOutlet weak var BIgImageProfile: UIImageView!
     
     
-    // Edit Profile Page section
     
+    // Edit Profile Page section
     //Outlet Fields
     @IBOutlet weak var EditProfileImage: UIImageView!
     @IBOutlet weak var txtFieldDate: UITextField!
@@ -24,11 +25,8 @@ class CustomerProfileViewController: UIViewController {
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     
-    //Outlet Errors
     
- 
-
-
+    //Outlet Errors
     @IBOutlet weak var lblErrorPhoneNumber: UILabel!
     @IBOutlet weak var lblErrorFullName: UILabel!
     @IBOutlet weak var lblErrorDOB: UILabel!
@@ -112,6 +110,7 @@ class CustomerProfileViewController: UIViewController {
 
 
 // ------------------------------------------------------------//
+
 
 //Customer Profile Tab functions
 extension CustomerProfileViewController{
@@ -305,7 +304,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         
         
         
-        
+        //edit_Fatima
         
         
 //        Task {
@@ -370,12 +369,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
  
         
       
-    
-    
-    
-    
-    
-    
+    //delete user account function connected to the onclick on the delete button
     func DeleteAccount(_ sender: Any){
         
         let DeleteAlert = UIAlertController(title: "Delete Account", message: "Are you sure you want to permanently delete your account? This action cannot be undone.", preferredStyle: .alert)
@@ -385,6 +379,9 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         }
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
+            
+            //delete the user from database -- edit_Fatima
+            
             
             if let LaunchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController() {
                 LaunchScreen.modalPresentationStyle = .fullScreen
@@ -408,6 +405,8 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
     
 }
 
+
+// extention for filds validations --> inclide the function that related to the validation
 extension CustomerProfileViewController{
     
     func validateFields() -> Bool {
