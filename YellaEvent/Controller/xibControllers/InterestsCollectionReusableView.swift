@@ -24,7 +24,7 @@ class InterestsCollectionReusableView: UICollectionReusableView, UICollectionVie
         
         // Fetch categories from Firestore
         Task {
-         try await   CategoriesManager.getInstence().getAllCategories { snapshot, error in
+         try await   CategoriesManager.getAllCategories { snapshot, error in
 //                guard let snapshot = snapshot, error == nil else {
 //                    print("Error fetching categories: \(error?.localizedDescription ?? "Unknown error")")
 //                    return

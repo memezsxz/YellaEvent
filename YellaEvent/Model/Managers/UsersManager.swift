@@ -8,129 +8,251 @@
 import FirebaseFirestore
 
 final class UsersManager {
-    private static var instence : UsersManager?
     private init() {}
     
-    static func getInstence () -> UsersManager {
-        if instence == nil {
-            instence = UsersManager()
-        }
-        return instence!
-    }
-    
-    // always kill when view is disapeard
-    static func killInstence() {
-        guard instence != nil else { return }
-        instence?.listener?.remove()
-        instence = nil
-    }
-    
-    private let userCollection = Firestore.firestore().collection(K.FStore.Users.collectionName)
-    private var listener: ListenerRegistration?
-    
-    private let encoder : Firestore.Encoder = {
-        let encoder = Firestore.Encoder()
-        encoder.keyEncodingStrategy = .useDefaultKeys
-        return encoder
-    }()
-    
-    private let decoder : Firestore.Decoder = {
-        let decoder = Firestore.Decoder()
-        decoder.keyDecodingStrategy = .useDefaultKeys
-        return decoder
-    }()
-    
-    
-    private func userDocument(userId: String) -> DocumentReference {
-        userCollection.document(userId)
-    }
-    
-    func createNewUser(user: User) async throws {
-        Task {
-            try userDocument(userId: user.userID).setData(encoder.encode(user), merge: false)
-        }
-    }
-    
-    func getUser(userId: String) async throws -> User {
-        try await userDocument(userId: userId).getDocument(as : User.self)
-    }
-    
-    func updateUser(userId: String, fields: [String: Any]) async throws {
-        try await userDocument(userId: userId).updateData(fields)
-    }
-    
-    func updateUser(user : User) async throws {
-        try await userDocument(userId: user.userID).updateData(encoder.encode(user))
-    }
-    
-    //    func updateUser(user: User, fields: [String: Any]) async throws {
-    //        try await userDocument(userId: user.id).updateData(fields)
+    //    static func getInstence () -> UsersManager {
+    //        if instence == nil {
+    //            instence = UsersManager()
+    //        }
+    //        return instence!
     //    }
     //
+    //    // always kill when view is disapeard
+    //    static func killInstence() {
+    //        guard instence != nil else { return }
+    //        instence?.listener?.remove()
+    //        instence = nil
+    //    }
+    
+    private static let adminsCollection = Firestore.firestore().collection(K.FStore.Admins.collectionName)
+    private static let customersCollection = Firestore.firestore().collection(K.FStore.Customers.collectionName)
+    private static let organizersCollection = Firestore.firestore().collection(K.FStore.Organizers.collectionName)
+    
+    private static var listeners = [ListenerRegistration] ()
+    
+    private static func adminDocument(userID: String) -> DocumentReference {
+        adminsCollection.document(userID)
+    }
+    
+    private static func customerDocument(userID: String) -> DocumentReference {
+        customersCollection.document(userID)
+    }
+    
+    private static func organizerDocument(userID: String) -> DocumentReference {
+        organizersCollection.document(userID)
+    }
+    
+    static func createNewUser(user: User) async throws {
+        Task {
+            switch user.type {
+            case .admin:
+                Task {
+                    try adminDocument(userID: user.userID).setData(K.encoder.encode(user as! Admin), merge: false)
+                }
+            case .customer:
+                Task {
+                    try customerDocument(userID: user.userID).setData(K.encoder.encode(user as! Customer), merge: false)
+                }
+            case .organizer:
+                Task {
+                    try organizerDocument(userID: user.userID).setData(K.encoder.encode(user as! Organizer), merge: false)
+                }
+            }
+        }
+    }
+    
+    static func getCustomer(customerID: String) async throws -> Customer {
+        return try await customerDocument(userID: customerID).getDocument(as : Customer.self)
+    }
+    
+    static func getOrganizer(organizerID: String) async throws -> Organizer {
+        return try await organizerDocument(userID: organizerID).getDocument(as : Organizer.self)
+    }
+    
+    static func getAdmin(adminID: String) async throws -> Admin {
+        return try await adminDocument(userID: adminID).getDocument(as : Admin.self)
+    }
+    
+    static func getUser(userID: String) async throws -> User {
+        if let customer = try? await getCustomer(customerID: userID) {
+            return customer
+        }
+        
+        if let admin = try? await getAdmin(adminID: userID) {
+            return admin
+        }
+        
+        if let organizer = try? await getOrganizer(organizerID: userID) {
+            return organizer
+        }
+        
+        throw NSError(
+            domain: "UserFetchError",
+            code: 404,
+            userInfo: [NSLocalizedDescriptionKey: "User with ID \(userID) not found."]
+        )
+    }
+    
+    static func updateUser(user : User) async throws {
+        switch user {
+        case is Customer:
+            try await customerDocument(userID: user.userID).updateData(K.encoder.encode(user as! Customer))
+        case is Organizer:
+            try await organizerDocument(userID: user.userID).updateData(K.encoder.encode(user as! Organizer))
+            try await EventsManager.updateEventOrganizer(organizer: user as! Organizer)
+        case is Admin:
+            try await adminDocument(userID: user.userID).updateData(K.encoder.encode(user as! Admin))
+        default:
+            throw NSError(
+                domain: "UnrecognizedUserType",
+                code: 404,
+                userInfo: [NSLocalizedDescriptionKey: "User Type \(user) not recognized."]
+            )
+        }
+    }
+    
+    //        func updateUser(user: User, fields: [String: Any]) async throws {
+    //            try await userDocument(userId: user.id).updateData(fields)
+    //        }
+    
     
     // important -- better add a listner snapshot
     
-    func addUsersListener(userType: UserType, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+    static func addUsersListener(userType: UserType, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
         
-        self.listener?.remove()
-        self.listener = userCollection
-            .whereField(K.FStore.Users.type, isEqualTo:userType.rawValue)
-            .order(by: K.FStore.Users.firstName)
-            .order(by: K.FStore.Users.lastName)
-            .addSnapshotListener(listener)
+        for listener in listeners {
+            listener.remove()
+        }
+
+        var collection : CollectionReference {
+            switch userType {
+            case .customer:
+                return customersCollection
+            case .admin :
+                return adminsCollection
+            case .organizer:
+                return organizersCollection
+            }
+        }
+        listeners.append(collection.order(by: K.FStore.User.fullName).addSnapshotListener(listener))
     }
     
-    func getAllUsers(listener: @escaping (QuerySnapshot?, Error?) -> Void) {
-        
-        self.listener?.remove()
-        self.listener = userCollection.order(by: K.FStore.Users.firstName).order(by: K.FStore.Users.lastName).addSnapshotListener(listener)
+    static func getAllUsers(listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+        for listener in listeners {
+            listener.remove()
+        }
+        listeners.append(customersCollection.order(by: K.FStore.User.fullName).addSnapshotListener(listener))
+        listeners.append(adminsCollection.order(by: K.FStore.User.fullName).addSnapshotListener(listener))
+        listeners.append(organizersCollection.order(by: K.FStore.User.fullName).addSnapshotListener(listener))
+        print("here1")
     }
     
-    func getAllUsers() async throws -> [User]{
+    static func getAllUsers() async throws -> [User] {
+        var users : [any User] = []
         
-        let snapshot = try await userCollection.order(by: K.FStore.Users.firstName).order(by: K.FStore.Users.lastName).getDocuments()
+        var snapshot = try await customersCollection.getDocuments()
+        users.append(contentsOf: try convertToUsers(snapshot: snapshot, ofType: Customer.self))
         
-        
-        return try convertToUsers(snapshot: snapshot)
+        snapshot = try await adminsCollection.getDocuments()
+        users.append(contentsOf: try convertToUsers(snapshot: snapshot, ofType: Admin.self))
+
+        snapshot = try await organizersCollection.getDocuments()
+        users.append(contentsOf: try convertToUsers(snapshot: snapshot, ofType: Organizer.self))
+
+        return users
     }
     
-    func getUsersOfType(_ userType: UserType) async throws -> [User] {
-        
-        let snapshot = try await userCollection
-            .whereField(K.FStore.Users.type, isEqualTo:userType.rawValue)
-            .order(by: K.FStore.Users.firstName)
-            .order(by: K.FStore.Users.lastName)
-            .getDocuments()
-        return try convertToUsers(snapshot: snapshot)
+    // This function expects a specific User type
+    static func getUsers(ofType type: UserType) async throws -> [User] {
+        switch type {
+        case .admin:
+            return try await getUsers(ofType: Admin.self)
+        case .customer:
+            return try await getUsers(ofType: Customer.self)
+        case .organizer:
+            return try await getUsers(ofType: Organizer.self)
+        }
     }
-    
-    private func convertToUsers(snapshot: QuerySnapshot) throws -> [User] {
-        var users = [User]()
+
+   private static func getUsers<T: User>(ofType type: T.Type) async throws -> [T] {
+        let collection: CollectionReference
+        
+        switch type {
+        case is Admin.Type:
+            collection = adminsCollection
+        case is Customer.Type:
+            collection = customersCollection
+        case is Organizer.Type:
+            collection = organizersCollection
+        default:
+            throw NSError(domain: "UnrecognizedUserType", code: 404, userInfo: [NSLocalizedDescriptionKey: "User Type \(T.self) not recognized."])
+        }
+        
+        let snapshot = try await collection.order(by: K.FStore.User.fullName).getDocuments()
+        
+        var users = [T]()
         for doc in snapshot.documents {
-            users.append(try doc.data(as: User.self))
+            if let user = try? doc.data(as: T.self) {
+                users.append(user)
+            }
+        }
+        
+        return users
+    }
+
+    // Convert snapshot to an array of `User`
+//    private static func convertToUsers<T: User & Decodable>(snapshot: QuerySnapshot) throws -> [T] {
+//        var users = [T]()
+//        for doc in snapshot.documents {
+//            // Decode the document into the specified user type
+//            users.append(try doc.data(as: T.self))
+//        }
+//        return users
+//    }
+    
+    // Convert snapshot to an array of specific `User` type
+    private static func convertToUsers<T: User & Decodable>(snapshot: QuerySnapshot, ofType userType: T.Type) throws -> [T] {
+        var users = [T]()
+        for doc in snapshot.documents {
+            // Decode the document into the specified user type
+            users.append(try doc.data(as: T.self))
         }
         return users
     }
     
-    public func searchUsers(userType: UserType?, searchText: String) async throws -> [User] {
-        let array = switch userType {
+    
+    static public func searchUsers(userType: UserType?, searchText: String) async throws -> [User] {
+        // Declare a variable to store the users
+        let users: [User]
+        
+        // Switch on the userType to fetch the appropriate users
+        switch userType {
         case .admin:
-             try await getUsersOfType(.admin)
+            users = try await getUsers(ofType: Admin.self)
         case .customer:
-             try await getUsersOfType(.customer)
+            users = try await getUsers(ofType: Customer.self)
         case .organizer:
-             try await getUsersOfType(.organizer)
+            users = try await getUsers(ofType: Organizer.self)
         case nil:
-             try await getAllUsers()
+            users = try await getAllUsers()  // If nil, get all users
         }
         
-        return array.filter { user in
-            user.firstName.lowercased().starts(with: searchText.lowercased()) ||
-            user.lastName.lowercased().starts(with: searchText.lowercased()) ||
-            user.email.lowercased().starts(with: searchText.lowercased())
+        // Filter the users by the search text
+        return users.filter { user in
+            let nameComponents = user.fullName.lowercased().split(separator: " ")
+            let emailParts = user.email.lowercased().split(separator: "@")
+
+            let matchesName = nameComponents.contains { word in
+                word.starts(with: searchText.lowercased())
+            }
+            let matchesEmail = emailParts.contains { part in
+                part.starts(with:searchText.lowercased())
+            }
+
+            return matchesName || matchesEmail
         }
     }
-    
+
     //    func searchText(text: String) async throws -> [User] {
     //        self.listener?.remove()
     //        do {
@@ -186,4 +308,55 @@ final class UsersManager {
     //    func removeListener(documentID: String) {
     //        listeners.removeValue(forKey: documentID)
     //    }
+    
+    static func deleteUser(userID: String, userType: UserType) async throws {
+        switch userType {
+            case .organizer:
+                try await organizerDocument(userID: userID).delete()
+        case .admin:
+            try await adminDocument(userID: userID).delete()
+        case .customer:
+            try await customerDocument(userID: userID).delete()
+        }
+    }
+    
+    static func banUser(userID: String, userType: UserType, reason: String, description: String, startDate: Date, endDate: Date) throws {
+        let userBansCollection = Firestore.firestore().collection(K.FStore.UserBans.collectionName)
+        
+        userBansCollection.addDocument(data: try K.encoder.encode(UserBan(userID: userID, reason: reason, descroption: description, adminID: UserDefaults.standard.string(forKey: K.bundleUserID)!, startDate: startDate, endDate: endDate)))
+        
+        if userType == .organizer {
+            Task {
+                try await EventsManager.OrganizerBanedHandler(organizerID: userID)
+            }
+        }
+    }
+    
+    static func unbanUser(userID: String) async throws {
+        let userBansCollection = Firestore.firestore().collection(K.FStore.UserBans.collectionName)
+        
+        let snapshot = try await userBansCollection.whereField(K.FStore.UserBans.userID, isEqualTo: userID).getDocuments()
+        for doc in snapshot.documents {
+            try await doc.reference.delete()
+        }
+    }
+
+    static func isUserBanned(userID: String) async throws -> UserBan? {
+        let userBansCollection = Firestore.firestore().collection(K.FStore.UserBans.collectionName)
+        
+        let snapshot = try await userBansCollection.whereField(K.FStore.UserBans.userID, isEqualTo: userID).order(by: K.FStore.UserBans.endDate).getDocuments()
+        
+        if snapshot.documents.isEmpty {
+            return nil
+        } else {
+          let ban =  try snapshot.documents[0].data(as: UserBan.self)
+            return  ban.endDate > Date.now ? ban : nil
+        }
+    }
+    
+    static func getUserBans() async throws -> [UserBan] {
+       try await Firestore.firestore().collection(K.FStore.UserBans.collectionName).getDocuments().documents.compactMap { doc in
+            try doc.data(as: UserBan.self)
+        }
+    }
 }

@@ -40,9 +40,9 @@ class AdminUsersViewController: UIViewController {
         tableView.register(UINib(nibName: "UsersTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "UsersTableViewCell")
         
         searchbar.delegate = self
-//                Task {
-//                    try await UsersManager.getInstence().createNewUser(user: User(id: "202200805", firstName: "gtgggggggggggg", lastName: "hhhhhhhhhhghghg", email: "323jhjhyubyuybyh_ghg0000@232.com", dob: Date.now, dateCreated: Date.now, phoneNumber: 323232, badgesArray: [], profileImageURL: "sds", type: .organizer))
-//                }
+//        Task {
+//            try await  UsersManager.createNewUser(user: Customer(userID: "sdfsd", fullName: "fds", email: "dsfdfs@dsf.co", dob: Date.now, dateCreated: Date.now, phoneNumber: 2123123, profileImageURL: "321213", badgesArray: [], interestsArray: []))
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,34 +70,34 @@ class AdminUsersViewController: UIViewController {
 
 // MARK: - Segment
 extension AdminUsersViewController {
-    // function to change the segment text color
-//    func updateSegment(){
-//        
-//        let textAttributesNormal: [NSAttributedString.Key: Any] = [
-//            .foregroundColor: UIColor.brandDarkPurple, // Non-selected text color
-//            .font: UIFont.systemFont(ofSize: 14) // Customize font size
-//        ]
-//        
-//        let textAttributesSelected: [NSAttributedString.Key: Any] = [
-//            .foregroundColor: UIColor.white, // Selected text color
-//            .font: UIFont.boldSystemFont(ofSize: 14) // Customize font size for selected
-//        ]
-//        
-//        // loop over the segment items
-//        for i in 0...userListSections.numberOfSegments{
-//            
-//            
-//            //if the tab selected the text could should be white
-//            if userListSections.selectedSegmentIndex == i {
-//                userListSections.setTitleTextAttributes(textAttributesSelected, for: .selected)
-//            }
-//            //if the tab not selected the text must be brandDarkPurple (defind color in the assets)
-//            else{
-//                userListSections.setTitleTextAttributes(textAttributesNormal, for: .normal)
-//            }
-//        }
-//        
-//    }
+    //     function to change the segment text color
+    //    func updateSegment(){
+    //
+    //        let textAttributesNormal: [NSAttributedString.Key: Any] = [
+    //            .foregroundColor: UIColor.brandDarkPurple, // Non-selected text color
+    //            .font: UIFont.systemFont(ofSize: 14) // Customize font size
+    //        ]
+    //
+    //        let textAttributesSelected: [NSAttributedString.Key: Any] = [
+    //            .foregroundColor: UIColor.white, // Selected text color
+    //            .font: UIFont.boldSystemFont(ofSize: 14) // Customize font size for selected
+    //        ]
+    //
+    //        // loop over the segment items
+    //        for i in 0...userListSections.numberOfSegments{
+    //
+    //
+    //            //if the tab selected the text could should be white
+    //            if userListSections.selectedSegmentIndex == i {
+    //                userListSections.setTitleTextAttributes(textAttributesSelected, for: .selected)
+    //            }
+    //            //if the tab not selected the text must be brandDarkPurple (defind color in the assets)
+    //            else{
+    //                userListSections.setTitleTextAttributes(textAttributesNormal, for: .normal)
+    //            }
+    //        }
+    //
+    //    }
     
     
     
@@ -131,7 +131,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
         let user = users[indexPath.row]
         // chnage the name to the user name and the email to the user email
         
-        cell.title.text = user.firstName + " " + user.lastName
+        cell.title.text = user.fullName
         cell.subtext.text = user.email
         
         return cell
@@ -141,30 +141,25 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.width / 6
     }
-
+    
     
     func usersUpdate() {
         let section = userListSections.selectedSegmentIndex
+        users.removeAll()
+        users = []
+        searchbar.text? = ""
         switch section {
         case 0:
-            Task {
-                UsersManager.getInstence().getAllUsers(listener: listner())
-            }
+            UsersManager.getAllUsers(listener: listner())
             currentSegment = nil
         case 1:
-            Task {
-                UsersManager.getInstence().addUsersListener(userType: .customer, listener: listner())
-            }
+            UsersManager.addUsersListener(userType: .customer, listener: listner())
             currentSegment = .customer
         case 2:
-            Task {
-                UsersManager.getInstence().addUsersListener(userType: .organizer, listener: listner())
-            }
+            UsersManager.addUsersListener(userType: .organizer, listener: listner())
             currentSegment = .organizer
         case 3:
-            Task {
-                UsersManager.getInstence().addUsersListener(userType: .admin, listener: listner())
-            }
+            UsersManager.addUsersListener(userType: .admin, listener: listner())
             currentSegment = .admin
         default:
             break
@@ -172,11 +167,9 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     }
     
     func listner()  -> ((QuerySnapshot?, (any Error)?) -> Void)  {
-//        updateSegment()
-        users.removeAll()
-        
+        self.users = []
+
         return { snapshot, error in
-            
             guard error == nil else {
                 // fatima add error handeling here
                 print("Error: \(error!)")
@@ -187,12 +180,29 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
                 print("No data available.")
                 return
             }
-            self.users = []
             
+            if self.currentSegment != nil {
+                self.users = []
+            }
+            print(snapshot.documents)
             for doc in snapshot.documents {
                 do {
-                    let user = try doc.data(as: User.self)
-                    self.users.append(user)
+                    if let userType = doc.data()[K.FStore.User.type] as? String {
+                        let user: User
+                        
+                        switch userType {
+                        case UserType.admin.rawValue:
+                            user = try doc.data(as: Admin.self)
+                        case UserType.customer.rawValue:
+                            user = try doc.data(as: Customer.self)
+                        case UserType.organizer.rawValue:
+                            user = try doc.data(as: Organizer.self)
+                        default:
+                            print("Unknown user type: \(userType)")
+                            continue
+                        }
+                        self.users.append(user)
+                    }
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -200,6 +210,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                //                self.searchBar(self.searchbar, textDidChange: self.searchbar.text ?? "")
             }
         }
     }
@@ -211,21 +222,17 @@ extension AdminUsersViewController : UISearchBarDelegate{
             usersUpdate()
             return
         }
-        let section = userListSections.selectedSegmentIndex
         var searchArray : [User] = []
-
+        
         Task {
-            
-            if currentSegment == nil {
-                searchArray = try await UsersManager.getInstence().getAllUsers()
-            } else {
-                searchArray = try await UsersManager.getInstence().getUsersOfType(currentSegment!)
-            }
+            let searchText = searchText.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+            searchArray = try await (currentSegment == nil
+                                     ? UsersManager.getAllUsers()
+                                     : UsersManager.getUsers(ofType: currentSegment!))
             
             users = searchArray.filter { user in
-                user.firstName.lowercased().starts(with: searchText.lowercased()) ||
-                user.lastName.lowercased().starts(with: searchText.lowercased()) ||
-                user.email.lowercased().starts(with: searchText.lowercased())
+                user.fullName.lowercased().split(separator: " ").contains { $0.lowercased().starts(with: searchText) } || user.fullName.lowercased().starts(with: searchText) ||
+                user.email.lowercased().starts(with: searchText)
             }
             
             DispatchQueue.main.async {

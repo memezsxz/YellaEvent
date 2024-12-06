@@ -54,14 +54,14 @@ class CustomerProfileViewController: UIViewController {
             
         
         Task {
-            let us = try await UsersManager.getInstence().getUser(userId: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+            let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
             
             PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                 
                 switch result {
                 case .success(let image):
                     self.BIgImageProfile?.image = image
-                case .failure(let error):
+                case .failure(_):
                     self.BIgImageProfile?.image = UIImage(named: "DefaultImageProfile")
                 }
                 
@@ -77,9 +77,9 @@ class CustomerProfileViewController: UIViewController {
         Task {
             do {
                 let userId = UserDefaults.standard.string(forKey: K.bundleUserID) ?? ""
-                let us = try await UsersManager.getInstence().getUser(userId: userId)
+                let us = try await UsersManager.getUser(userID: userId)
                 
-                txtFullName?.text = "\(us.firstName) \(us.lastName)"
+                txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 
                 txtPhoneNumber?.text = String(us.phoneNumber)
@@ -201,7 +201,6 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         let saveAlert = UIAlertController(title: "Save Changes", message: "Your changes have been saved successfully.", preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            print("done")
         }
         
         saveAlert.addAction(okAction)

@@ -9,87 +9,133 @@ import Foundation
 import FirebaseFirestore
 
 enum EventStatus : String, Codable {
-    case ongoing
-    case cancelled
-    case completed
-    case banned
+    case ongoing = "ongoing"
+    case cancelled = "cancelled"
+    case completed  = "completed"
+    case banned     = "banned"
 }
 
-struct Event : Codable {
+protocol EventProtocol {
+    var eventID : String { get }
+    var organizerName : String { get }
+    var name : String { get }
+    var description : String { get }
+    var startTimeStamp : Date { get }
+}
+
+struct Event : EventProtocol, Codable, Hashable {
     var eventID : String
     var organizerID : String
+    var organizerName : String
     var name : String
     var description : String
     
-    var startDate : Date
-    var endDate : Date
+    var startTimeStamp : Date
+    var endTimeStamp : Date
     
-    var startTime : Date
-    var endTime : Date
     var status : EventStatus
 
-    var category : String // Category ID
-    
+    var categoryID  : String
+    var categoryName  : String
+    var categoryIcon  : String
+
     var locationURL  : String
     
+    var minimumAge  : Int
+    var maximumAge  : Int
+    
+    var rattingsArray : [String: Double]// two dimintional array with user id and a double
     var maximumTickets : Int
     var price : Double
     
-// the first value in the meadiaArray wil be the cover image
+    var coverImageURL : String
     var mediaArray : [String] // references to the paths of uploaded photos
-
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.eventID = try container.decode(String.self, forKey: .eventID)
-        self.organizerID = try container.decode(String.self, forKey: .organizerID)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.description = try container.decode(String.self, forKey: .description)
-        self.startDate = try container.decode(Date.self, forKey: .startDate)
-        self.endDate = try container.decode(Date.self, forKey: .endDate)
-        self.startTime = try container.decode(Date.self, forKey: .startTime)
-        self.endTime = try container.decode(Date.self, forKey: .endTime)
-        self.status = try container.decode(EventStatus.self, forKey: .status)
-        self.category = try container.decode(String.self, forKey: .category)
-        self.locationURL = try container.decode(String.self, forKey: .locationURL)
-        self.maximumTickets = try container.decode(Int.self, forKey: .maximumTickets)
-        self.price = try container.decode(Double.self, forKey: .price)
-        self.mediaArray = try container.decode([String].self, forKey: .mediaArray)
-    }
+//            static let badgeID = "badgeID"  // we might not need
     
-    init(eventID: String, organizerID: String, name: String, description: String, startDate: Date, endDate: Date, startTime: Date, endTime: Date, status: EventStatus, category: String, locationURL: String, maximumTickets: Int, price: Double, mediaArray: [String]) {
-        self.eventID = eventID
+    init (organizerID: String, organizerName: String, name: String, description: String, startTimeStamp: Date, endTimeStamp: Date, status: EventStatus, categoryID: String, categoryName: String, categoryIcon: String, locationURL: String, minimumAge: Int, maximumAge: Int, rattingsArray: [String: Double], maximumTickets: Int, price: Double, coverImageURL: String, mediaArray: [String]) {
+        self.eventID = "Default"
         self.organizerID = organizerID
+        self.organizerName = organizerName
         self.name = name
         self.description = description
-        self.startDate = startDate
-        self.endDate = endDate
-        self.startTime = startTime
-        self.endTime = endTime
+        self.startTimeStamp = startTimeStamp
+        self.endTimeStamp = endTimeStamp
         self.status = status
-        self.category = category
+        self.categoryID = categoryID
+        self.categoryName = categoryName
+        self.categoryIcon = categoryIcon
         self.locationURL = locationURL
+        self.minimumAge = minimumAge
+        self.maximumAge = maximumAge
+        self.rattingsArray = rattingsArray
         self.maximumTickets = maximumTickets
         self.price = price
+        self.coverImageURL = coverImageURL
         self.mediaArray = mediaArray
     }
     
     init?(documentID: String) async throws {
-        let firestore = Firestore.firestore()
-        let documentRef = firestore.collection(K.FStore.Events.collectionName).document(documentID)
-        
-        let documentSnapshot = try await documentRef.getDocument()
-        
-        guard let documentData = documentSnapshot.data() else {
-            throw NSError(domain: "Event", code: 404, userInfo: [NSLocalizedDescriptionKey: "Document not found or empty."])
-        }
-        
-        let decoder = Firestore.Decoder()
-        guard let event = try? decoder.decode(Event.self, from: documentData) else {
-            throw NSError(domain: "Event", code: 400, userInfo: [NSLocalizedDescriptionKey: "Failed to decode event data."])
-        }
-        
-        self = event
+        self = try await Self.fetch(from: K.FStore.Events.collectionName, documentID: documentID)
         self.eventID = documentID
     }
+    
+    static func getRatting(from ratingsArray: [String : Double]) -> Double {
+        var rating : Double = 0
+        for (_, value) in ratingsArray {
+            rating += value
+        }
+        return rating / Double(ratingsArray.count)
+    }
+    
+    static func getStats(event: Event) async -> (ticketsSold : Int, attendedTickets : Int, remainingTickets : Int, avarageRating : Double) {
+       let ratting = getRatting(from: event.rattingsArray)
+        
+        var remainingTickets = 0
+        var ticketsSold = 0
+        var attendedTickets = 0
 
+        await TicketsManager.getEventAttendance(eventId: event.eventID) { _, totalTickets, attendedTicketsTotal in
+             remainingTickets = totalTickets - attendedTickets
+             ticketsSold = totalTickets
+            attendedTickets = attendedTicketsTotal
+        }
+        
+        return (ticketsSold, attendedTickets, remainingTickets, ratting)
+    }
+}
+
+struct EventSummary : EventProtocol, Decodable, Hashable {
+    var eventID : String
+    var organizerName : String
+    var name : String
+    var description : String
+    
+    var startTimeStamp : Date
+    
+    var categoryID  : String
+    var categoryName  : String
+    var categoryIcon  : String
+    
+    var rattingsArray : [String: Double]// two dimintional array with user id and a double
+    var price : Double
+    
+    var coverImageURL : String
+    
+    init(eventID: String = "Defaults", organizerName: String, name: String, description: String, startTimeStamp: Date, categoryID: String, categoryName: String, categoryIcon: String, rattingsArray: [String: Double], price: Double, coverImageURL: String) {
+        self.eventID = eventID
+        self.organizerName = organizerName
+        self.name = name
+        self.description = description
+        self.startTimeStamp = startTimeStamp
+        self.categoryID = categoryID
+        self.categoryName = categoryName
+        self.categoryIcon = categoryIcon
+        self.rattingsArray = rattingsArray
+        self.price = price
+        self.coverImageURL = coverImageURL
+    }
+    init?(documentID: String) async throws {
+        self = try await Self.fetch(from: K.FStore.Events.collectionName, documentID: documentID)
+        self.eventID = documentID
+    }
 }

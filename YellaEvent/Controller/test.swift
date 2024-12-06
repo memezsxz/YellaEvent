@@ -14,38 +14,37 @@ import UniformTypeIdentifiers
 
 class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         events.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventSummaryTableViewCell", for: indexPath) as! EventSummaryTableViewCell
-//        cell.convert(event)
-        
+        //        cell.convert(event)
         cell.setup(with: events[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return  tableView.frame.width / 2
+        return  tableView.frame.width / 2
     }
-//    let formatter = ISO8601DateFormatter()
-//    //
-//    //    let manager =         UsersManager()
+    //    let formatter = ISO8601DateFormatter()
+    //    //
+    //    //    let manager =         UsersManager()
     let db = Firestore.firestore()
-//    
-//    @IBOutlet weak var photo: UIImageView!
-//    let dateFormatter : DateFormatter = {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy-MM-dd"
-//        return formatter
-//    }()
-//    
-//    let imagePicker = UIImagePickerController()
-//    var selectedImage: UIImage?
-//
-    var events : [Event] = []
+    //
+    //    @IBOutlet weak var photo: UIImageView!
+    //    let dateFormatter : DateFormatter = {
+    //        let formatter = DateFormatter()
+    //        formatter.dateFormat = "yyyy-MM-dd"
+    //        return formatter
+    //    }()
+    //
+    //    let imagePicker = UIImagePickerController()
+    //    var selectedImage: UIImage?
+    //
+    var events : [EventSummary] = []
     
     
     
@@ -54,26 +53,69 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
+        //        Task {
+        //            EventsManager.getInstence().getAllEvents(listener: { snapshot, error in
+        //                guard let snapshot else { return }
+        //                self.events = []
+        //                for doc in snapshot.documents {
+        //                    do {
+        //                        self.events.append(try doc.data(as: Event.self))
+        //                    } catch {
+        //                        print(error)
+        //                    }
+        //                }
+        //                DispatchQueue.main.async {
+        ////                    print(self.events)
+        //                    print("self.events")
+        //                    self.tableView.reloadData()
+        //                }
+        //            })
+        
+        
+        //            try await UsersManager
+        
+        //        }
+        
+        //        Task {
+        //                            try await EventsManager.createNewEvent(event: Event(organizerID: "212``2", organizerName: "dsfngf", name: "event name sample", description: "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR I0000 00:00:1733511573.674274  681235 config.cc:230] gRPC experiments enabled: call_status_override_on_cancellation, http2_stats_fix, monitoring_experiment, pick_first_new, trace_record_callops, work_serializer_clears_time_cache", startTimeStamp: Date.now, endTimeStamp: Date.now, status: .ongoing, categoryID: "eXJFsGAC8odTjj74FYxP", categoryName: "Music", categoryIcon: "🎵", locationURL: "location", minimumAge: 1123, maximumAge: 31213, rattingsArray: [:], maximumTickets: 321, price: 32.23, coverImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", mediaArray: []))
+        //
+        //                            try await EventsManager.createNewEvent(event: Event(organizerID: "event 2", organizerName: "dsfngf", name: "close game", description: "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR I0000 00:00:", startTimeStamp: Date.now, endTimeStamp: Date.now, status: .ongoing, categoryID: "l6QT2ZIphKNnSDNcee1v", categoryName: "Art", categoryIcon: "🎨", locationURL: "location", minimumAge: 12, maximumAge: 120, rattingsArray: [:], maximumTickets: 321, price: 3.23, coverImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", mediaArray: []))
+        //        }
+        //
+        
         Task {
-            EventsManager.getInstence().getAllEvents(listener: { snapshot, error in
-                guard let snapshot else { return }
-                self.events = []
+            //        try await    TicketsManager.createNewTicket(ticket: Ticket(eventID: "2GZvRmpKp47kFThJ5dVj", userID: "sdfsd", eventName: "event name sample", organizerName: "dsfngf", startTimeStamp: Date.now, didAttend: false, totalPrice: 12.12, locationURL: "sadsd", quantity: 2))
+            //           try await EventsManager.updateEventsCategory(category: Category(documentID: "2GZvRmpKp47kFThJ5dVj")!)
+            
+//            try await BadgesManager.createNewBadge(badge: Badge(image: "fdefwfwe", eventID: "2GZvRmpKp47kFThJ5dVj", eventName: "event name sample", catigoryName: "Music", catigoryIcon: "🎵"))
+            try await CategoriesManager.updateCategorie(category: Category(categoryID: "eXJFsGAC8odTjj74FYxP", name: "Songs", icon: "🎵", isActive: true))
+        }
+        
+        
+        EventsManager.getAllEvents { snapshot, error in
+            guard error == nil else {
+                return
+            }
+            self.events = []
+            if let snapshot {
                 for doc in snapshot.documents {
+                    //                        print(doc.data())
                     do {
-                        self.events.append(try doc.data(as: Event.self))
+                        self.events.append(try doc.data(as: EventSummary.self))
                     } catch {
-                        print(error)
+                        print("conversion error \(error.localizedDescription)")
                     }
                 }
-                DispatchQueue.main.async {
-//                    print(self.events)
-                    print("self.events")
-                    self.tableView.reloadData()
-                }
-            })
-            
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             
         }
+        
+        
+        
+        
         //        if UserDefaults.standard.string(forKey: "dev.maryam.yellaevent.userid") == nil {
         //            Auth.auth().signIn(withEmail: "retyyu@fxdscdsgfgdsdxzgx.com", password: "pxzcass2102") { [weak self] authResult, error in
         //                guard let strongSelf = self else { return }
@@ -87,15 +129,15 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
         //            ju.text = "\(UserDefaults.standard.string(forKey: "dev.maryam.yellaevent.userid")!)"
         //
         //        }
-
         
-//        Auth.auth().signIn(withEmail: "retyyu@fxdscdsgfgdsdxzgx.com", password: "pxzcass2102") { [weak self] authResult, error in
-//          guard let strongSelf = self else { return }
-//            if var infoDictionary = Bundle.main.infoDictionary {
-//                infoDictionary["User ID"] = authResult?.user.uid
-//                print(infoDictionary["User ID"])
-//            }
-            
+        
+        //        Auth.auth().signIn(withEmail: "retyyu@fxdscdsgfgdsdxzgx.com", password: "pxzcass2102") { [weak self] authResult, error in
+        //          guard let strongSelf = self else { return }
+        //            if var infoDictionary = Bundle.main.infoDictionary {
+        //                infoDictionary["User ID"] = authResult?.user.uid
+        //                print(infoDictionary["User ID"])
+        //            }
+        
         //                   if error != nil {
         //                       print(error?.localizedDescription)
         //                   } else {
@@ -149,30 +191,30 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
         ////            }
         ////        }
         
-//        let users = [User]()
-//        let org = [User]()
-//
-//        db.collection(K.FStore.Users.collectionName).addSnapshotListener {
-//            snapshot, error in
-//            guard error == nil else {return}
-//            
-//            if snapshot?.documents.isEmpty ?? true {return}
-            
-//            for doc in snapshot!.documents {
-//                Task {
-//                    let user =   try doc.data(as: User.self) as User
-//                    switch (user.type) {
-//                    case .admin:
-//                        
-//                    case .customer:
-//                        
-//                    case .organizer:
-//                        org.append(user)
-//                    }
-//                }
-//                
-//            }
-//        }
+        //        let users = [User]()
+        //        let org = [User]()
+        //
+        //        db.collection(K.FStore.Users.collectionName).addSnapshotListener {
+        //            snapshot, error in
+        //            guard error == nil else {return}
+        //
+        //            if snapshot?.documents.isEmpty ?? true {return}
+        
+        //            for doc in snapshot!.documents {
+        //                Task {
+        //                    let user =   try doc.data(as: User.self) as User
+        //                    switch (user.type) {
+        //                    case .admin:
+        //
+        //                    case .customer:
+        //
+        //                    case .organizer:
+        //                        org.append(user)
+        //                    }
+        //                }
+        //
+        //            }
+        //        }
     }
     /*
      // MARK: - Navigation
@@ -185,7 +227,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
      */
     @IBAction func joinusclicked(_ sender: UIButton) {
         
-//        presentImagePicker()
+        //        presentImagePicker()
         
         
         
@@ -218,42 +260,42 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     
-//    private func presentImagePicker() {
-//        imagePicker.delegate = self
-//        imagePicker.sourceType = .photoLibrary // Or .camera for capturing photos
-//        present(imagePicker, animated: true, completion: nil)
-//    }
+    //    private func presentImagePicker() {
+    //        imagePicker.delegate = self
+    //        imagePicker.sourceType = .photoLibrary // Or .camera for capturing photos
+    //        present(imagePicker, animated: true, completion: nil)
+    //    }
     
     
-//    @IBAction func loginclicked(_ sender: UIButton) {
-//        
-//    }
+    //    @IBAction func loginclicked(_ sender: UIButton) {
+    //
+    //    }
 }
 
 //extension test: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//    
-//    
+//
+//
 //    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        
+//
 //        picker.dismiss(animated: true, completion: nil)
-//        
+//
 //        if let image = info[.originalImage] as? UIImage {
 //            self.selectedImage = image
 //            uploadImageToFirebase(image: image)
 //        }
 //    }
-//    
+//
 //    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
 //        // Handle the user canceling the image picker, if needed.
 //        dismiss(animated: true, completion: nil)
 //    }
-//    
+//
 //    func uploadImageToFirebase(image: UIImage) {
 //        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
 //            print("Failed to convert image to data.")
 //            return
 //        }
-//        
+//
 //        // Create a unique filename
 //        //        let uniqueFileName = UUID().uuidString
 //        //        let storageRef = Storage.storage().reference().child("images/\(uniqueFileName).jpg")
@@ -264,7 +306,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //        //                print("Error uploading image: \(error.localizedDescription)")
 //        //                return
 //        //            }
-//        
+//
 //        // Get the download URL
 //        //            storageRef.downloadURL { url, error in
 //        //                if let error = error {
@@ -288,10 +330,10 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //        //                }                    // Fetch the document
 //        //                print("Image uploaded successfully. Download URL: \(url)")
 //        //            }
-//        
+//
 //    }
-//    
-//    
+//
+//
 //}
 //
 

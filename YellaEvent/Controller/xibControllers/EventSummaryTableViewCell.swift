@@ -33,9 +33,9 @@ class EventSummaryTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setup(with event: Event) {
-        descriptionLabel.text = "\(event.startDate) \(event.organizerID)"
-        PhotoManager.shared.downloadImage(from: URL(string: event.mediaArray[0])!) { result in
+    func setup(with event: EventSummary) {
+        descriptionLabel.text = "\(K.DFormatter.string(from: event.startTimeStamp)) \(event.organizerName)"
+        PhotoManager.shared.downloadImage(from: URL(string: event.coverImageURL)!) { result in
             switch result {
                 case .success(let image):
                 self.eventImage.image = image
@@ -46,8 +46,6 @@ class EventSummaryTableViewCell: UITableViewCell {
         
         eventName.text = event.name
         priceLabel.text = "\(event.price)BD"
-        catagoryLabel.text = event.category
-        
-        print("done \(event.eventID)")
+        catagoryLabel.text = "\(event.categoryName) \(event.categoryIcon)"
     }
 }
