@@ -17,6 +17,11 @@ class CustomerSearchViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    
+    @IBOutlet weak var catButtons: UIStackView!
+    
+    
+    
     let prevSearch = ["Eminim", "AWS", "Fun", "GDG", "Swift"]
     var filteredSearch: [String] = []
     
@@ -30,6 +35,41 @@ class CustomerSearchViewController: UIViewController {
         } else{
             priceTextField.text = String(Int( priceSlider.value))
             ageTextField.text = String(Int( ageSlider.value))
+            
+            let testHor = UIStackView()
+            testHor.axis = .horizontal
+            testHor.distribution = .fillEqually
+            
+            let testBtn = UIButton()
+            testBtn.setTitle("test", for: .normal)
+            testBtn.setTitleColor(.white, for: .normal)
+            testBtn.layer.cornerRadius = 10
+            testBtn.layer.masksToBounds = true
+            testBtn.backgroundColor = .darkGray
+            testBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+            testHor.addArrangedSubview(testBtn)
+            
+            let testBtn2 = UIButton()
+            testBtn2.setTitle("test2", for: .normal)
+            testBtn2.setTitleColor(.white, for: .normal)
+            testBtn2.layer.cornerRadius = 10
+            testBtn2.layer.masksToBounds = true
+            testBtn2.backgroundColor = .darkGray
+            testBtn2.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+            testHor.addArrangedSubview(testBtn2)
+            
+            let testBtn3 = UIButton()
+            testBtn3.setTitle("test3", for: .normal)
+            testBtn3.setTitleColor(.white, for: .normal)
+            testBtn3.layer.cornerRadius = 10
+            testBtn3.layer.masksToBounds = true
+            testBtn3.backgroundColor = .darkGray
+            testBtn3.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+            testHor.addArrangedSubview(testBtn3)
+            
+//            catButtons.addArrangedSubview(testHor)
+            
+            
         }
         
     }
