@@ -7,17 +7,22 @@
 
 import Foundation
 
+enum CategoryStaus : String, Codable {
+    case enabled = "enabled" // being used
+    case disabled = "disabled" // deleted or disabled by admin, should not show up in search fillter 
+    case history = "history"
+}
 struct Category : Codable {
     var categoryID : String
     var name : String
     var icon : String
-    var isActive : Bool
+    var status : CategoryStaus
 
-    init (categoryID : String = "Default", name : String, icon : String, isActive : Bool = true) {
+    init (categoryID : String = "Default", name : String, icon : String, status : CategoryStaus = .enabled) {
         self.categoryID = categoryID
         self.name = name
         self.icon = icon
-        self.isActive = isActive
+        self.status = status
     }
 
     init?(documentID: String) async throws {

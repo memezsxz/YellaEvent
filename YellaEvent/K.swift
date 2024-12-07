@@ -79,7 +79,6 @@ struct K {
             static let collectionName = "events"
             static let eventID = "eventID"
             static let organizerID = "organizerID"
-            static let organizerName = "organizerName"
             static let name = "name"
             static let description = "description"
             
@@ -89,7 +88,6 @@ struct K {
             static let status = "status"
             
             static let categoryID = "categoryID"
-            static let badgeID = "badgeID"
 
             static let locationURL = "locationURL"
             
@@ -135,8 +133,7 @@ struct K {
             static let image = "image"
             static let eventID = "eventID" // maybe we want to delete the event, but we do not want the badge to be removed from users // delete or not?
             static let eventName = "eventName"
-            static let catigoryName = "catigoryName"
-            static let catigoryIcon = "catigoryIcon"
+            static let categoryID = "categoryID"
         }
         
         struct Categories {
@@ -144,7 +141,7 @@ struct K {
             static let categoryID = "categoryID"
             static let name = "name"
             static let icon = "icon"
-            static let isActive = "isActive"
+            static let status = "status"
         }
         
         struct UserBans {

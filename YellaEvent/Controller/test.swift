@@ -23,6 +23,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventSummaryTableViewCell", for: indexPath) as! EventSummaryTableViewCell
         //        cell.convert(event)
         cell.setup(with: events[indexPath.row])
+        print("cell")
         return cell
     }
     
@@ -48,7 +49,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
-    override func viewDidLoad() {
+    override func viewDidLoad()  {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
@@ -76,41 +77,63 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         //        }
         
-        //        Task {
+        //                Task {
         //                            try await EventsManager.createNewEvent(event: Event(organizerID: "212``2", organizerName: "dsfngf", name: "event name sample", description: "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR I0000 00:00:1733511573.674274  681235 config.cc:230] gRPC experiments enabled: call_status_override_on_cancellation, http2_stats_fix, monitoring_experiment, pick_first_new, trace_record_callops, work_serializer_clears_time_cache", startTimeStamp: Date.now, endTimeStamp: Date.now, status: .ongoing, categoryID: "eXJFsGAC8odTjj74FYxP", categoryName: "Music", categoryIcon: "🎵", locationURL: "location", minimumAge: 1123, maximumAge: 31213, rattingsArray: [:], maximumTickets: 321, price: 32.23, coverImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", mediaArray: []))
         //
-        //                            try await EventsManager.createNewEvent(event: Event(organizerID: "event 2", organizerName: "dsfngf", name: "close game", description: "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR I0000 00:00:", startTimeStamp: Date.now, endTimeStamp: Date.now, status: .ongoing, categoryID: "l6QT2ZIphKNnSDNcee1v", categoryName: "Art", categoryIcon: "🎨", locationURL: "location", minimumAge: 12, maximumAge: 120, rattingsArray: [:], maximumTickets: 321, price: 3.23, coverImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", mediaArray: []))
-        //        }
+        //                                    try await EventsManager.createNewEvent(event: Event(organizerID: "event 2", organizerName: "dsfngf", name: "final hope", description: "descreption", startTimeStamp: Date.now, endTimeStamp: Date.now, status: .ongoing, categoryID: "l6QT2ZIphKNnSDNcee1v", categoryName: "Art", categoryIcon: "🎨", locationURL: "location", minimumAge: 12, maximumAge: 12, rattingsArray: [:], maximumTickets: 321, price: 3.23, coverImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", mediaArray: []))
+        //                }
         //
         
-        Task {
-            //        try await    TicketsManager.createNewTicket(ticket: Ticket(eventID: "2GZvRmpKp47kFThJ5dVj", userID: "sdfsd", eventName: "event name sample", organizerName: "dsfngf", startTimeStamp: Date.now, didAttend: false, totalPrice: 12.12, locationURL: "sadsd", quantity: 2))
-            //           try await EventsManager.updateEventsCategory(category: Category(documentID: "2GZvRmpKp47kFThJ5dVj")!)
+        //        Task {
+        //        try await    TicketsManager.createNewTicket(ticket: Ticket(eventID: "2GZvRmpKp47kFThJ5dVj", userID: "sdfsd", eventName: "event name sample", organizerName: "dsfngf", startTimeStamp: Date.now, didAttend: false, totalPrice: 12.12, locationURL: "sadsd", quantity: 2))
+        //           try await EventsManager.updateEventsCategory(category: Category(documentID: "2GZvRmpKp47kFThJ5dVj")!)
+        
+        //            try await BadgesManager.createNewBadge(badge: Badge(image: "fdefwfwe", eventID: "2GZvRmpKp47kFThJ5dVj", eventName: "event name sample", catigoryName: "Music", catigoryIcon: "🎵"))
+        //            try await CategoriesManager.updateCategorie(category: Category(categoryID: "eXJFsGAC8odTjj74FYxP", name: "Songs", icon: "🎵", isActive: true))
+        //        }
+        
+//        Task {
+//            let cat = Category(name: "Education", icon: "✏️", status: .enabled)
+//            try await CategoriesManager.createNewCategory(category: cat)
+//
+//            try await EventsManager.createNewEvent(event:
+//            Event(organizerID: "212``2", organizerName: "dsfngf", name: "test 121", description: "safafafa safas fas fa", startTimeStamp: Date.now, endTimeStamp: Date.now, status: .ongoing, category: CategoriesManager.getCategory(categorieID: "nb9swHtZ6rZ5NTTc8oYl"), locationURL: "dasda dsa", minimumAge: 21, maximumAge: 324, rattingsArray: [:], maximumTickets: 123, price: 15.3, coverImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", mediaArray: []))
             
-//            try await BadgesManager.createNewBadge(badge: Badge(image: "fdefwfwe", eventID: "2GZvRmpKp47kFThJ5dVj", eventName: "event name sample", catigoryName: "Music", catigoryIcon: "🎵"))
-            try await CategoriesManager.updateCategorie(category: Category(categoryID: "eXJFsGAC8odTjj74FYxP", name: "Songs", icon: "🎵", isActive: true))
-        }
+//           try await BadgesManager.createNewBadge(badge: Badge(image: "sadsa", eventID: "Y3tLzfy1kdb27If4f1KG", eventName: "test 121", category: CategoriesManager.getCategory(categorieID: "nb9swHtZ6rZ5NTTc8oYl")))
+     
+//            try await TicketsManager.createNewTicket(ticket: Ticket(eventID: "Y3tLzfy1kdb27If4f1KG", userID: "sdfsd", eventName: "test 121", organizerName: "dsfngf", startTimeStamp: Date.now, didAttend: false, totalPrice: 12.6, locationURL: "sffssfffs", quantity: 12))
+
+//        }
+        
         
         
         EventsManager.getAllEvents { snapshot, error in
             guard error == nil else {
+                print("Error: \(error!)")
                 return
             }
-            self.events = []
+            
+            self.events = []  // Clear current events list
+            
             if let snapshot {
                 for doc in snapshot.documents {
-                    //                        print(doc.data())
-                    do {
-                        self.events.append(try doc.data(as: EventSummary.self))
-                    } catch {
-                        print("conversion error \(error.localizedDescription)")
+                    Task {
+                        do {
+                            let eventSummary = try await EventSummary(from: doc.data())
+                            self.events.append(eventSummary)
+                            print(eventSummary)
+                        } catch {
+                            print("Conversion error: \(error.localizedDescription) for document \(doc.documentID)")
+                        }
+                        
                     }
+                    
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
             }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            
         }
         
         

@@ -32,9 +32,6 @@ class InterestsCollectionReusableView: UICollectionReusableView, UICollectionVie
 //                
                 // Decode documents into Category objects
              self.categories = snapshot!.documents.compactMap {
-                 
-                 print("Categories: \(self.categories)")
-
                  return try? $0.data(as: Category.self)
              }
                 

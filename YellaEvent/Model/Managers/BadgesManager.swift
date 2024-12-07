@@ -12,7 +12,7 @@ final class BadgesManager {
     
     private static let badgesCollection = Firestore.firestore().collection(K.FStore.Badges.collectionName)
     private static var listener: ListenerRegistration?
-        
+    
     private static func badgeDocument(eventID: String) -> DocumentReference {
         badgesCollection.document(eventID)
     }
@@ -22,17 +22,22 @@ final class BadgesManager {
     }
     
     static func getBadge(eventID: String) async throws -> Badge{
-        try await badgeDocument(eventID: eventID).getDocument(as : Badge.self)
+        try await Badge(from: badgeDocument(eventID: eventID).getDocument().data()!)
     }
     
     static func getUserBadges(badgesArray: [String]) async throws -> [Badge] {
-        try await badgesCollection.whereField(K.FStore.Badges.badgeID, in: badgesArray).getDocuments().documents.compactMap { doc in
-            try  doc.data(as: Badge.self)
+        let snapshot = try await badgesCollection.whereField(K.FStore.Badges.badgeID, in: badgesArray).getDocuments()
+
+        var badges: [Badge] = []
+        for doc in snapshot.documents {
+            let badge = try await Badge(from: doc.data())
+            badges.append(badge)
         }
+        return badges
     }
-    
+
     static func updateBadge(badge: Badge) async throws {
-        try await badgeDocument(eventID: badge.eventID).setData(try K.encoder.encode(badge), merge: true)
+        try await badgeDocument(eventID: badge.eventID).setData(badge.toFirestoreData(), merge: true)
     }
     
     static func updateBadge(eventID: String, image : String) async throws {

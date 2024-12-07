@@ -17,9 +17,9 @@ class CategoriesManager {
         categoriesCollection.document(categorieID)
     }
     
-    static func createNewCategorie(categorie: Category) async throws {
+    static func createNewCategory(category: Category) async throws {
         Task {
-            let doc = try categoriesCollection.addDocument(data: K.encoder.encode(categorie))
+            let doc = try categoriesCollection.addDocument(data: K.encoder.encode(category))
             doc.updateData([K.FStore.Categories.categoryID: doc.documentID])
         }
     }
@@ -43,7 +43,7 @@ class CategoriesManager {
     static func getActiveCatigories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
         self.listener?.remove()
         self.listener = categoriesCollection
-            .whereField(K.FStore.Categories.isActive, isEqualTo: true)
+            .whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue)
             .order(by: K.FStore.Categories.name)
             .addSnapshotListener(listener)
     }
@@ -51,7 +51,7 @@ class CategoriesManager {
     static func getInactiveCatigories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
         self.listener?.remove()
         self.listener = categoriesCollection
-            .whereField(K.FStore.Categories.isActive, isEqualTo: false)
+            .whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue)
             .order(by: K.FStore.Categories.name)
             .addSnapshotListener(listener)
     }

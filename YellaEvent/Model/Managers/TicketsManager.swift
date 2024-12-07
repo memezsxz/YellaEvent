@@ -19,13 +19,13 @@ final class TicketsManager {
     
     static func createNewTicket(ticket: Ticket) async throws {
         Task {
-            let doc = try ticketsCollection.addDocument(data: K.encoder.encode(ticket))
+            let doc = ticketsCollection.addDocument(data: ticket.toFirestoreData())
             doc.updateData([K.FStore.Tickets.ticketID: doc.documentID])
         }
     }
     
     static func getTicket(ticketId: String) async throws -> Ticket{
-        try await ticketDocument(ticketId: ticketId).getDocument(as : Ticket.self)
+        try await Ticket(from: ticketDocument(ticketId: ticketId).getDocument().data()!)
     }
     
     static func updateAttendenceStatus(ticketId: String) async throws {
@@ -33,9 +33,13 @@ final class TicketsManager {
     }
     
     static func getUserTickets(userId: String) async throws -> [Ticket] {
-        try await ticketsCollection.whereField(K.FStore.Tickets.userID, isEqualTo: userId).getDocuments().documents.compactMap { doc in
-            try doc.data(as: Ticket.self)
+       let snapshop = try await ticketsCollection.whereField(K.FStore.Tickets.userID, isEqualTo: userId).getDocuments()
+        
+        var tickets: [Ticket] = []
+        for doc in snapshop.documents {
+            tickets.append( try await Ticket(from: doc.data()))
         }
+        return tickets
     }
     
     // not tested
@@ -60,7 +64,7 @@ final class TicketsManager {
             Task {
                 for doc in snapshot.documents {
                     do {
-                        let ticket = try doc.data(as: Ticket.self)
+                        let ticket = try await Ticket(from: doc.data())
                         do {
                             let user = try await UsersManager.getUser(userID: ticket.userID)
                             usersDec[user.email] = user.fullName
@@ -68,9 +72,11 @@ final class TicketsManager {
                             totalTickets += 1
                         } catch {
                             print("Error fetching user for userId \(ticket.userID): \(error)")
+                            throw error
                         }
                     } catch {
                         print("Error decoding Ticket: \(error)")
+                        throw error
                     }
                 }
                 completion(usersDec, totalTickets, attendedTickets) 
@@ -79,10 +85,22 @@ final class TicketsManager {
     }
     
     static func getEventTickets(eventID: String) async throws -> [Ticket] {
-       try await ticketsCollection.whereField(K.FStore.Tickets.eventID, isEqualTo: eventID).getDocuments().documents.compactMap { doc in
-           try doc.data(as: Ticket.self)
+        let snapshot = try await ticketsCollection.whereField(K.FStore.Tickets.eventID, isEqualTo: eventID).getDocuments()
+        var tickets: [Ticket] = []
+
+        for document in snapshot.documents {
+            do {
+                let ticket = try await Ticket(from: document.data())
+                tickets.append(ticket)
+            } catch {
+                print("Failed to decode document \(document.documentID): \(error.localizedDescription)")
+                throw error
+            }
         }
+
+        return tickets
     }
+
     
     static func updateEventStartTimeStamp(eventID: String, startTimeStamp: Date) async throws {
         let tickets = try await getEventTickets(eventID: eventID)

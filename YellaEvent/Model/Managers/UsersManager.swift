@@ -99,7 +99,7 @@ final class UsersManager {
             try await customerDocument(userID: user.userID).updateData(K.encoder.encode(user as! Customer))
         case is Organizer:
             try await organizerDocument(userID: user.userID).updateData(K.encoder.encode(user as! Organizer))
-            try await EventsManager.updateEventOrganizer(organizer: user as! Organizer)
+//            try await EventsManager.updateEventOrganizer(organizer: user as! Organizer)
         case is Admin:
             try await adminDocument(userID: user.userID).updateData(K.encoder.encode(user as! Admin))
         default:
@@ -144,7 +144,6 @@ final class UsersManager {
         listeners.append(customersCollection.order(by: K.FStore.User.fullName).addSnapshotListener(listener))
         listeners.append(adminsCollection.order(by: K.FStore.User.fullName).addSnapshotListener(listener))
         listeners.append(organizersCollection.order(by: K.FStore.User.fullName).addSnapshotListener(listener))
-        print("here1")
     }
     
     static func getAllUsers() async throws -> [User] {

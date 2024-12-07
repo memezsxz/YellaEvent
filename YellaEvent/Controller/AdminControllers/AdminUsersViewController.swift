@@ -184,7 +184,6 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
             if self.currentSegment != nil {
                 self.users = []
             }
-            print(snapshot.documents)
             for doc in snapshot.documents {
                 do {
                     if let userType = doc.data()[K.FStore.User.type] as? String {

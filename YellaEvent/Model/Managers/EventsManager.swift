@@ -21,33 +21,33 @@ class EventsManager {
     
     static func createNewEvent(event: Event) async throws {
         Task {
-            let doc = try eventsCollection.addDocument(data: K.encoder.encode(event))
+            let doc = eventsCollection.addDocument(data: event.toFirestoreData())
             doc.updateData([K.FStore.Events.eventID: doc.documentID])
         }
     }
     
     static func getEvent(eventID: String) async throws -> Event {
-        try await eventDocument(eventID: eventID).getDocument(as : Event.self)
+        try await Event (from: eventDocument(eventID: eventID).getDocument().data()!)
     }
     
     static func updateEvent(event: Event) async throws {
-        let oldEvent =  try await eventDocument(eventID: event.eventID).getDocument().data(as: Event.self)
+        let oldEvent =  try await Event(from: try eventDocument(eventID: event.eventID).getDocument().data()!)
 //            .setData(try K.encoder.encode(event), merge: true)
         
-        if oldEvent.categoryID != event.categoryID {
+        if oldEvent.category.categoryID != event.category.categoryID {
             var badge = try await BadgesManager.getBadge(eventID: event.eventID)
              
              badge.eventName = event.name
-             badge.categoryIcon = event.categoryIcon
-             badge.categoryName = event.categoryName
+            badge.category = event.category
 
             try await BadgesManager.updateBadge(badge: badge)
-
             
+        }
+        if oldEvent.startTimeStamp != event.startTimeStamp {
             try await TicketsManager.updateEventStartTimeStamp(eventID: event.eventID, startTimeStamp: event.startTimeStamp)
         }
-        
-        try await eventDocument(eventID: event.eventID).setData(try K.encoder.encode(event), merge: true)
+
+        try await eventDocument(eventID: event.eventID).setData(event.toFirestoreData(), merge: true)
     }
 
     static func getOrganizerEvents(organizerID: String, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
@@ -64,15 +64,15 @@ class EventsManager {
             .getDocuments()
     }
     
-    static func updateEventOrganizer(organizer: Organizer) async throws {
-        let snapshot = try await getOrganizerEvents(organizerID: organizer.userID)
-        
-        for document in snapshot.documents {
-            try await document.reference.updateData([
-                K.FStore.Events.organizerName: organizer.fullName
-            ])
-        }
-    }
+//    static func updateEventOrganizer(organizer: Organizer) async throws {
+//        let snapshot = try await getOrganizerEvents(organizerID: organizer.userID)
+//        
+//        for document in snapshot.documents {
+//            try await document.reference.updateData([
+//                K.FStore.Events.organizerID: organizer.fullName
+//            ])
+//        }
+//    }
 
     static func OrganizerBanedHandler(organizerID: String) async throws {
         let snapshot = try await getOrganizerEvents(organizerID: organizerID)
@@ -131,16 +131,21 @@ class EventsManager {
     }
 
     
-    static func searchEvents(byOrganizerName name: String) async throws -> [EventSummary] {
-        try await eventsCollection
-            .whereField(K.FStore.Events.organizerName, isEqualTo: name)
+    // replacement for search by name when admin clicks on view orginizer events
+    static func searchEvents(byOrganizerID id: String) async throws -> [EventSummary] {
+        let snapshot = try await eventsCollection
+            .whereField(K.FStore.Events.organizerID, isEqualTo: id)
             .order(by: K.FStore.Events.name)
-            .getDocuments().documents.compactMap { try $0.data(as: EventSummary.self) }
-        //            .sorted {
-        //                Event.getRatting(from: $0.rattingsArray) > Event.getRatting(from: $1.rattingsArray)
-        //            }
+            .getDocuments()
+
+        var events: [EventSummary] = []
+        for document in snapshot.documents {
+            let event = try await EventSummary(from: document.data())
+            events.append(event)
+        }
+        return events
     }
-    
+
 //    static func searchEvents(byEventName name: String) async throws -> [EventSummary] {
 //        let events = try await eventsCollection
 //            .order(by: K.FStore.Events.name)
@@ -157,38 +162,62 @@ class EventsManager {
 
     static func searchEvents(byText name: String) async throws -> [EventSummary] {
         let name = name.lowercased()
-       return try await eventsCollection
+        let snapshot = try await eventsCollection
             .whereField(K.FStore.Events.status, isEqualTo: EventStatus.ongoing.rawValue)
-            .getDocuments().documents.compactMap { try $0.data(as: EventSummary.self) }
-            .filter { event in
-                return event.name.lowercased().contains(name) || event.organizerName.lowercased().contains(name)
+            .getDocuments()
+
+        var results: [EventSummary] = []
+        for document in snapshot.documents {
+            let eventSummary = try await EventSummary(from: document.data())
+            if eventSummary.name.lowercased().contains(name) || eventSummary.organizerName.lowercased().contains(name) {
+                results.append(eventSummary)
             }
+        }
+        return results
     }
-    
+
     static func searchEvents(byText name: String, price: Int, age: Int, categories: [String]) async throws -> [EventSummary] {
         let name = name.lowercased()
-       return try await eventsCollection
+
+        let snapshot = try await eventsCollection
             .whereField(K.FStore.Events.status, isEqualTo: EventStatus.ongoing.rawValue)
             .whereField(K.FStore.Events.price, isGreaterThanOrEqualTo: price)
             .whereField(K.FStore.Events.minimumAge, isGreaterThanOrEqualTo: age)
             .whereField(K.FStore.Events.categoryID, in: categories)
-            .getDocuments().documents.compactMap { try $0.data(as: EventSummary.self) }
-            
-            .filter { event in
-                return event.name.lowercased().contains(name) || event.organizerName.lowercased().contains(name)
+            .getDocuments()
+
+        var results: [EventSummary] = []
+
+        for document in snapshot.documents {
+            do {
+                let eventSummary = try await EventSummary(from: document.data())
+                if eventSummary.name.lowercased().contains(name) || eventSummary.organizerName.lowercased().contains(name) {
+                    results.append(eventSummary)
+                }
+            } catch {
+                print("Failed to decode document \(document.documentID): \(error.localizedDescription)")
+                throw error
             }
+        }
+
+        return results
     }
 
     
     // only for category updates
     static func getEvents(byCategory categoryID: String) async throws -> [Event] {
-        return try await eventsCollection
+        let snapshot = try await eventsCollection
             .whereField(K.FStore.Events.categoryID, isEqualTo: categoryID)
-            .getDocuments().documents.compactMap { doc in
-                try doc.data(as: Event.self)
-            }
+            .getDocuments()
+
+        var events: [Event] = []
+        for document in snapshot.documents {
+            let event = try await Event(from: document.data())
+            events.append(event)
+        }
+        return events
     }
-    
+
     // only used when a catagory is updated
     static func updateEventsCategory(category: Category) async throws {
         let events = try await eventsCollection
@@ -196,13 +225,9 @@ class EventsManager {
             .getDocuments()
         
         for document in events.documents {
-            var event = try document.data(as: Event.self)
-            event.categoryIcon = category.icon
-            event.categoryName = category.name
-            try await updateEvent(event: event)
-            var badge = try await BadgesManager.getBadge(eventID: event.eventID)
-            badge.categoryIcon = category.icon
-            badge.categoryName = category.name
+            var eventID = document.data()[K.FStore.Events.eventID] as! String
+            var badge = try await BadgesManager.getBadge(eventID: eventID)
+            badge.category = category
             try await BadgesManager.updateBadge(badge: badge)
         }
         
