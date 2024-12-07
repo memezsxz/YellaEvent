@@ -223,12 +223,16 @@ class EventsManager {
             .getDocuments()
         
         for document in events.documents {
-            var eventID = document.data()[K.FStore.Events.eventID] as! String
+            let eventID = document.data()[K.FStore.Events.eventID] as! String
             var badge = try await BadgesManager.getBadge(eventID: eventID)
             badge.category = category
             try await BadgesManager.updateBadge(badge: badge)
         }
         
+    }
+
+    static func getNumEvents(withCategoryID categoryID: String) async throws -> Int {
+        try await eventsCollection.whereField(K.FStore.Events.categoryID, isEqualTo: categoryID).getDocuments().documents.count
     }
 
     // re do

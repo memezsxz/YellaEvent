@@ -43,6 +43,10 @@ final class BadgesManager {
     static func updateBadge(eventID: String, image : String) async throws {
         try await badgeDocument(eventID: eventID).updateData([K.FStore.Badges.image : image])
     }
+    
+    static func getNumBadges(withCategoryID categoryID: String) async throws -> Int {
+       try await badgesCollection.whereField(K.FStore.Badges.categoryID, isEqualTo: categoryID).getDocuments().documents.count
+    }
 }
 
 
