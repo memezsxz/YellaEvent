@@ -108,34 +108,25 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         
         EventsManager.getAllEvents { snapshot, error in
-            guard error == nil else {
-                print("Error: \(error!)")
-                return
-            }
-            
-            self.events = []  // Clear current events list
-            
+            guard error == nil else { return }
+            self.events = []
             if let snapshot {
-                for doc in snapshot.documents {
-                    Task {
+                Task {
+                    for doc in snapshot.documents {
                         do {
-                            let eventSummary = try await EventSummary(from: doc.data())
-                            self.events.append(eventSummary)
-                            print(eventSummary)
+                            let event = try await EventSummary(from: doc.data())
+                            self.events.append(event)
                         } catch {
-                            print("Conversion error: \(error.localizedDescription) for document \(doc.documentID)")
+                            print("Error converting event: \(error)")
                         }
-                        
                     }
-                    
-                }
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }
-        
+
         
         
         
