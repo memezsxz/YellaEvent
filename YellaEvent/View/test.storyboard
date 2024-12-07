@@ -23,12 +23,59 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="3pa-M7-eSL"/>
+                        <segue destination="0IX-B9-YYg" kind="relationship" relationship="rootViewController" id="7OK-Pb-5zy"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APL-cB-1F2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-848" y="102"/>
+            <point key="canvasLocation" x="849" y="-516"/>
+        </scene>
+        <!--Select Interests-->
+        <scene sceneID="rqE-WE-Sd0">
+            <objects>
+                <viewController id="0IX-B9-YYg" customClass="test" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dki-2p-lZe">
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="id2-eH-GTO" customClass="InterestsCollectionView" customModule="YellaEvent" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="106" width="402" height="734"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Xg6-q7-mOB">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="b1A-hy-o5q">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="BSA-9b-i12">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ySK-Pz-42a"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="id2-eH-GTO" firstAttribute="leading" secondItem="ySK-Pz-42a" secondAttribute="leading" id="8R9-XN-Hku"/>
+                            <constraint firstItem="id2-eH-GTO" firstAttribute="top" secondItem="ySK-Pz-42a" secondAttribute="top" id="Hbw-PT-xF9"/>
+                            <constraint firstItem="ySK-Pz-42a" firstAttribute="bottom" secondItem="id2-eH-GTO" secondAttribute="bottom" id="LSs-Bw-gcZ"/>
+                            <constraint firstItem="ySK-Pz-42a" firstAttribute="trailing" secondItem="id2-eH-GTO" secondAttribute="trailing" id="NYR-NX-aQu"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Select Interests" id="cSt-2u-OpH"/>
+                    <connections>
+                        <outlet property="collectionView" destination="id2-eH-GTO" id="62E-vQ-Ida"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w3v-7m-fSf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1828.3582089552237" y="-522.42562929061785"/>
         </scene>
         <!--Test-->
         <scene sceneID="Qha-bP-qu5">
@@ -63,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q1R-94-JdX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1509" y="-303"/>
+            <point key="canvasLocation" x="-1861" y="-303"/>
         </scene>
         <!--rfdxgcb-->
         <scene sceneID="xSM-r8-Cqt">
@@ -259,7 +306,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9HP-fy-vd1" customClass="MainUISegmentedControl" customModule="YellaEvent" customModuleProvider="target">
-                                <rect key="frame" x="16" y="172" width="370" height="32"/>
+                                <rect key="frame" x="16" y="76" width="370" height="32"/>
                                 <color key="backgroundColor" name="BrandLightPurple"/>
                                 <segments>
                                     <segment title="Active"/>
@@ -268,7 +315,7 @@
                                 <color key="selectedSegmentTintColor" name="BrandPurple"/>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Sqb-Cs-8Qd">
-                                <rect key="frame" x="0.0" y="213" width="402" height="627"/>
+                                <rect key="frame" x="0.0" y="117" width="402" height="723"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EventSummaryTableViewCell" id="3DI-Lm-IfO">
@@ -368,7 +415,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NbA-fC-RN9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="798" y="-71"/>
+            <point key="canvasLocation" x="1794" y="202"/>
         </scene>
     </scenes>
     <resources>

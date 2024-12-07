@@ -48,6 +48,12 @@ class CategoriesManager {
             .addSnapshotListener(listener)
     }
     
+    static func getActiveCatigories() async throws -> [Category] {
+        try await categoriesCollection.whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue).getDocuments().documents.compactMap { doc in
+            try doc.data(as: Category.self)
+        }
+    }
+
     static func getInactiveCatigories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
         self.listener?.remove()
         self.listener = categoriesCollection
@@ -59,5 +65,17 @@ class CategoriesManager {
     // do not use for now
     static func deleteCategorie(categorieID: String) async throws {
         try await categorieDocument(categorieID: categorieID).delete()
+    }
+    
+    static func getUserSelectedCatigories(userID: String) async throws -> [Category] {
+        try await categoriesCollection.whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue).getDocuments().documents.compactMap { doc in
+            try doc.data(as: Category.self)
+        }
+    }
+
+    static func getUserSelectedCatigories(categoriesIDsList: [String]) async throws -> [Category] {
+        try await categoriesCollection.whereField(K.FStore.Categories.categoryID, in: categoriesIDsList).getDocuments().documents.compactMap { doc in
+            try doc.data(as: Category.self)
+        }
     }
 }

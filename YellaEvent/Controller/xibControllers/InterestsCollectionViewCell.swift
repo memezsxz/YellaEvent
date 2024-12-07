@@ -1,41 +1,59 @@
 //
-//  InterestsCollectionViewCell.swift
-//  YellaEvent
+//  CollectionViewCell.swift
+//  fwifhks
 //
-//  Created by meme on 04/12/2024.
+//  Created by meme on 07/12/2024.
 //
 
 import UIKit
 
-class InterestsCollectionViewCell: UICollectionViewCell {
+class InterstsCollectionViewCell: UICollectionViewCell{
+    static let identifier = "InterstsCollectionViewCell"
+        
+    static var fontSize : CGFloat = 26
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        label.textColor = .white
+//        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    @IBOutlet weak var label: UIButton!
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            contentView.addSubview(titleLabel)
+            contentView.backgroundColor = UIColor.systemPurple
+//            contentView.layer.masksToBounds = true
+            
+            // Set up constraints between the content view of the cell and the label
+            NSLayoutConstraint.activate([
+                titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+                titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+                titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+                titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+            ])
+            
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
     
     override func layoutSubviews() {
-        self.layer.cornerRadius = self.frame.height / 10
-        self.layer.shadowOpacity = 0.5
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.height / 10).cgPath
-    }
-    
-       override init(frame: CGRect) {
-           super.init(frame: frame)
-           contentView.addSubview(label)
-           label.translatesAutoresizingMaskIntoConstraints = false
-           NSLayoutConstraint.activate([
-               label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-               label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-               label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-               label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-           ])
-       }
+        super.layoutSubviews()
+//        titleLabel.frame = contentView.bounds.insetBy(dx: 10, dy: 5) // Adjust for padding
+        contentView.layer.cornerRadius = contentView.frame.height / 2.3
+        contentView.clipsToBounds = true // to ensure contents respect the rounded corners
+}
 
-       required init?(coder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
-       }
+    func configure(with category: Category, isSelected: Bool) {
+        titleLabel.text = "\(category.name) \(category.icon)"
+        contentView.backgroundColor = isSelected ? UIColor(named: K.BrandColors.darkPurple) : UIColor(named: K.BrandColors.lightPurple)
+        }
+
 }

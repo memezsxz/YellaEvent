@@ -12,9 +12,21 @@ import Firebase
 import FirebaseStorage
 import UniformTypeIdentifiers
 
-class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collection.dequeueReusableCell(withReuseIdentifier: "InterestsCollectionViewCell", for: indexPath) as! InterstsCollectionViewCell
+
+//        cell.label.titleLabel?.text = "Interest \(indexPath.row)"
+        return cell
+    }
+    
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var collection: UICollectionView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         events.count
     }
@@ -49,11 +61,34 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
+    @IBOutlet var collectionView: InterestsCollectionView!
     override func viewDidLoad()  {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
+//        Task {
+//           try await  CategoriesManager.getActiveCatigories { snapshot, error in
+//               guard let snapshot = snapshot else { return }
+//               
+//               var categories : [Category] = []
+//               for doc in snapshot.documents {
+//                   do {
+//                       let cat = try doc.data(as: Category.self)
+//                       categories.append(cat)
+//                   } catch {
+//                       continue
+//                   }
+//               }
+//               DispatchQueue.main.async {
+//                   self.collectionView.setInterests(categories)
+//                   self.collectionView.reloadData()
+//               }
+//            }
+//        }
+//        collection.delegate = self
+//        collection.dataSource = self
+//        collection.register(InterstsCollectionViewCell.self, forCellWithReuseIdentifier: "InterestsCollectionViewCell")
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
         //        Task {
         //            EventsManager.getInstence().getAllEvents(listener: { snapshot, error in
         //                guard let snapshot else { return }
@@ -112,26 +147,26 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //           try await EventsManager.updateEvent(event: event)
 //        }
 //        
-        EventsManager.getAllEvents { snapshot, error in
-            guard error == nil else { return }
-            
-            if let snapshot {
-                self.events = []
-                Task {
-                    for doc in snapshot.documents {
-                        do {
-                            let event = try await EventSummary(from: doc.data())
-                            self.events.append(event)
-                        } catch {
-                            print("Error converting event: \(error)")
-                        }
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            }
-        }
+//        EventsManager.getAllEvents { snapshot, error in
+//            guard error == nil else { return }
+//            
+//            if let snapshot {
+//                self.events = []
+//                Task {
+//                    for doc in snapshot.documents {
+//                        do {
+//                            let event = try await EventSummary(from: doc.data())
+//                            self.events.append(event)
+//                        } catch {
+//                            print("Error converting event: \(error)")
+//                        }
+//                    }
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadData()
+//                    }
+//                }
+//            }
+//        }
 
         
         
