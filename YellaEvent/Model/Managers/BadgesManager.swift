@@ -18,7 +18,7 @@ final class BadgesManager {
     }
     
     static func createNewBadge(badge: Badge) async throws {
-        try await badgeDocument(eventID: badge.eventID).setData(K.encoder.encode(badge), merge: false)
+        try await badgeDocument(eventID: badge.eventID).setData(badge.toFirestoreData(), merge: false)
     }
     
     static func getBadge(eventID: String) async throws -> Badge{

@@ -45,11 +45,11 @@ class AdminProfileViewController: UIViewController {
         setupEditPage()
 
             
-            UserDefaults.standard.set("lN1LrxyBfnNjr45KRmz5VPc4cw13", forKey: K.bundleUserID) // this will be removed after seting the application
+            UserDefaults.standard.set("sdfsd", forKey: K.bundleUserID) // this will be removed after seting the application
                 
             // get the current user object
             Task {
-                let us = try await UsersManager.getInstence().getUser(userId: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+                let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
                 //download the current user image
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
@@ -99,9 +99,9 @@ extension AdminProfileViewController{
             do {
                 
                 let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
-                let us = try await UsersManager.getInstence().getUser(userId: userId)
+                let us = try await UsersManager.getUser(userID: userId)
                 
-                txtFullName?.text = "\(us.firstName) \(us.lastName)"
+                txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 
                 txtPhoneNumber?.text = String(us.phoneNumber)

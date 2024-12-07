@@ -23,7 +23,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventSummaryTableViewCell", for: indexPath) as! EventSummaryTableViewCell
         //        cell.convert(event)
         cell.setup(with: events[indexPath.row])
-        print("cell")
+//        print("cell")
         return cell
     }
     
@@ -105,12 +105,18 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 //        }
         
-        
-        
+//        Task {
+//           var event = try await EventsManager.getEvent(eventID: "Y3tLzfy1kdb27If4f1KG")
+////            event.startTimeStamp = Date.now
+//            event.category = try await CategoriesManager.getCategory(categorieID: "IAghDlatAhV2HHce4BXH")
+//           try await EventsManager.updateEvent(event: event)
+//        }
+//        
         EventsManager.getAllEvents { snapshot, error in
             guard error == nil else { return }
-            self.events = []
+            
             if let snapshot {
+                self.events = []
                 Task {
                     for doc in snapshot.documents {
                         do {
@@ -127,6 +133,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
 
+        
         
         
         

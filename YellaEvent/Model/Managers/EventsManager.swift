@@ -33,15 +33,13 @@ class EventsManager {
     static func updateEvent(event: Event) async throws {
         let oldEvent =  try await Event(from: try eventDocument(eventID: event.eventID).getDocument().data()!)
 //            .setData(try K.encoder.encode(event), merge: true)
-        
         if oldEvent.category.categoryID != event.category.categoryID {
             var badge = try await BadgesManager.getBadge(eventID: event.eventID)
-             
+
              badge.eventName = event.name
             badge.category = event.category
 
             try await BadgesManager.updateBadge(badge: badge)
-            
         }
         if oldEvent.startTimeStamp != event.startTimeStamp {
             try await TicketsManager.updateEventStartTimeStamp(eventID: event.eventID, startTimeStamp: event.startTimeStamp)
