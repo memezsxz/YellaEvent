@@ -12,7 +12,6 @@ class MainTableViewCell: UITableViewCell {
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var subtext: UILabel!
     @IBOutlet weak var arrowPhoto: UIImageView!
    
     override func awakeFromNib() {
@@ -29,4 +28,8 @@ class MainTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setup (event: Event){
+        
+        title.text = event.name
+    }
 }
