@@ -32,17 +32,17 @@
                                     <constraint firstAttribute="width" secondItem="dEB-kc-7O2" secondAttribute="height" multiplier="1:1" id="EnY-58-z8L"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="y32-Lz-mOq">
-                                <rect key="frame" x="40" y="7.5" width="219" height="36.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="y32-Lz-mOq">
+                                <rect key="frame" x="40" y="0.0" width="219" height="44"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q6A-rb-3it">
-                                        <rect key="frame" x="0.0" y="0.0" width="219" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="17" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q6A-rb-3it">
+                                        <rect key="frame" x="0.0" y="0.0" width="219" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="38"/>
                                         <color key="textColor" name="BrandDarkPurple"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZRZ-8W-gAS">
-                                        <rect key="frame" x="0.0" y="20.5" width="219" height="16"/>
+                                        <rect key="frame" x="0.0" y="28" width="219" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" name="BrandDarkPurple"/>
                                         <nil key="highlightedColor"/>

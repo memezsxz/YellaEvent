@@ -10,7 +10,7 @@ import UIKit
 
 class CustomerProfileViewController: UIViewController {
     
-    var currentUser: User?
+    var currentUser: Customer?
     
     
     // the profile tab outlet
@@ -61,13 +61,13 @@ class CustomerProfileViewController: UIViewController {
         setupEditPage()
 
             
-            UserDefaults.standard.set("sdfsd", forKey: K.bundleUserID) // this will be removed after seting the application
+            UserDefaults.standard.set("2", forKey: K.bundleUserID) // this will be removed after seting the application
             
                 
             // get the current user object
             Task {
                 let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
-                currentUser = us
+                currentUser = us as? Customer
                 //download the current user image
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
@@ -132,7 +132,7 @@ extension CustomerProfileViewController{
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 
-                currentUser
+                currentUser = currentUser as? Customer
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
                     switch result {
@@ -300,30 +300,35 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
-        guard let img = selectedImage.jpegData(compressionQuality: 0.9) else {return}
+//        guard let img = selectedImage.jpegData(compressionQuality: 0.9) else {return}
+        
+        PhotoManager.shared.uploadPhoto(selectedImage, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+            switch result {
+            case .success(let url):
+                // TODO: Update in user
+                print("Image uploaded successfully: \(url)")
+            case .failure(let error):
+                let saveAlert = UIAlertController(
+                    title: "Error",
+                    message: "Error uploading image",
+                    preferredStyle: .alert
+                )
+                
+                let okAction = UIAlertAction(title: "OK", style: .default) { action in
+        //
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+                saveAlert.addAction(okAction)
+                
+                self.present(saveAlert, animated: true, completion: nil)
+            }
+        }
         
         
         
-        //edit_Fatima
-        
-        
-//        Task {
-//            do {
-//                
-//                
-//                let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
-//                let us = try await UsersManager.getInstence().getUser(userId: userId)
-//                
-//                // upload the image
-//                //PhotoManager.shared.
-//                //refresh the edit page
-//                //setupEditPage()
-//                
-//            } catch {
-//                print("Error with uploading the images: \(error)")
-//                // Handle error appropriately, such as showing an alert to the user
-//            }
-//        }
+   //edit the user image by uploading it.
+   //edit_Fatima
         dismiss(animated: true, completion: nil)
     }
     
@@ -347,7 +352,22 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         }
         
         // 2. Proceed to save changes if validation passes
-        
+        do{
+            currentUser?.email = txtEmail.text!
+            currentUser?.fullName = txtFullName.text!
+            if let phone = Int(txtPhoneNumber.text!){
+                currentUser?.phoneNumber = phone
+            }
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMMM yyyy" // Adjust this to match your input format
+            currentUser?.dob = dateFormatter.date(from: txtFieldDate.text!)!
+            
+            Task{
+                try await UsersManager.updateUser(user: currentUser!)
+            }
+        }catch{
+            print("dob errer save")
+        }
             //add the requird code
         
         // 3. Show an alert notifying the user that the changes have been saved
@@ -358,7 +378,8 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            print("Changes saved.")
+//
+            self.navigationController?.popViewController(animated: true)
         }
         
         saveAlert.addAction(okAction)
