@@ -69,6 +69,8 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="previousLbl" destination="xVn-cV-3r8" id="CaO-3B-awN"/>
+                        <outlet property="searchBar" destination="eSx-K9-SXB" id="JEH-Jp-nWT"/>
                         <outlet property="tableView" destination="Aew-Mz-Hyy" id="jna-P7-2FJ"/>
                     </connections>
                 </viewController>

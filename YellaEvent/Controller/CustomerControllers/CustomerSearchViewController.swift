@@ -8,8 +8,10 @@
 import UIKit
 
 class CustomerSearchViewController: UIViewController {
-  
     
+    @IBOutlet weak var previousLbl: UILabel!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var priceSlider: UISlider!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var ageTextField: UITextField!
@@ -32,42 +34,11 @@ class CustomerSearchViewController: UIViewController {
         if tableView != nil {
             tableView.delegate = self
             tableView.dataSource = self
+            
+            
         } else{
             priceTextField.text = String(Int( priceSlider.value))
             ageTextField.text = String(Int( ageSlider.value))
-            
-            let testHor = UIStackView()
-            testHor.axis = .horizontal
-            testHor.distribution = .fillEqually
-            
-            let testBtn = UIButton()
-            testBtn.setTitle("test", for: .normal)
-            testBtn.setTitleColor(.white, for: .normal)
-            testBtn.layer.cornerRadius = 10
-            testBtn.layer.masksToBounds = true
-            testBtn.backgroundColor = .darkGray
-            testBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-            testHor.addArrangedSubview(testBtn)
-            
-            let testBtn2 = UIButton()
-            testBtn2.setTitle("test2", for: .normal)
-            testBtn2.setTitleColor(.white, for: .normal)
-            testBtn2.layer.cornerRadius = 10
-            testBtn2.layer.masksToBounds = true
-            testBtn2.backgroundColor = .darkGray
-            testBtn2.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-            testHor.addArrangedSubview(testBtn2)
-            
-            let testBtn3 = UIButton()
-            testBtn3.setTitle("test3", for: .normal)
-            testBtn3.setTitleColor(.white, for: .normal)
-            testBtn3.layer.cornerRadius = 10
-            testBtn3.layer.masksToBounds = true
-            testBtn3.backgroundColor = .darkGray
-            testBtn3.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-            testHor.addArrangedSubview(testBtn3)
-            
-//            catButtons.addArrangedSubview(testHor)
             
             
         }
@@ -87,6 +58,37 @@ class CustomerSearchViewController: UIViewController {
     @IBAction func fliteringunwind(_ unwindSegue: UIStoryboardSegue) {
     }
     
+    // Search button logic
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // Hide keyboard and UI elements
+        searchBar.resignFirstResponder()
+        showHide(condition: true)
+    }
+
+    // Cancel button logic
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        filteredSearch = prevSearch
+        tableView.reloadData()
+
+        // Hide the keyboard and restore UI
+        searchBar.resignFirstResponder()
+        showHide(condition: false)
+    }
+
+    // Perform search from selected cell
+    func performSearch(for text: String) {
+        // Update the search bar text with the selected cell's content
+        searchBar.text = text
+        showHide(condition: true)
+    }
+    
+    func showHide(condition: Bool){
+        previousLbl.isHidden = condition
+        tableView.isHidden = condition
+        searchBar.showsCancelButton = condition
+    }
+
 }
 
 
@@ -100,7 +102,19 @@ extension CustomerSearchViewController: UITableViewDelegate, UITableViewDataSour
         cell.textLabel?.text = filteredSearch[indexPath.row]
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedText = filteredSearch[indexPath.row]
+        
+        // Perform the search logic here
+        performSearch(for: selectedText)
+        
+        // Optional: Deselect the cell after selection
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
+
+
 
 extension CustomerSearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -111,4 +125,6 @@ extension CustomerSearchViewController: UISearchBarDelegate {
         
         tableView.reloadData()
     }
+    
+    
 }
