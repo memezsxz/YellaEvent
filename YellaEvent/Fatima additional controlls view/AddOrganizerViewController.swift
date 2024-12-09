@@ -8,7 +8,16 @@
 import UIKit
 
 class AddOrganizerViewController: UIViewController {
-
+    
+    //outlet 
+    @IBOutlet weak var txtUserName: UITextField!
+    @IBOutlet weak var txtPhoneNumber: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
