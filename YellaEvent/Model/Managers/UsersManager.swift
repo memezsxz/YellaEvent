@@ -311,9 +311,9 @@ final class UsersManager {
     static func deleteUser(userID: String, userType: UserType) async throws {
         switch userType {
             case .organizer:
-                try await organizerDocument(userID: userID).delete()
+                try await organizerDocument(userID: userID).delete() // return organizer document
         case .admin:
-            try await adminDocument(userID: userID).delete()
+            try await adminDocument(userID: userID).delete() // return admin document
         case .customer:
             try await customerDocument(userID: userID).delete()
         }

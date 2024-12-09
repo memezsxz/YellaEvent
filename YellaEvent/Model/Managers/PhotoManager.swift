@@ -65,22 +65,34 @@ final class PhotoManager {
     }
 
     // the result string is the download url
-    func uploadPhoto(_ image: UIImage,
-                     to storagePath: String,
-                     completion: @escaping (Result<String, Error>) -> Void) {
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+    func uploadPhoto(
+        _ image: UIImage,
+        to storagePath: String,
+        withNewName newName: String? = nil,
+        completion: @escaping (Result<String, Error>) -> Void
+    ) {
+        let fileName: String
+        if let newName = newName {
+            fileName = newName
+        } else {
+            fileName = UUID().uuidString
+        }
+
+        let newStoragePath = "\(storagePath)/\(fileName).jpg"
+
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else {
             let error = NSError(domain: "PhotoManager", code: 400, userInfo: [NSLocalizedDescriptionKey: "Failed to convert UIImage to JPEG data."])
             completion(.failure(error))
             return
         }
-        
-        let storageRef = storage.reference().child(storagePath)
+
+        let storageRef = storage.reference().child(newStoragePath)
         storageRef.putData(imageData, metadata: nil) { _, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
+
             storageRef.downloadURL { url, error in
                 if let error = error {
                     completion(.failure(error))
