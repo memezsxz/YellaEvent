@@ -10,6 +10,8 @@ import UIKit
 class AdminProfileViewController: UIViewController {
     
     
+    var currentUser: Admin?
+    
 // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
     @IBOutlet weak var BigImageProfile: UIImageView!
@@ -45,11 +47,12 @@ class AdminProfileViewController: UIViewController {
         setupEditPage()
 
             
-            UserDefaults.standard.set("sdfsd", forKey: K.bundleUserID) // this will be removed after seting the application
+            UserDefaults.standard.set("1", forKey: K.bundleUserID) // this will be removed after seting the application
                 
             // get the current user object
             Task {
                 let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+                currentUser = (us as! Admin)
                 //download the current user image
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
@@ -73,7 +76,6 @@ class AdminProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // method to set the edit user profile page
-        setupEditPage()
         
     }
     
@@ -103,8 +105,9 @@ extension AdminProfileViewController{
                 
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
+                print(us)
                 
-                txtPhoneNumber?.text = String(us.phoneNumber)
+//                txtPhoneNumber?.text = String(us.phoneNumber)
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
                     switch result {
@@ -186,30 +189,33 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
-        guard let img = selectedImage.jpegData(compressionQuality: 0.9) else {return}
         
         
-        
-        //edit_Fatima
-        
-        
-//        Task {
-//            do {
-//
-//
-//                let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
-//                let us = try await UsersManager.getInstence().getUser(userId: userId)
-//
-//                // upload the image
-//                //PhotoManager.shared.
-//                //refresh the edit page
-//                //setupEditPage()
-//
-//            } catch {
-//                print("Error with uploading the images: \(error)")
-//                // Handle error appropriately, such as showing an alert to the user
-//            }
-//        }
+        PhotoManager.shared.uploadPhoto(selectedImage, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+            switch result {
+            case .success(let url):
+                
+                
+                // TODO: Update in user
+                
+                print("Image uploaded successfully: \(url)")
+            case .failure(let error):
+                let saveAlert = UIAlertController(
+                    title: "Error",
+                    message: "Error uploading image",
+                    preferredStyle: .alert
+                )
+                
+                let okAction = UIAlertAction(title: "OK", style: .default) { action in
+        //
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+                saveAlert.addAction(okAction)
+                
+                self.present(saveAlert, animated: true, completion: nil)
+            }
+        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -233,9 +239,20 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
         }
         
         // 2. Proceed to save changes if validation passes
+        do{
+            currentUser?.email = txtEmail.text!
+            currentUser?.fullName = txtFullName.text!
+            currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
+            
+            Task{
+                try await UsersManager.updateUser(user: currentUser!)
+            }
+        }catch {
+            print("error with user saving data")
+        }
         
-            //add the requird code
         
+           
         // 3. Show an alert notifying the user that the changes have been saved
         let saveAlert = UIAlertController(
             title: "Save Changes",
@@ -248,7 +265,6 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
         }
         
         saveAlert.addAction(okAction)
-        
         present(saveAlert, animated: true, completion: nil)
     }
 }
@@ -298,6 +314,19 @@ extension AdminProfileViewController{
             resetFieldHighlight(txtPhoneNumber)
         }
 
+        var users: [User] = []
+        Task{
+            users = try await  UsersManager.getAllUsers()
+        }
+        
+        
+        var thereIs: Bool = false
+        for user in users {
+            if txtEmail.text != currentUser?.email && txtEmail.text == user.email{
+                thereIs = true
+            }
+        }
+        
         // Validate txtEmail (Valid email format)
         if let email = txtEmail?.text, email.isEmpty {
             lblErrorEmail.text = "Email address is required."
@@ -309,7 +338,12 @@ extension AdminProfileViewController{
             highlightField(txtEmail)
             isValid = false
             errorMessage = "Please fill in all required fields correctly."
-        } else {
+        }else if thereIs{
+            lblErrorEmail.text = "The provided email used by other user"
+            highlightField(txtEmail)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        }else {
             lblErrorEmail.text = ""
             resetFieldHighlight(txtEmail)
         }

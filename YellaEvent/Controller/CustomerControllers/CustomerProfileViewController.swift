@@ -66,6 +66,7 @@ class CustomerProfileViewController: UIViewController {
                 
             // get the current user object
             Task {
+                //chnage to getCustomer
                 let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
                 currentUser = us as? Customer
                 //download the current user image
@@ -83,7 +84,12 @@ class CustomerProfileViewController: UIViewController {
                 })
             }
         
-        
+        do {
+            //set a date picker on date of birth field
+            try setupDatePicker()
+        } catch {
+            print("Error setting up date picker: \(error.localizedDescription)")
+        }
     }
     
     
@@ -93,16 +99,6 @@ class CustomerProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        
-        do {
-            //set a date picker on date of birth field
-            try setupDatePicker()
-        } catch {
-            print("Error setting up date picker: \(error.localizedDescription)")
-        }
-        
-        // method to set the edit user profile page
-        setupEditPage()
         
     }
     
@@ -132,6 +128,8 @@ extension CustomerProfileViewController{
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 
+                //TODO - FATIMA - the phone number do not work
+//                txtPhoneNumber.text = String(us.phoneNumber)
                 currentUser = currentUser as? Customer
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
@@ -305,6 +303,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         PhotoManager.shared.uploadPhoto(selectedImage, to: "\(currentUser!.userID)", withNewName: "profile") { result in
             switch result {
             case .success(let url):
+                
                 // TODO: Update in user
                 print("Image uploaded successfully: \(url)")
             case .failure(let error):
@@ -366,9 +365,9 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
                 try await UsersManager.updateUser(user: currentUser!)
             }
         }catch{
-            print("dob errer save")
+            print("error with user saving data")
         }
-            //add the requird code
+
         
         // 3. Show an alert notifying the user that the changes have been saved
         let saveAlert = UIAlertController(
@@ -401,13 +400,16 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             
-            //delete the user from database -- edit_Fatima
-            //add another user and try o delete it
+            do{
+                Task{
+                    try await UsersManager.deleteUser(userID: self.currentUser!.userID, userType: self.currentUser!.type)
+                }
+            }catch{
+                
+            }
+
             
-            /*Task {
-                try await UsersManager.deleteUser(userID: self.currentUser!.userID, userType: .customer)
-            }*/
-            
+// need to be changed to the login screen
             if let LaunchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController() {
                 LaunchScreen.modalPresentationStyle = .fullScreen
                 self.present(LaunchScreen, animated: true, completion: nil)
@@ -481,6 +483,20 @@ extension CustomerProfileViewController{
             resetFieldHighlight(txtPhoneNumber)
         }
 
+        
+        var users: [User] = []
+        Task{
+            users = try await  UsersManager.getAllUsers()
+        }
+        
+        var thereIs: Bool = false
+        for user in users {
+            if txtEmail.text != currentUser?.email && txtEmail.text == user.email{
+                thereIs = true
+            }
+        }
+        
+        
         // Validate txtEmail (Valid email format)
         if let email = txtEmail?.text, email.isEmpty {
             lblErrorEmail.text = "Email address is required."
@@ -492,7 +508,12 @@ extension CustomerProfileViewController{
             highlightField(txtEmail)
             isValid = false
             errorMessage = "Please fill in all required fields correctly."
-        } else {
+        }else if thereIs{
+            lblErrorEmail.text = "The provided email used by other user"
+            highlightField(txtEmail)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        }else {
             lblErrorEmail.text = ""
             resetFieldHighlight(txtEmail)
         }

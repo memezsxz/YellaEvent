@@ -9,6 +9,8 @@ import UIKit
 
 class OrganizerProfileViewController: UIViewController {
     
+    var currentUser: Organizer?
+    
     
     // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
@@ -44,6 +46,7 @@ class OrganizerProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupEditPage()
 
         UserDefaults.standard.set("lN1LrxyBfnNjr45KRmz5VPc4cw13", forKey: K.bundleUserID) // this will be removed after seting the application
 
@@ -53,6 +56,8 @@ class OrganizerProfileViewController: UIViewController {
             
             let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
 
+            currentUser = us as! Organizer
+            
             //download the current user image
             PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                 
@@ -76,7 +81,6 @@ class OrganizerProfileViewController: UIViewController {
 
 
     override func viewWillAppear(_ animated: Bool) {
-        setupEditPage()
     }
     
 }

@@ -285,7 +285,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
                     return
                 }
                 
-                if self.currentSegment != nil {
+                if self.currentSegment != nil { // if the current segment is on all tap do not emptied the user list
                     self.users = []
                 }
                 for doc in snapshot.documents {
