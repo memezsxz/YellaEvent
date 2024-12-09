@@ -31,17 +31,17 @@ var tickets = [Ticket] ()
         tableView.dataSource = self
         tableView.register(UINib (nibName:"TicketsTableViewCell", bundle: .main), forCellReuseIdentifier: "TicketsTableViewCell")
         
-        Task{
-           try await TicketsManager.getInstence().createNewTicket(ticket: Ticket(ticketID: "ticket", eventID: "event1", userID: "1", didAttend: false, price: 12.12))
-            
-            
-        }
-        Task{
-            self.tickets = try await  TicketsManager.getInstence().getUserTickets(userId: "1")
-            DispatchQueue.main.async{
-                self.tableView.reloadData()
-            }
-        }
+//        Task{
+//           try await TicketsManager.getInstence().createNewTicket(ticket: Ticket(ticketID: "ticket", eventID: "event1", userID: "1", didAttend: false, price: 12.12))
+//            
+//            
+//        }
+//        Task{
+//            self.tickets = try await  TicketsManager.getInstence().getUserTickets(userId: "1")
+//            DispatchQueue.main.async{
+//                self.tableView.reloadData()
+//            }
+//        }
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

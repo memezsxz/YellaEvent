@@ -18,14 +18,38 @@ class OrganizerEventsViewController: UIViewController {
         
         
     }
-
+    var eventSummarys = [EventSummary]()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MainTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "MainTableViewCell")
         
-        print("test")
+        Task {
+            
+             EventsManager.getOrganizerEvents(organizerID: "4") { snapshot, error in
+                guard error == nil else {
+                    
+                    print(error!.localizedDescription)
+                    
+                    return
+                }
+                
+                if let snapshot = snapshot {
+                    Task {
+                        for doc in snapshot.documents {
+                            self.eventSummarys.append(try await EventSummary(from: doc.data()))
+                        }
+                        DispatchQueue.main.async{
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
+                else{
+                    print("not events found for organizer")
+                }
+            }
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -50,15 +74,13 @@ extension OrganizerEventsViewController: UITableViewDelegate , UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        eventSummarys.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell") as! MainTableViewCell
         
-        
-        print("test1")
-        cell.title.text = "test"
+        cell.setup(event: eventSummarys[indexPath.row])
         return cell
         
         

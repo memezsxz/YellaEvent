@@ -47,9 +47,9 @@ class OrganizerDashboardViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Task {
-            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
-        }
+//        Task {
+//            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+//        }
         // Do any additional setup after loading the view.
     }
     
