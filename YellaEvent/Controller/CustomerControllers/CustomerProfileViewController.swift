@@ -123,7 +123,7 @@ extension CustomerProfileViewController{
             do {
                 
                 let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
-                let us = try await UsersManager.getUser(userID: userId)
+                let us = try await UsersManager.getUser(userID: userId) as! Customer
                 
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
@@ -213,7 +213,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
                 
                 
                 let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
-                let us = try await UsersManager.getUser(userID: userId)
+                let us = try await UsersManager.getUser(userID: userId) as! Customer
                 datePicker.date = us.dob
                 txtFieldDate.text = formateDate(date: us.dob)
                 

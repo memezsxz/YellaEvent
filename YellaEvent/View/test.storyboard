@@ -23,12 +23,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="0IX-B9-YYg" kind="relationship" relationship="rootViewController" id="7OK-Pb-5zy"/>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="rLG-z2-8Jq"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APL-cB-1F2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="849" y="-516"/>
+            <point key="canvasLocation" x="-818" y="3"/>
         </scene>
         <!--Select Interests-->
         <scene sceneID="rqE-WE-Sd0">
@@ -39,7 +39,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="id2-eH-GTO" customClass="InterestsCollectionView" customModule="YellaEvent" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="106" width="402" height="734"/>
+                                <rect key="frame" x="0.0" y="62" width="402" height="778"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Xg6-q7-mOB">
                                     <size key="itemSize" width="128" height="128"/>
@@ -295,7 +295,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ic8-VB-2cL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-906" y="-555"/>
+            <point key="canvasLocation" x="-1143" y="-795"/>
         </scene>
         <!--Events-->
         <scene sceneID="s0d-6b-0kx">
@@ -306,7 +306,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9HP-fy-vd1" customClass="MainUISegmentedControl" customModule="YellaEvent" customModuleProvider="target">
-                                <rect key="frame" x="16" y="76" width="370" height="32"/>
+                                <rect key="frame" x="16" y="172" width="370" height="32"/>
                                 <color key="backgroundColor" name="BrandLightPurple"/>
                                 <segments>
                                     <segment title="Active"/>
@@ -315,7 +315,7 @@
                                 <color key="selectedSegmentTintColor" name="BrandPurple"/>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Sqb-Cs-8Qd">
-                                <rect key="frame" x="0.0" y="117" width="402" height="723"/>
+                                <rect key="frame" x="0.0" y="213" width="402" height="627"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EventSummaryTableViewCell" id="3DI-Lm-IfO">

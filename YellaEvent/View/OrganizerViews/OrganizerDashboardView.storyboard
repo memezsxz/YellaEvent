@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="znV-pd-Ohc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="znV-pd-Ohc">
     <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -51,7 +51,7 @@
         <!--Dashboard-->
         <scene sceneID="hF3-MA-2Ba">
             <objects>
-                <tableViewController id="Igz-rQ-wIV" sceneMemberID="viewController">
+                <tableViewController id="Igz-rQ-wIV" customClass="OrganizerDashboardViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="VfB-zx-l7U">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -108,7 +108,7 @@
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j11-eV-TUI">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j11-eV-TUI">
                                                                                     <rect key="frame" x="0.0" y="27.666666666666657" width="90.666666666666671" height="19.666666666666671"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                                                     <nil key="textColor"/>
@@ -142,7 +142,7 @@
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGw-rC-lqR">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGw-rC-lqR">
                                                                                     <rect key="frame" x="0.0" y="31.666666666666657" width="91" height="23.666666666666671"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                                                     <nil key="textColor"/>
@@ -176,7 +176,7 @@
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUR-nc-bRN">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUR-nc-bRN">
                                                                                     <rect key="frame" x="0.0" y="31.666666666666657" width="90.666666666666671" height="23.666666666666671"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                                                     <nil key="textColor"/>
@@ -210,7 +210,7 @@
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKZ-E9-tyA">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKZ-E9-tyA">
                                                                                     <rect key="frame" x="0.0" y="31.666666666666657" width="90.666666666666671" height="23.666666666666671"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                                                     <nil key="textColor"/>
@@ -252,7 +252,7 @@
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wg-On-uWw">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wg-On-uWw">
                                                                                             <rect key="frame" x="0.0" y="28" width="184" height="20"/>
                                                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                                                             <nil key="textColor"/>
@@ -287,7 +287,7 @@
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qhb-h7-iU8">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qhb-h7-iU8">
                                                                                             <rect key="frame" x="0.0" y="28" width="184" height="20"/>
                                                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                                                             <nil key="textColor"/>
@@ -326,7 +326,7 @@
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSk-g9-BIK">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSk-g9-BIK">
                                                                                             <rect key="frame" x="0.0" y="28" width="184" height="20.333333333333329"/>
                                                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                                                             <nil key="textColor"/>
@@ -360,7 +360,7 @@
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uub-n3-9hP">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uub-n3-9hP">
                                                                                             <rect key="frame" x="0.0" y="31.333333333333314" width="184" height="17"/>
                                                                                             <constraints>
                                                                                                 <constraint firstAttribute="height" constant="17" id="ohd-Dk-hdY"/>
@@ -435,7 +435,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="On Going Events" id="8Tg-iU-epa">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="263" id="OaM-yA-YeN">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MainTableViewCell" rowHeight="263" id="OaM-yA-YeN">
                                         <rect key="frame" x="0.0" y="576" width="440" height="263"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OaM-yA-YeN" id="Vmr-Bm-hQ3">
@@ -455,6 +455,16 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Dashboard" image="text.page" catalog="system" selectedImage="text.page.fill" id="iAl-Ej-iEQ"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="allEventsLabel" destination="j11-eV-TUI" id="dRw-Tm-Ej6"/>
+                        <outlet property="averageRatingLabel" destination="Qhb-h7-iU8" id="z9q-ko-pbS"/>
+                        <outlet property="canceledEventsLabel" destination="EKZ-E9-tyA" id="U9o-14-jDP"/>
+                        <outlet property="ongoingEventsLabel" destination="NGw-rC-lqR" id="JZH-Jv-6xF"/>
+                        <outlet property="overEventsLabel" destination="zUR-nc-bRN" id="FXi-Cg-zsO"/>
+                        <outlet property="revenueLabel" destination="NSk-g9-BIK" id="7lx-R3-gZJ"/>
+                        <outlet property="soldTicketsLabel" destination="7wg-On-uWw" id="sx4-2I-Ps1"/>
+                        <outlet property="totalAttendence" destination="Uub-n3-9hP" id="H8O-66-Owf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lfe-gM-RH6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

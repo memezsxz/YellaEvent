@@ -41,8 +41,11 @@ class AdminUsersViewController: UIViewController {
         
         searchbar.delegate = self
 //        Task {
-//            try await  UsersManager.createNewUser(user: Customer(userID: "sdfsd", fullName: "fds", email: "dsfdfs@dsf.co", dob: Date.now, dateCreated: Date.now, phoneNumber: 2123123, profileImageURL: "321213", badgesArray: [], interestsArray: []))
+//            try await  UsersManager.createNewUser(user: Organizer(fullName: "dsada", email: "sdaas@fdsf.fdsfsd", dob: Date.now, dateCreated: Date.now, phoneNumber: 24124421, profileImageURL: "sdfsdf", startDate: Date.now, endDate: Date.now, LicenseDocumentURL: "FSDAFSF"))
 //        }
+//        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

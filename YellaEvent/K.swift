@@ -31,7 +31,7 @@ struct K {
         formatter.dateStyle = DateFormatter.Style.short
         return formatter
     }()
- 
+    
     static let encoder : Firestore.Encoder = {
         let encoder = Firestore.Encoder()
         encoder.keyEncodingStrategy = .useDefaultKeys
@@ -49,7 +49,6 @@ struct K {
             static let userID = "userID"
             static let fullName = "fullName"
             static let email = "email"
-            static let dob = "dob"
             static let dateCreated = "dateCreated"
             static let phoneNumber = "phoneNumber"
             static let profileImageURL = "profileImageURL"
@@ -69,8 +68,10 @@ struct K {
         }
         
         struct Customers {
+            
             static let collectionName = "customers"
-
+            
+            static let dob = "dob"
             static let badgesArray = "badgesArray" // array of ids to the badges they have
             static let intrestArray = "intrestArray" // array of ids to the badges they have
         }
@@ -88,7 +89,7 @@ struct K {
             static let status = "status"
             
             static let categoryID = "categoryID"
-
+            
             static let locationURL = "locationURL"
             
             static let minimumAge = "minimumAge"
@@ -100,7 +101,9 @@ struct K {
             
             static let coverImageURL = "coverImageURL"
             static let mediaArray = "mediaArray" // references to the paths of uploaded photos
-//            static let badgeID = "badgeID"  // we might not need
+            static let isDeleted = "isDeleted" // bool
+            
+            //            static let badgeID = "badgeID"  // we might not need
         }
         
         struct Tickets {
@@ -108,31 +111,33 @@ struct K {
             static let ticketID = "ticketID"
             
             static let eventID = "eventID"
-            static let eventName = "eventName"
-            static let organizerName = "organizerName"
-            static let startTimeStamp = "startTimeStamp"
+            //            static let eventName = "eventName"
+            static let organizerID = "organizerID"
+            //            static let organizerName = "organizerName"
+            //            static let startTimeStamp = "startTimeStamp"
             
             static let quantity = "quantity"
-            static let userID = "userID"
+            static let customerID = "customerID"
             static let didAttend = "didAttend" // bool
             static let totalPrice = "totalPrice"
-            static let locationURL = "locationURL"
+            static let status = "status"
+            //            static let locationURL = "locationURL"
         }
         
-//        struct Rattings {
-//            static let collectionName = "ratings"
-//            static let userID = "userID"
-//            static let eventID = "eventID"
-//            static let organizerID = "organizerID"
-//            static let rating = "rating"
-//        }
+        //        struct Rattings {
+        //            static let collectionName = "ratings"
+        //            static let userID = "userID"
+        //            static let eventID = "eventID"
+        //            static let organizerID = "organizerID"
+        //            static let rating = "rating"
+        //        }
         
         struct Badges {
             static let collectionName = "badges"
             static let badgeID = "badgeID"
             static let image = "image"
             static let eventID = "eventID" // maybe we want to delete the event, but we do not want the badge to be removed from users // delete or not?
-            static let eventName = "eventName"
+            //            static let eventName = "eventName"
             static let categoryID = "categoryID"
         }
         
@@ -159,7 +164,7 @@ struct K {
             static let eventID = "eventID"
             static let adminID = "adminID"
             static let organizerID = "organizerID"
-
+            
             static let reason = "reason"
             static let descroption = "descroption"
         }

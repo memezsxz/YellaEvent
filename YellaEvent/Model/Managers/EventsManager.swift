@@ -21,8 +21,11 @@ class EventsManager {
     
     static func createNewEvent(event: Event) async throws {
         Task {
-            let doc = eventsCollection.addDocument(data: event.toFirestoreData())
-            doc.updateData([K.FStore.Events.eventID: doc.documentID])
+            let doc = try await eventsCollection.addDocument(data: event.toFirestoreData())
+            try await doc.updateData([K.FStore.Events.eventID: doc.documentID])
+            var badge = try await BadgesManager.getBadge(eventID: event.eventID)
+            badge.eventID = doc.documentID
+            try await BadgesManager.updateBadge(badge: badge)
         }
     }
     
@@ -31,19 +34,19 @@ class EventsManager {
     }
     
     static func updateEvent(event: Event) async throws {
-        let oldEvent =  try await Event(from: try eventDocument(eventID: event.eventID).getDocument().data()!)
+//        let oldEvent =  try await Event(from: try eventDocument(eventID: event.eventID).getDocument().data()!)
 //            .setData(try K.encoder.encode(event), merge: true)
-        if oldEvent.category.categoryID != event.category.categoryID {
-            var badge = try await BadgesManager.getBadge(eventID: event.eventID)
-
-             badge.eventName = event.name
-            badge.category = event.category
-
-            try await BadgesManager.updateBadge(badge: badge)
-        }
-        if oldEvent.startTimeStamp != event.startTimeStamp {
-            try await TicketsManager.updateEventStartTimeStamp(eventID: event.eventID, startTimeStamp: event.startTimeStamp)
-        }
+//        if oldEvent.category.categoryID != event.category.categoryID {
+//            var badge = try await BadgesManager.getBadge(eventID: event.eventID)
+//
+//             badge.eventName = event.name
+//            badge.category = event.category
+//
+//            try await BadgesManager.updateBadge(badge: badge)
+//        }
+//        if oldEvent.startTimeStamp != event.startTimeStamp {
+//            try await TicketsManager.updateEventStartTimeStamp(eventID: event.eventID, startTimeStamp: event.startTimeStamp)
+//        }
 
         try await eventDocument(eventID: event.eventID).setData(event.toFirestoreData(), merge: true)
     }
@@ -52,6 +55,7 @@ class EventsManager {
         self.listener?.remove()
         self.listener = eventsCollection
             .whereField(K.FStore.Events.organizerID, isEqualTo: organizerID)
+            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
             .order(by: K.FStore.Events.startTimeStamp)
             .addSnapshotListener(listener)
     }
@@ -59,6 +63,7 @@ class EventsManager {
     private static func getOrganizerEvents(organizerID: String) async throws -> QuerySnapshot {
         try await eventsCollection
             .whereField(K.FStore.Events.organizerID, isEqualTo: organizerID)
+            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
             .getDocuments()
     }
     
@@ -90,35 +95,41 @@ class EventsManager {
         self.listener?.remove()
         self.listener = eventsCollection
             .order(by: K.FStore.Events.startTimeStamp)
+            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
             .addSnapshotListener(listener)
     }
     
     static func deleteEvent(eventID: String) async throws {
-        try await eventDocument(eventID: eventID).delete()
+        try await eventDocument(eventID: eventID).setData([K.FStore.Events.isDeleted: true], merge: false)
     }
     
     static func banEvent(event: Event, reason: String,  description : String) async throws {
         try Firestore.firestore().collection(K.FStore.EventBans.collectionName).addDocument(from: EventBan(eventID: event.eventID, descroption: description, adminID: UserDefaults.standard.string(forKey: K.bundleUserID)!, organizerID: event.organizerID))
+        
+       try await eventDocument(eventID: event.eventID).updateData([K.FStore.Events.status: EventStatus.banned])
     }
     
     static func unbanEvent(eventID: String) async throws {
         let eventBansCollection = Firestore.firestore().collection(K.FStore.EventBans.collectionName)
         
-        let snapshot = try await eventBansCollection.whereField(K.FStore.EventBans.eventID, isEqualTo: eventID).getDocuments()
-        for doc in snapshot.documents {
-            try await doc.reference.delete()
-        }
+        try await eventBansCollection.document(eventID).delete()
+//        for doc in snapshot.documents {
+//            try await doc.reference.delete()
+//        }
+        
+        try await eventDocument(eventID: eventID).updateData([K.FStore.Events.status : EventStatus.ongoing])
     }
     
-    static func isEventBanned(userID: String) async throws -> EventBan? {
+    static func isEventBanned(eventID: String) async throws -> EventBan? {
         let eventBansCollection = Firestore.firestore().collection(K.FStore.EventBans.collectionName)
         
-        let snapshot = try await eventBansCollection.whereField(K.FStore.EventBans.eventID, isEqualTo: userID).getDocuments()
+        let doc = eventBansCollection.document(eventID)
         
-        if snapshot.documents.isEmpty {
+        do {
+            return try await doc.getDocument().data(as: EventBan.self)
+        }
+        catch {
             return nil
-        } else {
-            return try snapshot.documents[0].data(as: EventBan.self)
         }
     }
 
@@ -133,6 +144,7 @@ class EventsManager {
     static func searchEvents(byOrganizerID id: String) async throws -> [EventSummary] {
         let snapshot = try await eventsCollection
             .whereField(K.FStore.Events.organizerID, isEqualTo: id)
+            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
             .order(by: K.FStore.Events.name)
             .getDocuments()
 
@@ -161,6 +173,7 @@ class EventsManager {
     static func searchEvents(byText name: String) async throws -> [EventSummary] {
         let name = name.lowercased()
         let snapshot = try await eventsCollection
+            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
             .whereField(K.FStore.Events.status, isEqualTo: EventStatus.ongoing.rawValue)
             .getDocuments()
 
@@ -235,6 +248,73 @@ class EventsManager {
         try await eventsCollection.whereField(K.FStore.Events.categoryID, isEqualTo: categoryID).getDocuments().documents.count
     }
 
+    static func getDashboardStats(
+        organizerID: String,
+        completion: @escaping (Int, Int, Int, Int, Int, Double, Double, Int) -> Void
+    ) async throws {
+        // Fetch all events for the organizer
+        let events = try await EventsManager.getOrganizerEvents(organizerID: organizerID)
+        
+        // Use async let to perform concurrent tasks
+        var numOngoingEvents = 0
+        var numCancelledEvents = 0
+        var numCompletedEvents = 0
+        var totalAttendance = 0
+        var totalRevenue = 0.0
+        var soldTickets = 0
+        var totalRating = 0.0
+
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for eventDocument in events.documents {
+                group.addTask {
+                    let event = try await Event(from: eventDocument.data())
+
+                    switch event.status {
+                    case .ongoing:
+                        numOngoingEvents += 1
+                    case .cancelled:
+                        numCancelledEvents += 1
+                    case .completed:
+                        numCompletedEvents += 1
+                    default:
+                        break
+                    }
+
+                    let tickets = try await TicketsManager.getEventTickets(eventID: event.eventID)
+                    for ticket in tickets {
+                        if event.status == .ongoing || event.status == .completed {
+                            soldTickets += 1
+                        }
+                        if ticket.didAttend {
+                            totalAttendance += 1
+                            totalRevenue += ticket.totalPrice
+                        }
+                    }
+
+                    totalRating += Event.getRatting(from: event.rattingsArray)
+                }
+            }
+            try await group.waitForAll()
+        }
+
+        // Compute derived statistics
+        let numAllEvents = numOngoingEvents + numCancelledEvents + numCompletedEvents
+        let averageRating = events.documents.isEmpty ? 0.0 : totalRating / Double(events.documents.count)
+
+        // Return results
+        completion(
+            numCancelledEvents,
+            numCompletedEvents,
+            numOngoingEvents,
+            numAllEvents,
+            totalAttendance,
+            totalRevenue,
+            averageRating,
+            soldTickets
+        )
+    }
+
+    
     // re do
     //    func getEventRating(eventID: String) async throws -> Double {
     //        var count = 0.0

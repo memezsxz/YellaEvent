@@ -86,9 +86,55 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
 //        collection.delegate = self
 //        collection.dataSource = self
 //        collection.register(InterstsCollectionViewCell.self, forCellWithReuseIdentifier: "InterestsCollectionViewCell")
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
+        
+//        Task {
+//           try await  UsersManager.createNewUser(user: Admin(userID: "1", fullName: "das dsa", email: "d@as", dateCreated: Date.now, phoneNumber: 2312312123, profileImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74"))
+//            
+//            try await UsersManager.createNewUser(user: Customer(userID: "2", fullName: "wewq wqqe weq", email: "wqewq@wqe", dob: Date.now, dateCreated: Date.now, phoneNumber: 1123123123, profileImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", badgesArray: [], interestsArray: []))
+//      
+//            try await UsersManager.createNewUser(user: Organizer(userID: "3", fullName: "dsa dsaojk", email: "ugk@fewbj", dateCreated: Date.now, phoneNumber: 321312132, profileImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", startDate: Date.now, endDate: Date.now, LicenseDocumentURL: "wfdfsdsa"))
+//            
+//            try await UsersManager.createNewUser(user: Organizer(userID: "4", fullName: "fkbw SDGUFI P3EQR", email: "adi@ukuk.vrt", dateCreated: Date.now, phoneNumber: 213412352, profileImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", startDate: Date.now, endDate: Date.now, LicenseDocumentURL: "WQDBHFK"))
+//
+//            try await CategoriesManager.createNewCategory(category: Category(name: "Song", icon: "🎵"))
+//            try await CategoriesManager.createNewCategory(category: Category(name: "Education", icon: "✏️"))
+//            try await CategoriesManager.createNewCategory(category: Category(name: "Game", icon: "🎯"))
+
+//            let cat1 = try await  CategoriesManager.getCategory(categorieID: "2pVKStedBMlFH5r0gsKz")
+//            let cat2 = try await CategoriesManager.getCategory(categorieID: "A3X7es5m9EbSL4c26sTk")
+
+//            try await EventsManager.createNewEvent(event: Event(organizerID: "3", organizerName: "dsa dsaojk", name: "event name", description: "sdfsdfdsf dfsf s dsf   dsfdfsfdssf dfsfdsfdsfs sdfdfsfsdfs dsffsdfdsfds  dsffdsfds", startTimeStamp: Date.now, endTimeStamp: Date.now, status: .ongoing, category: cat1, locationURL: "asd adsda", minimumAge: 12, maximumAge: 24, rattingsArray: [:], maximumTickets: 1233, price: 123.231, coverImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", mediaArray: []))
+//            
+//            try await EventsManager.createNewEvent(event: Event(organizerID: "4", organizerName: "fkbw SDGUFI P3EQR", name: "event name looooong", description: "rytytr dfsf s dsf   rtfhxb dfsfdsfdsfs sdfdfsfsdfs kkgl  dsffdsfds", startTimeStamp: Date.now, endTimeStamp: Date.now, status: .ongoing, category: cat1, locationURL: "asd adsda", minimumAge: 12, maximumAge: 24, rattingsArray: [:], maximumTickets: 1233, price: 123.231, coverImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", mediaArray: []))
+
+//            print("cat1", cat2)
+//            print(cat1, "cat2")
+//
+//            try await BadgesManager.createNewBadge(badge: Badge(image: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", eventID: "tsOPfvJzXdfXDNdTmJFn", eventName: "event name", category: cat1))
+//            
+//           try await BadgesManager.createNewBadge(badge: Badge(image: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74", eventID: "IQTniXexNLrGd6HtFsFx", eventName: "event name looooong", category: cat2))
+//
+//            
+//            try await TicketsManager.createNewTicket(ticket:  Ticket(ticketID: "sd", eventID: "tsOPfvJzXdfXDNdTmJFn", customerID: "2", organizerID: "3", eventName:
+//                    "event name", organizerName: "dsa dsaojk", startTimeStamp: Date.now, didAttend: false, totalPrice: 12.21, locationURL: "dasd", quantity: 2, status: .paied)
+//)
+            
+//            var event = try await EventsManager.getEvent(eventID: "IQTniXexNLrGd6HtFsFx")
+//            event.status = .ongoing
+//            try await EventsManager.updateEvent(event: event)
+//            
+//            event = try await EventsManager.getEvent(eventID: "tsOPfvJzXdfXDNdTmJFn")
+//            event.status = .banned
+//            try await EventsManager.updateEvent(event: event)
+//
+////            print(try await BadgesManager.getBadge(eventID: "IQTniXexNLrGd6HtFsFx"))
+//            print(try await TicketsManager.getEventTickets(eventID: "tsOPfvJzXdfXDNdTmJFn"
+//))
+//        }
+        
         //        Task {
         //            EventsManager.getInstence().getAllEvents(listener: { snapshot, error in
         //                guard let snapshot else { return }
