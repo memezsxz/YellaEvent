@@ -1,134 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dAb-eL-LfG">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="R2S-Zn-jQF">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bUe-zm-GqT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="md6-aK-fW3" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="auM-iy-MSE">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="dft-UL-JkV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-1708" y="-28"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="eOw-hp-WLT">
             <objects>
                 <navigationController id="dAb-eL-LfG" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="EU9-Aj-B2g">
-                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="98"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                            <color key="textColor" name="BrandDarkPurple"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="Y6W-OH-hqX" kind="show" id="yIe-7h-qGt"/>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="SMD-Bl-vAK"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fon-pG-ogU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-790" y="-28"/>
+            <point key="canvasLocation" x="-802" y="-2"/>
         </scene>
-        <!--Customer Registration View Controller-->
+        <!--Payment-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="CustomerRegistrationViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Q36-qO-AHj">
-                                <rect key="frame" x="16" y="156" width="361" height="54.333333333333343"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="TMW-cc-WTB">
+                                <rect key="frame" x="16" y="213.66666666666663" width="361" height="418"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7J-6A-mQb">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="BrandDarkPurple"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrq-2m-VmE">
-                                        <rect key="frame" x="0.0" y="20.333333333333343" width="361" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Rgu-bd-TBX">
-                                <rect key="frame" x="16" y="243.00000000000003" width="361" height="54.333333333333343"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Holder Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EP8-z5-S6v">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="BrandDarkPurple"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-Ab-RCW">
-                                        <rect key="frame" x="0.0" y="20.333333333333314" width="361" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2aE-GS-uAk">
-                                <rect key="frame" x="16" y="336" width="361" height="54.333333333333314"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Expiry Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmw-6a-5Kc">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="BrandDarkPurple"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="axS-cw-ud6">
-                                        <rect key="frame" x="0.0" y="20.333333333333314" width="361" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zW2-Vo-xk3">
-                                <rect key="frame" x="16" y="428" width="361" height="54.333333333333314"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card CCV" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prm-cc-Jj8">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="BrandDarkPurple"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iGd-mn-k5G">
-                                        <rect key="frame" x="0.0" y="20.333333333333314" width="361" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                            </stackView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="*By proceeding, you are agree to our Terms and Conditions." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FBL-LK-oVs">
-                                <rect key="frame" x="16" y="490" width="369" height="58"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="58" id="zAy-yG-J2E"/>
-                                </constraints>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2DV-M2-Yao">
-                                <rect key="frame" x="16" y="631" width="361" height="110"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gnd-bE-Smi">
-                                        <rect key="frame" x="0.0" y="0.0" width="179.66666666666666" height="110"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Q36-qO-AHj">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="91.666666666666671"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Total Price for X Tickets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgZ-gn-4iY">
-                                                <rect key="frame" x="0.0" y="0.0" width="179.66666666666666" height="89.666666666666671"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7J-6A-mQb">
+                                                <rect key="frame" x="0.0" y="0.0" width="361" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <color key="textColor" name="BrandDarkPurple"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrq-2m-VmE">
+                                                <rect key="frame" x="0.0" y="46.000000000000028" width="361" height="45.666666666666657"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Rgu-bd-TBX">
+                                        <rect key="frame" x="0.0" y="108.66666666666666" width="361" height="92"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Holder Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EP8-z5-S6v">
+                                                <rect key="frame" x="0.0" y="0.0" width="361" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <color key="textColor" name="BrandDarkPurple"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-Ab-RCW">
+                                                <rect key="frame" x="0.0" y="46" width="361" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2aE-GS-uAk">
+                                        <rect key="frame" x="0.0" y="217.66666666666666" width="361" height="91.666666666666657"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Expiry Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmw-6a-5Kc">
+                                                <rect key="frame" x="0.0" y="0.0" width="361" height="45.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <color key="textColor" name="BrandDarkPurple"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="axS-cw-ud6">
+                                                <rect key="frame" x="0.0" y="45.666666666666686" width="361" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="zW2-Vo-xk3">
+                                        <rect key="frame" x="0.0" y="326.33333333333337" width="361" height="91.666666666666686"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card CCV" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prm-cc-Jj8">
+                                                <rect key="frame" x="0.0" y="0.0" width="361" height="45.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <color key="textColor" name="BrandDarkPurple"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iGd-mn-k5G">
+                                                <rect key="frame" x="0.0" y="45.666666666666629" width="361" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Q36-qO-AHj" firstAttribute="height" secondItem="TMW-cc-WTB" secondAttribute="height" multiplier="0.2195" id="x2d-GN-Chn"/>
+                                </constraints>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7U8-rV-khC">
+                                <rect key="frame" x="16" y="157" width="361" height="40.666666666666657"/>
+                                <string key="text">Secure Your Event Booking Now and Let the 
+Fun Begin!</string>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
+                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.60999999999999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*By proceeding, you are agree to our Terms and Conditions." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndb-Hb-eki">
+                                <rect key="frame" x="16" y="650" width="361" height="14.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="rvb-I9-umN">
+                                <rect key="frame" x="30" y="714.33333333333337" width="333" height="38.333333333333371"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="TU3-eS-RbS">
+                                        <rect key="frame" x="0.0" y="0.0" width="115" height="38.333333333333336"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Total Price for X Tickets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ich-66-sx4">
+                                                <rect key="frame" x="0.0" y="0.0" width="115" height="16.666666666666668"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" name="BrandPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BHD XXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iwg-kg-vkY">
-                                                <rect key="frame" x="0.0" y="89.666666666666629" width="179.66666666666666" height="20.333333333333329"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BHD XXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kD6-xT-YFR">
+                                                <rect key="frame" x="0.0" y="16.666666666666629" width="115" height="21.666666666666671"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Ich-66-sx4" secondAttribute="trailing" id="S7w-2C-qJI"/>
+                                            <constraint firstItem="Ich-66-sx4" firstAttribute="leading" secondItem="TU3-eS-RbS" secondAttribute="leading" id="tjZ-SL-lFL"/>
+                                            <constraint firstItem="Ich-66-sx4" firstAttribute="top" secondItem="TU3-eS-RbS" secondAttribute="top" id="yT3-yJ-0HF"/>
+                                        </constraints>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Opz-1G-Rm8">
-                                        <rect key="frame" x="179.66666666666663" y="0.0" width="181.33333333333337" height="110"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14l-pc-xyh">
+                                        <rect key="frame" x="135" y="0.0" width="198" height="38.333333333333336"/>
                                         <color key="tintColor" name="BrandPurple"/>
                                         <state key="normal" title="Button" backgroundImage="ticket" catalog="system"/>
                                         <buttonConfiguration key="configuration" style="filled" image="ticket" catalog="system" title="Pay"/>
@@ -139,29 +175,21 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Q36-qO-AHj" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="57z-18-Neq"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="FBL-LK-oVs" secondAttribute="trailing" constant="8" id="7Mr-gh-HM2"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="2aE-GS-uAk" secondAttribute="trailing" constant="16" id="H4V-QV-jvb"/>
-                            <constraint firstItem="2aE-GS-uAk" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="Qf9-T9-33o"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="zW2-Vo-xk3" secondAttribute="trailing" constant="16" id="S2G-d5-TR1"/>
-                            <constraint firstItem="Q36-qO-AHj" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="156" id="S7g-cj-U1X"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="2DV-M2-Yao" secondAttribute="bottom" constant="101" id="W87-BI-bRF"/>
-                            <constraint firstItem="FBL-LK-oVs" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="ayc-Ls-p1L"/>
-                            <constraint firstItem="2aE-GS-uAk" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="336" id="c2C-dG-ECG"/>
-                            <constraint firstItem="Rgu-bd-TBX" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="cMR-jg-bg4"/>
-                            <constraint firstItem="2DV-M2-Yao" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="fvJ-Ge-tEp"/>
-                            <constraint firstItem="2DV-M2-Yao" firstAttribute="top" secondItem="FBL-LK-oVs" secondAttribute="bottom" constant="83" id="guE-Vy-xfJ"/>
-                            <constraint firstItem="2aE-GS-uAk" firstAttribute="top" secondItem="Rgu-bd-TBX" secondAttribute="bottom" constant="38.666666666666742" id="jYe-ok-Ix9"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Rgu-bd-TBX" secondAttribute="trailing" constant="16" id="k4j-ee-SnW"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Q36-qO-AHj" secondAttribute="trailing" constant="16" id="kCI-0l-qEq"/>
-                            <constraint firstAttribute="bottom" secondItem="zW2-Vo-xk3" secondAttribute="bottom" constant="359.66666666666669" id="nrh-B0-Mlh"/>
-                            <constraint firstItem="zW2-Vo-xk3" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="ui8-5C-blq"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="2DV-M2-Yao" secondAttribute="trailing" constant="16" id="vOc-Ve-AqW"/>
-                            <constraint firstItem="zW2-Vo-xk3" firstAttribute="top" secondItem="2aE-GS-uAk" secondAttribute="bottom" constant="37.666666666666686" id="yON-x4-tl7"/>
-                            <constraint firstItem="FBL-LK-oVs" firstAttribute="top" secondItem="zW2-Vo-xk3" secondAttribute="bottom" constant="7.6666666666666856" id="zWo-b7-oO4"/>
+                            <constraint firstItem="rvb-I9-umN" firstAttribute="top" secondItem="Ndb-Hb-eki" secondAttribute="bottom" constant="50" id="5Xd-g3-kcW"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Ndb-Hb-eki" secondAttribute="trailing" constant="16" id="BqE-tn-juG"/>
+                            <constraint firstItem="rvb-I9-umN" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="F1o-rf-3IX"/>
+                            <constraint firstItem="Ndb-Hb-eki" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="FLo-sn-ldi"/>
+                            <constraint firstItem="TMW-cc-WTB" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="J4x-Yu-hVM"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="TMW-cc-WTB" secondAttribute="trailing" constant="16" id="O2A-X6-WP8"/>
+                            <constraint firstItem="TMW-cc-WTB" firstAttribute="top" secondItem="7U8-rV-khC" secondAttribute="bottom" constant="16" id="Onl-JM-hce"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="rvb-I9-umN" secondAttribute="trailing" constant="30" id="RaD-Ib-ALM"/>
+                            <constraint firstItem="7U8-rV-khC" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Sn7-rF-LPF"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="7U8-rV-khC" secondAttribute="trailing" constant="16" id="VOr-AB-44p"/>
+                            <constraint firstItem="Ndb-Hb-eki" firstAttribute="top" secondItem="TMW-cc-WTB" secondAttribute="bottom" constant="18.329999999999998" id="Yji-0F-sq2"/>
+                            <constraint firstItem="7U8-rV-khC" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="eAJ-K3-rbt"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="1lB-Q3-Vk4"/>
+                    <navigationItem key="navigationItem" title="Payment" id="1lB-Q3-Vk4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -178,6 +206,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
