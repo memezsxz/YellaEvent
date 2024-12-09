@@ -23,24 +23,26 @@ class CustomerSearchViewController: UIViewController {
     @IBOutlet weak var catButtons: UIStackView!
     
     
+    var prevSearch: [String] = []
+    let userDefaults = UserDefaults.standard
     
-    let prevSearch = ["Eminim", "AWS", "Fun", "GDG", "Swift"]
     var filteredSearch: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        prevSearch = userDefaults.array(forKey: "prevSearch") as? [String] ?? []
         
         filteredSearch = prevSearch
         if tableView != nil {
             tableView.delegate = self
             tableView.dataSource = self
-            
-            
+            if prevSearch.isEmpty{
+                tableView.isHidden = true
+                previousLbl.isHidden = true
+            }
         } else{
             priceTextField.text = String(Int( priceSlider.value))
             ageTextField.text = String(Int( ageSlider.value))
-            
-            
         }
         
     }
@@ -63,6 +65,8 @@ class CustomerSearchViewController: UIViewController {
         // Hide keyboard and UI elements
         searchBar.resignFirstResponder()
         showHide(condition: true)
+        prevSearch.append(searchBar.text ?? "")
+        UserDefaults.standard.set(prevSearch, forKey: "prevSearch")
     }
 
     // Cancel button logic
