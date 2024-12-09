@@ -48,7 +48,7 @@ final class TicketsManager {
     func createNewTicket(ticket: Ticket) async throws {
         Task {
             let doc = try ticketsCollection.addDocument(data: encoder.encode(ticket))
-            doc.setData([K.FStore.Tickets.ticketID: doc.documentID])
+            doc.updateData([K.FStore.Tickets.ticketID: doc.documentID])
         }
     }
     

@@ -10,7 +10,6 @@ import UIKit
 class TicketsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var view: UIView!
-    @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var subtext: UILabel!
     @IBOutlet weak var arrowPhoto: UIImageView!

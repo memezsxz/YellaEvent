@@ -3,28 +3,179 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="eOw-hp-WLT">
+            <objects>
+                <navigationController id="dAb-eL-LfG" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="EU9-Aj-B2g">
+                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="show" id="yIe-7h-qGt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fon-pG-ogU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-790" y="-28"/>
+        </scene>
         <!--Customer Registration View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="CustomerRegistrationViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Q36-qO-AHj">
+                                <rect key="frame" x="16" y="156" width="361" height="54.333333333333343"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7J-6A-mQb">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="BrandDarkPurple"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrq-2m-VmE">
+                                        <rect key="frame" x="0.0" y="20.333333333333343" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Rgu-bd-TBX">
+                                <rect key="frame" x="16" y="243.00000000000003" width="361" height="54.333333333333343"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Holder Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EP8-z5-S6v">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="BrandDarkPurple"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-Ab-RCW">
+                                        <rect key="frame" x="0.0" y="20.333333333333314" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2aE-GS-uAk">
+                                <rect key="frame" x="16" y="336" width="361" height="54.333333333333314"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Expiry Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmw-6a-5Kc">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="BrandDarkPurple"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="axS-cw-ud6">
+                                        <rect key="frame" x="0.0" y="20.333333333333314" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zW2-Vo-xk3">
+                                <rect key="frame" x="16" y="428" width="361" height="54.333333333333314"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card CCV" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prm-cc-Jj8">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="BrandDarkPurple"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iGd-mn-k5G">
+                                        <rect key="frame" x="0.0" y="20.333333333333314" width="361" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="*By proceeding, you are agree to our Terms and Conditions." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FBL-LK-oVs">
+                                <rect key="frame" x="16" y="490" width="369" height="58"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58" id="zAy-yG-J2E"/>
+                                </constraints>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2DV-M2-Yao">
+                                <rect key="frame" x="16" y="631" width="361" height="110"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gnd-bE-Smi">
+                                        <rect key="frame" x="0.0" y="0.0" width="179.66666666666666" height="110"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Total Price for X Tickets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgZ-gn-4iY">
+                                                <rect key="frame" x="0.0" y="0.0" width="179.66666666666666" height="89.666666666666671"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" name="BrandPurple"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BHD XXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iwg-kg-vkY">
+                                                <rect key="frame" x="0.0" y="89.666666666666629" width="179.66666666666666" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Opz-1G-Rm8">
+                                        <rect key="frame" x="179.66666666666663" y="0.0" width="181.33333333333337" height="110"/>
+                                        <color key="tintColor" name="BrandPurple"/>
+                                        <state key="normal" title="Button" backgroundImage="ticket" catalog="system"/>
+                                        <buttonConfiguration key="configuration" style="filled" image="ticket" catalog="system" title="Pay"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Q36-qO-AHj" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="57z-18-Neq"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="FBL-LK-oVs" secondAttribute="trailing" constant="8" id="7Mr-gh-HM2"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="2aE-GS-uAk" secondAttribute="trailing" constant="16" id="H4V-QV-jvb"/>
+                            <constraint firstItem="2aE-GS-uAk" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="Qf9-T9-33o"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="zW2-Vo-xk3" secondAttribute="trailing" constant="16" id="S2G-d5-TR1"/>
+                            <constraint firstItem="Q36-qO-AHj" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="156" id="S7g-cj-U1X"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="2DV-M2-Yao" secondAttribute="bottom" constant="101" id="W87-BI-bRF"/>
+                            <constraint firstItem="FBL-LK-oVs" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="ayc-Ls-p1L"/>
+                            <constraint firstItem="2aE-GS-uAk" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="336" id="c2C-dG-ECG"/>
+                            <constraint firstItem="Rgu-bd-TBX" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="cMR-jg-bg4"/>
+                            <constraint firstItem="2DV-M2-Yao" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="fvJ-Ge-tEp"/>
+                            <constraint firstItem="2DV-M2-Yao" firstAttribute="top" secondItem="FBL-LK-oVs" secondAttribute="bottom" constant="83" id="guE-Vy-xfJ"/>
+                            <constraint firstItem="2aE-GS-uAk" firstAttribute="top" secondItem="Rgu-bd-TBX" secondAttribute="bottom" constant="38.666666666666742" id="jYe-ok-Ix9"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Rgu-bd-TBX" secondAttribute="trailing" constant="16" id="k4j-ee-SnW"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Q36-qO-AHj" secondAttribute="trailing" constant="16" id="kCI-0l-qEq"/>
+                            <constraint firstAttribute="bottom" secondItem="zW2-Vo-xk3" secondAttribute="bottom" constant="359.66666666666669" id="nrh-B0-Mlh"/>
+                            <constraint firstItem="zW2-Vo-xk3" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="ui8-5C-blq"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="2DV-M2-Yao" secondAttribute="trailing" constant="16" id="vOc-Ve-AqW"/>
+                            <constraint firstItem="zW2-Vo-xk3" firstAttribute="top" secondItem="2aE-GS-uAk" secondAttribute="bottom" constant="37.666666666666686" id="yON-x4-tl7"/>
+                            <constraint firstItem="FBL-LK-oVs" firstAttribute="top" secondItem="zW2-Vo-xk3" secondAttribute="bottom" constant="7.6666666666666856" id="zWo-b7-oO4"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="1lB-Q3-Vk4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="116" y="-2"/>
+            <point key="canvasLocation" x="115.26717557251908" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>
+        <image name="ticket" catalog="system" width="128" height="86"/>
+        <namedColor name="BrandDarkPurple">
+            <color red="0.29399999976158142" green="0.2669999897480011" blue="0.32499998807907104" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BrandPurple">
+            <color red="0.51800000667572021" green="0.36899998784065247" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
