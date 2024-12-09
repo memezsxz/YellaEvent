@@ -139,6 +139,7 @@
                                                 <constraint firstItem="VXF-kQ-hjm" firstAttribute="leading" secondItem="qQe-cY-jqp" secondAttribute="leading" constant="16" id="qXc-IL-1h1"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>

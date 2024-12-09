@@ -223,7 +223,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var user = users[indexPath.row]
+        let user = users[indexPath.row]
         if (user.type == .admin){
             performSegue(withIdentifier: "ViewAdminPage", sender: self)
         }else if (user.type == .customer){
