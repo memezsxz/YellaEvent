@@ -20,9 +20,10 @@ struct RuntimeError: LocalizedError {
     }
 }
 
+
+var currentUser: User? = nil
+
 class AdminUsersViewController: UIViewController {
-    
-    
     
 //Users List page
     // Outlet
@@ -32,7 +33,6 @@ class AdminUsersViewController: UIViewController {
     @IBOutlet weak var searchbar: UISearchBar!
     var users : [User] = []
     var currentSegment : UserType?
-    
     
 //Create Organizer Page
     // Outlet
@@ -72,14 +72,22 @@ class AdminUsersViewController: UIViewController {
     
     //view customer details Page
     //outlets
-    @IBOutlet weak var txtUserType: UITextField!
 
+ 
+    @IBOutlet weak var txtUserNameCustomer: UINavigationItem!
+    @IBOutlet weak var txtPhoneNumberCustomer: UITextField!
+    @IBOutlet weak var txtDOBCustomer: UITextField!
+    @IBOutlet weak var txtEmailCustomer: UITextField!
+    @IBOutlet weak var txtUserTypeCustomer: UITextField!
+    
+    
+    
     @IBOutlet weak var btnBan: UIButton!
     //Action
     
     @IBAction func ResetCustomerPassword(_ sender: Any) {
         //get the user object and reset the password value of the user
-        
+        //TODO-Fatima
         
         //show an alert that the password reset
         resertPassword()
@@ -183,6 +191,70 @@ class AdminUsersViewController: UIViewController {
         }catch is Error {
             print("no menue is there")
         }
+        
+        //view customer page
+        do {
+            if let currentUser = currentUser {
+                if currentUser.type == .customer {
+                    // Check if the text fields exist before accessing them
+                    if let txtUserTypeCustomer = txtUserTypeCustomer {
+                        txtUserTypeCustomer.isUserInteractionEnabled = false
+                        txtUserTypeCustomer.text = "Customer"
+                    }
+
+                    if let txtUserNameCustomer = txtUserNameCustomer {
+                        txtUserNameCustomer.title = currentUser.fullName
+                    }
+
+                    if let txtPhoneNumberCustomer = txtPhoneNumberCustomer {
+                        txtPhoneNumberCustomer.isUserInteractionEnabled = false
+                        txtPhoneNumberCustomer.text = "\(currentUser.phoneNumber)"
+                    }
+
+                    if let txtDOBCustomer = txtDOBCustomer {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd MMMM yyyy"
+                        txtDOBCustomer.text = formatter.string(from: currentUser.dob)
+                        txtDOBCustomer.isUserInteractionEnabled = false
+
+                    }
+
+                    if let txtEmailCustomer = txtEmailCustomer {
+                        txtEmailCustomer.text = currentUser.email
+                        txtEmailCustomer.isUserInteractionEnabled = false
+
+                    }
+
+                    // Checking and handling banning logic
+                    var isBan = false
+                    var banUsers: [UserBan] = []
+                    Task {
+                        banUsers = try await UsersManager.getUserBans()
+                    }
+
+                    for i in banUsers {
+                        if i.userID == currentUser.userID {
+                            isBan = true
+                            break
+                        }
+                    }
+
+                    if isBan {
+                        if let btnBan = btnBan {
+                            btnBan.setTitle("Unban Account", for: .normal)
+                            btnBan.setTitleColor(UIColor.brandBlue, for: .normal)
+                        }
+                    }
+
+                } else if currentUser.type == .admin {
+                    // Handle admin-specific code if necessary
+                } else if currentUser.type == .organizer {
+                    // Handle organizer-specific code if necessary
+                }
+            }
+        } catch {
+            print("Error occurred while processing user data: \(error)")
+        }
     
 
     }
@@ -251,7 +323,12 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         let user = users[indexPath.row]
+        print("array size: \(users.count)")
+        currentUser = user
+        print(currentUser!)
+
 
         if (user.type == .admin){
             performSegue(withIdentifier: "ViewAdminPage", sender: self)
@@ -262,10 +339,8 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
             performSegue(withIdentifier: "ViewCustomerPage", sender: self)
             
             
-        }else{
+        }else if (user.type == .organizer){
             performSegue(withIdentifier: "ViewOrganizerPage", sender: self)
-
-            
         }
         
     }
@@ -279,6 +354,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
             let section = userListSections.selectedSegmentIndex
 
             // Clear users and reset the search bar
+            
             users.removeAll()
             users = []
             searchbar?.text = "" // Use optional chaining to handle missing search bar
@@ -471,7 +547,7 @@ extension AdminUsersViewController: UIImagePickerControllerDelegate, UINavigatio
     func configureMenu(options: [String]) {
         do {
             // Ensure `listAccountDuration` exists
-            guard let listAccountDuration = listAccountDuration else {
+            guard let list = listAccountDuration else {
                 throw RuntimeError("The listAccountDuration button is not connected.")
             }
 
@@ -493,10 +569,10 @@ extension AdminUsersViewController: UIImagePickerControllerDelegate, UINavigatio
 
             // Attach the menu to the button
             let menu = UIMenu(title: "", children: menuActions)
-            listAccountDuration.menu = menu
-            listAccountDuration.showsMenuAsPrimaryAction = true
-            listAccountDuration.backgroundColor = .white
-            listAccountDuration.setTitle("Select Duration", for: .normal)
+            list.menu = menu
+            list.showsMenuAsPrimaryAction = true
+            list.backgroundColor = .white
+            list.setTitle("Select Duration", for: .normal)
             
 
         } catch {
@@ -756,16 +832,12 @@ extension AdminUsersViewController{
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-//
-            self.navigationController?.popViewController(animated: true)
         }
         
         saveAlert.addAction(okAction)
         
         self.present(saveAlert, animated: true, completion: nil)
     
-
-        dismiss(animated: true, completion: nil)
 
     }
     
