@@ -105,6 +105,7 @@ extension AdminProfileViewController{
                 
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
+                txtPhoneNumber.text = "\(us.phoneNumber)"
                 print(us)
                 
 //                txtPhoneNumber?.text = String(us.phoneNumber)

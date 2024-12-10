@@ -20,11 +20,10 @@ struct RuntimeError: LocalizedError {
     }
 }
 
-class AdminUsersViewController: UIViewController {
-    
 
-    
-    //Test
+var currentUser: User? = nil
+
+class AdminUsersViewController: UIViewController {
     
 //Users List page
     // Outlet
@@ -35,13 +34,13 @@ class AdminUsersViewController: UIViewController {
     var users : [User] = []
     var currentSegment : UserType?
     
-    
 //Create Organizer Page
     // Outlet
     @IBOutlet weak var txtUserNameCreate: UITextField!
     @IBOutlet weak var txtPhoneNumberCreate: UITextField!
     @IBOutlet weak var txtPasswordCreate: UITextField!
     @IBOutlet weak var txtEmailCreate: UITextField!
+    @IBOutlet weak var txtLicenceCreate: UILabel!
     
     @IBOutlet weak var listAccountDuration: UIButton!
     
@@ -55,9 +54,11 @@ class AdminUsersViewController: UIViewController {
     
     
     //Actions
-
     @IBAction func createUserTapped(_ sender: Any) {
         createOrganizer()
+    }
+    @IBAction func UploadDoucumentTapped(_ sender: Any) {
+        uploadDoucument(sender)
     }
     
     
@@ -65,23 +66,71 @@ class AdminUsersViewController: UIViewController {
     //form the main page + button
     @IBAction func CreateButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "createUser", sender: sender)
-        createOrganizer()
     }
     
+    
+    
+    //view customer details Page
+    //outlets
+
+ 
+    @IBOutlet weak var txtUserNameCustomer: UINavigationItem!
+    @IBOutlet weak var txtPhoneNumberCustomer: UITextField!
+    @IBOutlet weak var txtDOBCustomer: UITextField!
+    @IBOutlet weak var txtEmailCustomer: UITextField!
+    @IBOutlet weak var txtUserTypeCustomer: UITextField!
+    
+    
+    
+    @IBOutlet weak var btnBan: UIButton!
+    //Action
+    
+    @IBAction func ResetCustomerPassword(_ sender: Any) {
+        //get the user object and reset the password value of the user
+        //TODO-Fatima
+        
+        //show an alert that the password reset
+        resertPassword()
+    }
+    
+    @IBAction func BanUserButton(_ sender: Any) {
+            //check if the user in the ban collection
+        
+            // if the user not on the ban collection show this function
+             BanAlert()
+        
+            // if the user is in the ban collection use this function
+            //UnBanAlert
+        
+    }
+    
+    
+    
+ //Ban Account Page
+    //outlets
+    @IBOutlet weak var txtDescription: UITextView!
+    
+    
+    //Actions
+    @IBAction func ConformBan(_ sender: Any) {
+        //1.validation
+        //2.alert
+        banConformation()
+    }
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
-        print("1")
         //load for the list user page
         do {
             // Ensure tableView exists
             guard let tableView = tableView else {
                 throw RuntimeError("TableView is not connected.")
             }
-            print("2")
 
             tableView.delegate = self
             tableView.dataSource = self
@@ -92,40 +141,21 @@ class AdminUsersViewController: UIViewController {
             guard Bundle.main.path(forResource: nibName, ofType: "nib") != nil else {
                 throw RuntimeError("Nib file \(nibName) not found in the bundle.")
             }
-            print("3")
 
             tableView.register(UINib(nibName: nibName, bundle: Bundle.main), forCellReuseIdentifier: "UsersTableViewCell")
-            print("4")
         } catch {
             print("Error setting up tableView: \(error.localizedDescription)")
         }
         
-        print("5")
         // Check if the searchbar exists and set its delegate
         if let searchbar = searchbar {
             searchbar.delegate = self
-            print("6")
         } else {
             print("SearchBar is not present for this screen.")
         }
-
         
-//        Task {
-//            try await  UsersManager.createNewUser(user: Organizer(fullName: "dsada", email: "sdaas@fdsf.fdsfsd", dob: Date.now, dateCreated: Date.now, phoneNumber: 24124421, profileImageURL: "sdfsdf", startDate: Date.now, endDate: Date.now, LicenseDocumentURL: "FSDAFSF"))
-//        }
-//        
-        
-        
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print("7")
-        super.viewWillAppear(animated)
-        print("7")
         do{
             do{
-                print("8")
                 // Safely check and handle `userListSections` and `addOrganizer`
                 if let userListSections = userListSections {
                    
@@ -138,11 +168,9 @@ class AdminUsersViewController: UIViewController {
                 } else {
                     print("userListSections is not available on this screen.")
                 }
-                print("9")
             }catch {
                 print("Something went wrong: \(error.localizedDescription)")
             }
-            print("10")
             // Safely update users
             do {
                 usersUpdate()
@@ -153,12 +181,10 @@ class AdminUsersViewController: UIViewController {
             print("Something went wrong: \(error.localizedDescription)")
         }
 
-        print("11")
         // chnage it to real data
          var options = ["No Expire","1 Week", "1 Month", "1 Year"]
         
         
-        print("12")
         // for the create user page
         do{
             try configureMenu(options: options)
@@ -166,6 +192,77 @@ class AdminUsersViewController: UIViewController {
             print("no menue is there")
         }
         
+        //view customer page
+        do {
+            if let currentUser = currentUser {
+                if currentUser.type == .customer {
+                    // Check if the text fields exist before accessing them
+                    if let txtUserTypeCustomer = txtUserTypeCustomer {
+                        txtUserTypeCustomer.isUserInteractionEnabled = false
+                        txtUserTypeCustomer.text = "Customer"
+                    }
+
+                    if let txtUserNameCustomer = txtUserNameCustomer {
+                        txtUserNameCustomer.title = currentUser.fullName
+                    }
+
+                    if let txtPhoneNumberCustomer = txtPhoneNumberCustomer {
+                        txtPhoneNumberCustomer.isUserInteractionEnabled = false
+                        txtPhoneNumberCustomer.text = "\(currentUser.phoneNumber)"
+                    }
+
+                    if let txtDOBCustomer = txtDOBCustomer {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd MMMM yyyy"
+                        txtDOBCustomer.text = formatter.string(from: currentUser.dob)
+                        txtDOBCustomer.isUserInteractionEnabled = false
+
+                    }
+
+                    if let txtEmailCustomer = txtEmailCustomer {
+                        txtEmailCustomer.text = currentUser.email
+                        txtEmailCustomer.isUserInteractionEnabled = false
+
+                    }
+
+                    // Checking and handling banning logic
+                    var isBan = false
+                    var banUsers: [UserBan] = []
+                    Task {
+                        banUsers = try await UsersManager.getUserBans()
+                    }
+
+                    for i in banUsers {
+                        if i.userID == currentUser.userID {
+                            isBan = true
+                            break
+                        }
+                    }
+
+                    if isBan {
+                        if let btnBan = btnBan {
+                            btnBan.setTitle("Unban Account", for: .normal)
+                            btnBan.setTitleColor(UIColor.brandBlue, for: .normal)
+                        }
+                    }
+
+                } else if currentUser.type == .admin {
+                    // Handle admin-specific code if necessary
+                } else if currentUser.type == .organizer {
+                    // Handle organizer-specific code if necessary
+                }
+            }
+        } catch {
+            print("Error occurred while processing user data: \(error)")
+        }
+    
+
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
 
         
     }
@@ -226,12 +323,23 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var user = users[indexPath.row]
+        
+        let user = users[indexPath.row]
+        print("array size: \(users.count)")
+        currentUser = user
+        print(currentUser!)
+
+
         if (user.type == .admin){
             performSegue(withIdentifier: "ViewAdminPage", sender: self)
+            
+
+            
         }else if (user.type == .customer){
             performSegue(withIdentifier: "ViewCustomerPage", sender: self)
-        }else{
+            
+            
+        }else if (user.type == .organizer){
             performSegue(withIdentifier: "ViewOrganizerPage", sender: self)
         }
         
@@ -246,6 +354,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
             let section = userListSections.selectedSegmentIndex
 
             // Clear users and reset the search bar
+            
             users.removeAll()
             users = []
             searchbar?.text = "" // Use optional chaining to handle missing search bar
@@ -350,27 +459,95 @@ extension AdminUsersViewController : UISearchBarDelegate{
 }
 
 //create organizer functions
-extension AdminUsersViewController{
+extension AdminUsersViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
     
     func createOrganizer(){
         //1. DO validation on the provided information
-//        validateCreateFields()
+        validateCreateFields()
         
         //2. if everything go well
             //create new organization user
-            
+        let name = txtUserNameCreate.text!
+//        let phone = Int(txtPhoneNumberCreate.text!)
+        let email = txtEmailCreate.text
+        let pass = txtPasswordCreate.text
+        let start = Data()
+
+        
+//        let org = Organizer(fullName: name, email: email!, dob: Date(), dateCreated: Date(), phoneNumber: phone, profileImageURL: "", startDate: start, endDate: <#T##Date#>, LicenseDocumentURL: <#T##String#>)
+//            
             //add the organization object in the firbase
         
     }
     
     
+    func uploadDoucument(_ sender: Any){
+        
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            
+            let menue = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            menue.addAction(cancelAction)
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                
+                let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
+                    imagePicker.sourceType = .camera
+                    self.present(imagePicker, animated: true, completion: nil)
+                }
+                
+                menue.addAction(cameraAction)
+            }
+            
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                
+                let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
+                    imagePicker.sourceType = .photoLibrary
+                    self.present(imagePicker, animated: true, completion: nil)
+                }
+                
+                menue.addAction(photoLibraryAction)
+            }
+            
+            
+            
+            
+            
+            menue.popoverPresentationController?.sourceView = sender as? UIView
+            present(menue, animated: true)
+            
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        //1.get the selected image
+        guard let selectedImage = info[.originalImage] as? UIImage else {return}
+        
+        //2. save the image in somewhere and rename it as Licence
+            //save the image to the organizer user object
+        
+        
+        //3. display the documnet name as Licence
+        
+    }
+    
+    
+    // if the user click cancel run this method
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
+        //1. close the screen
+        dismiss(animated: true, completion: nil)
+    }
+    
     // function to show a list
     func configureMenu(options: [String]) {
         do {
             // Ensure `listAccountDuration` exists
-            guard let listAccountDuration = listAccountDuration else {
+            guard let list = listAccountDuration else {
                 throw RuntimeError("The listAccountDuration button is not connected.")
             }
 
@@ -392,10 +569,10 @@ extension AdminUsersViewController{
 
             // Attach the menu to the button
             let menu = UIMenu(title: "", children: menuActions)
-            listAccountDuration.menu = menu
-            listAccountDuration.showsMenuAsPrimaryAction = true
-            listAccountDuration.backgroundColor = .white
-            listAccountDuration.setTitle("Select Duration", for: .normal)
+            list.menu = menu
+            list.showsMenuAsPrimaryAction = true
+            list.backgroundColor = .white
+            list.setTitle("Select Duration", for: .normal)
             
 
         } catch {
@@ -644,6 +821,101 @@ extension AdminUsersViewController{
     }
 
 
+//shared functions
+extension AdminUsersViewController{
+    func resertPassword(){
+        //show an alert that the password reset
+        let saveAlert = UIAlertController(
+            title: "Password Reset Successful",
+            message: "You have successfully reset the user's password. The user will be notified accordingly.",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+        }
+        
+        saveAlert.addAction(okAction)
+        
+        self.present(saveAlert, animated: true, completion: nil)
+    
+
+    }
+    
+    //function shows the ban alert
+    func BanAlert(){
+        
+        let saveAlert = UIAlertController(
+            title: "Ban User",
+            message: "Are you sure you want to ban this user? This action is permanent and cannot be undone.",
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        let banlAction = UIAlertAction(title: "Ban", style: .destructive) { action in
+            self.goToBan()
+            
+        }
+        
+        saveAlert.addAction(cancelAction)
+        saveAlert.addAction(banlAction)
+        
+        self.present(saveAlert, animated: true, completion: nil)
+    
+
+
+    }
+    
+    
+    //function to shoe the unban alert
+    func UnBanAlert(){
+        
+        let saveAlert = UIAlertController(
+            title: "Account Unbanned",
+            message: "The account has been successfully unbanned. Access has been restored.",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+//
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        saveAlert.addAction(okAction)
+        
+        self.present(saveAlert, animated: true, completion: nil)
+    
+
+        dismiss(animated: true, completion: nil)
+
+    }
+    
+    
+    func goToBan(){
+        performSegue(withIdentifier: "BanPage", sender: self)
+    }
+    
+    
+    func banConformation() {
+        let saveAlert = UIAlertController(
+            title: "Account Banned",
+            message: "The account has been successfully banned. Access has been restricted.",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            // Pop the view controller after the user taps "OK"
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        
+        saveAlert.addAction(okAction)
+        
+        // Present the alert
+        self.present(saveAlert, animated: true, completion: nil)
+    }
+    
+    
+}
     
 
     

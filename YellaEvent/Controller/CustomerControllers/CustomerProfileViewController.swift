@@ -127,9 +127,7 @@ extension CustomerProfileViewController{
                 
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
-                
-                //TODO - FATIMA - the phone number do not work
-//                txtPhoneNumber.text = String(us.phoneNumber)
+                txtPhoneNumber.text = "\(us.phoneNumber)"
                 currentUser = currentUser as? Customer
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
@@ -327,7 +325,6 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         
         
    //edit the user image by uploading it.
-   //edit_Fatima
         dismiss(animated: true, completion: nil)
     }
     

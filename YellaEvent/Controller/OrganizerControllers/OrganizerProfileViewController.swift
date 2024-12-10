@@ -95,13 +95,12 @@ extension OrganizerProfileViewController{
         Task {
             do {
                 
-                let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+    
+                txtFullName?.text = "\(currentUser!.fullName)"
+                txtEmail?.text = currentUser!.email
                 
-                txtFullName?.text = "\(us.fullName)"
-                txtEmail?.text = us.email
-                
-                txtPhoneNumber?.text = String(us.phoneNumber)
-                PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+                txtPhoneNumber?.text = String(currentUser!.phoneNumber)
+                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
                     case .success(let image):
@@ -185,30 +184,31 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
-        guard let img = selectedImage.jpegData(compressionQuality: 0.9) else {return}
+        PhotoManager.shared.uploadPhoto(selectedImage, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+            switch result {
+            case .success(let url):
+                
+                // TODO: Update in user
+                print("Image uploaded successfully: \(url)")
+            case .failure(let error):
+                let saveAlert = UIAlertController(
+                    title: "Error",
+                    message: "Error uploading image",
+                    preferredStyle: .alert
+                )
+                
+                let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                    //
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+                saveAlert.addAction(okAction)
+                
+                self.present(saveAlert, animated: true, completion: nil)
+            }
+            
+        }
         
-        
-        
-        //edit_Fatima
-        
-        
-//        Task {
-//            do {
-//
-//
-//                let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
-//                let us = try await UsersManager.getInstence().getUser(userId: userId)
-//
-//                // upload the image
-//                //PhotoManager.shared.
-//                //refresh the edit page
-//                //setupEditPage()
-//
-//            } catch {
-//                print("Error with uploading the images: \(error)")
-//                // Handle error appropriately, such as showing an alert to the user
-//            }
-//        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -232,6 +232,17 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
         // 2. Proceed to save changes if validation passes
         
             //add the requird code
+        do{
+            currentUser!.fullName = txtFullName.text!
+            
+            currentUser!.email = txtEmail.text!
+//TODO: fatima
+//            currentUser?.phoneNumber =  Int(txtPhoneNumber.text)
+        }catch{
+            
+        }
+        
+        
         
         // 3. Show an alert notifying the user that the changes have been saved
         let saveAlert = UIAlertController(
@@ -241,7 +252,7 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            print("Changes saved.")
+            self.navigationController?.popViewController(animated: true)
         }
         
         saveAlert.addAction(okAction)
@@ -264,6 +275,15 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             
             //delete the user from database -- edit_Fatima
+            do{
+                Task{
+                    try await UsersManager.deleteUser(userID: self.currentUser!.userID, userType: self.currentUser!.type)
+                }
+            }catch{
+                
+            }
+            
+            
             
             
             if let LaunchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController() {
@@ -325,6 +345,19 @@ extension OrganizerProfileViewController{
             resetFieldHighlight(txtPhoneNumber)
         }
 
+        var users: [User] = []
+        Task{
+            users = try await  UsersManager.getAllUsers()
+        }
+        
+        var thereIs: Bool = false
+        for user in users {
+            if txtEmail.text != currentUser?.email && txtEmail.text == user.email{
+                thereIs = true
+            }
+        }
+        
+        
         // Validate txtEmail (Valid email format)
         if let email = txtEmail?.text, email.isEmpty {
             lblErrorEmail.text = "Email address is required."
@@ -333,6 +366,11 @@ extension OrganizerProfileViewController{
             errorMessage = "Please fill in all required fields correctly."
         } else if let email = txtEmail?.text, !isValidEmail(email) {
             lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
+            highlightField(txtEmail)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        }else if thereIs{
+            lblErrorEmail.text = "The provided email used by other user"
             highlightField(txtEmail)
             isValid = false
             errorMessage = "Please fill in all required fields correctly."
