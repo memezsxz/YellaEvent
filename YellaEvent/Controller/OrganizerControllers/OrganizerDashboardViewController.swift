@@ -6,8 +6,11 @@
 //
 
 import UIKit
-
 class OrganizerDashboardViewController: UITableViewController {
+    
+    var organizer : Organizer?
+    
+    var onGoingEvents : [String: String] = [:]
     
     @IBOutlet var canceledEventsLabel: UILabel!
     @IBOutlet var overEventsLabel: UILabel!
@@ -20,40 +23,59 @@ class OrganizerDashboardViewController: UITableViewController {
     @IBOutlet var averageRatingLabel: UILabel!
     @IBOutlet var soldTicketsLabel: UILabel!
     
-    var organizer : Organizer?
-    
-    override func viewWillAppear(_ animated: Bool) {
-//        Task {
-//            try await EventsManager.getDashboardStats(organizerID: "212``2", completion: { canceledEvents,overEvents,ongoingEvents,allEvents,numTotalAttendence,revenue,averageRating,soldTickets in
-//                
-//                DispatchQueue.main.async {
-//                    self.canceledEventsLabel.text = "\(canceledEvents)"
-//                    self.overEventsLabel.text = "\(overEvents)"
-//                    self.ongoingEventsLabel.text = "\(ongoingEvents)"
-//                    self.allEventsLabel.text = "\(allEvents)"
-//                    
-//                    self.totalAttendence.text = "\(numTotalAttendence)"
-//                    self.revenueLabel.text = String(format: "%.3f", revenue)
-//                    self.averageRatingLabel.text = String(format: "%.1f", revenue)
-//                    self.soldTicketsLabel.text = "\(soldTickets)"
-//                    
-//                }
-//            }
-//            )
-//        }
-        
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        Task {
-//            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
-//        }
-        // Do any additional setup after loading the view.
+        //        Task {
+        //            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+        //        }
+        
+        UserDefaults.standard.set("3", forKey: K.bundleUserID) // this will be removed after seting the application
+        
+        tableView.register(UINib(nibName: "MainTableViewCell", bundle: .main), forCellReuseIdentifier: "MainTableViewCell")
+
+        //        Task {
+        //            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+        //        }
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        Task {
+            try await EventsManager.getDashboardStats(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!, completion: { canceledEvents,overEvents,ongoingEvents,allEvents,numTotalAttendence,revenue,averageRating,soldTickets in
+                
+                DispatchQueue.main.async {
+                    self.canceledEventsLabel.text = "\(canceledEvents)"
+                    self.overEventsLabel.text = "\(overEvents)"
+                    self.ongoingEventsLabel.text = "\(ongoingEvents)"
+                    self.allEventsLabel.text = "\(allEvents)"
+                    
+                    self.totalAttendence.text = "\(numTotalAttendence)"
+                    self.revenueLabel.text = String(format: "%.3f", revenue)
+                    self.averageRatingLabel.text = String(format: "%.1f", averageRating)
+                    self.soldTicketsLabel.text = "\(soldTickets)"
+                    
+                }
+            }
+            )
+        }
+
+        Task {
+            EventsManager.getOrganizerEvents(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!) { snapshot, error in
+                guard let snapshot else { return }
+                
+                for event in snapshot.documents {
+                    if event.data()[K.FStore.Events.status] as! String == EventStatus.ongoing.rawValue {
+                        
+                        self.onGoingEvents[event.data()[K.FStore.Events.eventID] as! String] = event.data()[K.FStore.Events.name] as? String
+                    }
+                    
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
     /*
      // MARK: - Navigation
      
@@ -63,5 +85,75 @@ class OrganizerDashboardViewController: UITableViewController {
      // Pass the selected object to the new view controller.
      }
      */
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
+        
+        if section == 1 {
+           return onGoingEvents.count
+        }
+        
+        return 0
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+
+    
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 1 {
+
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as! MainTableViewCell
+            
+            cell.title.text = Array(onGoingEvents)[indexPath.row].value
+
+            return cell
+        }
+
+        return super.tableView(tableView, cellForRowAt: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 {
+            return tableView.frame.width / 6
+        }
+        
+        return super.tableView(tableView, heightForRowAt: indexPath)
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            tableView.cellForRow(at: indexPath)?.isSelected = false
+        }
+        
+        if indexPath.section == 1 {
+            let eventID = Array(onGoingEvents)[indexPath.row].key
+
+            let eventsNavigationController = self.tabBarController?.viewControllers?[1] as! UINavigationController
+            
+                    
+            if let viewcontroller = eventsNavigationController.viewControllers.first as? OrganizerEventsViewController {
+                viewcontroller.selectedEventID = eventID
+            }
+            
+            self.tabBarController?.selectedViewController = eventsNavigationController
+            eventsNavigationController.popToRootViewController(animated: true)
+
+//            let eventsViewController  = eventsViews?.first as? OrganizerEventsViewController
+//            print(eventsViews)
+//            eventsViewController?.selectedEventID = eventID
+            
+//            eventsViewController?.tableView.selectRow(at: IndexPath(row: <#T##Int#>, section: 0), animated: <#T##Bool#>, scrollPosition: <#T##UITableView.ScrollPosition#>)
+            // navigate to the event's details screen
+            
+//            eventsViewController?.sea
+            
+        }
+    }
+    
     
 }

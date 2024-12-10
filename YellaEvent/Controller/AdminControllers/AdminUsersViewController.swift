@@ -195,8 +195,9 @@ class AdminUsersViewController: UIViewController {
         //view customer page
         do {
             if let currentUser = currentUser {
-                if currentUser.type == .customer {
+                if let currentUser = currentUser as? Customer {
                     // Check if the text fields exist before accessing them
+                    
                     if let txtUserTypeCustomer = txtUserTypeCustomer {
                         txtUserTypeCustomer.isUserInteractionEnabled = false
                         txtUserTypeCustomer.text = "Customer"

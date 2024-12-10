@@ -18,6 +18,9 @@ class OrganizerEventsViewController: UIViewController {
         
         
     }
+    
+    var selectedEventID : String?
+    
     var eventSummarys = [EventSummary]()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +30,7 @@ class OrganizerEventsViewController: UIViewController {
         
         Task {
             
-             EventsManager.getOrganizerEvents(organizerID: "4") { snapshot, error in
+             EventsManager.getOrganizerEvents(organizerID: "3") { snapshot, error in
                 guard error == nil else {
                     
                     print(error!.localizedDescription)
@@ -42,6 +45,8 @@ class OrganizerEventsViewController: UIViewController {
                         }
                         DispatchQueue.main.async{
                             self.tableView.reloadData()
+//                            print(self.selectedEventID)
+                            self.moveToSelection()
                         }
                     }
                 }
@@ -78,7 +83,7 @@ extension OrganizerEventsViewController: UITableViewDelegate , UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell") as! MainTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell") as! MainTableViewCell
         
         cell.setup(event: eventSummarys[indexPath.row])
         return cell
@@ -86,6 +91,19 @@ extension OrganizerEventsViewController: UITableViewDelegate , UITableViewDataSo
         
     }
     
+    func moveToSelection() {
+        if selectedEventID != nil {
+            let index = eventSummarys.firstIndex{$0.eventID == selectedEventID!}
+            print(index, selectedEventID, eventSummarys)
+            tableView.selectRow(at: IndexPath(row: index!, section: 0), animated: true, scrollPosition: .middle)
+            print("selected")
+
+            selectedEventID = nil
+        }
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("selected")
+    }
     
 }

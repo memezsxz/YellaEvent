@@ -46,20 +46,17 @@ class OrganizerProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupEditPage()
 
-        UserDefaults.standard.set("lN1LrxyBfnNjr45KRmz5VPc4cw13", forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set("3", forKey: K.bundleUserID) // this will be removed after seting the application
 
 
         // get the current user object
         Task {
             
-            let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
-
-            currentUser = us as! Organizer
-            
+            self.currentUser = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+                        
             //download the current user image
-            PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+            PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                 
                 switch result {
                     //if the user have an image and his/her image
@@ -75,6 +72,10 @@ class OrganizerProfileViewController: UIViewController {
                 }
                 
             })
+            
+            DispatchQueue.main.async {
+                self.setupEditPage()
+            }
         }
     }
 
@@ -94,7 +95,6 @@ extension OrganizerProfileViewController{
         // get the current user object
         Task {
             do {
-                
     
                 txtFullName?.text = "\(currentUser!.fullName)"
                 txtEmail?.text = currentUser!.email
@@ -190,7 +190,7 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
                 
                 // TODO: Update in user
                 print("Image uploaded successfully: \(url)")
-            case .failure(let error):
+            case .failure(let _):
                 let saveAlert = UIAlertController(
                     title: "Error",
                     message: "Error uploading image",

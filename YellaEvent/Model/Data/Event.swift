@@ -137,6 +137,10 @@ struct Event : EventProtocol, Codable {
     }
     
     static func getRatting(from ratingsArray: [String : Double]) -> Double {
+        if ratingsArray.isEmpty {
+            return 0
+        }
+        
         var rating : Double = 0
         for (_, value) in ratingsArray {
             rating += value
