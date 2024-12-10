@@ -22,9 +22,7 @@ struct RuntimeError: LocalizedError {
 
 class AdminUsersViewController: UIViewController {
     
-
     
-    //Test
     
 //Users List page
     // Outlet
@@ -42,6 +40,7 @@ class AdminUsersViewController: UIViewController {
     @IBOutlet weak var txtPhoneNumberCreate: UITextField!
     @IBOutlet weak var txtPasswordCreate: UITextField!
     @IBOutlet weak var txtEmailCreate: UITextField!
+    @IBOutlet weak var txtLicenceCreate: UILabel!
     
     @IBOutlet weak var listAccountDuration: UIButton!
     
@@ -55,9 +54,11 @@ class AdminUsersViewController: UIViewController {
     
     
     //Actions
-
     @IBAction func createUserTapped(_ sender: Any) {
         createOrganizer()
+    }
+    @IBAction func UploadDoucumentTapped(_ sender: Any) {
+        uploadDoucument(sender)
     }
     
     
@@ -65,23 +66,63 @@ class AdminUsersViewController: UIViewController {
     //form the main page + button
     @IBAction func CreateButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "createUser", sender: sender)
-        createOrganizer()
     }
     
+    
+    
+    //view customer details Page
+    //outlets
+    @IBOutlet weak var txtUserType: UITextField!
+
+    @IBOutlet weak var btnBan: UIButton!
+    //Action
+    
+    @IBAction func ResetCustomerPassword(_ sender: Any) {
+        //get the user object and reset the password value of the user
+        
+        
+        //show an alert that the password reset
+        resertPassword()
+    }
+    
+    @IBAction func BanUserButton(_ sender: Any) {
+            //check if the user in the ban collection
+        
+            // if the user not on the ban collection show this function
+             BanAlert()
+        
+            // if the user is in the ban collection use this function
+            //UnBanAlert
+        
+    }
+    
+    
+    
+ //Ban Account Page
+    //outlets
+    @IBOutlet weak var txtDescription: UITextView!
+    
+    
+    //Actions
+    @IBAction func ConformBan(_ sender: Any) {
+        //1.validation
+        //2.alert
+        banConformation()
+    }
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
-        print("1")
         //load for the list user page
         do {
             // Ensure tableView exists
             guard let tableView = tableView else {
                 throw RuntimeError("TableView is not connected.")
             }
-            print("2")
 
             tableView.delegate = self
             tableView.dataSource = self
@@ -92,37 +133,21 @@ class AdminUsersViewController: UIViewController {
             guard Bundle.main.path(forResource: nibName, ofType: "nib") != nil else {
                 throw RuntimeError("Nib file \(nibName) not found in the bundle.")
             }
-            print("3")
 
             tableView.register(UINib(nibName: nibName, bundle: Bundle.main), forCellReuseIdentifier: "UsersTableViewCell")
-            print("4")
         } catch {
             print("Error setting up tableView: \(error.localizedDescription)")
         }
         
-        print("5")
         // Check if the searchbar exists and set its delegate
         if let searchbar = searchbar {
             searchbar.delegate = self
-            print("6")
         } else {
             print("SearchBar is not present for this screen.")
         }
-
         
-//        Task {
-//            try await  UsersManager.createNewUser(user: Customer(userID: "sdfsd", fullName: "fds", email: "dsfdfs@dsf.co", dob: Date.now, dateCreated: Date.now, phoneNumber: 2123123, profileImageURL: "321213", badgesArray: [], interestsArray: []))
-//        }
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print("7")
-        super.viewWillAppear(animated)
-        print("7")
         do{
             do{
-                print("8")
                 // Safely check and handle `userListSections` and `addOrganizer`
                 if let userListSections = userListSections {
                    
@@ -135,11 +160,9 @@ class AdminUsersViewController: UIViewController {
                 } else {
                     print("userListSections is not available on this screen.")
                 }
-                print("9")
             }catch {
                 print("Something went wrong: \(error.localizedDescription)")
             }
-            print("10")
             // Safely update users
             do {
                 usersUpdate()
@@ -150,19 +173,24 @@ class AdminUsersViewController: UIViewController {
             print("Something went wrong: \(error.localizedDescription)")
         }
 
-        print("11")
         // chnage it to real data
          var options = ["No Expire","1 Week", "1 Month", "1 Year"]
         
         
-        print("12")
         // for the create user page
         do{
             try configureMenu(options: options)
         }catch is Error {
             print("no menue is there")
         }
-        
+    
+
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
 
         
     }
@@ -224,12 +252,20 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = users[indexPath.row]
+
         if (user.type == .admin){
             performSegue(withIdentifier: "ViewAdminPage", sender: self)
+            
+
+            
         }else if (user.type == .customer){
             performSegue(withIdentifier: "ViewCustomerPage", sender: self)
+            
+            
         }else{
             performSegue(withIdentifier: "ViewOrganizerPage", sender: self)
+
+            
         }
         
     }
@@ -347,21 +383,89 @@ extension AdminUsersViewController : UISearchBarDelegate{
 }
 
 //create organizer functions
-extension AdminUsersViewController{
+extension AdminUsersViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
     
     func createOrganizer(){
         //1. DO validation on the provided information
-//        validateCreateFields()
+        validateCreateFields()
         
         //2. if everything go well
             //create new organization user
-            
+        let name = txtUserNameCreate.text!
+//        let phone = Int(txtPhoneNumberCreate.text!)
+        let email = txtEmailCreate.text
+        let pass = txtPasswordCreate.text
+        let start = Data()
+
+        
+//        let org = Organizer(fullName: name, email: email!, dob: Date(), dateCreated: Date(), phoneNumber: phone, profileImageURL: "", startDate: start, endDate: <#T##Date#>, LicenseDocumentURL: <#T##String#>)
+//            
             //add the organization object in the firbase
         
     }
     
+    
+    func uploadDoucument(_ sender: Any){
+        
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            
+            let menue = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            menue.addAction(cancelAction)
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                
+                let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
+                    imagePicker.sourceType = .camera
+                    self.present(imagePicker, animated: true, completion: nil)
+                }
+                
+                menue.addAction(cameraAction)
+            }
+            
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                
+                let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
+                    imagePicker.sourceType = .photoLibrary
+                    self.present(imagePicker, animated: true, completion: nil)
+                }
+                
+                menue.addAction(photoLibraryAction)
+            }
+            
+            
+            
+            
+            
+            menue.popoverPresentationController?.sourceView = sender as? UIView
+            present(menue, animated: true)
+            
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        //1.get the selected image
+        guard let selectedImage = info[.originalImage] as? UIImage else {return}
+        
+        //2. save the image in somewhere and rename it as Licence
+            //save the image to the organizer user object
+        
+        
+        //3. display the documnet name as Licence
+        
+    }
+    
+    
+    // if the user click cancel run this method
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
+        //1. close the screen
+        dismiss(animated: true, completion: nil)
+    }
     
     // function to show a list
     func configureMenu(options: [String]) {
@@ -641,6 +745,105 @@ extension AdminUsersViewController{
     }
 
 
+//shared functions
+extension AdminUsersViewController{
+    func resertPassword(){
+        //show an alert that the password reset
+        let saveAlert = UIAlertController(
+            title: "Password Reset Successful",
+            message: "You have successfully reset the user's password. The user will be notified accordingly.",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+//
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        saveAlert.addAction(okAction)
+        
+        self.present(saveAlert, animated: true, completion: nil)
+    
+
+        dismiss(animated: true, completion: nil)
+
+    }
+    
+    //function shows the ban alert
+    func BanAlert(){
+        
+        let saveAlert = UIAlertController(
+            title: "Ban User",
+            message: "Are you sure you want to ban this user? This action is permanent and cannot be undone.",
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        let banlAction = UIAlertAction(title: "Ban", style: .destructive) { action in
+            self.goToBan()
+            
+        }
+        
+        saveAlert.addAction(cancelAction)
+        saveAlert.addAction(banlAction)
+        
+        self.present(saveAlert, animated: true, completion: nil)
+    
+
+
+    }
+    
+    
+    //function to shoe the unban alert
+    func UnBanAlert(){
+        
+        let saveAlert = UIAlertController(
+            title: "Account Unbanned",
+            message: "The account has been successfully unbanned. Access has been restored.",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+//
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        saveAlert.addAction(okAction)
+        
+        self.present(saveAlert, animated: true, completion: nil)
+    
+
+        dismiss(animated: true, completion: nil)
+
+    }
+    
+    
+    func goToBan(){
+        performSegue(withIdentifier: "BanPage", sender: self)
+    }
+    
+    
+    func banConformation() {
+        let saveAlert = UIAlertController(
+            title: "Account Banned",
+            message: "The account has been successfully banned. Access has been restricted.",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            // Pop the view controller after the user taps "OK"
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        
+        saveAlert.addAction(okAction)
+        
+        // Present the alert
+        self.present(saveAlert, animated: true, completion: nil)
+    }
+    
+    
+}
     
 
     

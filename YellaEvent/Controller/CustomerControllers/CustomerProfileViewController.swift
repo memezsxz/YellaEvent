@@ -327,7 +327,6 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         
         
    //edit the user image by uploading it.
-   //edit_Fatima
         dismiss(animated: true, completion: nil)
     }
     
