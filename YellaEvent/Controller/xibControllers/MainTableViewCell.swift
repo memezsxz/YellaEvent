@@ -28,7 +28,7 @@ class MainTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setup (event: Event){
+    func setup (event: EventSummary){
         
         title.text = event.name
     }
