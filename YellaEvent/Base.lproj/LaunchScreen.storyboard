@@ -16,32 +16,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJb-gV-dXz">
-                                <rect key="frame" x="0.0" y="300" width="393" height="252"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="BlackIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6fa-EG-TzW">
-                                        <rect key="frame" x="0.0" y="23" width="394" height="210"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WhiteIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aSY-fl-MUg">
-                                        <rect key="frame" x="1" y="19" width="391" height="214"/>
-                                    </imageView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="aSY-fl-MUg" firstAttribute="centerY" secondItem="dJb-gV-dXz" secondAttribute="centerY" id="4mS-aY-Vsy"/>
-                                    <constraint firstItem="aSY-fl-MUg" firstAttribute="top" secondItem="dJb-gV-dXz" secondAttribute="top" constant="19" id="5PK-EE-SJA"/>
-                                    <constraint firstItem="aSY-fl-MUg" firstAttribute="leading" secondItem="dJb-gV-dXz" secondAttribute="leading" constant="1" id="d8E-9R-C83"/>
-                                    <constraint firstItem="aSY-fl-MUg" firstAttribute="centerX" secondItem="dJb-gV-dXz" secondAttribute="centerX" id="eua-76-taL"/>
-                                </constraints>
-                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="bvz-Lp-ffQ">
+                                <rect key="frame" x="16" y="315.66666666666669" width="361" height="221.00000000000006"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="BrandPurple"/>
                         <constraints>
-                            <constraint firstItem="dJb-gV-dXz" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="4Rj-vH-SY5"/>
-                            <constraint firstItem="dJb-gV-dXz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="I8A-Dd-mm4"/>
-                            <constraint firstItem="dJb-gV-dXz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="241" id="Jwn-b6-V3p"/>
-                            <constraint firstItem="dJb-gV-dXz" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="OJ0-TN-CY6"/>
+                            <constraint firstItem="bvz-Lp-ffQ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="4ta-Lh-0VQ"/>
+                            <constraint firstItem="bvz-Lp-ffQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="FdK-ur-2ze"/>
+                            <constraint firstItem="bvz-Lp-ffQ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="JxO-t0-lLO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bvz-Lp-ffQ" secondAttribute="trailing" id="VMe-V7-FQK"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -51,8 +36,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BlackIcon" width="131" height="146.33332824707031"/>
-        <image name="WhiteIcon" width="131" height="149.66667175292969"/>
+        <image name="icon" width="234" height="221"/>
         <namedColor name="BrandPurple">
             <color red="0.51800000667572021" green="0.36899998784065247" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -49,8 +49,9 @@ struct Event : EventProtocol, Codable {
     var coverImageURL : String
     var mediaArray : [String] // references to the paths of uploaded photos
     //            static let badgeID = "badgeID"  // we might not need
-    
-    init (organizerID: String, organizerName: String, name: String, description: String, startTimeStamp: Date, endTimeStamp: Date, status: EventStatus, category: Category, locationURL: String, minimumAge: Int, maximumAge: Int, rattingsArray: [String: Double], maximumTickets: Int, price: Double, coverImageURL: String, mediaArray: [String]) {
+    var isDeleted : Bool
+
+    init (organizerID: String, organizerName: String, name: String, description: String, startTimeStamp: Date, endTimeStamp: Date, status: EventStatus, category: Category, locationURL: String, minimumAge: Int, maximumAge: Int, rattingsArray: [String: Double], maximumTickets: Int, price: Double, coverImageURL: String, mediaArray: [String], isDeleted: Bool = false) {
         self.eventID = "Default"
         self.organizerID = organizerID
         self.organizerName = organizerName
@@ -68,6 +69,7 @@ struct Event : EventProtocol, Codable {
         self.price = price
         self.coverImageURL = coverImageURL
         self.mediaArray = mediaArray
+        self.isDeleted = isDeleted
     }
     
     
@@ -89,7 +91,8 @@ struct Event : EventProtocol, Codable {
             K.FStore.Events.maximumTickets: self.maximumTickets,
             K.FStore.Events.price: self.price,
             K.FStore.Events.coverImageURL: self.coverImageURL,
-            K.FStore.Events.mediaArray: self.mediaArray
+            K.FStore.Events.mediaArray: self.mediaArray,
+            K.FStore.Events.isDeleted: self.isDeleted
         ]
     }
     
@@ -124,6 +127,7 @@ struct Event : EventProtocol, Codable {
         self.price = data[K.FStore.Events.price] as? Double ?? 0.0
         self.coverImageURL = data[K.FStore.Events.coverImageURL] as? String ?? ""
         self.mediaArray = data[K.FStore.Events.mediaArray] as? [String] ?? []
+        self.isDeleted = data[K.FStore.Events.isDeleted] as? Bool ?? false
     }
     
     
@@ -133,6 +137,10 @@ struct Event : EventProtocol, Codable {
     }
     
     static func getRatting(from ratingsArray: [String : Double]) -> Double {
+        if ratingsArray.isEmpty {
+            return 0
+        }
+        
         var rating : Double = 0
         for (_, value) in ratingsArray {
             rating += value

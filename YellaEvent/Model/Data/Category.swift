@@ -12,6 +12,7 @@ enum CategoryStaus : String, Codable {
     case disabled = "disabled" // deleted or disabled by admin, should not show up in search fillter or when creating an event
     case history = "history" // will not be shown to the admin but some badges will depend on it so it will e kept in the database
 }
+
 struct Category : Codable {
     var categoryID : String
     var name : String

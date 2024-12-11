@@ -28,20 +28,23 @@ struct Badge : Codable {
         return [
             K.FStore.Badges.image: self.image,
             K.FStore.Badges.eventID: self.eventID,
-            K.FStore.Badges.eventName: self.eventName,
-            K.FStore.Badges.categoryID: self.category.categoryID,
+//            K.FStore.Badges.eventName: self.eventName,
+//            K.FStore.Badges.categoryID: self.category.categoryID,
         ]
     }
 
     init(from data: [String: Any]) async throws {
         self.image = data[K.FStore.Badges.image] as? String ?? ""
         self.eventID = data[K.FStore.Badges.eventID] as? String ?? ""
-         do {
-             self.eventName = try await EventsManager.getEvent(eventID: self.eventID).name }
-        catch {
-            self.eventName = data[K.FStore.Badges.eventName] as? String ?? ""
+        do {
+            let event = try await EventsManager.getEvent(eventID: self.eventID)
+            self.eventName = event.name
+            self.category = event.category
         }
-        self.category = try await CategoriesManager.getCategory(categorieID: data[K.FStore.Badges.categoryID] as? String ?? "")
+        catch {
+            self.eventName = ""
+            self.category = Category(categoryID: "", name: "", icon: "")
+        }
     }
     
     init?(documentID: String) async throws {

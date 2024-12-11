@@ -33,7 +33,7 @@ final class TicketsManager {
     }
     
     static func getUserTickets(userId: String) async throws -> [Ticket] {
-       let snapshop = try await ticketsCollection.whereField(K.FStore.Tickets.userID, isEqualTo: userId).getDocuments()
+        let snapshop = try await ticketsCollection.whereField(K.FStore.Tickets.customerID, isEqualTo: userId).getDocuments()
         
         var tickets: [Ticket] = []
         for doc in snapshop.documents {
@@ -66,12 +66,12 @@ final class TicketsManager {
                     do {
                         let ticket = try await Ticket(from: doc.data())
                         do {
-                            let user = try await UsersManager.getUser(userID: ticket.userID)
+                            let user = try await UsersManager.getUser(userID: ticket.customerID)
                             usersDec[user.email] = user.fullName
                             if ticket.didAttend {attendedTickets += 1}
                             totalTickets += 1
                         } catch {
-                            print("Error fetching user for userId \(ticket.userID): \(error)")
+                            print("Error fetching user for userId \(ticket.customerID): \(error)")
                             throw error
                         }
                     } catch {
@@ -104,11 +104,11 @@ final class TicketsManager {
     
     static func updateEventStartTimeStamp(eventID: String, startTimeStamp: Date) async throws {
         let tickets = try await getEventTickets(eventID: eventID)
-        for ticket in tickets {
-            try await ticketDocument(ticketId: ticket.ticketID).updateData([
-                K.FStore.Tickets.startTimeStamp: startTimeStamp,
-            ])
-        }
+//        for ticket in tickets {
+//            try await ticketDocument(ticketId: ticket.ticketID).updateData([
+//                K.FStore.Tickets.startTimeStamp: startTimeStamp,
+//            ])
+//        }
     }
     
 //    static func updateEventCategory(eventID: String, categoryIcon : String, categoryName : String) async throws {

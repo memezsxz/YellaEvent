@@ -10,6 +10,8 @@ import UIKit
 class AdminProfileViewController: UIViewController {
     
     
+    var currentUser: Admin?
+    
 // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
     @IBOutlet weak var BigImageProfile: UIImageView!
@@ -45,11 +47,12 @@ class AdminProfileViewController: UIViewController {
         setupEditPage()
 
             
-            UserDefaults.standard.set("sdfsd", forKey: K.bundleUserID) // this will be removed after seting the application
+            UserDefaults.standard.set("1", forKey: K.bundleUserID) // this will be removed after seting the application
                 
             // get the current user object
             Task {
                 let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+                currentUser = (us as! Admin)
                 //download the current user image
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
@@ -73,7 +76,6 @@ class AdminProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // method to set the edit user profile page
-        setupEditPage()
         
     }
     
@@ -103,8 +105,10 @@ extension AdminProfileViewController{
                 
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
+                txtPhoneNumber?.text = "\(us.phoneNumber)"
+                print(us)
                 
-                txtPhoneNumber?.text = String(us.phoneNumber)
+//                txtPhoneNumber?.text = String(us.phoneNumber)
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
                     switch result {
@@ -125,7 +129,17 @@ extension AdminProfileViewController{
         }
         
     }
-}
+    //function to make the provided list of views circle
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        for view in roundedViews{
+            view.layer.cornerRadius = view.frame.height / 2
+            view.clipsToBounds = true
+        }
+    }
+    
+}// End of the class
 
 
 
@@ -176,30 +190,33 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
-        guard let img = selectedImage.jpegData(compressionQuality: 0.9) else {return}
         
         
-        
-        //edit_Fatima
-        
-        
-//        Task {
-//            do {
-//
-//
-//                let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
-//                let us = try await UsersManager.getInstence().getUser(userId: userId)
-//
-//                // upload the image
-//                //PhotoManager.shared.
-//                //refresh the edit page
-//                //setupEditPage()
-//
-//            } catch {
-//                print("Error with uploading the images: \(error)")
-//                // Handle error appropriately, such as showing an alert to the user
-//            }
-//        }
+        PhotoManager.shared.uploadPhoto(selectedImage, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+            switch result {
+            case .success(let url):
+                
+                
+                // TODO: Update in user
+                
+                print("Image uploaded successfully: \(url)")
+            case .failure(let error):
+                let saveAlert = UIAlertController(
+                    title: "Error",
+                    message: "Error uploading image",
+                    preferredStyle: .alert
+                )
+                
+                let okAction = UIAlertAction(title: "OK", style: .default) { action in
+        //
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+                saveAlert.addAction(okAction)
+                
+                self.present(saveAlert, animated: true, completion: nil)
+            }
+        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -223,9 +240,20 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
         }
         
         // 2. Proceed to save changes if validation passes
+        do{
+            currentUser?.email = txtEmail.text!
+            currentUser?.fullName = txtFullName.text!
+            currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
+            
+            Task{
+                try await UsersManager.updateUser(user: currentUser!)
+            }
+        }catch {
+            print("error with user saving data")
+        }
         
-            //add the requird code
         
+           
         // 3. Show an alert notifying the user that the changes have been saved
         let saveAlert = UIAlertController(
             title: "Save Changes",
@@ -238,7 +266,6 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
         }
         
         saveAlert.addAction(okAction)
-        
         present(saveAlert, animated: true, completion: nil)
     }
 }
@@ -253,52 +280,83 @@ extension AdminProfileViewController{
     
     func validateFields() -> Bool {
         var isValid = true
+        var errorMessage = ""
 
 
         // Validate txtFullName (Only letters)
-          if let fullName = txtFullName?.text, fullName.isEmpty {
-              lblErrorFullName.text = "Full name is required."
-              highlightField(txtFullName)
-              isValid = false
-          } else if let fullName = txtFullName?.text, !isValidFullName(fullName) {
-              lblErrorFullName.text = "Full name must contain only letters."
-              highlightField(txtFullName)
-              isValid = false
-          } else {
-              lblErrorFullName.text = ""
-              resetFieldHighlight(txtFullName)
-          }
+        if let fullName = txtFullName?.text, fullName.isEmpty {
+            lblErrorFullName.text = "Full name is required."
+            highlightField(txtFullName)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        } else if let fullName = txtFullName?.text, !isValidFullName(fullName) {
+            lblErrorFullName.text = "Full name must contain only letters."
+            highlightField(txtFullName)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        } else {
+            lblErrorFullName.text = ""
+            resetFieldHighlight(txtFullName)
+        }
 
-          // Validate txtPhoneNumber (Only numbers)
-          if let phoneNumber = txtPhoneNumber?.text, phoneNumber.isEmpty {
-              lblErrorPhoneNumber.text = "Phone number is required."
-              highlightField(txtPhoneNumber)
-              isValid = false
-          } else if let phoneNumber = txtPhoneNumber?.text, !isValidPhoneNumber(phoneNumber) {
-              lblErrorPhoneNumber.text = "Phone number must be exactly 8 digits."
-              highlightField(txtPhoneNumber)
-              isValid = false
-          } else {
-              lblErrorPhoneNumber.text = ""
-              resetFieldHighlight(txtPhoneNumber)
-          }
+        // Validate txtPhoneNumber (Only numbers)
+        if let phoneNumber = txtPhoneNumber?.text, phoneNumber.isEmpty {
+            lblErrorPhoneNumber.text = "Phone number is required."
+            highlightField(txtPhoneNumber)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        } else if let phoneNumber = txtPhoneNumber?.text, !isValidPhoneNumber(phoneNumber) {
+            lblErrorPhoneNumber.text = "Phone number must be exactly 8 digits."
+            highlightField(txtPhoneNumber)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        } else {
+            lblErrorPhoneNumber.text = ""
+            resetFieldHighlight(txtPhoneNumber)
+        }
 
-          // Validate txtEmail (Valid email format)
-          if let email = txtEmail?.text, email.isEmpty {
-              lblErrorEmail.text = "Email address is required."
-              highlightField(txtEmail)
-              isValid = false
-          } else if let email = txtEmail?.text, !isValidEmail(email) {
-              lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
-              highlightField(txtEmail)
-              isValid = false
-          } else {
-              lblErrorEmail.text = ""
-              resetFieldHighlight(txtEmail)
-          }
+        var users: [User] = []
+        Task{
+            users = try await  UsersManager.getAllUsers()
+        }
+        
+        
+        var thereIs: Bool = false
+        for user in users {
+            if txtEmail.text != currentUser?.email && txtEmail.text == user.email{
+                thereIs = true
+            }
+        }
+        
+        // Validate txtEmail (Valid email format)
+        if let email = txtEmail?.text, email.isEmpty {
+            lblErrorEmail.text = "Email address is required."
+            highlightField(txtEmail)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        } else if let email = txtEmail?.text, !isValidEmail(email) {
+            lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
+            highlightField(txtEmail)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        }else if thereIs{
+            lblErrorEmail.text = "The provided email used by other user"
+            highlightField(txtEmail)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        }else {
+            lblErrorEmail.text = ""
+            resetFieldHighlight(txtEmail)
+        }
 
-          return isValid
+        // Show warning if validation fails
+        if !isValid {
+            showWarning(message: errorMessage)
+        }
+
+        return isValid
     }
+
     
     
     
@@ -333,4 +391,81 @@ extension AdminProfileViewController{
         textField?.layer.borderColor = UIColor.clear.cgColor
     }
     
+    
+    
+    func showWarning(message: String) {
+        // Check if the warning view already exists
+        if self.view.viewWithTag(999) != nil { return } // Avoid adding duplicate warnings
+        
+        // Create the warning view
+        let warningView = UIView()
+        warningView.backgroundColor = UIColor.red
+        warningView.tag = 999 // Use a unique tag to identify the view
+        warningView.layer.cornerRadius = 5
+        warningView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Create the warning message label
+        let warningLabel = UILabel()
+        warningLabel.text = message
+        warningLabel.textColor = .white
+        warningLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        warningLabel.numberOfLines = 0
+        warningLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        // Create the close button
+        let closeButton = UIButton(type: .system)
+        closeButton.setTitle("X", for: .normal)
+        closeButton.setTitleColor(.white, for: .normal)
+        closeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.addTarget(self, action: #selector(hideWarning), for: .touchUpInside)
+
+        // Add subviews to the warning view
+        warningView.addSubview(warningLabel)
+        warningView.addSubview(closeButton)
+
+        // Add the warning view to the main view
+        self.view.addSubview(warningView)
+
+        // Constraints for the warning view
+        NSLayoutConstraint.activate([
+            warningView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            warningView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
+            warningView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+            warningView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
+        ])
+
+        // Constraints for the warning label
+        NSLayoutConstraint.activate([
+            warningLabel.leadingAnchor.constraint(equalTo: warningView.leadingAnchor, constant: 10),
+            warningLabel.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
+            warningLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -10),
+        ])
+
+        // Constraints for the close button
+        NSLayoutConstraint.activate([
+            closeButton.trailingAnchor.constraint(equalTo: warningView.trailingAnchor, constant: -10),
+            closeButton.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
+            closeButton.widthAnchor.constraint(equalToConstant: 30),
+            closeButton.heightAnchor.constraint(equalToConstant: 30),
+        ])
+
+        // Animate the warning view appearance
+        warningView.alpha = 0
+        UIView.animate(withDuration: 0.3) {
+            warningView.alpha = 1
+        }
+    }
+
+    
+    @objc func hideWarning() {
+        if let warningView = self.view.viewWithTag(999) {
+            UIView.animate(withDuration: 0.3, animations: {
+                warningView.alpha = 0
+            }) { _ in
+                warningView.removeFromSuperview()
+            }
+        }
+    }
+
 }
