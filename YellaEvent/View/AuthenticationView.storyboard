@@ -151,7 +151,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCf-ln-tem">
-                                        <rect key="frame" x="119.66666666666669" y="186" width="133.66666666666663" height="33.333333333333343"/>
+                                        <rect key="frame" x="119.66666666666667" y="186" width="133.66666666666663" height="33.333333333333343"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Re-send Code">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="16"/>
@@ -404,7 +404,7 @@
         <!--Sign Up-->
         <scene sceneID="Gi9-zJ-z3J">
             <objects>
-                <viewController id="VOJ-rv-Kht" sceneMemberID="viewController">
+                <viewController id="VOJ-rv-Kht" customClass="AuthenticationViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b2i-wN-4Ht">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -586,6 +586,9 @@
                                     <fontDescription key="titleFontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
                                     <color key="baseBackgroundColor" name="BrandPurple"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="registerAccountAction:" destination="VOJ-rv-Kht" eventType="touchUpInside" id="AjK-qB-FBq"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="FLD-z8-lqJ"/>
@@ -607,6 +610,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Sign Up" largeTitleDisplayMode="always" id="0dd-Ks-qhu"/>
+                    <connections>
+                        <outlet property="registerDateOfBirthField" destination="Iqr-pM-Sbf" id="EvL-km-pql"/>
+                        <outlet property="registerEmailField" destination="Wot-8f-peh" id="zi4-Me-lTa"/>
+                        <outlet property="registerFullNameField" destination="mkq-rx-YJY" id="Ucp-Mr-tJB"/>
+                        <outlet property="registerPasswordField" destination="r5Z-WM-xbX" id="9yc-WK-Zha"/>
+                        <outlet property="registerPhoneNumberField" destination="oI3-yn-ghg" id="wl1-Fs-6zr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oYq-qO-kzP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -615,7 +625,7 @@
         <!--Login-->
         <scene sceneID="Cc6-VF-sN1">
             <objects>
-                <viewController id="8ct-SW-DWE" sceneMemberID="viewController">
+                <viewController id="8ct-SW-DWE" customClass="AuthenticationViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NKn-Ti-k1i">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -686,6 +696,9 @@
                                     <fontDescription key="titleFontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
                                     <color key="baseBackgroundColor" name="BrandPurple"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="normalLoginAction:" destination="8ct-SW-DWE" eventType="touchUpInside" id="FJV-UP-Lii"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0vA-BH-1kC">
                                 <rect key="frame" x="29.666666666666657" y="507.66666666666674" width="380.66666666666674" height="58"/>
@@ -698,15 +711,18 @@
                                     <fontDescription key="titleFontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
                                     <color key="baseBackgroundColor" name="BrandDarkPurple"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="signInThroughGoogleAction:" destination="8ct-SW-DWE" eventType="touchUpInside" id="val-Ie-GSR"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uV2-0N-v9Q">
-                                <rect key="frame" x="210.33333333333337" y="477.66666666666669" width="19.333333333333314" height="15.666666666666686"/>
+                                <rect key="frame" x="210.33333333333334" y="477.66666666666669" width="19.333333333333343" height="15.666666666666686"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mrx-zp-AVB">
-                                <rect key="frame" x="96.666666666666686" y="585.66666666666663" width="246.66666666666663" height="40"/>
+                                <rect key="frame" x="96.666666666666671" y="585.66666666666663" width="246.66666666666663" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't Have Account ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGc-6T-fGx">
                                         <rect key="frame" x="14" y="5" width="148" height="18"/>
@@ -793,6 +809,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="ojk-lW-Fv6"/>
+                    <connections>
+                        <outlet property="loginEmailField" destination="9xN-Rx-bhJ" id="pNa-U4-rMC"/>
+                        <outlet property="loginPasswordField" destination="sp5-yn-mMd" id="uJh-LY-ytR"/>
+                        <outlet property="signInThroughGoogle" destination="0vA-BH-1kC" id="ZrS-Ea-Fij"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mik-sp-gta" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
