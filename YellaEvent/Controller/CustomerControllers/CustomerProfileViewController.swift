@@ -127,7 +127,7 @@ extension CustomerProfileViewController{
                 
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
-                txtPhoneNumber.text = "\(us.phoneNumber)"
+//                txtPhoneNumber.text = "\(us.phoneNumber)"
                 currentUser = currentUser as? Customer
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     

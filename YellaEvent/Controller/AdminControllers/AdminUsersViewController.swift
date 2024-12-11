@@ -73,18 +73,15 @@ class AdminUsersViewController: UIViewController {
     //view customer details Page
     //outlets
 
- 
     @IBOutlet weak var txtUserNameCustomer: UINavigationItem!
     @IBOutlet weak var txtPhoneNumberCustomer: UITextField!
     @IBOutlet weak var txtDOBCustomer: UITextField!
     @IBOutlet weak var txtEmailCustomer: UITextField!
     @IBOutlet weak var txtUserTypeCustomer: UITextField!
-    
-    
-    
     @IBOutlet weak var btnBan: UIButton!
-    //Action
     
+    
+    //Action
     @IBAction func ResetCustomerPassword(_ sender: Any) {
         //get the user object and reset the password value of the user
         //TODO-Fatima
@@ -109,14 +106,61 @@ class AdminUsersViewController: UIViewController {
  //Ban Account Page
     //outlets
     @IBOutlet weak var txtDescription: UITextView!
+    @IBOutlet weak var txtBanReason: UIButton!
+    @IBOutlet weak var txtBanduration: UIButton!
+    var banReasons = ["Abusive Behavior", "Spam", "Fraudulent Activity", "Harassment", "Other"]
     
+    var banDuration = ["24 Hours", "7 Days", "14 Days", "1 Month", "1 Year", "Permanent", "Custom Duration"]
     
     //Actions
     @IBAction func ConformBan(_ sender: Any) {
-        //1.validation
-        //2.alert
-        banConformation()
+        // 1. Validation
+        if txtBanReason.titleLabel?.text == "Select Ban Reason" ||
+           txtBanduration.titleLabel?.text == "Select Ban Duration" ||
+           txtDescription.text.isEmpty {
+            showWarning(message: "Please fill in all required fields correctly.")
+        } else {
+            // 2. Get the selected duration and convert it into days
+            let selectedDurationText = txtBanduration.titleLabel?.text ?? ""
+            let selectedDurationInDays = getDurationInDays(from: selectedDurationText)
+            
+            // 3. Calculate the end date by adding the duration to today's date
+            let startDate = Date()  // today's date
+            let endDate = calculateEndDate(from: startDate, durationInDays: selectedDurationInDays)
+            
+            // 4. Call the UsersManager.banUser method with startDate and endDate
+            let txt = (txtBanReason.titleLabel?.text)!
+            
+            Task{
+                try await UsersManager.banUser(userID: currentUser!.userID, userType: currentUser!.type, reason: txt, description: txtDescription.text, startDate: startDate, endDate: endDate)
+            }
+            
+            // 5. Show the confirmation alert
+            banConformation()
+        }
     }
+    
+    @IBAction func BanReasonClicked(_ sender: Any) {
+        showDropdown(options: banReasons, for: txtBanReason, title: "Select Ban Reason")
+    }
+    
+    @IBAction func BanDurationaClicked(_ sender: Any) {
+        showDropdown(options: banDuration, for: txtBanduration, title: "Select Ban Duration")
+    }
+    
+    //View Admin Page
+    //Outlet
+  
+    @IBOutlet weak var txtNameAdmin: UINavigationItem!
+    @IBOutlet weak var txtEmailAdmin: UITextField!
+    
+    @IBOutlet weak var txtPhoneNumberAdmin: UITextField!
+
+    @IBOutlet weak var txtUsetTypeAdmin: UITextField!
+
+    
+    
+    
     
     
     
@@ -247,13 +291,31 @@ class AdminUsersViewController: UIViewController {
                     }
 
                 } else if currentUser.type == .admin {
-                    // Handle admin-specific code if necessary
+                        // Admin page setup
+                    if let userType = txtUsetTypeAdmin{
+                        txtUsetTypeAdmin.text = "Admin"
+                        txtEmailAdmin.text = currentUser.email
+                        txtPhoneNumberAdmin.text = "\(currentUser.phoneNumber)"
+                        txtNameAdmin.title = currentUser.fullName
+                    }
+                    
                 } else if currentUser.type == .organizer {
                     // Handle organizer-specific code if necessary
                 }
             }
         } catch {
             print("Error occurred while processing user data: \(error)")
+        }
+        
+        //view Ban page
+
+        do{
+            if let banreason = txtBanReason {
+                txtBanReason.setTitle("Select Ban Reason", for: .normal)
+                txtBanduration.setTitle("Select Ban Duration", for: .normal)
+            }
+        }catch {
+            
         }
     
 
@@ -262,9 +324,7 @@ class AdminUsersViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-
-        
+  
     }
 
     
@@ -821,8 +881,99 @@ extension AdminUsersViewController{
     }
 
 
+// Ban User Page functions {
+// Convert the selected duration text (e.g. "1 Day", "1 Week", "1 Month") to days
+func getDurationInDays(from text: String) -> Int {
+    // Default to 0 if the duration cannot be interpreted
+    var durationInDays = 0
+    
+    if text.contains("Day") {
+        // Extract the number of days
+        if let numberOfDays = Int(text.split(separator: " ")[0]) {
+            durationInDays = numberOfDays
+        }
+    } else if text.contains("Week") {
+        // Assuming a week is 7 days
+        if let numberOfWeeks = Int(text.split(separator: " ")[0]) {
+            durationInDays = numberOfWeeks * 7
+        }
+    } else if text.contains("Month") {
+        // Assuming a month is approximately 30 days
+        if let numberOfMonths = Int(text.split(separator: " ")[0]) {
+            durationInDays = numberOfMonths * 30
+        }
+    }
+    
+    return durationInDays
+}
+
+// Calculate the end date by adding the given number of days to the start date
+func calculateEndDate(from startDate: Date, durationInDays: Int) -> Date {
+    let calendar = Calendar.current
+    let endDate = calendar.date(byAdding: .day, value: durationInDays, to: startDate)
+    return endDate ?? startDate // Return the start date if there's any issue with the calculation
+}
+
+
+
+
+
+
+
+
+
 //shared functions
 extension AdminUsersViewController{
+    
+    
+    // Generalized function to show a dropdown with a list of items
+    func showDropdown(options: [String], for button: UIButton, title: String) {
+        // Ensure the options list is not empty
+            guard !options.isEmpty else {
+                print("The options list cannot be empty.")
+                return
+            }
+
+            // Create UIActions from options
+            let menuActions = options.map { option in
+                UIAction(title: option, image: nil) { action in
+                    self.updateMenuWithSelection(selectedOption: option, options: options, button: button)
+                }
+            }
+
+            // Create the menu and assign it to the button
+            let menu = UIMenu(title: "", children: menuActions)
+            button.menu = menu
+            button.showsMenuAsPrimaryAction = true
+        }
+
+        // Function to update the menu with the selected option
+        func updateMenuWithSelection(selectedOption: String, options: [String], button: UIButton) {
+            // Ensure the selected option is valid
+            guard options.contains(selectedOption) else {
+                print("Invalid selected option: \(selectedOption).")
+                return
+            }
+
+            // Create updated menu actions with checkmark for the selected option
+            let menuActions = options.map { option in
+                UIAction(
+                    title: option,
+                    image: option == selectedOption ? UIImage(systemName: "checkmark") : nil
+                ) { action in
+                    self.updateMenuWithSelection(selectedOption: option, options: options, button: button)
+                }
+            }
+
+            // Update the button's title to the selected option
+            button.setTitle(selectedOption, for: .normal)
+
+            // Reassign the updated menu to the button
+            button.menu = UIMenu(title: "", children: menuActions)
+        }
+    
+    
+    
     func resertPassword(){
         //show an alert that the password reset
         let saveAlert = UIAlertController(
