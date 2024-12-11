@@ -358,4 +358,12 @@ final class UsersManager {
             try doc.data(as: UserBan.self)
         }
     }
+    
+    static func getCustomersSum() async throws  -> Int {
+        try await customersCollection.getDocuments().documents.count
+        }
+    
+    static func getOrganizersSum() async throws -> Int {
+        try await organizersCollection.getDocuments().documents.count
+        }
 }

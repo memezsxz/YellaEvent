@@ -96,14 +96,14 @@ extension OrganizerEventsViewController: UITableViewDelegate , UITableViewDataSo
             let index = eventSummarys.firstIndex{$0.eventID == selectedEventID!}
             print(index, selectedEventID, eventSummarys)
             tableView.selectRow(at: IndexPath(row: index!, section: 0), animated: true, scrollPosition: .middle)
-            print("selected")
 
+            
             selectedEventID = nil
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected")
+
     }
     
 }

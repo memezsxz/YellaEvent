@@ -325,4 +325,8 @@ class EventsManager {
 //        }
 //        return sum / count
 //    }
+    
+    static func getEventsSum() async throws  -> Int {
+        try await eventsCollection.whereField(K.FStore.Events.isDeleted, isEqualTo: false).getDocuments().documents.count
+    }
 }

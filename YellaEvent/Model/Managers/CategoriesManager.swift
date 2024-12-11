@@ -78,4 +78,8 @@ class CategoriesManager {
             try doc.data(as: Category.self)
         }
     }
+    
+    static func getCategoriesSum() async throws  -> Int {
+        try await categoriesCollection.whereField(K.FStore.Categories.status, isNotEqualTo: CategoryStaus.history.rawValue).getDocuments().documents.count
+    }
 }

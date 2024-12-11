@@ -9,7 +9,10 @@ import FirebaseFirestore
 struct K {
     static let appName = "Yella Event"
     static let bundleUserID = "dev.maryam.yellaevent.userid"
+    static let HSizeclass = UIScreen.main.traitCollection.horizontalSizeClass
     
+    static let VSizeclass = UIScreen.main.traitCollection.verticalSizeClass
+
     struct BrandColors {
         static let purple = "BrandPurple"
         static let lightPurple = "BrandLightPurple"
