@@ -99,7 +99,7 @@ extension OrganizerProfileViewController{
                 txtFullName?.text = "\(currentUser!.fullName)"
                 txtEmail?.text = currentUser!.email
                 
-                txtPhoneNumber?.text = String(currentUser!.phoneNumber)
+//                txtPhoneNumber?.text = "\(currentUser!.phoneNumber)"
                 PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
