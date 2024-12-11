@@ -75,6 +75,7 @@ class OrganizerEventsViewController: UIViewController {
 extension OrganizerEventsViewController: UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         return tableView.frame.width / 6
     }
     
@@ -87,8 +88,6 @@ extension OrganizerEventsViewController: UITableViewDelegate , UITableViewDataSo
         
         cell.setup(event: eventSummarys[indexPath.row])
         return cell
-        
-        
     }
     
     func moveToSelection() {
@@ -102,8 +101,8 @@ extension OrganizerEventsViewController: UITableViewDelegate , UITableViewDataSo
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "toEventDetails", sender: self)
+//    }
     
 }
