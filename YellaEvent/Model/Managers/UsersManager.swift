@@ -339,18 +339,11 @@ final class UsersManager {
             try await doc.reference.delete()
         }
     }
+    
+    
 
-    static func isUserBanned(userID: String) async throws -> UserBan? {
-        let userBansCollection = Firestore.firestore().collection(K.FStore.UserBans.collectionName)
-        
-        let snapshot = try await userBansCollection.whereField(K.FStore.UserBans.userID, isEqualTo: userID).order(by: K.FStore.UserBans.endDate).getDocuments()
-        
-        if snapshot.documents.isEmpty {
-            return nil
-        } else {
-          let ban =  try snapshot.documents[0].data(as: UserBan.self)
-            return  ban.endDate > Date.now ? ban : nil
-        }
+    static func isUserBanned(userID: String) async throws -> Bool {
+        try await  Firestore.firestore().collection(K.FStore.UserBans.collectionName).whereField(K.FStore.UserBans.userID, isEqualTo: userID).getDocuments().documents.isEmpty
     }
     
     static func getUserBans() async throws -> [UserBan] {

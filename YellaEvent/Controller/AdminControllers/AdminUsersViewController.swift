@@ -25,7 +25,13 @@ var currentUser: User? = nil
 
 class AdminUsersViewController: UIViewController {
     
-//Users List page
+    @IBOutlet var viewCustomerDetailsView: ViewCustomerDetailsView!
+    @IBOutlet var viewAdminDetailsView: ViewAdminDetailsView!
+    
+    @IBOutlet var viewOrganizerDetailsView: ViewOrganizerDetailsView!
+    
+    @IBOutlet var editOrganizerDetailsView: EditOrganizerDetailsView!
+    //Users List page
     // Outlet
     @IBOutlet weak var addOrganizer: UIBarButtonItem!
     @IBOutlet weak var userListSections: UISegmentedControl!
@@ -72,37 +78,37 @@ class AdminUsersViewController: UIViewController {
     
     //view customer details Page
     //outlets
-
-    @IBOutlet weak var txtUserNameCustomer: UINavigationItem!
-    @IBOutlet weak var txtPhoneNumberCustomer: UITextField!
-    @IBOutlet weak var txtDOBCustomer: UITextField!
-    @IBOutlet weak var txtEmailCustomer: UITextField!
-    @IBOutlet weak var txtUserTypeCustomer: UITextField!
-    @IBOutlet weak var btnBan: UIButton!
-    
-    
-    //Action
-    @IBAction func ResetCustomerPassword(_ sender: Any) {
-        //get the user object and reset the password value of the user
-        //TODO-Fatima
-        
-        //show an alert that the password reset
-        resertPassword()
-    }
-    
-    @IBAction func BanUserButton(_ sender: Any) {
-            //check if the user in the ban collection
-        
-            // if the user not on the ban collection show this function
-             BanAlert()
-        
-            // if the user is in the ban collection use this function
-            //UnBanAlert
-        
-    }
-    
-    
-    
+//
+//    @IBOutlet weak var txtUserNameCustomer: UINavigationItem!
+//    @IBOutlet weak var txtPhoneNumberCustomer: UITextField!
+//    @IBOutlet weak var txtDOBCustomer: UITextField!
+//    @IBOutlet weak var txtEmailCustomer: UITextField!
+//    @IBOutlet weak var txtUserTypeCustomer: UITextField!
+//    @IBOutlet weak var btnBan: UIButton!
+//    
+//    
+//    //Action
+//    @IBAction func ResetCustomerPassword(_ sender: Any) {
+//        //get the user object and reset the password value of the user
+//        //TODO-Fatima
+//        
+//        //show an alert that the password reset
+//        resertPassword()
+//    }
+//    
+//    @IBAction func BanUserButton(_ sender: Any) {
+//            //check if the user in the ban collection
+//        
+//            // if the user not on the ban collection show this function
+//             BanAlert()
+//        
+//            // if the user is in the ban collection use this function
+//            //UnBanAlert
+//        
+//    }
+//    
+//    
+//    
  //Ban Account Page
     //outlets
     @IBOutlet weak var txtDescription: UITextView!
@@ -147,21 +153,6 @@ class AdminUsersViewController: UIViewController {
     @IBAction func BanDurationaClicked(_ sender: Any) {
         showDropdown(options: banDuration, for: txtBanduration, title: "Select Ban Duration")
     }
-    
-    //View Admin Page
-    //Outlet
-  
-    @IBOutlet weak var txtNameAdmin: UINavigationItem!
-    @IBOutlet weak var txtEmailAdmin: UITextField!
-    
-    @IBOutlet weak var txtPhoneNumberAdmin: UITextField!
-
-    @IBOutlet weak var txtUsetTypeAdmin: UITextField!
-
-    
-    
-    
-    
     
     
     override func viewDidLoad() {
@@ -236,79 +227,7 @@ class AdminUsersViewController: UIViewController {
             print("no menue is there")
         }
         
-        //view customer page
-        do {
-            if let currentUser = currentUser {
-                if let currentUser = currentUser as? Customer {
-                    // Check if the text fields exist before accessing them
-                    
-                    if let txtUserTypeCustomer = txtUserTypeCustomer {
-                        txtUserTypeCustomer.isUserInteractionEnabled = false
-                        txtUserTypeCustomer.text = "Customer"
-                    }
-
-                    if let txtUserNameCustomer = txtUserNameCustomer {
-                        txtUserNameCustomer.title = currentUser.fullName
-                    }
-
-                    if let txtPhoneNumberCustomer = txtPhoneNumberCustomer {
-                        txtPhoneNumberCustomer.isUserInteractionEnabled = false
-                        txtPhoneNumberCustomer.text = "\(currentUser.phoneNumber)"
-                    }
-
-                    if let txtDOBCustomer = txtDOBCustomer {
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "dd MMMM yyyy"
-                        txtDOBCustomer.text = formatter.string(from: currentUser.dob)
-                        txtDOBCustomer.isUserInteractionEnabled = false
-
-                    }
-
-                    if let txtEmailCustomer = txtEmailCustomer {
-                        txtEmailCustomer.text = currentUser.email
-                        txtEmailCustomer.isUserInteractionEnabled = false
-
-                    }
-
-                    // Checking and handling banning logic
-                    var isBan = false
-                    var banUsers: [UserBan] = []
-                    Task {
-                        banUsers = try await UsersManager.getUserBans()
-                    }
-
-                    for i in banUsers {
-                        if i.userID == currentUser.userID {
-                            isBan = true
-                            break
-                        }
-                    }
-
-                    if isBan {
-                        if let btnBan = btnBan {
-                            btnBan.setTitle("Unban Account", for: .normal)
-                            btnBan.setTitleColor(UIColor.brandBlue, for: .normal)
-                        }
-                    }
-
-                } else if currentUser.type == .admin {
-                        // Admin page setup
-                    if let userType = txtUsetTypeAdmin{
-                        txtUsetTypeAdmin.text = "Admin"
-                        txtEmailAdmin.text = currentUser.email
-                        txtPhoneNumberAdmin.text = "\(currentUser.phoneNumber)"
-                        txtNameAdmin.title = currentUser.fullName
-                    }
-                    
-                } else if currentUser.type == .organizer {
-                    // Handle organizer-specific code if necessary
-                }
-            }
-        } catch {
-            print("Error occurred while processing user data: \(error)")
-        }
         
-        //view Ban page
 
         do{
             if let banreason = txtBanReason {
@@ -328,6 +247,35 @@ class AdminUsersViewController: UIViewController {
   
     }
 
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ViewCustomerPage" {
+            viewCustomerDetailsView = segue.destination.view as? ViewCustomerDetailsView
+            viewCustomerDetailsView.delegate = self
+            viewCustomerDetailsView.currentCustomer = (currentUser as! Customer)
+            viewCustomerDetailsView.setup()
+            return
+        }else if (segue.identifier == "ViewAdminPage" ){
+            viewAdminDetailsView = segue.destination.view as? ViewAdminDetailsView
+            viewAdminDetailsView.delegate = self
+            viewAdminDetailsView.currentAdmin = (currentUser as! Admin)
+            viewAdminDetailsView.setup()
+        }else if (segue.identifier == "ViewOrganizerPage"){
+            viewOrganizerDetailsView = segue.destination.view as? ViewOrganizerDetailsView
+            viewOrganizerDetailsView.delegate = self
+            viewOrganizerDetailsView.currentOrganizer = (currentUser as! Organizer)
+            viewOrganizerDetailsView.setup()
+        }else if (segue.identifier == "EditUser"){
+            editOrganizerDetailsView = segue.destination.view as? EditOrganizerDetailsView
+            editOrganizerDetailsView.delegate = viewOrganizerDetailsView
+            editOrganizerDetailsView.currentOrganizer = (currentUser as! Organizer)
+            editOrganizerDetailsView.setup()
+        }
+        
+        super.prepare(for: segue, sender: sender)
+    }
+    
+    
     
 }
 
@@ -386,10 +334,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let user = users[indexPath.row]
-        print("array size: \(users.count)")
         currentUser = user
-        print(currentUser!)
-
 
         if (user.type == .admin){
             performSegue(withIdentifier: "ViewAdminPage", sender: self)
@@ -976,6 +921,10 @@ extension AdminUsersViewController{
     
     
     func resertPassword(){
+        
+        //reset the user password
+        //TODO: FATIMA
+        
         //show an alert that the password reset
         let saveAlert = UIAlertController(
             title: "Password Reset Successful",
@@ -1029,7 +978,7 @@ extension AdminUsersViewController{
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-//
+
             self.navigationController?.popViewController(animated: true)
         }
         
@@ -1037,8 +986,6 @@ extension AdminUsersViewController{
         
         self.present(saveAlert, animated: true, completion: nil)
     
-
-        dismiss(animated: true, completion: nil)
 
     }
     

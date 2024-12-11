@@ -211,7 +211,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
                 let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
                 let us = try await UsersManager.getUser(userID: userId) as! Customer
                 datePicker.date = us.dob
-                txtFieldDate.text = formateDate(date: us.dob)
+                txtFieldDate.text = K.DFormatter.string(from: us.dob)
                 
                 
             } catch {
@@ -232,7 +232,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
             guard txtFieldDate != nil else{
                 throw NSError(domain: "ViewController", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Text field is not available for updating."])
             }
-            txtFieldDate.text = formateDate(date: datePicker.date)
+            txtFieldDate.text = K.DFormatter.string(from: datePicker.date)
         } catch {
             print("Error updating date: \(error.localizedDescription)")
         }
@@ -244,12 +244,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         view.endEditing(true)
     }
     
-    // Format the date to a readable string
-    func formateDate(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMMM yyyy" // Customize as needed
-        return formatter.string(from: date)
-    }
+
     
     
     // function show two options (camera, photo library)
@@ -354,9 +349,8 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
             if let phone = Int(txtPhoneNumber.text!){
                 currentUser?.phoneNumber = phone
             }
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMMM yyyy" // Adjust this to match your input format
-            currentUser?.dob = dateFormatter.date(from: txtFieldDate.text!)!
+
+            currentUser?.dob = K.DFormatter.date(from: txtFieldDate.text!)!
             
             Task{
                 try await UsersManager.updateUser(user: currentUser!)
