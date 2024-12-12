@@ -27,10 +27,12 @@ class AdminUsersViewController: UIViewController {
     
     @IBOutlet var viewCustomerDetailsView: ViewCustomerDetailsView!
     @IBOutlet var viewAdminDetailsView: ViewAdminDetailsView!
-    
     @IBOutlet var viewOrganizerDetailsView: ViewOrganizerDetailsView!
-    
     @IBOutlet var editOrganizerDetailsView: EditOrganizerDetailsView!
+    @IBOutlet var createOrganizerView: createOrganizerView!
+    
+    
+    
     //Users List page
     // Outlet
     @IBOutlet weak var addOrganizer: UIBarButtonItem!
@@ -40,33 +42,7 @@ class AdminUsersViewController: UIViewController {
     var users : [User] = []
     var currentSegment : UserType?
     
-//Create Organizer Page
-    // Outlet
-    @IBOutlet weak var txtUserNameCreate: UITextField!
-    @IBOutlet weak var txtPhoneNumberCreate: UITextField!
-    @IBOutlet weak var txtPasswordCreate: UITextField!
-    @IBOutlet weak var txtEmailCreate: UITextField!
-    @IBOutlet weak var txtLicenceCreate: UILabel!
-    
-    @IBOutlet weak var listAccountDuration: UIButton!
-    
-    //lblError
-    @IBOutlet weak var lblErrorUserName: UILabel!
-    @IBOutlet weak var lblErrorPhoneNumber: UILabel!
-    @IBOutlet weak var lblErrorEmail: UILabel!
-    @IBOutlet weak var lblErrorPassword: UILabel!
 
-    @IBOutlet weak var lblErrorAccountDuration: UILabel!
-    
-    
-    //Actions
-    @IBAction func createUserTapped(_ sender: Any) {
-        createOrganizer()
-    }
-    @IBAction func UploadDoucumentTapped(_ sender: Any) {
-        uploadDoucument(sender)
-    }
-    
     
     
     //form the main page + button
@@ -216,18 +192,6 @@ class AdminUsersViewController: UIViewController {
             print("Something went wrong: \(error.localizedDescription)")
         }
 
-        // chnage it to real data
-         var options = ["No Expire","1 Week", "1 Month", "1 Year"]
-        
-        
-        // for the create user page
-        do{
-            try configureMenu(options: options)
-        }catch is Error {
-            print("no menue is there")
-        }
-        
-        
 
         do{
             if let banreason = txtBanReason {
@@ -270,6 +234,10 @@ class AdminUsersViewController: UIViewController {
             editOrganizerDetailsView.delegate = viewOrganizerDetailsView
             editOrganizerDetailsView.currentOrganizer = (currentUser as! Organizer)
             editOrganizerDetailsView.setup()
+        }else if (segue.identifier == "createUser"){
+            createOrganizerView = segue.destination.view as? createOrganizerView
+            createOrganizerView.delegate = self
+            createOrganizerView.setup()
         }
         
         super.prepare(for: segue, sender: sender)
@@ -438,6 +406,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
         
 }
 
+// MARK: Search delegate
 extension AdminUsersViewController : UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
@@ -451,7 +420,6 @@ extension AdminUsersViewController : UISearchBarDelegate{
             searchArray = try await (currentSegment == nil
                                      ? UsersManager.getAllUsers()
                                      : UsersManager.getUsers(ofType: currentSegment!))
-            
             users = searchArray.filter { user in
                 user.fullName.lowercased().split(separator: " ").contains { $0.lowercased().starts(with: searchText) } || user.fullName.lowercased().starts(with: searchText) ||
                 user.email.lowercased().starts(with: searchText)
@@ -464,258 +432,10 @@ extension AdminUsersViewController : UISearchBarDelegate{
     }
 }
 
-//create organizer functions
-extension AdminUsersViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
-    
-    
-    func createOrganizer(){
-        //1. DO validation on the provided information
-        validateCreateFields()
-        
-        //2. if everything go well
-            //create new organization user
-        let name = txtUserNameCreate.text!
-//        let phone = Int(txtPhoneNumberCreate.text!)
-        let email = txtEmailCreate.text
-        let pass = txtPasswordCreate.text
-        let start = Data()
-
-        
-//        let org = Organizer(fullName: name, email: email!, dob: Date(), dateCreated: Date(), phoneNumber: phone, profileImageURL: "", startDate: start, endDate: <#T##Date#>, LicenseDocumentURL: <#T##String#>)
-//            
-            //add the organization object in the firbase
-        
-    }
-    
-    
-    func uploadDoucument(_ sender: Any){
-        
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            
-            let menue = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-            menue.addAction(cancelAction)
-            
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                
-                let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
-                    imagePicker.sourceType = .camera
-                    self.present(imagePicker, animated: true, completion: nil)
-                }
-                
-                menue.addAction(cameraAction)
-            }
-            
-            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-                
-                let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
-                    imagePicker.sourceType = .photoLibrary
-                    self.present(imagePicker, animated: true, completion: nil)
-                }
-                
-                menue.addAction(photoLibraryAction)
-            }
-            
-            
-            
-            
-            
-            menue.popoverPresentationController?.sourceView = sender as? UIView
-            present(menue, animated: true)
-            
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        //1.get the selected image
-        guard let selectedImage = info[.originalImage] as? UIImage else {return}
-        
-        //2. save the image in somewhere and rename it as Licence
-            //save the image to the organizer user object
-        
-        
-        //3. display the documnet name as Licence
-        
-    }
-    
-    
-    // if the user click cancel run this method
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        
-        //1. close the screen
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // function to show a list
-    func configureMenu(options: [String]) {
-        do {
-            // Ensure `listAccountDuration` exists
-            guard let list = listAccountDuration else {
-                throw RuntimeError("The listAccountDuration button is not connected.")
-            }
-
-            // Ensure options are not empty
-            guard !options.isEmpty else {
-                throw RuntimeError("The options list cannot be empty.")
-            }
-
-            // Create UIActions from options
-            let menuActions = options.map { option in
-                UIAction(title: option, image: nil) { action in
-                    do {
-                        try self.updateMenuWithSelection(selectedOption: option, options: options)
-                    } catch {
-                        print("Error updating menu selection: \(error.localizedDescription)")
-                    }
-                }
-            }
-
-            // Attach the menu to the button
-            let menu = UIMenu(title: "", children: menuActions)
-            list.menu = menu
-            list.showsMenuAsPrimaryAction = true
-            list.backgroundColor = .white
-            list.setTitle("Select Duration", for: .normal)
-            
-
-        } catch {
-            print("Error configuring menu: \(error.localizedDescription)")
-        }
-    }
-
-    func updateMenuWithSelection(selectedOption: String, options: [String]) throws {
-        // Ensure `listAccountDuration` exists
-        guard let listAccountDuration = listAccountDuration else {
-            throw RuntimeError("The listAccountDuration button is not connected.")
-        }
-
-        // Ensure the selected option is valid
-        guard options.contains(selectedOption) else {
-            throw RuntimeError("Invalid selected option: \(selectedOption).")
-        }
-
-        // Create updated menu actions
-        let menuActions = options.map { option in
-            UIAction(
-                title: option,
-                image: option == selectedOption ? UIImage(systemName: "checkmark") : nil
-            ) { action in
-                do {
-                    try self.updateMenuWithSelection(selectedOption: option, options: options)
-                } catch {
-                    print("Error updating menu selection: \(error.localizedDescription)")
-                }
-            }
-        }
-
-        // Update the button's title and reassign the menu
-        listAccountDuration.setTitle(selectedOption, for: .normal)
-        listAccountDuration.menu = UIMenu(title: "", children: menuActions)
-        
-
-        // Dismiss the menu after 0.4 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            listAccountDuration.showsMenuAsPrimaryAction = false
-            listAccountDuration.showsMenuAsPrimaryAction = true
-        }
-    }
-
-}
 
 // extention for filds validations for create oragnizer --> inclide the function that related to the validation
 extension AdminUsersViewController{
-        
-        func validateCreateFields() -> Bool {
-            var isValid = true
-            var errorMessage = ""
-
-
-            // Validate txtFullName (Only letters)
-            if let fullName = txtUserNameCreate?.text, fullName.isEmpty {
-                lblErrorUserName.text = "Full name is required."
-                highlightField(txtUserNameCreate)
-                isValid = false
-                errorMessage = "Please fill in all required fields correctly."
-            } else if let fullName = txtUserNameCreate?.text, !isValidFullName(fullName) {
-                lblErrorUserName.text = "Full name must contain only letters."
-                highlightField(txtUserNameCreate)
-                isValid = false
-                errorMessage = "Please fill in all required fields correctly."
-            } else {
-                lblErrorUserName.text = ""
-                resetFieldHighlight(txtUserNameCreate)
-            }
-
-            // Validate txtPhoneNumber (Only numbers)
-            if let phoneNumber = txtPhoneNumberCreate?.text, phoneNumber.isEmpty {
-                lblErrorPhoneNumber.text = "Phone number is required."
-                highlightField(txtPhoneNumberCreate)
-                isValid = false
-                errorMessage = "Please fill in all required fields correctly."
-            } else if let phoneNumber = txtPhoneNumberCreate?.text, !isValidPhoneNumber(phoneNumber) {
-                lblErrorPhoneNumber.text = "Phone number must be exactly 8 digits."
-                highlightField(txtPhoneNumberCreate)
-                isValid = false
-                errorMessage = "Please fill in all required fields correctly."
-            } else {
-                lblErrorPhoneNumber.text = ""
-                resetFieldHighlight(txtPhoneNumberCreate)
-            }
-
-            // Validate txtEmail (Valid email format)
-            if let email = txtEmailCreate?.text, email.isEmpty {
-                lblErrorEmail.text = "Email address is required."
-                highlightField(txtEmailCreate)
-                isValid = false
-                errorMessage = "Please fill in all required fields correctly."
-            } else if let email = txtEmailCreate?.text, !isValidEmail(email) {
-                lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
-                highlightField(txtEmailCreate)
-                isValid = false
-                errorMessage = "Please fill in all required fields correctly."
-            } else {
-                lblErrorEmail.text = ""
-                resetFieldHighlight(txtEmailCreate)
-            }
-            
-            // Validate txtPasswordCreate (Valid password format)
-            if let password = txtPasswordCreate?.text, password.isEmpty {
-                lblErrorPassword.text = "Password is required."
-                highlightField(txtPasswordCreate)
-                isValid = false
-                errorMessage = "Please fill in all required fields correctly."
-            }else {
-                lblErrorPassword.text = ""
-                resetFieldHighlight(txtPasswordCreate)
-            }
-
-            if listAccountDuration.titleLabel?.text == "Select Duration"{
-                lblErrorAccountDuration.text = "Account Duration is required."
-                listAccountDuration.layer.borderColor = UIColor.red.cgColor // Set the border color (e.g., red)
-                listAccountDuration.layer.borderWidth = 1 // Set the border width
-                isValid = false
-                errorMessage = "Please fill in all required fields correctly."
-            }else {
-                lblErrorAccountDuration.text = ""
-                listAccountDuration?.layer.borderWidth = 0
-                listAccountDuration?.layer.borderColor = UIColor.clear.cgColor
-            }
-            
-
-            // Show warning if validation fails
-            if !isValid {
-                showWarning(message: errorMessage)
-            }
-
-            return isValid
-        }
-
-        
-        
-        
+    
         
         func isValidFullName(_ fullName: String) -> Bool {
             let fullNameRegex = "^[a-zA-Z ]+$"
@@ -859,12 +579,6 @@ func calculateEndDate(from startDate: Date, durationInDays: Int) -> Date {
     let endDate = calendar.date(byAdding: .day, value: durationInDays, to: startDate)
     return endDate ?? startDate // Return the start date if there's any issue with the calculation
 }
-
-
-
-
-
-
 
 
 
@@ -1013,10 +727,19 @@ extension AdminUsersViewController{
         self.present(saveAlert, animated: true, completion: nil)
     }
     
+    func saveAlert(){
+        // 3. Show an alert notifying the user that the changes have been saved
+        let saveAlert = UIAlertController(
+            title: "Save Changes",
+            message: "Your changes have been saved successfully.",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+        }
+        
+        saveAlert.addAction(okAction)
+        present(saveAlert, animated: true, completion: nil)
+    }
     
 }
-    
-
-    
-
-

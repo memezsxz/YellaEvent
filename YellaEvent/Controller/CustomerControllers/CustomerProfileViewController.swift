@@ -35,7 +35,9 @@ class CustomerProfileViewController: UIViewController {
     @IBOutlet weak var lblErrorDOB: UILabel!
     @IBOutlet weak var lblErrorEmail: UILabel!
     
+    @IBOutlet weak var txtBigUserName: UILabel!
     
+    @IBOutlet weak var txtUserType: UILabel!
     //Actions
     @IBAction func ChangeImageTapped(_ sender: UIButton) {
         changeTheUserImage(sender)
@@ -69,6 +71,16 @@ class CustomerProfileViewController: UIViewController {
                 //chnage to getCustomer
                 let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
                 currentUser = us as? Customer
+                
+                do{
+                    if let text = txtBigUserName{
+                        txtBigUserName.text = currentUser?.fullName
+                        txtUserType.text = "Customer"
+                    }
+                }catch{
+                    print("check")
+                }
+ 
                 //download the current user image
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
@@ -99,8 +111,37 @@ class CustomerProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        
+        do{
+            if (txtBigUserName != nil){
+                txtBigUserName.text = currentUser?.fullName
+                txtUserType.text = "Customer"
+            }
+        }catch{
+            print("check")
+        }
+
+        //download the current user image
+        do{
+            if let photo = currentUser?.profileImageURL{
+                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+                    
+                    switch result {
+                        //if the user have an image and his/her image
+                    case .success(let image):
+                        self.BIgImageProfile?.image = image
+                        // if the user don't have an image put the defualt image
+                    case .failure(_):
+                        self.BIgImageProfile?.image = UIImage(named: "DefaultImageProfile")
+                    }
+                    
+                })
+            }
+        }catch {
+            print("check")
+        }
     }
+        
+    
     
     
     

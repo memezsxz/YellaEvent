@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ViewCustomerDetailsView: UIView {
     
@@ -75,6 +76,12 @@ class ViewCustomerDetailsView: UIView {
     @IBAction func ResetCustomerPassword(_ sender: Any) {
         //get the user object and reset the password value of the user
         //TODO-Fatima
+        
+//        Auth.auth().sendPasswordReset(withEmail: email) { error in
+//          // ...
+//        }
+
+
         
         //show an alert that the password reset
         delegate?.resertPassword()

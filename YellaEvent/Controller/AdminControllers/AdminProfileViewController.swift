@@ -40,7 +40,8 @@ class AdminProfileViewController: UIViewController {
         saveUserChanges(sender)
     }
     
-    
+    @IBOutlet weak var bigUserName: UILabel!
+    @IBOutlet weak var bigUserType: UILabel!
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -53,6 +54,17 @@ class AdminProfileViewController: UIViewController {
             Task {
                 let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
                 currentUser = (us as! Admin)
+                do{
+                    if let text = bigUserName{
+                        bigUserName.text = currentUser?.fullName
+                        bigUserType.text = "Admin"
+                    }
+                }catch{
+                    print("check")
+                }
+
+                
+                
                 //download the current user image
                 PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                     
@@ -262,11 +274,11 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            print("Changes saved.")
         }
         
         saveAlert.addAction(okAction)
         present(saveAlert, animated: true, completion: nil)
+    
     }
 }
 

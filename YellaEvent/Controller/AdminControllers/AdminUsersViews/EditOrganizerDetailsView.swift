@@ -58,6 +58,7 @@ class EditOrganizerDetailsView: UIView {
     @IBAction func selectedOption(_ sender: UIAction){
         if sender.title == "Never Expire" {
              txtDuraion.setTitle("Never Expire", for: .normal) // Set button title to "Never Expire"
+            lastField.isHidden = true
          } else {
              print("Enerd")
              lastField.isHidden = false
@@ -73,6 +74,7 @@ class EditOrganizerDetailsView: UIView {
         //do validation
         validation()
         
+        
         currentOrganizer!.email = txtEmail.text!
         if let phone = Int(txtPhoneNumber.text!){
             currentOrganizer?.phoneNumber = phone
@@ -86,6 +88,7 @@ class EditOrganizerDetailsView: UIView {
             }
         }
         
+        
         //save the given documnet 
         //TODO_FATIMA
         
@@ -94,6 +97,10 @@ class EditOrganizerDetailsView: UIView {
         Task{
             try await UsersManager.updateUser(user: currentUser!)
         }
+        
+        // 3. Show an alert notifying the user that the changes have been saved
+        delegate?.delegate?.saveAlert()
+        
         
         //update user
     }

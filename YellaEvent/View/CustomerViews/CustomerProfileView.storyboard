@@ -280,6 +280,8 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="BIgImageProfile" destination="cPG-mg-g85" id="Xnq-gg-qgC"/>
+                        <outlet property="txtBigUserName" destination="Iir-om-JN0" id="aBd-Gu-Kut"/>
+                        <outlet property="txtUserType" destination="4Jl-Fz-fGE" id="jtf-6x-Exd"/>
                         <outletCollection property="roundedViews" destination="SLm-aP-QMJ" collectionClass="NSMutableArray" id="aSa-1D-WeD"/>
                         <outletCollection property="roundedViews" destination="F16-Dc-n4S" collectionClass="NSMutableArray" id="902-BM-HPa"/>
                         <outletCollection property="roundedViews" destination="1O8-bf-QCK" collectionClass="NSMutableArray" id="1T8-7a-M5o"/>
@@ -418,7 +420,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="1yG-IM-XRn">
-                                                <rect key="frame" x="19.666666666666657" y="243.33333333333337" width="353.66666666666674" height="569"/>
+                                                <rect key="frame" x="19.666666666666657" y="243.33333333333337" width="353.66666666666674" height="468"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0xg-nn-LXr">
                                                         <rect key="frame" x="0.0" y="0.0" width="353.66666666666669" height="94.333333333333329"/>
@@ -549,31 +551,10 @@
                                                             <constraint firstItem="Pne-S6-kfg" firstAttribute="height" secondItem="SyL-Ce-gkU" secondAttribute="height" multiplier="0.45" id="mnP-MT-P3i"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hfK-Uv-xFt">
-                                                        <rect key="frame" x="0.0" y="498" width="353.66666666666669" height="71"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SnM-Ud-9Ob">
-                                                                <rect key="frame" x="0.0" y="0.0" width="353.66666666666669" height="20.333333333333332"/>
-                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                                <color key="textColor" red="0.29411764709999999" green="0.2666666667" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qvd-Mp-o27">
-                                                                <rect key="frame" x="0.0" y="28.333333333333254" width="353.66666666666669" height="42.666666666666657"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits"/>
-                                                            </textField>
-                                                        </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="SnM-Ud-9Ob" firstAttribute="width" secondItem="hfK-Uv-xFt" secondAttribute="width" id="JFZ-nv-Euu"/>
-                                                            <constraint firstItem="qvd-Mp-o27" firstAttribute="width" secondItem="hfK-Uv-xFt" secondAttribute="width" id="PE0-QQ-lEa"/>
-                                                            <constraint firstItem="qvd-Mp-o27" firstAttribute="height" secondItem="hfK-Uv-xFt" secondAttribute="height" multiplier="0.6" id="agu-8H-gVw"/>
-                                                        </constraints>
-                                                    </stackView>
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Olw-vJ-4h2">
-                                                <rect key="frame" x="59" y="996" width="275" height="39.333333333333258"/>
+                                                <rect key="frame" x="59" y="889.66666666666663" width="275" height="39.333333333333371"/>
                                                 <color key="tintColor" systemColor="systemRedColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Delete Account">
@@ -599,7 +580,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfy-yo-pTw">
-                                                <rect key="frame" x="40" y="887" width="313" height="64"/>
+                                                <rect key="frame" x="40" y="780.66666666666663" width="313" height="64"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" title=" Save Profile" cornerStyle="medium">
                                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
@@ -607,6 +588,17 @@
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="SaveButtonTaped:" destination="Ikn-St-sM2" eventType="touchUpInside" id="zOu-RT-EZr"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKr-QN-XI6">
+                                                <rect key="frame" x="16" y="716.33333333333337" width="361" height="34.333333333333371"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Chnage Password">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <color key="baseForegroundColor" name="BrandBlue"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <segue destination="bqI-ci-0vi" kind="show" id="oex-1g-qIk"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -626,14 +618,17 @@
                                             <constraint firstItem="YQy-7C-gBJ" firstAttribute="centerX" secondItem="POA-Fa-THq" secondAttribute="centerX" id="UoQ-nI-etf"/>
                                             <constraint firstItem="1yG-IM-XRn" firstAttribute="centerX" secondItem="POA-Fa-THq" secondAttribute="centerX" id="cBd-B1-HLc"/>
                                             <constraint firstItem="Olw-vJ-4h2" firstAttribute="top" secondItem="nfy-yo-pTw" secondAttribute="bottom" constant="45" id="d8q-oS-My3"/>
+                                            <constraint firstAttribute="trailing" secondItem="iKr-QN-XI6" secondAttribute="trailing" constant="16" id="enG-R4-fkm"/>
                                             <constraint firstItem="qbn-HP-VWg" firstAttribute="width" secondItem="YQy-7C-gBJ" secondAttribute="width" id="iVJ-cR-ePE"/>
                                             <constraint firstItem="qbn-HP-VWg" firstAttribute="centerY" secondItem="YQy-7C-gBJ" secondAttribute="centerY" id="n2y-p8-9SO"/>
+                                            <constraint firstItem="nfy-yo-pTw" firstAttribute="top" secondItem="iKr-QN-XI6" secondAttribute="bottom" constant="30" id="pEp-EA-s22"/>
                                             <constraint firstItem="nfy-yo-pTw" firstAttribute="height" secondItem="POA-Fa-THq" secondAttribute="height" multiplier="0.06" id="q07-qL-hlP"/>
                                             <constraint firstAttribute="trailing" secondItem="yfS-55-VZm" secondAttribute="trailing" id="rQQ-g6-JOt"/>
                                             <constraint firstItem="qbn-HP-VWg" firstAttribute="centerX" secondItem="YQy-7C-gBJ" secondAttribute="centerX" id="tyl-JT-RWG"/>
-                                            <constraint firstItem="nfy-yo-pTw" firstAttribute="top" secondItem="1yG-IM-XRn" secondAttribute="bottom" constant="74.670000000000002" id="uOx-mC-bZO"/>
+                                            <constraint firstItem="iKr-QN-XI6" firstAttribute="top" secondItem="1yG-IM-XRn" secondAttribute="bottom" constant="5" id="ux3-ag-zhI"/>
                                             <constraint firstItem="1yG-IM-XRn" firstAttribute="top" secondItem="YQy-7C-gBJ" secondAttribute="bottom" constant="45" id="vVL-ZW-L9v"/>
                                             <constraint firstItem="YQy-7C-gBJ" firstAttribute="width" secondItem="POA-Fa-THq" secondAttribute="width" multiplier="0.3" id="yLY-U7-vNg"/>
+                                            <constraint firstItem="iKr-QN-XI6" firstAttribute="leading" secondItem="POA-Fa-THq" secondAttribute="leading" constant="16" id="zo3-34-aDU"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -667,7 +662,6 @@
                         <outlet property="txtEmail" destination="Pne-S6-kfg" id="Plg-vt-aGw"/>
                         <outlet property="txtFieldDate" destination="uxL-0H-JqX" id="FUh-dX-3DS"/>
                         <outlet property="txtFullName" destination="BW3-4q-yPL" id="stR-o9-uO2"/>
-                        <outlet property="txtPassword" destination="qvd-Mp-o27" id="AGc-I7-Szz"/>
                         <outlet property="txtPhoneNumber" destination="hQu-I7-HEE" id="N4Y-Br-sup"/>
                         <outletCollection property="roundedViews" destination="YQy-7C-gBJ" collectionClass="NSMutableArray" id="2Db-vd-bEH"/>
                     </connections>
@@ -675,6 +669,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QGA-2A-PjR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1080" y="-2"/>
+        </scene>
+        <!--AuthenticationView-->
+        <scene sceneID="L6N-nO-F1g">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AuthenticationView" id="bqI-ci-0vi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="e1q-Wa-5si"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gjM-zL-mmn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1727" y="-63"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tFU-7S-9dD">
@@ -708,6 +712,9 @@
         <image name="person.crop.circle" catalog="system" width="128" height="123"/>
         <image name="person.crop.circle.fill" catalog="system" width="128" height="123"/>
         <image name="questionmark" catalog="system" width="94" height="128"/>
+        <namedColor name="BrandBlue">
+            <color red="0.024000000208616257" green="0.57999998331069946" blue="0.62000000476837158" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="BrandDarkPurple">
             <color red="0.29399999976158142" green="0.2669999897480011" blue="0.32499998807907104" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -16,7 +16,9 @@ class OrganizerProfileViewController: UIViewController {
     @IBOutlet var roundedViews: [UIView]!
     @IBOutlet weak var BigImageProfile: UIImageView!
     
+    @IBOutlet weak var bigUserName: UILabel!
     
+    @IBOutlet weak var bigUserType: UILabel!
     // Edit Profile Page section
     //Outlet Fields
     @IBOutlet weak var editProfileImage: UIImageView!
@@ -55,6 +57,18 @@ class OrganizerProfileViewController: UIViewController {
             
             self.currentUser = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
                         
+            
+            do{
+                //set the lables
+                if let text = bigUserName{
+                    bigUserType.text = "Organizer"
+                    bigUserName.text = currentUser?.fullName
+                }
+            }catch{
+                print("no profile")
+            }
+
+            
             //download the current user image
             PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                 
