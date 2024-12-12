@@ -207,17 +207,27 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYr-dD-6lF">
-                                        <rect key="frame" x="0.0" y="164.33333333333337" width="380" height="163"/>
+                                        <rect key="frame" x="0.0" y="164.33333333333337" width="380" height="115.66666666666669"/>
                                         <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Ban Account">
+                                        <buttonConfiguration key="configuration" style="plain" title="Delete Event">
+                                            <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="21"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Bg-Pb-k1k">
+                                        <rect key="frame" x="0.0" y="288" width="380" height="39.333333333333314"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Ban Event">
                                             <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="21"/>
                                         </buttonConfiguration>
                                     </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="VYr-dD-6lF" firstAttribute="centerX" secondItem="Y92-iy-6rj" secondAttribute="centerX" id="FJU-Ae-7xE"/>
+                                    <constraint firstItem="0Bg-Pb-k1k" firstAttribute="leading" secondItem="Y92-iy-6rj" secondAttribute="leading" id="V4c-9d-OGf"/>
                                     <constraint firstAttribute="trailing" secondItem="dau-OK-qEp" secondAttribute="trailing" id="lV7-bJ-upc"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Bg-Pb-k1k" secondAttribute="trailing" id="zMp-R5-1WL"/>
                                 </constraints>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 BD per ticket" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8DX-pC-spc">
@@ -306,7 +316,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
