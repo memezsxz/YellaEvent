@@ -416,16 +416,29 @@ extension AdminUsersViewController : UISearchBarDelegate{
         var searchArray : [User] = []
         
         Task {
+//            print("in")
             let searchText = searchText.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
             searchArray = try await (currentSegment == nil
                                      ? UsersManager.getAllUsers()
                                      : UsersManager.getUsers(ofType: currentSegment!))
             
-            users = searchArray.filter { user in
-                user.fullName.lowercased().split(separator: " ").contains { $0.lowercased().starts(with: searchText) } || user.fullName.lowercased().starts(with: searchText) ||
-                user.email.lowercased().starts(with: searchText)
+//            print(currentSegment == nil
+//                         ? "UsersManager.getAllUsers()"
+//                         : "UsersManager.getUsers(ofType: currentSegment!))")
+            self.users = searchArray.filter { user in
+                let searchText = searchText.lowercased()
+                let fullName = user.fullName.lowercased()
+                let email = user.email.lowercased()
+                
+                let nameMatches = fullName.split(separator: " ").contains { $0.starts(with: searchText) }
+                
+                let fullNameContains = fullName.starts(with: searchText)
+                
+                let emailContains = email.contains(searchText)
+                
+                return nameMatches || fullNameContains || emailContains
             }
-            
+
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
