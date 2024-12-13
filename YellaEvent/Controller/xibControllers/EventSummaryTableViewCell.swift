@@ -34,7 +34,24 @@ class EventSummaryTableViewCell: UITableViewCell {
     }
     
     func setup(with event: EventSummary) {
-        descriptionLabel.text = "\(K.DFormatter.string(from: event.startTimeStamp)) \(event.organizerName)"
+        
+        let find = "@"
+
+        let text = "\(K.TSFormatter.string(from: event.startTimeStamp)) @ \(event.venueName)"
+
+        descriptionLabel.text = text
+
+        let attributedString = NSMutableAttributedString(string: text)
+
+        if let range = text.range(of: find) {
+            let nsRange = NSRange(range, in: text)
+            attributedString.addAttribute(.font,
+                value: UIFont.systemFont(ofSize: descriptionLabel.font.pointSize, weight: .black),
+                range: nsRange)
+        }
+
+        descriptionLabel.attributedText = attributedString
+
         PhotoManager.shared.downloadImage(from: URL(string: event.coverImageURL)!) { result in
             switch result {
                 case .success(let image):

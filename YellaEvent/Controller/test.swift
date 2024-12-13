@@ -62,8 +62,22 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
     
     
     @IBOutlet var collectionView: InterestsCollectionView!
+    
     override func viewDidLoad()  {
         super.viewDidLoad()
+//        DataImport.uploadData() 
+        
+//        Task {
+////            print(try await RatingManager.getRating(eventID:"event1", userID: "customer1"))
+//            let  r = try await EventsManager.getEvent(eventID: "sJtqjop59LiYQ7QdYrkh")
+//            
+//            DispatchQueue.main.async {
+//                print(r)
+//                print("fsfd")
+//
+//            }
+//        }
+        
 //        Task {
 //           try await  CategoriesManager.getActiveCatigories { snapshot, error in
 //               guard let snapshot = snapshot else { return }
@@ -119,7 +133,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
 //
 //            
 //            try await TicketsManager.createNewTicket(ticket:  Ticket(ticketID: "sd", eventID: "tsOPfvJzXdfXDNdTmJFn", customerID: "2", organizerID: "3", eventName:
-//                    "event name", organizerName: "dsa dsaojk", startTimeStamp: Date.now, didAttend: false, totalPrice: 12.21, locationURL: "dasd", quantity: 2, status: .paied)
+//                    "event name", organizerName: "dsa dsaojk", startTimeStamp: Date.now, didAttend: false, totalPrice: 12.21, locationURL: "dasd", quantity: 2, status: .paid)
 //)
             
 //            var event = try await EventsManager.getEvent(eventID: "IQTniXexNLrGd6HtFsFx")
@@ -192,27 +206,28 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
 //            event.category = try await CategoriesManager.getCategory(categorieID: "IAghDlatAhV2HHce4BXH")
 //           try await EventsManager.updateEvent(event: event)
 //        }
-//        
-//        EventsManager.getAllEvents { snapshot, error in
-//            guard error == nil else { return }
-//            
-//            if let snapshot {
-//                self.events = []
-//                Task {
-//                    for doc in snapshot.documents {
-//                        do {
-//                            let event = try await EventSummary(from: doc.data())
-//                            self.events.append(event)
-//                        } catch {
-//                            print("Error converting event: \(error)")
-//                        }
-//                    }
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                    }
-//                }
-//            }
-//        }
+        
+        EventsManager.getAllEvents { snapshot, error in
+            guard error == nil else { return }
+            
+            if let snapshot {
+                self.events = []
+                Task {
+                    for doc in snapshot.documents {
+                        do {
+                            let event = try await EventSummary(from: doc.data())
+                            self.events.append(event)
+                        } catch {
+                            print(doc.data())
+                            print("Error converting event: \(error)")
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
 
         
         
@@ -318,6 +333,9 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
         //            }
         //        }
     }
+    
+    
+    
     /*
      // MARK: - Navigation
      
@@ -372,6 +390,77 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
     //    @IBAction func loginclicked(_ sender: UIButton) {
     //
     //    }
+    
+    
+//    func uploadData() {
+//        // Locate the JSON file in the app bundle
+//        guard let path = Bundle.main.path(forResource: "data", ofType: "json") else {
+//            print("JSON file not found.")
+//            return
+//        }
+//        
+//        let url = URL(fileURLWithPath: path)
+//
+//        do {
+//            // Read the JSON file
+//            let data = try Data(contentsOf: url)
+//            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+//                // Upload each collection
+//                uploadCollection(json: json, collectionName: K.FStore.Admins.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.Organizers.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.Customers.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.Events.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.Tickets.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.Badges.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.Categories.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.UserBans.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.EventBans.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.FAQs.collectionName)
+//                uploadCollection(json: json, collectionName: K.FStore.Ratings.collectionName)
+//            }
+//        } catch {
+//            print("Error reading or parsing JSON: \(error.localizedDescription)")
+//        }
+//    }
+//
+//    private func uploadCollection(json: [String: Any], collectionName: String) {
+//        guard let collectionData = json[collectionName] as? [[String: Any]] else {
+//            print("No data found for collection: \(collectionName)")
+//            return
+//        }
+//
+//        for document in collectionData {
+//            db.collection(collectionName).addDocument(data: document) { error in
+//                if let error = error {
+//                    print("Error uploading document to \(collectionName): \(error.localizedDescription)")
+//                } else {
+//                    print("Successfully uploaded a document to \(collectionName).")
+//                }
+//            }
+//        }
+//    }
+
+//    private func uploadCollection(json: [String: Any], collectionName: String) {
+//        guard let collectionData = json[collectionName] as? [[String: Any]] else {
+//            print("No data found for collection: \(collectionName)")
+//            return
+//        }
+//
+//        for document in collectionData {
+//            if let documentID = document["id"] as? String { // Assume each document has an "id" field
+//                db.collection(collectionName).document(documentID).setData(document) { error in
+//                    if let error = error {
+//                        print("Error uploading document \(documentID) to \(collectionName): \(error.localizedDescription)")
+//                    } else {
+//                        print("Successfully uploaded document \(documentID) to \(collectionName).")
+//                    }
+//                }
+//            } else {
+//                print("Document in \(collectionName) missing 'id' field.")
+//            }
+//        }
+//    }
+
 }
 
 //extension test: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

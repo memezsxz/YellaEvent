@@ -293,7 +293,15 @@ class EventsManager {
                     }
                 }
                 
-                totalRating += Event.getRatting(from: event.rattingsArray)
+                RatingManager.getOrganizerRating(organizerID: organizerID, completion: { result in
+                    switch result {
+                    case .success(let rating):
+                        totalRating = rating
+                    case .failure(let error):
+                        totalRating = 0.0
+                    }
+                })
+
             }
             
             numAllEvents = numOngoingEvents + numCancelledEvents + numCompletedEvents
