@@ -11,7 +11,7 @@ import UIKit
 class CustomerProfileViewController: UIViewController {
     
     var currentUser: Customer?
-    
+    var imageUpdated : Bool = false
     
     // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
@@ -61,86 +61,56 @@ class CustomerProfileViewController: UIViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         setupEditPage()
-
-            
-            UserDefaults.standard.set("2", forKey: K.bundleUserID) // this will be removed after seting the application
-            
+        UserDefaults.standard.set("8qADbVxCtdPu22FDCNrM", forKey: K.bundleUserID) // this will be removed after seting the application
+        setup()
+    }
+    
+    
+    
+    func setup() {
+        // get the current user object
+        Task {
+            do {
                 
-            // get the current user object
-            Task {
-                //chnage to getCustomer
-                let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+                let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
+                let us = try await UsersManager.getUser(userID: userId) as! Customer
+                
+                txtBigUserName?.text = "\(us.fullName)"
+                txtUserType?.text = "Customer"
                 currentUser = us as? Customer
-                
-                do{
-                    if let text = txtBigUserName{
-                        txtBigUserName.text = currentUser?.fullName
-                        txtUserType.text = "Customer"
-                    }
-                }catch{
-                    print("check")
-                }
- 
-                //download the current user image
-                PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+
+                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
-                        //if the user have an image and his/her image
                     case .success(let image):
                         self.BIgImageProfile?.image = image
-                        // if the user don't have an image put the defualt image
                     case .failure(_):
                         self.BIgImageProfile?.image = UIImage(named: "DefaultImageProfile")
                     }
                     
                 })
+                
+                
+            } catch {
+                print("Failed to fetch user: \(error)")
+                // Handle error appropriately, such as showing an alert to the user
             }
-        
-        do {
-            //set a date picker on date of birth field
-            try setupDatePicker()
-        } catch {
-            print("Error setting up date picker: \(error.localizedDescription)")
         }
-    }
-    
-    
 
+            
+            
+        
+        
+        
+    }
     
     
     
     override func viewWillAppear(_ animated: Bool) {
         
-        do{
-            if (txtBigUserName != nil){
-                txtBigUserName.text = currentUser?.fullName
-                txtUserType.text = "Customer"
-            }
-        }catch{
-            print("check")
-        }
-
-        //download the current user image
-        do{
-            if let photo = currentUser?.profileImageURL{
-                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
-                    
-                    switch result {
-                        //if the user have an image and his/her image
-                    case .success(let image):
-                        self.BIgImageProfile?.image = image
-                        // if the user don't have an image put the defualt image
-                    case .failure(_):
-                        self.BIgImageProfile?.image = UIImage(named: "DefaultImageProfile")
-                    }
-                    
-                })
-            }
-        }catch {
-            print("check")
-        }
+        setup()
     }
-        
+    
     
     
     
@@ -169,8 +139,9 @@ extension CustomerProfileViewController{
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 txtPhoneNumber?.text = "\(us.phoneNumber)"
-                currentUser = currentUser as? Customer
-                PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+                currentUser = us as? Customer
+
+                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
                     case .success(let image):
@@ -181,7 +152,14 @@ extension CustomerProfileViewController{
                     
                 })
                 
-                
+                do {
+                    //set a date picker on date of birth field
+                    try self.setupDatePicker()
+                } catch {
+                    print("Error setting up date picker: \(error.localizedDescription)")
+                }
+            
+
             } catch {
                 print("Failed to fetch user: \(error)")
                 // Handle error appropriately, such as showing an alert to the user
@@ -285,7 +263,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         view.endEditing(true)
     }
     
-
+    
     
     
     // function show two options (camera, photo library)
@@ -317,11 +295,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
             
             menue.addAction(photoLibraryAction)
         }
-        
-        
-        
-        
-        
+
         menue.popoverPresentationController?.sourceView = sender as? UIView
         present(menue, animated: true)
         
@@ -332,35 +306,8 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
-//        guard let img = selectedImage.jpegData(compressionQuality: 0.9) else {return}
-        
-        PhotoManager.shared.uploadPhoto(selectedImage, to: "\(currentUser!.userID)", withNewName: "profile") { result in
-            switch result {
-            case .success(let url):
-                
-                // TODO: Update in user
-                print("Image uploaded successfully: \(url)")
-            case .failure(let error):
-                let saveAlert = UIAlertController(
-                    title: "Error",
-                    message: "Error uploading image",
-                    preferredStyle: .alert
-                )
-                
-                let okAction = UIAlertAction(title: "OK", style: .default) { action in
-        //
-                    self.navigationController?.popViewController(animated: true)
-                }
-                
-                saveAlert.addAction(okAction)
-                
-                self.present(saveAlert, animated: true, completion: nil)
-            }
-        }
-        
-        
-        
-   //edit the user image by uploading it.
+        EditProfileImage.image = selectedImage
+        imageUpdated = true
         dismiss(animated: true, completion: nil)
     }
     
@@ -387,19 +334,50 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         do{
             currentUser?.email = txtEmail.text!
             currentUser?.fullName = txtFullName.text!
-            if let phone = Int(txtPhoneNumber.text!){
-                currentUser?.phoneNumber = phone
-            }
+            currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
+            
+            if let image = EditProfileImage.image, imageUpdated {
+                PhotoManager.shared.uploadPhoto(image, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+                    switch result {
+                    case .success(let url):
+                        
+                        
+                        // TODO: Update in user
+                        
+                        print("Image uploaded successfully: \(url)")
+                        self.currentUser?.profileImageURL = url
+                        self.imageUpdated = false
+                        
 
-            currentUser?.dob = K.DFormatter.date(from: txtFieldDate.text!)!
+                    case .failure( _):
+                        let saveAlert = UIAlertController(
+                            title: "Error",
+                            message: "Error uploading image",
+                            preferredStyle: .alert
+                        )
+                        
+                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                            //
+                            self.navigationController?.popViewController(animated: true)
+
+                        }
+                        
+                        saveAlert.addAction(okAction)
+                        
+                        self.present(saveAlert, animated: true, completion: nil)
+                    }
+                }
+            }
             
             Task{
-                try await UsersManager.updateUser(user: currentUser!)
+                try await UsersManager.updateUser(user: self.currentUser!)
+                
             }
-        }catch{
+
+            
+        }catch {
             print("error with user saving data")
         }
-
         
         // 3. Show an alert notifying the user that the changes have been saved
         let saveAlert = UIAlertController(
@@ -409,18 +387,16 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-//
-            self.navigationController?.popViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: true)
         }
         
         saveAlert.addAction(okAction)
-        
-        present(saveAlert, animated: true, completion: nil)
+        self.present(saveAlert, animated: true, completion: nil)
     }
     
- 
-        
-      
+    
+    
+    
     //delete user account function connected to the onclick on the delete button
     func DeleteAccount(_ sender: Any){
         
@@ -439,9 +415,9 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
             }catch{
                 
             }
-
             
-// need to be changed to the login screen
+            
+            // need to be changed to the login screen
             if let LaunchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController() {
                 LaunchScreen.modalPresentationStyle = .fullScreen
                 self.present(LaunchScreen, animated: true, completion: nil)
@@ -458,7 +434,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         
     }
     
- 
+    
     
     
     
@@ -471,7 +447,7 @@ extension CustomerProfileViewController{
     func validateFields() -> Bool {
         var isValid = true
         var errorMessage = ""
-
+        
         // Validate txtFieldDate
         if txtFieldDate?.text?.isEmpty ?? true {
             lblErrorDOB.text = "Date of birth is required."
@@ -482,7 +458,7 @@ extension CustomerProfileViewController{
             lblErrorDOB.text = ""
             resetFieldHighlight(txtFieldDate)
         }
-
+        
         // Validate txtFullName (Only letters)
         if let fullName = txtFullName?.text, fullName.isEmpty {
             lblErrorFullName.text = "Full name is required."
@@ -498,7 +474,7 @@ extension CustomerProfileViewController{
             lblErrorFullName.text = ""
             resetFieldHighlight(txtFullName)
         }
-
+        
         // Validate txtPhoneNumber (Only numbers)
         if let phoneNumber = txtPhoneNumber?.text, phoneNumber.isEmpty {
             lblErrorPhoneNumber.text = "Phone number is required."
@@ -514,7 +490,7 @@ extension CustomerProfileViewController{
             lblErrorPhoneNumber.text = ""
             resetFieldHighlight(txtPhoneNumber)
         }
-
+        
         
         var users: [User] = []
         Task{
@@ -549,15 +525,15 @@ extension CustomerProfileViewController{
             lblErrorEmail.text = ""
             resetFieldHighlight(txtEmail)
         }
-
+        
         // Show warning if validation fails
         if !isValid {
             showWarning(message: errorMessage)
         }
-
+        
         return isValid
     }
-
+    
     
     
     
@@ -586,7 +562,7 @@ extension CustomerProfileViewController{
         textField?.layer.borderColor = UIColor.red.cgColor
         textField?.layer.cornerRadius = 5
     }
-
+    
     func resetFieldHighlight(_ textField: UITextField?) {
         textField?.layer.borderWidth = 0
         textField?.layer.borderColor = UIColor.clear.cgColor
@@ -604,7 +580,7 @@ extension CustomerProfileViewController{
         warningView.tag = 999 // Use a unique tag to identify the view
         warningView.layer.cornerRadius = 5
         warningView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         // Create the warning message label
         let warningLabel = UILabel()
         warningLabel.text = message
@@ -612,7 +588,7 @@ extension CustomerProfileViewController{
         warningLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         warningLabel.numberOfLines = 0
         warningLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        
         // Create the close button
         let closeButton = UIButton(type: .system)
         closeButton.setTitle("X", for: .normal)
@@ -620,14 +596,14 @@ extension CustomerProfileViewController{
         closeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.addTarget(self, action: #selector(hideWarning), for: .touchUpInside)
-
+        
         // Add subviews to the warning view
         warningView.addSubview(warningLabel)
         warningView.addSubview(closeButton)
-
+        
         // Add the warning view to the main view
         self.view.addSubview(warningView)
-
+        
         // Constraints for the warning view
         NSLayoutConstraint.activate([
             warningView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
@@ -635,14 +611,14 @@ extension CustomerProfileViewController{
             warningView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
             warningView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
         ])
-
+        
         // Constraints for the warning label
         NSLayoutConstraint.activate([
             warningLabel.leadingAnchor.constraint(equalTo: warningView.leadingAnchor, constant: 10),
             warningLabel.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
             warningLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -10),
         ])
-
+        
         // Constraints for the close button
         NSLayoutConstraint.activate([
             closeButton.trailingAnchor.constraint(equalTo: warningView.trailingAnchor, constant: -10),
@@ -650,14 +626,14 @@ extension CustomerProfileViewController{
             closeButton.widthAnchor.constraint(equalToConstant: 30),
             closeButton.heightAnchor.constraint(equalToConstant: 30),
         ])
-
+        
         // Animate the warning view appearance
         warningView.alpha = 0
         UIView.animate(withDuration: 0.3) {
             warningView.alpha = 1
         }
     }
-
+    
     
     @objc func hideWarning() {
         if let warningView = self.view.viewWithTag(999) {
@@ -668,5 +644,5 @@ extension CustomerProfileViewController{
             }
         }
     }
-
+    
 }
