@@ -420,6 +420,7 @@ extension AdminUsersViewController : UISearchBarDelegate{
             searchArray = try await (currentSegment == nil
                                      ? UsersManager.getAllUsers()
                                      : UsersManager.getUsers(ofType: currentSegment!))
+            
             users = searchArray.filter { user in
                 user.fullName.lowercased().split(separator: " ").contains { $0.lowercased().starts(with: searchText) } || user.fullName.lowercased().starts(with: searchText) ||
                 user.email.lowercased().starts(with: searchText)
@@ -736,6 +737,7 @@ extension AdminUsersViewController{
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            self.navigationController?.popToRootViewController(animated: true)
         }
         
         saveAlert.addAction(okAction)

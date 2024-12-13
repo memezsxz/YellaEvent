@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import Photos
 
 class ViewOrganizerDetailsView: UIView {
-
+    
     var delegate : AdminUsersViewController? = nil
     var currentOrganizer : Organizer? = nil
     var userBan : Bool = false
-
+    
     
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
@@ -37,15 +38,17 @@ class ViewOrganizerDetailsView: UIView {
         txtName.title = currentOrganizer?.fullName
         txtEmail.text = currentOrganizer?.email
         txtUserType.text = "Organizer"
-        txtAccountDate.text = K.DFormatter.string(from: currentOrganizer!.endDate)
+        if let date =  currentOrganizer!.endDate {
+            txtAccountDate.text = K.DFormatter.string(from: date)
+        }
         txtPhoneNumber.text = "\(currentOrganizer!.phoneNumber)"
-        txtDocumnetName.text = currentOrganizer?.LicenseDocumentURL
+        //        txtDocumnetName.text = currentOrganizer?.LicenseDocumentURL
         
         
         Task {
             
             self.userBan =  try await UsersManager.isUserBanned(userID: currentOrganizer!.userID)
-
+            
             
             if !self.userBan {
                 self.btnBan.setTitle("Unban Account", for: .normal)
@@ -90,8 +93,30 @@ class ViewOrganizerDetailsView: UIView {
     }
     
     @IBAction func DownloadDocumnets(_ sender: UIButton) {
-        //TODO_Fatima
+        //        currentOrganizer?.profileImageURL?
+        
+        PhotoManager.shared.downloadImage(from: URL(string: currentOrganizer!.LicenseDocumentURL)!) { result in
+            switch result {
+            case .success(let image):
+                self.saveImageToPhotos(image: image)
+                let alert = UIAlertController(title: "Download Compleated", message: "Photo added to library", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in }))
+                self.delegate!.present(alert, animated: true, completion: {})
+
+            case .failure(let error):
+                let alert = UIAlertController(title: "Failed to Download", message: error.localizedDescription, preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in }))
+                self.delegate!.present(alert, animated: true, completion: {})
+
+            }
+
+        }
+        
     }
+    
+    
     
     
     
@@ -102,8 +127,29 @@ class ViewOrganizerDetailsView: UIView {
     
     
     
+    func saveImageToPhotos(image: UIImage) {
+        PHPhotoLibrary.requestAuthorization { status in
+            guard status == .authorized else {
+                print("Photo library access not granted.")
+                return
+            }
+            
+            PHPhotoLibrary.shared().performChanges({
+                // Add the image to the library
+                PHAssetChangeRequest.creationRequestForAsset(from: image)
+            }) { success, error in
+                if success {
+                    print("Image successfully saved to Photos.")
+                } else if let error = error {
+                    print("Error saving image: \(error.localizedDescription)")
+                } else {
+                    print("Unknown error occurred.")
+                }
+            }
+        }
+    }
     
     
     
-
+    
 }

@@ -7,12 +7,13 @@
 
 import UIKit
 
-class EditOrganizerDetailsView: UIView {
+class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var delegate : ViewOrganizerDetailsView? = nil
     var currentOrganizer : Organizer? = nil
+    var image : UIImage? = nil
+    let imagePickerController = UIImagePickerController()
 
-    
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
     @IBOutlet weak var txtUserType: UITextField!
@@ -47,9 +48,11 @@ class EditOrganizerDetailsView: UIView {
         txtName.title = currentOrganizer?.fullName
         txtEmail.text = currentOrganizer?.email
         txtUserType.text = "Organizer"
-        txtDuraion.titleLabel?.text = K.DFormatter.string(from: currentOrganizer!.endDate)
+        if let date = currentOrganizer!.endDate {
+            txtDuraion.titleLabel?.text = K.DFormatter.string(from: date)
+        }
         txtPhoneNumber.text = "\(currentOrganizer!.phoneNumber)"
-        txtDocumnetName.text = currentOrganizer?.LicenseDocumentURL
+        txtDocumnetName.text = "License.jpg"
         
      
     }
@@ -72,31 +75,46 @@ class EditOrganizerDetailsView: UIView {
     @IBAction func saveButtonClickd(_ sender: UIButton) {
         
         //do validation
-        validation()
+        guard validation() else { return}
         
         
         currentOrganizer!.email = txtEmail.text!
         if let phone = Int(txtPhoneNumber.text!){
             currentOrganizer?.phoneNumber = phone
         }
+        
         if txtDuraion.titleLabel!.text == "Never Expire"{
-            currentOrganizer?.endDate = K.DFormatter.date(from: "31/12/2999")!
+            currentOrganizer?.endDate = nil
         }else{
-            var days = Calendar.current.date(byAdding: .day, value: Int(txtDuration.text!)!, to: Date())
+            let days = Calendar.current.date(byAdding: .day, value: Int(txtDuration.text!)!, to: Date())
             if let newdate = days {
-                currentOrganizer?.endDate = days!
+                currentOrganizer?.endDate = newdate
             }
         }
         
         
         //save the given documnet 
-        //TODO_FATIMA
+        if let image  = image{
+            PhotoManager.shared.uploadPhoto(image, to: "\(currentOrganizer!.userID)", withNewName: "License") { result in
+                switch result {
+                    case .success(let url):
+                    self.currentOrganizer?.LicenseDocumentURL = url
+                    Task {
+                        try await UsersManager.updateUser(user: self.currentOrganizer!)
+                    }
+                case .failure(let error):
+                    print("Error uploading photo: \(error)")
+                }
+            }
+        } else {
+            Task{
+                try await UsersManager.updateUser(user: self.currentOrganizer!)
+            }
+        }
         
         
 //        take the value from the text fields
-        Task{
-            try await UsersManager.updateUser(user: currentUser!)
-        }
+        
         
         // 3. Show an alert notifying the user that the changes have been saved
         delegate?.delegate?.saveAlert()
@@ -109,6 +127,9 @@ class EditOrganizerDetailsView: UIView {
     
     @IBAction func chnageDocument(_ sender: UIButton) {
         //TODO_FATIMA
+        
+        presentLicenseImagePicker()
+
     }
     
     
@@ -186,6 +207,22 @@ class EditOrganizerDetailsView: UIView {
         let durationRegex = "^[0-9]+$" // Allows one or more digits
         let durationTest = NSPredicate(format: "SELF MATCHES %@", durationRegex)
         return durationTest.evaluate(with: duration)
+    }
+
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let selectedImage = info[.originalImage] as? UIImage else {return}
+        
+        image = selectedImage
+        
+        delegate!.delegate!.dismiss(animated: true, completion: nil)
+    }
+
+    func presentLicenseImagePicker() {
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        delegate!.delegate!.present(imagePickerController, animated: true, completion: nil)
     }
 
          

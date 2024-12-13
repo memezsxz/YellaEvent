@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Photos
 
-class createOrganizerView: UIView {
+class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var delegate : AdminUsersViewController? = nil
-    
+    var organizer : Organizer = Organizer(fullName: "name", email: "email", dateCreated: Date.now, phoneNumber: 12345678, profileImageURL: "sdsasdasda", startDate: nil, endDate: nil, LicenseDocumentURL: "sdasad")
+    var image : UIImage?
+    let imagePickerController = UIImagePickerController()
+
     //Create Organizer Page
     // Outlet
     @IBOutlet weak var txtUserNameCreate: UITextField!
@@ -34,6 +39,7 @@ class createOrganizerView: UIView {
     @IBOutlet weak var lblErrorAccountDuration: UILabel!
     @IBOutlet weak var lblErrorDuration: UILabel!
     
+//    @IBOutlet var txtErrorImage: UILabel!
     
     //Actions
     @IBAction func createUserTapped(_ sender: Any) {
@@ -41,7 +47,7 @@ class createOrganizerView: UIView {
         //            createOrganizer()
     }
     @IBAction func UploadDoucumentTapped(_ sender: Any) {
-        //            uploadDoucument(sender)
+        presentLicenseImagePicker()
     }
     
     @IBAction func valueChanged(_ sender: Any) {
@@ -86,31 +92,90 @@ class createOrganizerView: UIView {
     }
     
     
-
+    
     
     
     
     
     func createOrganizer(){
         //1. DO validation on the provided information
-        validateCreateFields()
+        guard validateCreateFields() else {
+            return
+        }
+        
+        organizer.email = (txtEmailCreate?.text)!
+        organizer.phoneNumber = Int((txtPhoneNumberCreate?.text)!)!
+        organizer.fullName = (txtUserNameCreate?.text)!
+        organizer.dateCreated = Date.now
+        if lastField.isHidden {
+            organizer.endDate = nil
+            organizer.startDate = nil
+        } else {
+            organizer.startDate = Date.now
+            organizer.endDate = Calendar.current.date(byAdding: .day, value: Int(txtduration.text!)!, to: Date())
+        }
+        
+        Auth.auth().createUser(withEmail: organizer.email, password: txtPasswordCreate!.text!) { result, error  in
+            guard  error == nil else {
+                let alert = UIAlertController(title: "Unable To Create Organizer", message: error?.localizedDescription, preferredStyle: .alert)
+                
+                // Add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                // Show the alert
+                self.delegate!.present(alert, animated: true, completion: nil)
+                return
+            }
+            self.organizer.userID = (result!.user.uid)
+            
+            PhotoManager.shared.uploadPhoto(self.image!, to: "\(self.organizer.userID)", withNewName: "license", completion: { result in
+                switch result {
+                    case .success(let url):
+                    self.organizer.LicenseDocumentURL = url
+                    Task {
+                        try await  UsersManager.createNewUser(user: self.organizer)
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(title: "Organizer Created", message: "Organizer Created Successfully", preferredStyle: .alert)
+                            
+                            alert.addAction(
+                                UIAlertAction(title: "OK", style: .default, handler: { action in
+                                self.delegate!.navigationController?.popToRootViewController(animated: true)
+                            }))
+                            self.delegate!.present(alert, animated: true, completion: {})
+                        }
+                    }
+                case .failure(let error):
+                    let alert = UIAlertController(title: "Unable to upload image", message: error.localizedDescription, preferredStyle: .alert)
+                    
+                    alert.addAction(
+                        UIAlertAction(title: "OK", style: .default, handler: { action in
+                    }))
+                    self.delegate!.present(alert, animated: true, completion: {})
+                }
+            })
+        }
         
         //2. if everything go well
         //create new organization user
-//        let name = txtUserNameCreate.text!
-//        //        let phone = Int(txtPhoneNumberCreate.text!)
-//        let email = txtEmailCreate.text
-//        let pass = txtPasswordCreate.text
-//        let start = Data()
-//        
-        //user the usersmanager to create user in the firebase 
-        
-        
+        //        let name = txtUserNameCreate.text!
+        //        //        let phone = Int(txtPhoneNumberCreate.text!)
+        //        let email = txtEmailCreate.text
+        //        let pass = txtPasswordCreate.text
+        //        let start = Data()
+        //
+        //user the usersmanager to create user in the firebase
     }
     
     
     // function to show a list
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let selectedImage = info[.originalImage] as? UIImage else {return}
+        
+        image = selectedImage
+        
+        delegate!.dismiss(animated: true, completion: nil)
+    }
     
     func validateCreateFields() -> Bool {
         var isValid = true
@@ -193,20 +258,64 @@ class createOrganizerView: UIView {
             }
             
         }
-            // Show warning if validation fails
-            if !isValid {
-                delegate!.showWarning(message: errorMessage)
-            }
-            
-            return isValid
         
-    }
-        
-        func isValidDuration(_ duration: String) -> Bool {
-            let durationRegex = "^[0-9]+$" // Allows one or more digits
-            let durationTest = NSPredicate(format: "SELF MATCHES %@", durationRegex)
-            return durationTest.evaluate(with: duration)
+        if image == nil {
+            isValid = false
+//            txtErrorImage.text = "Image is required."
+        } else {
+//            txtErrorImage.text = ""
         }
         
+        // Show warning if validation fails
+        if !isValid {
+            delegate!.showWarning(message: errorMessage)
+        }
+        
+        return isValid
+        
+    }
     
+    func isValidDuration(_ duration: String) -> Bool {
+        let durationRegex = "^[0-9]+$" // Allows one or more digits
+        let durationTest = NSPredicate(format: "SELF MATCHES %@", durationRegex)
+        return durationTest.evaluate(with: duration)
+    }
+    
+    func presentLicenseImagePicker() {
+        imagePickerController.delegate = self
+        
+//        let menue = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+//        menue.addAction(cancelAction)
+//        
+//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//            
+//            let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
+//                imagePicker.sourceType = .camera
+//                self.present(imagePicker, animated: true, completion: nil)
+//            }
+//            
+//            menue.addAction(cameraAction)
+//        }
+//        
+//        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+//            
+//            let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
+//                imagePicker.sourceType = .photoLibrary
+//                self.present(imagePicker, animated: true, completion: nil)
+//            }
+//            
+//            menue.addAction(photoLibraryAction)
+//        }
+//
+//        menue.popoverPresentationController?.sourceView = sender as? UIView
+//        present(menue, animated: true)
+
+        
+        
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        delegate!.present(imagePickerController, animated: true, completion: nil)
+    }
 }
