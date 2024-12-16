@@ -8,72 +8,78 @@
 import FirebaseFirestore
 
 class CategoriesManager {
-    private static var instence : CategoriesManager?
     private init() {}
     
+    private static let categoriesCollection = Firestore.firestore().collection(K.FStore.Categories.collectionName)
+    private static var listener: ListenerRegistration?
     
-    static func getInstence () -> CategoriesManager {
-        if instence == nil {
-            instence = CategoriesManager()
-        }
-        return instence!
-    }
-    
-    // always kill when view is disapeard
-    static func killInstence() {
-        guard instence != nil else { return }
-        instence?.listener?.remove()
-        instence = nil
-    }
-    
-    private let categoriesCollection = Firestore.firestore().collection(K.FStore.Categories.collectionName)
-    private var listener: ListenerRegistration?
-    
-    private let encoder : Firestore.Encoder = {
-        let encoder = Firestore.Encoder()
-        encoder.keyEncodingStrategy = .useDefaultKeys
-        return encoder
-    }()
-    
-    private let decoder : Firestore.Decoder = {
-        let decoder = Firestore.Decoder()
-        decoder.keyDecodingStrategy = .useDefaultKeys
-        return decoder
-    }()
-    
-    
-    private func categorieDocument(categorieID: String) -> DocumentReference {
+    private static func categorieDocument(categorieID: String) -> DocumentReference {
         categoriesCollection.document(categorieID)
     }
     
-    func createNewCategorie(categorie: Category) async throws {
+    static func createNewCategory(category: Category) async throws {
         Task {
-            let doc = try categoriesCollection.addDocument(data: encoder.encode(categorie))
-            doc.setData([K.FStore.Categories.categoryID: doc.documentID])
+            let doc = try categoriesCollection.addDocument(data: K.encoder.encode(category))
+            doc.updateData([K.FStore.Categories.categoryID: doc.documentID])
         }
     }
     
-    func getCategorie(categorieID: String) async throws -> Category {
+    static func getCategory(categorieID: String) async throws -> Category {
         try await categorieDocument(categorieID: categorieID).getDocument(as : Category.self)
     }
-    
-    func updateCategorie(categorieID: String, fields: [String: Any]) async throws {
-        try await categorieDocument(categorieID: categorieID).updateData(fields)
+        
+    static func updateCategorie(category: Category) async throws {
+        try await categorieDocument(categorieID: category.categoryID).updateData(K.encoder.encode(category))
+        try await EventsManager.updateEventsCategory(category: category)
     }
     
-    func updateCategorie(categorie: Category) async throws {
-        try await categorieDocument(categorieID: categorie.categoryID).updateData(encoder.encode(categorie))
-    }
-    
-    func getAllCategories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
+    static func getAllCategories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
         self.listener?.remove()
         self.listener = categoriesCollection
             .order(by: K.FStore.Categories.name)
             .addSnapshotListener(listener)
     }
     
+    static func getActiveCatigories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
+        self.listener?.remove()
+        self.listener = categoriesCollection
+            .whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue)
+            .order(by: K.FStore.Categories.name)
+            .addSnapshotListener(listener)
+    }
+    
+    static func getActiveCatigories() async throws -> [Category] {
+        try await categoriesCollection.whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue).getDocuments().documents.compactMap { doc in
+            try doc.data(as: Category.self)
+        }
+    }
+
+    static func getInactiveCatigories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
+        self.listener?.remove()
+        self.listener = categoriesCollection
+            .whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue)
+            .order(by: K.FStore.Categories.name)
+            .addSnapshotListener(listener)
+    }
+
     // do not use for now
-    func deleteCategorie(categorieID: String) async throws {
+    static func deleteCategorie(categorieID: String) async throws {
         try await categorieDocument(categorieID: categorieID).delete()
+    }
+    
+    static func getUserSelectedCatigories(userID: String) async throws -> [Category] {
+        try await categoriesCollection.whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue).getDocuments().documents.compactMap { doc in
+            try doc.data(as: Category.self)
+        }
+    }
+
+    static func getUserSelectedCatigories(categoriesIDsList: [String]) async throws -> [Category] {
+        try await categoriesCollection.whereField(K.FStore.Categories.categoryID, in: categoriesIDsList).getDocuments().documents.compactMap { doc in
+            try doc.data(as: Category.self)
+        }
+    }
+    
+    static func getCategoriesSum() async throws  -> Int {
+        try await categoriesCollection.whereField(K.FStore.Categories.status, isNotEqualTo: CategoryStaus.history.rawValue).getDocuments().documents.count
     }
 }

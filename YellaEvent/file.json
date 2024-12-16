@@ -1,0 +1,983 @@
+{
+      "admins": [
+            {
+                  "userID": "admin1",
+                  "fullName": "Alice Johnson",
+                  "email": "alice.johnson@company.com",
+                  "dateCreated": "1 January 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 9876543210,
+                  "profileImageURL": "https://example.com/profiles/admin1.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin2",
+                  "fullName": "Bob Smith",
+                  "email": "bob.smith@company.com",
+                  "dateCreated": "5 January 2023 at 12:00:00 UTC+3",
+                  "phoneNumber": 9123456789,
+                  "profileImageURL": "https://example.com/profiles/admin2.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin3",
+                  "fullName": "Clara Davis",
+                  "email": "clara.davis@company.com",
+                  "dateCreated": "10 January 2023 at 08:00:00 UTC+3",
+                  "phoneNumber": 9123456788,
+                  "profileImageURL": "https://example.com/profiles/admin3.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin4",
+                  "fullName": "David Brown",
+                  "email": "david.brown@company.com",
+                  "dateCreated": "15 January 2023 at 15:00:00 UTC+3",
+                  "phoneNumber": 8923456787,
+                  "profileImageURL": "https://example.com/profiles/admin4.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin5",
+                  "fullName": "Ella Martinez",
+                  "email": "ella.martinez@company.com",
+                  "dateCreated": "20 January 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 8923456786,
+                  "profileImageURL": "https://example.com/profiles/admin5.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin6",
+                  "fullName": "Frank Garcia",
+                  "email": "frank.garcia@company.com",
+                  "dateCreated": "25 January 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 8923456785,
+                  "profileImageURL": "https://example.com/profiles/admin6.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin7",
+                  "fullName": "Grace Wilson",
+                  "email": "grace.wilson@company.com",
+                  "dateCreated": "30 January 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 8923456784,
+                  "profileImageURL": "https://example.com/profiles/admin7.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin8",
+                  "fullName": "Harry Lee",
+                  "email": "harry.lee@company.com",
+                  "dateCreated": "1 February 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 8923456783,
+                  "profileImageURL": "https://example.com/profiles/admin8.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin9",
+                  "fullName": "Isabel Harris",
+                  "email": "isabel.harris@company.com",
+                  "dateCreated": "5 February 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 8923456782,
+                  "profileImageURL": "https://example.com/profiles/admin9.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                },
+            {
+                  "userID": "admin10",
+                  "fullName": "Jack White",
+                  "email": "jack.white@company.com",
+                  "dateCreated": "10 February 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 8923456781,
+                  "profileImageURL": "https://example.com/profiles/admin10.jpg",
+                  "type": "admin",
+                  "isDeleted": false
+                }
+          ],
+    
+      "organizers": [
+            {
+                  "userID": "organizer1",
+                  "fullName": "Emma Carter",
+                  "email": "emma.carter@events.com",
+                  "dateCreated": "10 February 2023 at 14:00:00 UTC+3",
+                  "phoneNumber": 8234567891,
+                  "profileImageURL": "https://example.com/profiles/organizer1.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "10 February 2023 at 14:00:00 UTC+3",
+                  "endDate": "10 February 2024 at 14:00:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license1.pdf"
+                },
+            {
+                  "userID": "organizer2",
+                  "fullName": "Lucas Scott",
+                  "email": "lucas.scott@events.com",
+                  "dateCreated": "20 February 2023 at 15:00:00 UTC+3",
+                  "phoneNumber": 8345678912,
+                  "profileImageURL": "https://example.com/profiles/organizer2.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "20 February 2023 at 15:00:00 UTC+3",
+                  "endDate": "20 February 2024 at 15:00:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license2.pdf"
+                },
+            {
+                  "userID": "organizer3",
+                  "fullName": "Sophia Taylor",
+                  "email": "sophia.taylor@events.com",
+                  "dateCreated": "5 March 2023 at 11:00:00 UTC+3",
+                  "phoneNumber": 8123456789,
+                  "profileImageURL": "https://example.com/profiles/organizer3.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "5 March 2023 at 11:00:00 UTC+3",
+                  "endDate": "5 March 2024 at 11:00:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license3.pdf"
+                },
+            {
+                  "userID": "organizer4",
+                  "fullName": "Michael Brown",
+                  "email": "michael.brown@events.com",
+                  "dateCreated": "15 March 2023 at 10:30:00 UTC+3",
+                  "phoneNumber": 8934567890,
+                  "profileImageURL": "https://example.com/profiles/organizer4.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "15 March 2023 at 10:30:00 UTC+3",
+                  "endDate": "15 March 2024 at 10:30:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license4.pdf"
+                },
+            {
+                  "userID": "organizer5",
+                  "fullName": "Olivia Martinez",
+                  "email": "olivia.martinez@events.com",
+                  "dateCreated": "1 April 2023 at 09:45:00 UTC+3",
+                  "phoneNumber": 8934567891,
+                  "profileImageURL": "https://example.com/profiles/organizer5.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "1 April 2023 at 09:45:00 UTC+3",
+                  "endDate": "1 April 2024 at 09:45:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license5.pdf"
+                },
+            {
+                  "userID": "organizer6",
+                  "fullName": "Ethan Wilson",
+                  "email": "ethan.wilson@events.com",
+                  "dateCreated": "10 April 2023 at 16:00:00 UTC+3",
+                  "phoneNumber": 8434567892,
+                  "profileImageURL": "https://example.com/profiles/organizer6.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "10 April 2023 at 16:00:00 UTC+3",
+                  "endDate": "10 April 2024 at 16:00:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license6.pdf"
+                },
+            {
+                  "userID": "organizer7",
+                  "fullName": "Ava White",
+                  "email": "ava.white@events.com",
+                  "dateCreated": "20 April 2023 at 14:30:00 UTC+3",
+                  "phoneNumber": 8123456788,
+                  "profileImageURL": "https://example.com/profiles/organizer7.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "20 April 2023 at 14:30:00 UTC+3",
+                  "endDate": "20 April 2024 at 14:30:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license7.pdf"
+                },
+            {
+                  "userID": "organizer8",
+                  "fullName": "Liam Harris",
+                  "email": "liam.harris@events.com",
+                  "dateCreated": "1 May 2023 at 12:00:00 UTC+3",
+                  "phoneNumber": 8434567893,
+                  "profileImageURL": "https://example.com/profiles/organizer8.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "1 May 2023 at 12:00:00 UTC+3",
+                  "endDate": "1 May 2024 at 12:00:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license8.pdf"
+                },
+            {
+                  "userID": "organizer9",
+                  "fullName": "Charlotte Adams",
+                  "email": "charlotte.adams@events.com",
+                  "dateCreated": "10 May 2023 at 10:15:00 UTC+3",
+                  "phoneNumber": 8123456787,
+                  "profileImageURL": "https://example.com/profiles/organizer9.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "10 May 2023 at 10:15:00 UTC+3",
+                  "endDate": "10 May 2024 at 10:15:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license9.pdf"
+                },
+            {
+                  "userID": "organizer10",
+                  "fullName": "James King",
+                  "email": "james.king@events.com",
+                  "dateCreated": "20 May 2023 at 09:00:00 UTC+3",
+                  "phoneNumber": 8434567894,
+                  "profileImageURL": "https://example.com/profiles/organizer10.jpg",
+                  "type": "organizer",
+                  "isDeleted": false,
+                  "startDate": "20 May 2023 at 09:00:00 UTC+3",
+                  "endDate": "20 May 2024 at 09:00:00 UTC+3",
+                  "LicenseDocumentURL": "https://example.com/docs/license10.pdf"
+                }
+          ],
+    
+      "customers": [
+            {
+                  "userID": "customer1",
+                  "fullName": "Liam Miller",
+                  "email": "liam.miller@gmail.com",
+                  "dob": "15 January 1990 at 00:00:00 UTC+3",
+                  "dateCreated": "5 March 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 9834567890,
+                  "profileImageURL": "https://example.com/profiles/customer1.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge1", "badge3"],
+                  "interestArray": ["music", "technology"]
+                },
+            {
+                  "userID": "customer2",
+                  "fullName": "Sophia Taylor",
+                  "email": "sophia.taylor@gmail.com",
+                  "dob": "22 March 1985 at 00:00:00 UTC+3",
+                  "dateCreated": "10 March 2023 at 11:00:00 UTC+3",
+                  "phoneNumber": 8123456789,
+                  "profileImageURL": "https://example.com/profiles/customer2.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge2"],
+                  "interestArray": ["travel", "photography"]
+                },
+            {
+                  "userID": "customer3",
+                  "fullName": "Olivia Davis",
+                  "email": "olivia.davis@gmail.com",
+                  "dob": "5 July 1995 at 00:00:00 UTC+3",
+                  "dateCreated": "15 March 2023 at 12:00:00 UTC+3",
+                  "phoneNumber": 8934567890,
+                  "profileImageURL": "https://example.com/profiles/customer3.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge4"],
+                  "interestArray": ["art", "fashion"]
+                },
+            {
+                  "userID": "customer4",
+                  "fullName": "Noah Brown",
+                  "email": "noah.brown@gmail.com",
+                  "dob": "12 December 1988 at 00:00:00 UTC+3",
+                  "dateCreated": "20 March 2023 at 09:00:00 UTC+3",
+                  "phoneNumber": 8434567891,
+                  "profileImageURL": "https://example.com/profiles/customer4.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge5", "badge6"],
+                  "interestArray": ["sports", "fitness"]
+                },
+            {
+                  "userID": "customer5",
+                  "fullName": "Emma Wilson",
+                  "email": "emma.wilson@gmail.com",
+                  "dob": "1 April 1992 at 00:00:00 UTC+3",
+                  "dateCreated": "25 March 2023 at 08:30:00 UTC+3",
+                  "phoneNumber": 8123456788,
+                  "profileImageURL": "https://example.com/profiles/customer5.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge2"],
+                  "interestArray": ["books", "writing"]
+                },
+            {
+                  "userID": "customer6",
+                  "fullName": "James White",
+                  "email": "james.white@gmail.com",
+                  "dob": "19 June 1983 at 00:00:00 UTC+3",
+                  "dateCreated": "1 April 2023 at 14:00:00 UTC+3",
+                  "phoneNumber": 8123456787,
+                  "profileImageURL": "https://example.com/profiles/customer6.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge1", "badge4"],
+                  "interestArray": ["cooking", "food"]
+                },
+            {
+                  "userID": "customer7",
+                  "fullName": "Mia Harris",
+                  "email": "mia.harris@gmail.com",
+                  "dob": "14 February 1997 at 00:00:00 UTC+3",
+                  "dateCreated": "10 April 2023 at 11:00:00 UTC+3",
+                  "phoneNumber": 8934567892,
+                  "profileImageURL": "https://example.com/profiles/customer7.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge3"],
+                  "interestArray": ["travel", "adventure"]
+                },
+            {
+                  "userID": "customer8",
+                  "fullName": "Ethan Scott",
+                  "email": "ethan.scott@gmail.com",
+                  "dob": "20 October 1990 at 00:00:00 UTC+3",
+                  "dateCreated": "15 April 2023 at 10:00:00 UTC+3",
+                  "phoneNumber": 8434567893,
+                  "profileImageURL": "https://example.com/profiles/customer8.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge6"],
+                  "interestArray": ["gaming", "tech"]
+                },
+            {
+                  "userID": "customer9",
+                  "fullName": "Isabella King",
+                  "email": "isabella.king@gmail.com",
+                  "dob": "30 August 1993 at 00:00:00 UTC+3",
+                  "dateCreated": "20 April 2023 at 16:00:00 UTC+3",
+                  "phoneNumber": 8434567894,
+                  "profileImageURL": "https://example.com/profiles/customer9.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge1", "badge5"],
+                  "interestArray": ["yoga", "meditation"]
+                },
+            {
+                  "userID": "customer10",
+                  "fullName": "Charlotte Adams",
+                  "email": "charlotte.adams@gmail.com",
+                  "dob": "11 May 1996 at 00:00:00 UTC+3",
+                  "dateCreated": "25 April 2023 at 13:00:00 UTC+3",
+                  "phoneNumber": 8123456786,
+                  "profileImageURL": "https://example.com/profiles/customer10.jpg",
+                  "type": "customer",
+                  "isDeleted": false,
+                  "badgesArray": ["badge3"],
+                  "interestArray": ["movies", "cinema"]
+                }
+          ],
+    
+      "categories": [
+            {
+                  "categoryID": "category1",
+                  "name": "Music",
+                  "icon": "🎵",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category2",
+                  "name": "Technology",
+                  "icon": "💻",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category3",
+                  "name": "Art",
+                  "icon": "🎨",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category4",
+                  "name": "Food & Drink",
+                  "icon": "🍽️",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category5",
+                  "name": "Sports",
+                  "icon": "🤸🏻‍♂️",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category6",
+                  "name": "Movies",
+                  "icon": "🎬",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category7",
+                  "name": "Dance",
+                  "icon": "💃🏻",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category8",
+                  "name": "Photography",
+                  "icon": "📷",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category9",
+                  "name": "Health & Wellness",
+                  "icon": "🩺",
+                  "status": "enabled"
+                },
+            {
+                  "categoryID": "category10",
+                  "name": "Comedy",
+                  "icon": "😂",
+                  "status": "enabled"
+                }
+          ],
+    
+      "events": [
+            {
+                  "eventID": "event1",
+                  "organizerID": "organizer1",
+                  "name": "Music Concert",
+                  "description": "Enjoy a night of live music performances from top artists.",
+                  "startTimeStamp": "10 June 2023 at 18:00:00 UTC+3",
+                  "endTimeStamp": "10 June 2023 at 22:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "Central Park Stage",
+                  "categoryID": "category1",
+                  "locationURL": "https://maps.example.com/music-concert",
+                  "minimumAge": 18,
+                  "maximumAge": 60,
+                  "maximumTickets": 500,
+                  "price": 75.00,
+                  "coverImageURL": "https://example.com/images/event1.jpg",
+                  "mediaArray": ["https://example.com/images/event1-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event2",
+                  "organizerID": "organizer2",
+                  "name": "Tech Fair 2023",
+                  "description": "Explore the latest tech innovations and gadgets.",
+                  "startTimeStamp": "15 June 2023 at 10:00:00 UTC+3",
+                  "endTimeStamp": "15 June 2023 at 18:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "Tech Convention Hall",
+                  "categoryID": "category2",
+                  "locationURL": "https://maps.example.com/tech-fair",
+                  "minimumAge": 15,
+                  "maximumAge": 65,
+                  "maximumTickets": 1000,
+                  "price": 30.00,
+                  "coverImageURL": "https://example.com/images/event2.jpg",
+                  "mediaArray": ["https://example.com/images/event2-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event3",
+                  "organizerID": "organizer3",
+                  "name": "Art Expo",
+                  "description": "Discover amazing artwork from talented artists around the world.",
+                  "startTimeStamp": "20 June 2023 at 09:00:00 UTC+3",
+                  "endTimeStamp": "20 June 2023 at 17:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "City Art Gallery",
+                  "categoryID": "category3",
+                  "locationURL": "https://maps.example.com/art-expo",
+                  "minimumAge": 12,
+                  "maximumAge": 70,
+                  "maximumTickets": 300,
+                  "price": 20.00,
+                  "coverImageURL": "https://example.com/images/event3.jpg",
+                  "mediaArray": ["https://example.com/images/event3-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event4",
+                  "organizerID": "organizer4",
+                  "name": "Food Festival",
+                  "description": "Taste culinary delights from various cuisines.",
+                  "startTimeStamp": "25 June 2023 at 12:00:00 UTC+3",
+                  "endTimeStamp": "25 June 2023 at 20:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "Riverside Park",
+                  "categoryID": "category4",
+                  "locationURL": "https://maps.example.com/food-festival",
+                  "minimumAge": 0,
+                  "maximumAge": 99,
+                  "maximumTickets": 800,
+                  "price": 15.00,
+                  "coverImageURL": "https://example.com/images/event4.jpg",
+                  "mediaArray": ["https://example.com/images/event4-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event5",
+                  "organizerID": "organizer5",
+                  "name": "Sports Meet",
+                  "description": "A day full of exciting sports competitions.",
+                  "startTimeStamp": "1 July 2023 at 08:00:00 UTC+3",
+                  "endTimeStamp": "1 July 2023 at 18:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "National Stadium",
+                  "categoryID": "category5",
+                  "locationURL": "https://maps.example.com/sports-meet",
+                  "minimumAge": 10,
+                  "maximumAge": 65,
+                  "maximumTickets": 2000,
+                  "price": 50.00,
+                  "coverImageURL": "https://example.com/images/event5.jpg",
+                  "mediaArray": ["https://example.com/images/event5-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event6",
+                  "organizerID": "organizer6",
+                  "name": "Film Screening",
+                  "description": "Watch the premiere of a highly anticipated film.",
+                  "startTimeStamp": "10 July 2023 at 20:00:00 UTC+3",
+                  "endTimeStamp": "10 July 2023 at 22:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "City Cinema Hall",
+                  "categoryID": "category6",
+                  "locationURL": "https://maps.example.com/film-screening",
+                  "minimumAge": 18,
+                  "maximumAge": 60,
+                  "maximumTickets": 300,
+                  "price": 12.00,
+                  "coverImageURL": "https://example.com/images/event6.jpg",
+                  "mediaArray": ["https://example.com/images/event6-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event7",
+                  "organizerID": "organizer7",
+                  "name": "Dance Workshop",
+                  "description": "Learn dance moves from professional choreographers.",
+                  "startTimeStamp": "15 July 2023 at 14:00:00 UTC+3",
+                  "endTimeStamp": "15 July 2023 at 17:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "Downtown Studio",
+                  "categoryID": "category7",
+                  "locationURL": "https://maps.example.com/dance-workshop",
+                  "minimumAge": 16,
+                  "maximumAge": 50,
+                  "maximumTickets": 100,
+                  "price": 25.00,
+                  "coverImageURL": "https://example.com/images/event7.jpg",
+                  "mediaArray": ["https://example.com/images/event7-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event8",
+                  "organizerID": "organizer8",
+                  "name": "Photography Contest",
+                  "description": "Showcase your photography skills and win prizes.",
+                  "startTimeStamp": "20 July 2023 at 09:00:00 UTC+3",
+                  "endTimeStamp": "20 July 2023 at 18:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "City Art Center",
+                  "categoryID": "category8",
+                  "locationURL": "https://maps.example.com/photography-contest",
+                  "minimumAge": 12,
+                  "maximumAge": 60,
+                  "maximumTickets": 200,
+                  "price": 10.00,
+                  "coverImageURL": "https://example.com/images/event8.jpg",
+                  "mediaArray": ["https://example.com/images/event8-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event9",
+                  "organizerID": "organizer9",
+                  "name": "Yoga Retreat",
+                  "description": "A relaxing day of yoga and meditation.",
+                  "startTimeStamp": "25 July 2023 at 07:00:00 UTC+3",
+                  "endTimeStamp": "25 July 2023 at 16:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "Beachside Resort",
+                  "categoryID": "category9",
+                  "locationURL": "https://maps.example.com/yoga-retreat",
+                  "minimumAge": 18,
+                  "maximumAge": 65,
+                  "maximumTickets": 100,
+                  "price": 60.00,
+                  "coverImageURL": "https://example.com/images/event9.jpg",
+                  "mediaArray": ["https://example.com/images/event9-photo1.jpg"],
+                  "isDeleted": false
+                },
+            {
+                  "eventID": "event10",
+                  "organizerID": "organizer10",
+                  "name": "Comedy Night",
+                  "description": "Laugh out loud with performances from top comedians.",
+                  "startTimeStamp": "30 July 2023 at 19:00:00 UTC+3",
+                  "endTimeStamp": "30 July 2023 at 22:00:00 UTC+3",
+                  "status": "upcoming",
+                  "venueName": "Comedy Club",
+                  "categoryID": "category10",
+                  "locationURL": "https://maps.example.com/comedy-night",
+                  "minimumAge": 18,
+                  "maximumAge": 60,
+                  "maximumTickets": 150,
+                  "price": 20.00,
+                  "coverImageURL": "https://example.com/images/event10.jpg",
+                  "mediaArray": ["https://example.com/images/event10-photo1.jpg"],
+                  "isDeleted": false
+                }
+    ],
+    
+    "userBans": [
+        {
+            "userID": "customer1",
+            "adminID": "admin1",
+            "reason": "Spamming events",
+            "description": "User posted irrelevant comments on multiple events.",
+            "startDate": "1 July 2023 at 00:00:00 UTC+3",
+            "endDate": "31 July 2023 at 23:59:59 UTC+3"
+        },
+        {
+            "userID": "customer3",
+            "adminID": "admin2",
+            "reason": "Abusive behavior",
+            "description": "User was reported for sending offensive messages to others.",
+            "startDate": "15 June 2023 at 00:00:00 UTC+3",
+            "endDate": "15 July 2023 at 23:59:59 UTC+3"
+        },
+        {
+            "userID": "customer5",
+            "adminID": "admin3",
+            "reason": "Multiple account violations",
+            "description": "User was found creating multiple accounts to exploit discounts.",
+            "startDate": "20 May 2023 at 00:00:00 UTC+3",
+            "endDate": "20 August 2023 at 23:59:59 UTC+3"
+        }
+    ],
+    
+    "eventBans": [
+        {
+            "eventID": "event3",
+            "adminID": "admin2",
+            "organizerID": "organizer3",
+            "reason": "Inappropriate content",
+            "description": "Event was promoting hate speech.",
+            "dateBanned": "15 July 2023 at 12:00:00 UTC+3"
+        },
+        {
+            "eventID": "event5",
+            "adminID": "admin1",
+            "organizerID": "organizer5",
+            "reason": "Unverified venue",
+            "description": "Venue could not be verified for safety standards.",
+            "dateBanned": "10 June 2023 at 10:00:00 UTC+3"
+        },
+        {
+            "eventID": "event8",
+            "adminID": "admin4",
+            "organizerID": "organizer8",
+            "reason": "Fraudulent ticket sales",
+            "description": "Tickets were being oversold beyond capacity.",
+            "dateBanned": "5 July 2023 at 15:00:00 UTC+3"
+        }
+    ],
+    
+    "faqs": [
+        {
+            "faqID": "faq1",
+            "question": "How can I book tickets?",
+            "answer": "Visit the event page, select your event, and proceed with payment.",
+            "userType": "customer"
+        },
+        {
+            "faqID": "faq2",
+            "question": "Can I get a refund for tickets?",
+            "answer": "Refunds are available if requested 48 hours before the event.",
+            "userType": "customer"
+        },
+        {
+            "faqID": "faq3",
+            "question": "How do I become an organizer?",
+            "answer": "Contact us through the organizer registration page.",
+            "userType": "organizer"
+        },
+        {
+            "faqID": "faq4",
+            "question": "What should I do if I encounter a technical issue?",
+            "answer": "Reach out to support through the Help Center.",
+            "userType": "all"
+        },
+        {
+            "faqID": "faq5",
+            "question": "Are there age restrictions for events?",
+            "answer": "Age restrictions are specified in the event details.",
+            "userType": "customer"
+        },
+        {
+            "faqID": "faq6",
+            "question": "Can I change my event details after publishing?",
+            "answer": "Yes, you can edit event details from the organizer dashboard.",
+            "userType": "organizer"
+        },
+        {
+            "faqID": "faq7",
+            "question": "How can I report inappropriate behavior?",
+            "answer": "Use the report button on the user's profile or event page.",
+            "userType": "customer"
+        },
+        {
+            "faqID": "faq8",
+            "question": "How do I access my purchased tickets?",
+            "answer": "Tickets are available in your account under 'My Tickets'.",
+            "userType": "customer"
+        },
+        {
+            "faqID": "faq9",
+            "question": "What payment methods are accepted?",
+            "answer": "We accept credit/debit cards and digital wallets.",
+            "userType": "all"
+        },
+        {
+            "faqID": "faq10",
+            "question": "Can I host multiple events at the same time?",
+            "answer": "Yes, organizers can host multiple events simultaneously.",
+            "userType": "organizer"
+        }
+    ],
+    
+    "tickets": [
+        {
+            "ticketID": "ticket1",
+            "eventID": "event1",
+            "organizerID": "organizer1",
+            "quantity": 2,
+            "customerID": "customer1",
+            "didAttend": false,
+            "totalPrice": 150.00,
+            "status": "cancelled"
+        },
+        {
+            "ticketID": "ticket2",
+            "eventID": "event2",
+            "organizerID": "organizer2",
+            "quantity": 1,
+            "customerID": "customer2",
+            "didAttend": false,
+            "totalPrice": 30.00,
+            "status": "paid"
+        },
+        {
+            "ticketID": "ticket3",
+            "eventID": "event3",
+            "organizerID": "organizer3",
+            "quantity": 3,
+            "customerID": "customer3",
+            "didAttend": true,
+            "totalPrice": 60.00,
+            "status": "paid"
+        },
+        {
+            "ticketID": "ticket4",
+            "eventID": "event4",
+            "organizerID": "organizer4",
+            "quantity": 5,
+            "customerID": "customer4",
+            "didAttend": true,
+            "totalPrice": 75.00,
+            "status": "cancelled"
+        },
+        {
+            "ticketID": "ticket5",
+            "eventID": "event5",
+            "organizerID": "organizer5",
+            "quantity": 4,
+            "customerID": "customer5",
+            "didAttend": false,
+            "totalPrice": 200.00,
+            "status": "paid"
+        },
+        {
+            "ticketID": "ticket6",
+            "eventID": "event6",
+            "organizerID": "organizer6",
+            "quantity": 1,
+            "customerID": "customer6",
+            "didAttend": false,
+            "totalPrice": 12.00,
+            "status": "cancelled"
+        },
+        {
+            "ticketID": "ticket7",
+            "eventID": "event7",
+            "organizerID": "organizer7",
+            "quantity": 2,
+            "customerID": "customer7",
+            "didAttend": true,
+            "totalPrice": 50.00,
+            "status": "paid"
+        },
+        {
+            "ticketID": "ticket8",
+            "eventID": "event8",
+            "organizerID": "organizer8",
+            "quantity": 3,
+            "customerID": "customer8",
+            "didAttend": false,
+            "totalPrice": 30.00,
+            "status": "cancelled"
+        },
+        {
+            "ticketID": "ticket9",
+            "eventID": "event9",
+            "organizerID": "organizer9",
+            "quantity": 1,
+            "customerID": "customer9",
+            "didAttend": true,
+            "totalPrice": 60.00,
+            "status": "paid"
+        },
+        {
+            "ticketID": "ticket10",
+            "eventID": "event10",
+            "organizerID": "organizer10",
+            "quantity": 2,
+            "customerID": "customer10",
+            "didAttend": true,
+            "totalPrice": 40.00,
+            "status": "paid"
+        }
+    ],
+    
+    "ratings": [
+        {
+            "ratingID": "rating1",
+            "eventID": "event1",
+            "organizerID": "organizer1",
+            "userID": "customer1",
+            "rating": 4.5
+        },
+        {
+            "ratingID": "rating2",
+            "eventID": "event2",
+            "organizerID": "organizer2",
+            "userID": "customer2",
+            "rating": 4.8
+        },
+        {
+            "ratingID": "rating3",
+            "eventID": "event3",
+            "organizerID": "organizer3",
+            "userID": "customer3",
+            "rating": 5.0
+        },
+        {
+            "ratingID": "rating4",
+            "eventID": "event4",
+            "organizerID": "organizer4",
+            "userID": "customer4",
+            "rating": 4.0
+        },
+        {
+            "ratingID": "rating5",
+            "eventID": "event5",
+            "organizerID": "organizer5",
+            "userID": "customer5",
+            "rating": 3.5
+        },
+        {
+            "ratingID": "rating6",
+            "eventID": "event6",
+            "organizerID": "organizer6",
+            "userID": "customer6",
+            "rating": 4.2
+        },
+        {
+            "ratingID": "rating7",
+            "eventID": "event7",
+            "organizerID": "organizer7",
+            "userID": "customer7",
+            "rating": 4.7
+        },
+        {
+            "ratingID": "rating8",
+            "eventID": "event8",
+            "organizerID": "organizer8",
+            "userID": "customer8",
+            "rating": 4.9
+        },
+        {
+            "ratingID": "rating9",
+            "eventID": "event9",
+            "organizerID": "organizer9",
+            "userID": "customer9",
+            "rating": 5.0
+        },
+        {
+            "ratingID": "rating10",
+            "eventID": "event10",
+            "organizerID": "organizer10",
+            "userID": "customer10",
+            "rating": 4.6
+        }
+    ],
+    
+      "badges": [
+            {
+                  "badgeID": "badge1",
+                  "image": "https://example.com/badges/badge1.jpg",
+                  "eventID": "event1",
+                  "categoryID": "category1"
+                },
+            {
+                  "badgeID": "badge2",
+                  "image": "https://example.com/badges/badge2.jpg",
+                  "eventID": "event2",
+                  "categoryID": "category2"
+                },
+            {
+                  "badgeID": "badge3",
+                  "image": "https://example.com/badges/badge3.jpg",
+                  "eventID": "event3",
+                  "categoryID": "category3"
+                },
+            {
+                  "badgeID": "badge4",
+                  "image": "https://example.com/badges/badge4.jpg",
+                  "eventID": "event4",
+                  "categoryID": "category4"
+                },
+            {
+                  "badgeID": "badge5",
+                  "image": "https://example.com/badges/badge5.jpg",
+                  "eventID": "event5",
+                  "categoryID": "category5"
+                },
+            {
+                  "badgeID": "badge6",
+                  "image": "https://example.com/badges/badge6.jpg",
+                  "eventID": "event6",
+                  "categoryID": "category6"
+                },
+            {
+                  "badgeID": "badge7",
+                  "image": "https://example.com/badges/badge7.jpg",
+                  "eventID": "event7",
+                  "categoryID": "category7"
+                },
+            {
+                  "badgeID": "badge8",
+                  "image": "https://example.com/badges/badge8.jpg",
+                  "eventID": "event8",
+                  "categoryID": "category8"
+                },
+            {
+                  "badgeID": "badge9",
+                  "image": "https://example.com/badges/badge9.jpg",
+                  "eventID": "event9",
+                  "categoryID": "category9"
+                },
+            {
+                  "badgeID": "badge10",
+                  "image": "https://example.com/badges/badge10.jpg",
+                  "eventID": "event10",
+                  "categoryID": "category10"
+                }
+          ]
+}
+

@@ -8,79 +8,156 @@
 import FirebaseFirestore
 import Foundation
 
+// MARK: UserType
 enum UserType: String, Codable {
     case admin = "admin"
     case customer = "customer"
     case organizer = "organizer"
 }
 
+// MARK: Firestore Fetch
+extension Decodable {
+    static func fetch<T: Decodable>(from collection: String, documentID: String) async throws -> T {
+        let firestore = Firestore.firestore()
+        let documentRef = firestore.collection(collection).document(documentID)
+        let snapshot = try await documentRef.getDocument()
+        
+        guard let data = snapshot.data() else {
+            throw NSError(domain: "\(T.self)", code: 404, userInfo: [NSLocalizedDescriptionKey: "Document not found or empty."])
+        }
+        
+        let decoder = Firestore.Decoder()
+        guard let decoded = try? decoder.decode(T.self, from: data) else {
+            throw NSError(domain: "\(T.self)", code: 400, userInfo: [NSLocalizedDescriptionKey: "Failed to decode data."])
+        }
+        
+        return decoded
+    }
+}
 
-//static let dateFormatter : DateFormatter = {
-//    let formatter = DateFormatter()
-//    formatter.dateFormat = "yyyy-MM-dd"
-//    return formatter
-//}()
+// MARK: User Protocol
+protocol User: Decodable {
+    var userID: String { get }
+    var fullName: String { get }
+    var email: String { get }
+//    var dob: Date { get }
+    var dateCreated: Date { get }
+    var phoneNumber: Int { get }
+    var profileImageURL: String { get }
+    var type: UserType { get }
+    var isDeleted: Bool { get }
+}
 
 
-
-struct User : Codable {
-    var userID : String
-    var firstName : String
-    var lastName : String
-    var email : String
-    var dob : Date
-    var dateCreated : Date
-    var phoneNumber : Int
-    var profileImageURL : String
-    var badgesArray : [String] // array of ids to the badges they have
-    var type : UserType
+// MARK: Admin
+struct Admin: User , Codable {
+    var userID: String
+    var fullName: String
+    var email: String
+//    var dob: Date
+    var dateCreated: Date
+    var phoneNumber: Int
+    var profileImageURL: String
+    var type: UserType = .admin
+    var isDeleted: Bool
     
-    init(id: String, firstName: String, lastName: String, email: String, dob: Date, dateCreated : Date, phoneNumber: Int, badgesArray: [String], profileImageURL: String,  type: UserType) {
-        self.userID = id
-        self.firstName = firstName
-        self.lastName = lastName
+    init(userID: String, fullName: String, email: String,/* dob: Date, */dateCreated: Date, phoneNumber: Int, profileImageURL: String, isDeleted: Bool = false) {
+        self.userID = userID
+        self.fullName = fullName
+        self.email = email
+//        self.dob = dob
+        self.dateCreated = dateCreated
+        self.phoneNumber = phoneNumber
+        self.profileImageURL = profileImageURL
+        self.isDeleted = isDeleted
+    }
+    
+    init?(documentID: String) async throws {
+        self = try await Self.fetch(from: K.FStore.Admins.collectionName, documentID: documentID)
+        self.userID = documentID
+    }
+}
+
+// MARK: Organizer
+struct Organizer: User, Codable {
+    var userID: String
+    var fullName: String
+    var email: String
+//    var dob: Date
+    var dateCreated: Date
+    var phoneNumber: Int
+    var profileImageURL: String
+    var type: UserType = .organizer
+    var isDeleted: Bool
+    
+    var startDate: Date
+    var endDate: Date
+    var LicenseDocumentURL : String
+    
+    init(userID: String = "Default", fullName: String, email: String,/* dob: Date,*/ dateCreated: Date, phoneNumber: Int, profileImageURL: String, startDate: Date, endDate: Date, LicenseDocumentURL: String, isDeleted: Bool = false) {
+        self.userID = userID
+        self.fullName = fullName
+        self.email = email
+//        self.dob = dob
+        self.dateCreated = dateCreated
+        self.phoneNumber = phoneNumber
+        self.profileImageURL = profileImageURL
+        self.isDeleted = isDeleted
+        
+        self.startDate = startDate
+        self.endDate = endDate
+        self.LicenseDocumentURL = LicenseDocumentURL
+    }
+    
+    init?(documentID: String) async throws {
+        self = try await Self.fetch(from: K.FStore.Organizers.collectionName, documentID: documentID)
+    }
+}
+
+// MARK: Customer
+struct Customer: User, Codable {
+    var userID: String
+    var fullName: String
+    var email: String
+    var dob: Date
+    var dateCreated: Date
+    var phoneNumber: Int
+    var profileImageURL: String
+    var type: UserType = .customer
+    var isDeleted: Bool
+    
+    var badgesArray: [String]
+    var interestsArray: [String]
+    
+    init(userID: String, fullName: String, email: String, dob: Date, dateCreated: Date, phoneNumber: Int, profileImageURL: String, badgesArray: [String], interestsArray: [String], isDeleted: Bool = false) {
+        self.userID = userID
+        self.fullName = fullName
         self.email = email
         self.dob = dob
         self.dateCreated = dateCreated
         self.phoneNumber = phoneNumber
         self.profileImageURL = profileImageURL
+        self.isDeleted = isDeleted
+        
         self.badgesArray = badgesArray
-        self.type = type
+        self.interestsArray = interestsArray
     }
     
-    init(from decoder: any Decoder) throws{
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userID = try container.decode(String.self, forKey: .userID)
-        self.firstName = try container.decode(String.self, forKey: .firstName)
-        self.lastName = try container.decode(String.self, forKey: .lastName)
-        self.email = try container.decode(String.self, forKey: .email)
-        self.dob = try container.decode(Date.self, forKey: .dob)
-        self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
-        self.phoneNumber = try container.decode(Int.self, forKey: .phoneNumber)
-        self.badgesArray = try container.decode([String].self, forKey: .badgesArray)
-        self.profileImageURL = try container.decode(String.self, forKey: .profileImageURL)
-        self.type = try container.decode(UserType.self, forKey: .type)
-    }
-    
+//    func getBadges() async throws -> [Badge] {
+////        var badges: [Badge] = []
+////        badgesArray.map { badgeID in
+////            badges.append(try await BadgesManager.getBadge(eventID: badgeID))
+////        }
+//    }
+//    
+//    func getInterest() async throws -> [Badge] {
+////        var categories: [Category] = []
+////        interestsArray.map { categoryID in
+////                categories.append(try await CategoriesManager.getCategory(categorieID: categoryID))
+////        }
+//    }
+//    
     init?(documentID: String) async throws {
-        let firestore = Firestore.firestore()
-        let documentRef = firestore.collection(K.FStore.Users.collectionName).document(documentID)
-        
-        let documentSnapshot = try await documentRef.getDocument()
-        
-        guard let documentData = documentSnapshot.data() else {
-            throw NSError(domain: "User", code: 404, userInfo: [NSLocalizedDescriptionKey: "Document not found or empty."])
-        }
-        
-        let decoder = Firestore.Decoder()
-        guard let user = try? decoder.decode(User.self, from: documentData) else {
-            throw NSError(domain: "User", code: 400, userInfo: [NSLocalizedDescriptionKey: "Failed to decode user data."])
-        }
-        
-        self = user
-        self.userID = documentID
+        self = try await Self.fetch(from: K.FStore.Customers.collectionName, documentID: documentID)
     }
-
 }
-
-

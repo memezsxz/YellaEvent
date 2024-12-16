@@ -9,46 +9,47 @@ import Foundation
 import FirebaseFirestore
 
 struct Badge : Codable {
-    var badgeID : String
     var image : String
     var eventID : String // maybe we want to delete the event, but we do not want the badge to be removed from users
     var eventName : String
-    var catigoryID : String
-    
-    init(badgeID: String, image: String, eventID: String, eventName: String, catigoryID: String) {
-        self.badgeID = badgeID
+    var category : Category
+
+    init(image: String, eventID: String, eventName: String, category: Category) {
         self.image = image
         self.eventID = eventID
         self.eventName = eventName
-        self.catigoryID = catigoryID
+        self.category = category
+//        self.categoryID = catigoryID
+//        self.categoryName = category.name
+//        self.categoryIcon = ca
     }
     
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.badgeID = try container.decode(String.self, forKey: .badgeID)
-        self.image = try container.decode(String.self, forKey: .image)
-        self.eventID = try container.decode(String.self, forKey: .eventID)
-        self.eventName = try container.decode(String.self, forKey: .eventName)
-        self.catigoryID = try container.decode(String.self, forKey: .catigoryID)
+    func toFirestoreData() -> [String: Any] {
+        return [
+            K.FStore.Badges.image: self.image,
+            K.FStore.Badges.eventID: self.eventID,
+//            K.FStore.Badges.eventName: self.eventName,
+//            K.FStore.Badges.categoryID: self.category.categoryID,
+        ]
+    }
+
+    init(from data: [String: Any]) async throws {
+        self.image = data[K.FStore.Badges.image] as? String ?? ""
+        self.eventID = data[K.FStore.Badges.eventID] as? String ?? ""
+        do {
+            let event = try await EventsManager.getEvent(eventID: self.eventID)
+            self.eventName = event.name
+            self.category = event.category
+        }
+        catch {
+            self.eventName = ""
+            self.category = Category(categoryID: "", name: "", icon: "")
+        }
     }
     
     init?(documentID: String) async throws {
-        let firestore = Firestore.firestore()
-        let documentRef = firestore.collection(K.FStore.Badges.collectionName).document(documentID)
-        
-        let documentSnapshot = try await documentRef.getDocument()
-        
-        guard let documentData = documentSnapshot.data() else {
-            throw NSError(domain: "Badge", code: 404, userInfo: [NSLocalizedDescriptionKey: "Document not found or empty."])
-        }
-        
-        let decoder = Firestore.Decoder()
-        guard let badge = try? decoder.decode(Badge.self, from: documentData) else {
-            throw NSError(domain: "Badge", code: 400, userInfo: [NSLocalizedDescriptionKey: "Failed to decode badge data."])
-        }
-        
-        self = badge
-        self.badgeID = documentID
+        self = try await Self.fetch(from: K.FStore.Badges.collectionName, documentID: documentID)
+        self.eventID = documentID
     }
-
+    
 }

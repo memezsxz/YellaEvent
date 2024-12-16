@@ -4,10 +4,14 @@
 //
 //  Created by meme on 25/11/2024.
 //
+import FirebaseFirestore
 
 struct K {
     static let appName = "Yella Event"
     static let bundleUserID = "dev.maryam.yellaevent.userid"
+    static let HSizeclass = UIScreen.main.traitCollection.horizontalSizeClass
+    
+    static let VSizeclass = UIScreen.main.traitCollection.verticalSizeClass
     
     struct BrandColors {
         static let purple = "BrandPurple"
@@ -17,23 +21,67 @@ struct K {
         static let backgroundGray = "BackgroundGray"
     }
     
+    static let DFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM yyyy 'at' HH:mm:ss 'UTC'Z"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+//        formatter.timeStyle = DateFormatter.Style.none
+//        formatter .dateStyle = DateFormatter.Style.short
+        return formatter
+    }()
+    
+    static let TSFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = DateFormatter.Style.short
+        formatter.dateStyle = DateFormatter.Style.short
+        return formatter
+    }()
+    
+    static let encoder : Firestore.Encoder = {
+        let encoder = Firestore.Encoder()
+        encoder.keyEncodingStrategy = .useDefaultKeys
+        return encoder
+    }()
+    
+    static let decoder : Firestore.Decoder = {
+        let decoder = Firestore.Decoder()
+        decoder.keyDecodingStrategy = .useDefaultKeys
+        return decoder
+    }()
     
     struct FStore {
-        struct Users {
-            static let collectionName = "users"
+        struct User {
             static let userID = "userID"
-            static let firstName = "firstName"
-            static let lastName = "lastName"
+            static let fullName = "fullName"
             static let email = "email"
-            static let dob = "dob"
             static let dateCreated = "dateCreated"
             static let phoneNumber = "phoneNumber"
             static let profileImageURL = "profileImageURL"
-            static let badgesArray = "badgesArray" // array of ids to the badges they have
-            static let startDate = "startDate"
-            static let endDate = "endDate"
             static let type = "type"
         }
+        
+        struct Admins {
+            static let collectionName = "admins"
+        }
+        
+        struct Organizers {
+            static let collectionName = "organizers"
+            
+            static let startDate = "startDate"
+            static let endDate = "endDate"
+            static let LicenseDocumentURL = "LicenseDocumentURL"
+        }
+        
+        struct Customers {
+            
+            static let collectionName = "customers"
+            
+            static let dob = "dob"
+            static let badgesArray = "badgesArray" // array of ids to the badges they have
+            static let intrestArray = "intrestArray" // array of ids to the badges they have
+        }
+        
         struct Events {
             static let collectionName = "events"
             static let eventID = "eventID"
@@ -41,35 +89,49 @@ struct K {
             static let name = "name"
             static let description = "description"
             
-            static let startDate = "startDate"
-            static let endDate = "endDate"
+            static let startTimeStamp = "startTimeStamp"
+            static let endTimeStamp = "endTimeStamp"
             
-            static let startTime = "startTime"
-            static let endTime = "endTime"
             static let status = "status"
-
-            static let category = "category"
+            
+            static let categoryID = "categoryID"
             
             static let locationURL = "locationURL"
+            static let venueName = "venueName"
+
+            static let minimumAge = "minimumAge"
+            static let maximumAge = "maximumAge"
             
+//            static let rattingsArray = "rattingsArray" // two dimintional array with user id and a double
             static let maximumTickets = "maximumTickets"
             static let price = "price"
             
-//            static let coverImageURL = "coverImageURL" // the first value in the meadiaArray
+            static let coverImageURL = "coverImageURL"
             static let mediaArray = "mediaArray" // references to the paths of uploaded photos
-//            static let badgeID = "badgeID"  // we might not need
+            static let isDeleted = "isDeleted" // bool
+            
+            //            static let badgeID = "badgeID"  // we might not need
         }
         
         struct Tickets {
             static let collectionName = "tickets"
             static let ticketID = "ticketID"
+            
             static let eventID = "eventID"
-            static let userID = "userID"
+            //            static let eventName = "eventName"
+            static let organizerID = "organizerID"
+            //            static let organizerName = "organizerName"
+            //            static let startTimeStamp = "startTimeStamp"
+            
+            static let quantity = "quantity"
+            static let customerID = "customerID"
             static let didAttend = "didAttend" // bool
-            static let price = "price"
+            static let totalPrice = "totalPrice"
+            static let status = "status"
+            //            static let locationURL = "locationURL"
         }
         
-        struct Rattings {
+        struct Ratings {
             static let collectionName = "ratings"
             static let userID = "userID"
             static let eventID = "eventID"
@@ -82,8 +144,8 @@ struct K {
             static let badgeID = "badgeID"
             static let image = "image"
             static let eventID = "eventID" // maybe we want to delete the event, but we do not want the badge to be removed from users // delete or not?
-            static let eventName = "eventName"
-            static let catigoryID = "catigoryID"
+            //            static let eventName = "eventName"
+            static let categoryID = "categoryID"
         }
         
         struct Categories {
@@ -91,13 +153,15 @@ struct K {
             static let categoryID = "categoryID"
             static let name = "name"
             static let icon = "icon"
+            static let status = "status"
         }
         
         struct UserBans {
             static let collectionName = "userBans"
             static let userID = "userID"
-            static let descroption = "descroption"
             static let adminID = "adminID"
+            static let reason = "reason"
+            static let descroption = "descroption"
             static let startDate = "startDate"
             static let endDate = "endDate"
         }
@@ -105,9 +169,19 @@ struct K {
         struct EventBans {
             static let collectionName = "eventBans"
             static let eventID = "eventID"
-            static let descroption = "descroption"
             static let adminID = "adminID"
             static let organizerID = "organizerID"
+            
+            static let reason = "reason"
+            static let descroption = "descroption"
+        }
+        
+        struct FAQs {
+            static let collectionName = "faqs"
+            static let faqID = "faqID"
+            static let question = "question"
+            static let answer = "answer"
+            static let userType = "userType"
         }
     }
 }

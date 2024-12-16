@@ -6,43 +6,28 @@
 //
 
 import Foundation
-import FirebaseFirestore
+
+enum CategoryStaus : String, Codable {
+    case enabled = "enabled" // being used
+    case disabled = "disabled" // deleted or disabled by admin, should not show up in search fillter or when creating an event
+    case history = "history" // will not be shown to the admin but some badges will depend on it so it will e kept in the database
+}
 
 struct Category : Codable {
     var categoryID : String
     var name : String
     var icon : String
+    var status : CategoryStaus
 
-    init(categoryID: String, name: String, icon: String) {
+    init (categoryID : String = "Default", name : String, icon : String, status : CategoryStaus = .enabled) {
         self.categoryID = categoryID
         self.name = name
         self.icon = icon
-    }
-    
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.categoryID = try container.decode(String.self, forKey: .categoryID)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.icon = try container.decode(String.self, forKey: .icon)
-    }
-    
-    init?(documentID: String) async throws {
-        let firestore = Firestore.firestore()
-        let documentRef = firestore.collection(K.FStore.Categories.collectionName).document(documentID)
-        
-        let documentSnapshot = try await documentRef.getDocument()
-        
-        guard let documentData = documentSnapshot.data() else {
-            throw NSError(domain: "Category", code: 404, userInfo: [NSLocalizedDescriptionKey: "Document not found or empty."])
-        }
-        
-        let decoder = Firestore.Decoder()
-        guard let category = try? decoder.decode(Category.self, from: documentData) else {
-            throw NSError(domain: "Category", code: 400, userInfo: [NSLocalizedDescriptionKey: "Failed to decode category data."])
-        }
-        
-        self = category
-        self.categoryID = documentID
+        self.status = status
     }
 
+    init?(documentID: String) async throws {
+        self = try await Self.fetch(from: K.FStore.Categories.collectionName, documentID: documentID)
+        self.categoryID = documentID
+    }
 }

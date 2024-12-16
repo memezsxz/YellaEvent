@@ -1,0 +1,128 @@
+{
+    "admins": [
+        {
+            "userID": "admin1",
+            "fullName": "Admin User",
+            "email": "admin1@example.com",
+            "dateCreated": "14 January 2023 at 00:00:00 UTC+3",
+            "phoneNumber": 1234567890,
+            "profileImageURL": "https://example.com/admin1.jpg",
+            "type": "admin",
+            "isDeleted": false
+        }
+    ],
+    "organizers": [
+        {
+            "userID": "organizer1",
+            "fullName": "Organizer User",
+            "email": "organizer1@example.com",
+            "dateCreated": "14 February 2023 at 00:00:00 UTC+3",
+            "phoneNumber": 1234567891,
+            "profileImageURL": "https://example.com/organizer1.jpg",
+            "type": "organizer",
+            "isDeleted": false,
+            "startDate": "14 February 2023 at 00:00:00 UTC+3",
+            "endDate": "14 February 2024 at 00:00:00 UTC+3",
+            "LicenseDocumentURL": "https://example.com/license1.pdf"
+        }
+    ],
+    "customers": [
+        {
+            "userID": "customer1",
+            "fullName": "Customer User",
+            "email": "customer1@example.com",
+            "dob": "14 January 1990 at 00:00:00 UTC+3",
+            "dateCreated": "14 March 2023 at 00:00:00 UTC+3",
+            "phoneNumber": 1234567892,
+            "profileImageURL": "https://example.com/customer1.jpg",
+            "type": "customer",
+            "isDeleted": false,
+            "badgesArray": ["badge1"],
+            "interestArray": ["category1"]
+        }
+    ],
+    "events": [
+        {
+            "eventID": "event1",
+            "organizerID": "organizer1",
+            "name": "Music Festival",
+            "description": "A fun-filled music festival.",
+            "startTimeStamp": "14 January 2024 at 10:00:00 UTC+3",
+            "endTimeStamp": "14 January 2024 at 22:00:00 UTC+3",
+            "status": "ongoing",
+            "venueName": "venue name",
+            "categoryID": "category1",
+            "locationURL": "https://maps.example.com/location1",
+            "minimumAge": 18,
+            "maximumAge": 60,
+            "maximumTickets": 1000,
+            "price": 50.00,
+            "coverImageURL": "https://example.com/event1.jpg",
+            "mediaArray": ["https://example.com/event1-photo1.jpg"],
+            "isDeleted": false
+        }
+    ],
+    "ratings": [
+        {
+            "eventID": "event1",
+            "organizerID": "organizer1",
+            "userID": "customer1",
+            "rating": 4.5
+        }
+    ],
+    "tickets": [
+        {
+            "ticketID": "ticket1",
+            "eventID": "event1",
+            "organizerID": "organizer1",
+            "quantity": 2,
+            "customerID": "customer1",
+            "didAttend": false,
+            "totalPrice": 100.00,
+            "status": "paid"
+        }
+    ],
+    "badges": [
+        {
+            "badgeID": "badge1",
+            "image": "https://example.com/badge1.jpg",
+            "eventID": "event1",
+            "categoryID": "category1"
+        }
+    ],
+    "categories": [
+        {
+            "categoryID": "category1",
+            "name": "Music",
+            "icon": "🎵",
+            "status": "enabled"
+        }
+    ],
+    "userBans": [
+        {
+            "userID": "customer1",
+            "adminID": "admin1",
+            "reason": "Violation of terms",
+            "description": "Spamming events.",
+            "startDate": "14 January 2024 at 00:00:00 UTC+3",
+            "endDate": "14 February 2024 at 00:00:00 UTC+3"
+        }
+    ],
+    "eventBans": [
+        {
+            "eventID": "event1",
+            "adminID": "admin1",
+            "organizerID": "organizer1",
+            "reason": "Inappropriate content",
+            "description": "Event contained prohibited themes."
+        }
+    ],
+    "faqs": [
+        {
+            "faqID": "faq1",
+            "question": "How to book tickets?",
+            "answer": "Visit the events page and select your desired event to book tickets.",
+            "userType": "customer"
+        }
+    ]
+}
