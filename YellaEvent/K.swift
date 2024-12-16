@@ -79,7 +79,7 @@ struct K {
             
             static let dob = "dob"
             static let badgesArray = "badgesArray" // array of ids to the badges they have
-            static let intrestArray = "intrestArray" // array of ids to the badges they have
+            static let intrestArray = "interestsArray" // array of ids to the badges they have
         }
         
         struct Events {

@@ -247,7 +247,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge1", "badge3"],
-                  "interestArray": ["music", "technology"]
+                  "interestsArray": ["category1", "category2"]
                 },
             {
                   "userID": "customer2",
@@ -260,7 +260,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge2"],
-                  "interestArray": ["travel", "photography"]
+                  "interestsArray": ["travel", "category8"]
                 },
             {
                   "userID": "customer3",
@@ -273,7 +273,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge4"],
-                  "interestArray": ["art", "fashion"]
+                  "interestsArray": ["category3", "fashion"]
                 },
             {
                   "userID": "customer4",
@@ -286,7 +286,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge5", "badge6"],
-                  "interestArray": ["sports", "fitness"]
+                  "interestsArray": ["category5", "fitness"]
                 },
             {
                   "userID": "customer5",
@@ -299,7 +299,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge2"],
-                  "interestArray": ["books", "writing"]
+                  "interestsArray": ["books", "writing"]
                 },
             {
                   "userID": "customer6",
@@ -312,7 +312,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge1", "badge4"],
-                  "interestArray": ["cooking", "food"]
+                  "interestsArray": ["category4"]
                 },
             {
                   "userID": "customer7",
@@ -325,7 +325,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge3"],
-                  "interestArray": ["travel", "adventure"]
+                  "interestsArray": ["travel", "adventure"]
                 },
             {
                   "userID": "customer8",
@@ -338,7 +338,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge6"],
-                  "interestArray": ["gaming", "tech"]
+                  "interestsArray": ["category11", "category2"]
                 },
             {
                   "userID": "customer9",
@@ -351,7 +351,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge1", "badge5"],
-                  "interestArray": ["yoga", "meditation"]
+                  "interestsArray": ["category9"]
                 },
             {
                   "userID": "customer10",
@@ -364,7 +364,7 @@
                   "type": "customer",
                   "isDeleted": false,
                   "badgesArray": ["badge3"],
-                  "interestArray": ["movies", "cinema"]
+                  "interestsArray": ["category6"]
                 }
           ],
     
@@ -428,6 +428,12 @@
                   "name": "Comedy",
                   "icon": "😂",
                   "status": "enabled"
+                },
+            {
+                  "categoryID": "category11",
+                  "name": "Gamming",
+                  "icon": "🎮",
+                  "status": "enabled"
                 }
           ],
     
@@ -439,7 +445,7 @@
                   "description": "Enjoy a night of live music performances from top artists.",
                   "startTimeStamp": "10 June 2023 at 18:00:00 UTC+3",
                   "endTimeStamp": "10 June 2023 at 22:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "Central Park Stage",
                   "categoryID": "category1",
                   "locationURL": "https://maps.example.com/music-concert",
@@ -458,7 +464,7 @@
                   "description": "Explore the latest tech innovations and gadgets.",
                   "startTimeStamp": "15 June 2023 at 10:00:00 UTC+3",
                   "endTimeStamp": "15 June 2023 at 18:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "Tech Convention Hall",
                   "categoryID": "category2",
                   "locationURL": "https://maps.example.com/tech-fair",
@@ -477,7 +483,7 @@
                   "description": "Discover amazing artwork from talented artists around the world.",
                   "startTimeStamp": "20 June 2023 at 09:00:00 UTC+3",
                   "endTimeStamp": "20 June 2023 at 17:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "City Art Gallery",
                   "categoryID": "category3",
                   "locationURL": "https://maps.example.com/art-expo",
@@ -496,7 +502,7 @@
                   "description": "Taste culinary delights from various cuisines.",
                   "startTimeStamp": "25 June 2023 at 12:00:00 UTC+3",
                   "endTimeStamp": "25 June 2023 at 20:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "Riverside Park",
                   "categoryID": "category4",
                   "locationURL": "https://maps.example.com/food-festival",
@@ -515,7 +521,7 @@
                   "description": "A day full of exciting sports competitions.",
                   "startTimeStamp": "1 July 2023 at 08:00:00 UTC+3",
                   "endTimeStamp": "1 July 2023 at 18:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "National Stadium",
                   "categoryID": "category5",
                   "locationURL": "https://maps.example.com/sports-meet",
@@ -534,7 +540,7 @@
                   "description": "Watch the premiere of a highly anticipated film.",
                   "startTimeStamp": "10 July 2023 at 20:00:00 UTC+3",
                   "endTimeStamp": "10 July 2023 at 22:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "City Cinema Hall",
                   "categoryID": "category6",
                   "locationURL": "https://maps.example.com/film-screening",
@@ -553,7 +559,7 @@
                   "description": "Learn dance moves from professional choreographers.",
                   "startTimeStamp": "15 July 2023 at 14:00:00 UTC+3",
                   "endTimeStamp": "15 July 2023 at 17:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "Downtown Studio",
                   "categoryID": "category7",
                   "locationURL": "https://maps.example.com/dance-workshop",
@@ -572,7 +578,7 @@
                   "description": "Showcase your photography skills and win prizes.",
                   "startTimeStamp": "20 July 2023 at 09:00:00 UTC+3",
                   "endTimeStamp": "20 July 2023 at 18:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "City Art Center",
                   "categoryID": "category8",
                   "locationURL": "https://maps.example.com/photography-contest",
@@ -591,7 +597,7 @@
                   "description": "A relaxing day of yoga and meditation.",
                   "startTimeStamp": "25 July 2023 at 07:00:00 UTC+3",
                   "endTimeStamp": "25 July 2023 at 16:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "Beachside Resort",
                   "categoryID": "category9",
                   "locationURL": "https://maps.example.com/yoga-retreat",
@@ -610,7 +616,7 @@
                   "description": "Laugh out loud with performances from top comedians.",
                   "startTimeStamp": "30 July 2023 at 19:00:00 UTC+3",
                   "endTimeStamp": "30 July 2023 at 22:00:00 UTC+3",
-                  "status": "upcoming",
+                  "status": "ongoing",
                   "venueName": "Comedy Club",
                   "categoryID": "category10",
                   "locationURL": "https://maps.example.com/comedy-night",

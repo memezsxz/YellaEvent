@@ -64,6 +64,9 @@ class AdminStatisticsViewController:UITableViewController{
             
             
             if let viewcontroller = usersNavigationController.viewControllers.first as? AdminUsersViewController {
+                
+                _ = viewcontroller.view // loading the view if it is not loaded yet
+
                 if indexPath.section == 3 {
                     viewcontroller.userListSections.selectedSegmentIndex = 2
                 } else {
@@ -73,6 +76,7 @@ class AdminStatisticsViewController:UITableViewController{
             }
             
             self.tabBarController?.selectedViewController = usersNavigationController
+
 
         } else if indexPath.section == 4 {
             tabBarController?.selectedIndex = 3

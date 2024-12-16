@@ -36,7 +36,7 @@ class OrganizerDashboardViewController: UITableViewController {
         //            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
         //        }
         
-        UserDefaults.standard.set("3", forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set("0TgGkZPHew1WhMNVvHcU", forKey: K.bundleUserID) // this will be removed after seting the application
         
         Task {
             self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
