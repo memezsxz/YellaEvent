@@ -38,7 +38,7 @@
             "type": "customer",
             "isDeleted": false,
             "badgesArray": ["badge1"],
-            "interestArray": ["category1"]
+            "interestsArray": ["category1"]
         }
     ],
     "events": [

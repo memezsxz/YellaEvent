@@ -285,10 +285,10 @@ class EventsManager {
                
                 for ticket in tickets {
                     if (event.status == .ongoing || event.status == .completed) && ticket.didAttend {
-                        soldTickets += 1
+                        soldTickets += ticket.quantity
                     }
                     if ticket.didAttend {
-                        totalAttendance += 1
+                        totalAttendance += ticket.quantity
                         totalRevenue += ticket.totalPrice
                     }
                 }
