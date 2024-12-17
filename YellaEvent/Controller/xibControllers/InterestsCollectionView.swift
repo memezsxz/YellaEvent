@@ -158,7 +158,7 @@ class LeftAlignedFlowLayout: UICollectionViewFlowLayout {
         guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
         
         var leftMargin: CGFloat = sectionInset.left
-        var maxY: CGFloat = -1.0
+        var maxY: CGFloat = 1.0
         
         for layoutAttribute in attributes {
             if layoutAttribute.frame.origin.y >= maxY {

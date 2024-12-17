@@ -10,13 +10,15 @@ import UIKit
 class OrganizerProfileViewController: UIViewController {
     
     var currentUser: Organizer?
-    
+    var imageUpdated = false
     
     // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
     @IBOutlet weak var BigImageProfile: UIImageView!
     
+    @IBOutlet weak var bigUserName: UILabel!
     
+    @IBOutlet weak var bigUserType: UILabel!
     // Edit Profile Page section
     //Outlet Fields
     @IBOutlet weak var editProfileImage: UIImageView!
@@ -47,41 +49,50 @@ class OrganizerProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UserDefaults.standard.set("3", forKey: K.bundleUserID) // this will be removed after seting the application
+        setupEditPage()
+        
+        UserDefaults.standard.set("0TgGkZPHew1WhMNVvHcU", forKey: K.bundleUserID) // this will be removed after seting the application
 
+        setup()
 
-        // get the current user object
-        Task {
-            
-            self.currentUser = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
-                        
-            //download the current user image
-            PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
-                
-                switch result {
-                    //if the user have an image and his/her image
-                case .success(let image):
-
-                    self.BigImageProfile?.image = image
-
-                    // if the user don't have an image put the defualt image
-                case .failure(_):
-
-                    self.BigImageProfile?.image = UIImage(named: "DefaultImageProfile")
-
-                }
-                
-            })
-            
-            DispatchQueue.main.async {
-                self.setupEditPage()
-            }
-        }
     }
 
 
+    func setup() {
+        // get the current user object
+        Task {
+            do {
+                let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
+                let us = try await UsersManager.getUser(userID: userId) as! Organizer
+
+                currentUser = us
+                bigUserName?.text = "\(us.fullName)"
+                txtEmail?.text = us.email
+                bigUserType?.text = "Organizer"
+                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+                    
+                    switch result {
+                    case .success(let image):
+                        self.BigImageProfile?.image = image
+                    case .failure(_):
+                        self.BigImageProfile?.image = UIImage(named: "DefaultImageProfile")
+                    }
+                    
+                })
+                
+
+            } catch {
+                print("Failed to fetch user: \(error)")
+                
+                // Handle error appropriately, such as showing an alert to the user
+            }
+        }
+
+
+    }
 
     override func viewWillAppear(_ animated: Bool) {
+        setup()
     }
     
 }
@@ -96,10 +107,14 @@ extension OrganizerProfileViewController{
         Task {
             do {
     
+                let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
+                let us = try await UsersManager.getUser(userID: userId) as! Organizer
+                
+                currentUser = us
+
                 txtFullName?.text = "\(currentUser!.fullName)"
                 txtEmail?.text = currentUser!.email
-                
-//                txtPhoneNumber?.text = "\(currentUser!.phoneNumber)"
+                txtPhoneNumber?.text = "\(currentUser!.phoneNumber)"
                 PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
@@ -183,32 +198,9 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
     //after finish picking the profile image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
-        
-        PhotoManager.shared.uploadPhoto(selectedImage, to: "\(currentUser!.userID)", withNewName: "profile") { result in
-            switch result {
-            case .success(let url):
-                
-                // TODO: Update in user
-                print("Image uploaded successfully: \(url)")
-            case .failure(let _):
-                let saveAlert = UIAlertController(
-                    title: "Error",
-                    message: "Error uploading image",
-                    preferredStyle: .alert
-                )
-                
-                let okAction = UIAlertAction(title: "OK", style: .default) { action in
-                    //
-                    self.navigationController?.popViewController(animated: true)
-                }
-                
-                saveAlert.addAction(okAction)
-                
-                self.present(saveAlert, animated: true, completion: nil)
-            }
-            
-        }
-        
+        editProfileImage.image = selectedImage
+        imageUpdated = true
+
         dismiss(animated: true, completion: nil)
     }
     
@@ -234,15 +226,51 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
             //add the requird code
         do{
             currentUser!.fullName = txtFullName.text!
-            
             currentUser!.email = txtEmail.text!
-//TODO: fatima
-//            currentUser?.phoneNumber =  Int(txtPhoneNumber.text)
-        }catch{
+            currentUser!.phoneNumber =  Int(txtPhoneNumber!.text!)!
             
+            if let image = editProfileImage.image, imageUpdated {
+                PhotoManager.shared.uploadPhoto(image, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+                    switch result {
+                    case .success(let url):
+                        
+                        
+                        // TODO: Update in user
+                        
+                        print("Image uploaded successfully: \(url)")
+                        self.currentUser?.profileImageURL = url
+                        self.imageUpdated = false
+                        
+
+                    case .failure( _):
+                        let saveAlert = UIAlertController(
+                            title: "Error",
+                            message: "Error uploading image",
+                            preferredStyle: .alert
+                        )
+                        
+                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                            //
+                            self.navigationController?.popViewController(animated: true)
+
+                        }
+                        
+                        saveAlert.addAction(okAction)
+                        
+                        self.present(saveAlert, animated: true, completion: nil)
+                    }
+                }
+            }
+            
+            Task{
+                try await UsersManager.updateUser(user: self.currentUser!)
+                
+            }
+
+
+        }catch{
+            print("error with user saving data")
         }
-        
-        
         
         // 3. Show an alert notifying the user that the changes have been saved
         let saveAlert = UIAlertController(
