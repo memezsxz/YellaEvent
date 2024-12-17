@@ -14,6 +14,7 @@ import FirebaseFirestore
 class AuthenticationViewController: UIViewController {
     @IBOutlet weak var signInThroughGoogle: UIButton!
     
+    @IBOutlet weak var forgotPasswordEmailField: UITextField!
     @IBOutlet weak var loginPasswordField: UITextField!
     @IBOutlet weak var loginEmailField: UITextField!
     
@@ -183,5 +184,23 @@ class AuthenticationViewController: UIViewController {
         UserDefaults.standard.set(userId, forKey: K.bundleUserID)
         UserDefaults.standard.synchronize()
         print("User ID saved in UserDefaults under key: \(K.bundleUserID)")
+    }
+    @IBAction func createForgetPasswordAction(_ sender: Any) {
+        
+        guard let email = forgotPasswordEmailField.text, !email.isEmpty else {
+            showAlert(message: "Please enter your email.")
+            return
+        }
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+        
+                self.showAlert( message: error.localizedDescription)
+                return
+            }
+            
+        
+            self.showAlert(message: "A password reset link has been sent to \(email).")
+        }
     }
 }
