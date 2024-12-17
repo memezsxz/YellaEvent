@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZOT-Sk-bwl">
-                                <rect key="frame" x="13" y="179" width="367" height="548"/>
+                                <rect key="frame" x="13" y="155" width="367" height="548"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Dyy-xD-Zg7">
                                         <rect key="frame" x="0.0" y="0.0" width="367" height="32"/>
@@ -78,7 +78,6 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ZOT-Sk-bwl" firstAttribute="top" secondItem="ZbF-hk-cjT" secondAttribute="top" id="ACc-j6-3sv"/>
-                            <constraint firstItem="ZOT-Sk-bwl" firstAttribute="top" secondItem="ZbF-hk-cjT" secondAttribute="top" constant="24" id="JW9-WW-xHF"/>
                             <constraint firstAttribute="trailing" secondItem="ZOT-Sk-bwl" secondAttribute="trailing" constant="13" id="pSw-ZM-ftH"/>
                             <constraint firstItem="ZOT-Sk-bwl" firstAttribute="leading" secondItem="ZbF-hk-cjT" secondAttribute="leading" constant="13" id="pfO-ao-jsV"/>
                         </constraints>
@@ -274,7 +273,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

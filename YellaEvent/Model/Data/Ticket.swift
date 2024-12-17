@@ -13,7 +13,7 @@ import Foundation
 /// cancelled, refunded, or affected by an event deletion.
 enum TicketStatus: String, Codable {
     /// The ticket has been paid for.
-    case paied = "paied"
+    case paid = "paid"
     
     /// The event associated with the ticket was deleted or banned.
     case cancelled = "cancelled"
@@ -99,14 +99,14 @@ struct Ticket : Codable {
         self.quantity = data[K.FStore.Tickets.quantity] as? Int ?? 0
         
         switch data[K.FStore.Tickets.status] as! String {
-        case TicketStatus.paied.rawValue:
-            self.status =  .paied
+        case TicketStatus.paid.rawValue:
+            self.status =  .paid
         case TicketStatus.cancelled.rawValue:
             self.status =  .cancelled
         case TicketStatus.refunded.rawValue:
-            self.status =  .paied
+            self.status =  .paid
         default:
-            self.status =  .paied
+            self.status =  .paid
         }
     }
     

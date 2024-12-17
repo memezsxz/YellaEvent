@@ -285,15 +285,23 @@ class EventsManager {
                
                 for ticket in tickets {
                     if (event.status == .ongoing || event.status == .completed) && ticket.didAttend {
-                        soldTickets += 1
+                        soldTickets += ticket.quantity
                     }
                     if ticket.didAttend {
-                        totalAttendance += 1
+                        totalAttendance += ticket.quantity
                         totalRevenue += ticket.totalPrice
                     }
                 }
                 
-                totalRating += Event.getRatting(from: event.rattingsArray)
+                RatingManager.getOrganizerRating(organizerID: organizerID, completion: { result in
+                    switch result {
+                    case .success(let rating):
+                        totalRating = rating
+                    case .failure(let error):
+                        totalRating = 0.0
+                    }
+                })
+
             }
             
             numAllEvents = numOngoingEvents + numCancelledEvents + numCompletedEvents
