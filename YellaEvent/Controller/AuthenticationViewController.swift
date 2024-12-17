@@ -109,9 +109,29 @@ class AuthenticationViewController: UIViewController {
             if let user = authResult?.user {
                 print("Login successful for user: \(user.email ?? "Unknown email")")
                 self.saveUserIdInUserDefaults(user.uid)
-                self.showAlert(message: "Welcome, \(user.email ?? "User")!") {
-                    // Navigate to the home screen after a successful login
-
+                let db = Firestore.firestore()
+                
+                // Check if user exists in the 'admins' collection
+                db.collection("admins").document(user.uid).getDocument { [weak self] document, error in
+                    guard let self = self else { return }
+                    
+                    if let document = document, document.exists {
+                        // Navigate to Admin screen
+                        self.performSegue(withIdentifier: "goToAdmin", sender: self)
+                    } else {
+                        // Check if user exists in the 'organizers' collection
+                        db.collection("organizers").document(user.uid).getDocument { [weak self] document, error in
+                            guard let self = self else { return }
+                            
+                            if let document = document, document.exists {
+                                // Navigate to Organizer screen
+                                self.performSegue(withIdentifier: "goToOrganizer", sender: self)
+                            } else {
+                                // Navigate to Normal User screen
+                                self.performSegue(withIdentifier: "goToCustomer", sender: self)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -164,10 +184,11 @@ class AuthenticationViewController: UIViewController {
                 "phoneNumber": phoneNumber,
                 "dateOfBirth": dateOfBirth,
                 "uid": user.uid,
+                "type": "customer",
                 "dateCreated": FieldValue.serverTimestamp()
             ]
             
-            db.collection("users").document(user.uid).setData(userData) { error in
+            db.collection("customers").document(user.uid).setData(userData) { error in
                 if let error = error {
                     self.showAlert(message: "Failed to save user data: \(error.localizedDescription)")
                 } else {
