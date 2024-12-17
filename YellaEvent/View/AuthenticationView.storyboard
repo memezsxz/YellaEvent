@@ -753,29 +753,6 @@
                                     <constraint firstItem="ac3-rU-PxY" firstAttribute="centerY" secondItem="NGc-6T-fGx" secondAttribute="centerY" id="xN6-cX-5IO"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Td8-2s-fPQ">
-                                <rect key="frame" x="60.666666666666657" y="835" width="318.66666666666674" height="36.666666666666629"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dey-yD-SZv">
-                                        <rect key="frame" x="0.0" y="0.0" width="149.33333333333334" height="36.666666666666664"/>
-                                        <color key="tintColor" name="BrandPurple"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Organizer" cornerStyle="large">
-                                            <fontDescription key="titleFontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
-                                            <color key="baseBackgroundColor" name="BrandPurple"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WPM-xT-fcF">
-                                        <rect key="frame" x="169.33333333333331" y="0.0" width="149.33333333333331" height="36.666666666666664"/>
-                                        <color key="tintColor" name="BrandPurple"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Admin" cornerStyle="large">
-                                            <fontDescription key="titleFontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
-                                            <color key="baseBackgroundColor" name="BrandPurple"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                </subviews>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJT-A3-Alc">
                                 <rect key="frame" x="30.333333333333329" y="341.66666666666669" width="140" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
@@ -793,15 +770,12 @@
                         <constraints>
                             <constraint firstItem="yyM-q2-50b" firstAttribute="centerX" secondItem="Jcz-zt-R7e" secondAttribute="centerX" id="54R-6B-MHY"/>
                             <constraint firstItem="0vA-BH-1kC" firstAttribute="width" secondItem="NKn-Ti-k1i" secondAttribute="width" multiplier="0.865734" id="6SJ-fJ-4iq"/>
-                            <constraint firstItem="Td8-2s-fPQ" firstAttribute="centerX" secondItem="7hL-dY-LVz" secondAttribute="centerX" id="NDM-Sk-x6v"/>
                             <constraint firstItem="uV2-0N-v9Q" firstAttribute="centerX" secondItem="7hL-dY-LVz" secondAttribute="centerX" id="Qa1-8S-Exn"/>
                             <constraint firstItem="Jcz-zt-R7e" firstAttribute="top" secondItem="7hL-dY-LVz" secondAttribute="top" constant="30" id="V6q-4C-J4G"/>
                             <constraint firstItem="uV2-0N-v9Q" firstAttribute="top" secondItem="yyM-q2-50b" secondAttribute="bottom" constant="12" id="XRI-Lj-9dx"/>
                             <constraint firstItem="mrx-zp-AVB" firstAttribute="top" secondItem="0vA-BH-1kC" secondAttribute="bottom" constant="20" id="XpE-aY-k9T"/>
-                            <constraint firstItem="7hL-dY-LVz" firstAttribute="bottom" secondItem="Td8-2s-fPQ" secondAttribute="bottom" constant="50.333333333333371" id="Yah-ad-uyp"/>
                             <constraint firstItem="Jcz-zt-R7e" firstAttribute="centerX" secondItem="NKn-Ti-k1i" secondAttribute="centerX" id="YkS-LQ-tNN"/>
                             <constraint firstItem="mrx-zp-AVB" firstAttribute="centerX" secondItem="7hL-dY-LVz" secondAttribute="centerX" id="Zo0-vI-2vN"/>
-                            <constraint firstItem="Td8-2s-fPQ" firstAttribute="width" secondItem="NKn-Ti-k1i" secondAttribute="width" multiplier="0.724258" id="bBY-2F-3bq"/>
                             <constraint firstItem="0vA-BH-1kC" firstAttribute="leading" secondItem="yyM-q2-50b" secondAttribute="leading" id="fEZ-ek-mhR"/>
                             <constraint firstItem="yyM-q2-50b" firstAttribute="top" secondItem="JJT-A3-Alc" secondAttribute="bottom" constant="37" id="ngk-ll-yOW"/>
                             <constraint firstItem="Jcz-zt-R7e" firstAttribute="width" secondItem="NKn-Ti-k1i" secondAttribute="width" multiplier="0.862595" id="ntC-QU-SpE"/>
