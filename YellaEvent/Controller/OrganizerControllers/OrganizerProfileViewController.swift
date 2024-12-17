@@ -18,7 +18,7 @@ class OrganizerProfileViewController: UIViewController {
     
     @IBOutlet weak var bigUserName: UILabel!
     
-    @IBOutlet weak var bigUserType: UILabel!
+    @IBOutlet weak var bigUserType: UIButton!
     // Edit Profile Page section
     //Outlet Fields
     @IBOutlet weak var editProfileImage: UIImageView!
@@ -68,7 +68,7 @@ class OrganizerProfileViewController: UIViewController {
                 currentUser = us
                 bigUserName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
-                bigUserType?.text = "Organizer"
+                bigUserType?.titleLabel!.text = "Organizer"
                 PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {

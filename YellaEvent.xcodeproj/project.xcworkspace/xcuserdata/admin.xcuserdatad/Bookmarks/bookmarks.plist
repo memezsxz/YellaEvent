@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>208</string>
+					<string>204</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>207</string>
+					<string>203</string>
 					<key>Timestamp</key>
-					<string>755692025.8857909</string>
+					<string>756054150.3243279</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -34,16 +34,16 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>
+				<string>extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 </string>
 				<key>leading</key>
-				<string>    
-}
-</string>
-				<key>trailing</key>
 				<string>
 // edit profile page
-extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+</string>
+				<key>trailing</key>
+				<string>    
+    
+    // function to set the date picket on the date of birth field in the user profile page
 </string>
 			</dict>
 			<key>title</key>

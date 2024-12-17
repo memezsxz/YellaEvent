@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class AdminProfileViewController: UIViewController {
     
@@ -42,18 +43,112 @@ class AdminProfileViewController: UIViewController {
     }
     
     @IBOutlet weak var bigUserName: UILabel!
-    @IBOutlet weak var bigUserType: UILabel!
+    @IBOutlet weak var bigUserType: UIButton!
+
+    
+    
+// chnage password page
+    //outlet
+    @IBOutlet weak var txtOldPassword: UITextField!
+    @IBOutlet weak var txtNewPassword: UITextField!
+    @IBOutlet weak var txtConfirmPassword: UITextField!
+    
+    //error lable
+    @IBOutlet weak var lblErrorOldPassword: UILabel!
+    @IBOutlet weak var lblErrorNewPassword: UILabel!
+    @IBOutlet weak var lblErrorConfirmPassword: UILabel!
+    
+    
+    @IBAction func changePassword(_ sender: Any) {
+   
+        
+                var isValid = true
+                //1. validation
+                if let pass = txtOldPassword.text, pass.isEmpty {
+                    lblErrorOldPassword.text = "This Field is required"
+                    highlightField(txtOldPassword)
+                    isValid = false
+                
+                }else{
+                    lblErrorOldPassword.text = ""
+                    resetFieldHighlight(txtOldPassword)
+                    isValid = true
+                }
+        
+                if let pass = txtNewPassword.text, pass.isEmpty {
+                    lblErrorNewPassword.text = "This Field is required"
+                    highlightField(txtNewPassword)
+                    isValid = false
+        
+                }else{
+                    lblErrorNewPassword.text = ""
+                    resetFieldHighlight(txtNewPassword)
+                    isValid = true
+                }
+        
+                if let pass = txtConfirmPassword.text, pass.isEmpty {
+                    lblErrorConfirmPassword.text = "This Field is required"
+                    highlightField(txtConfirmPassword)
+                    isValid = false
+        
+                }else if (txtConfirmPassword.text != txtNewPassword.text){
+                    lblErrorConfirmPassword.text = "Password does not match"
+                    highlightField(txtConfirmPassword)
+                    isValid = false
+        
+                }else{
+                    lblErrorConfirmPassword.text = ""
+                    resetFieldHighlight(txtConfirmPassword)
+                    isValid = true
+                }
+        
+        
+                //2. change password
+        if (isValid == true){
+                        
+            
+            Auth.auth().currentUser?.updatePassword(to: txtNewPassword.text!) { error in
+                DispatchQueue.main.async {
+                    if let error = error {
+                        // Handle the error case
+                        let errorAlert = UIAlertController(
+                            title: "Error",
+                            message: "Error with changing password: \(error.localizedDescription)",
+                            preferredStyle: .alert
+                        )
+                        
+                        let okAction = UIAlertAction(title: "OK", style: .default)
+                        errorAlert.addAction(okAction)
+                        self.present(errorAlert, animated: true, completion: nil)
+                    } else {
+                        // Handle the success case
+                        let saveAlert = UIAlertController(
+                            title: "Changes Saved",
+                            message: "You can use your new password",
+                            preferredStyle: .alert
+                        )
+                        
+                        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                        
+                        saveAlert.addAction(okAction)
+                        self.present(saveAlert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+
+    }
+    
     
     override func viewDidLoad(){
         super.viewDidLoad()
         setupEditPage()
 
-            
             UserDefaults.standard.set("9aszi9qERnzUTZdCl0TF", forKey: K.bundleUserID) // this will be removed after seting the application
-                
-        
         setup()
-        
+
     }
     
     func setup() {
@@ -64,7 +159,7 @@ class AdminProfileViewController: UIViewController {
             do{
                 if let text = bigUserName{
                     bigUserName.text = currentUser?.fullName
-                    bigUserType.text = "Admin"
+                    bigUserType.titleLabel!.text = "Admin"
                 }
             }catch{
                 print("check")
@@ -93,17 +188,10 @@ class AdminProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         // method to set the edit user profile page
         setup()
+
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }
 
@@ -150,10 +238,14 @@ extension AdminProfileViewController{
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        for view in roundedViews{
-            view.layer.cornerRadius = view.frame.height / 2
-            view.clipsToBounds = true
+        if let shape = roundedViews {
+            for view in shape{
+                view.layer.cornerRadius = view.frame.height / 2
+                view.clipsToBounds = true
+            }
         }
+            
+        
     }
     
 }// End of the class
@@ -495,3 +587,8 @@ extension AdminProfileViewController{
     }
 
 }
+
+//extension AdminProfileViewController{
+//    
+//    
+//}

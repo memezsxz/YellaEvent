@@ -39,7 +39,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var lblErrorAccountDuration: UILabel!
     @IBOutlet weak var lblErrorDuration: UILabel!
     
-//    @IBOutlet var txtErrorImage: UILabel!
+    //    @IBOutlet var txtErrorImage: UILabel!
     
     //Actions
     @IBAction func createUserTapped(_ sender: Any) {
@@ -102,6 +102,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         guard validateCreateFields() else {
             return
         }
+
         
         organizer.email = (txtEmailCreate?.text)!
         organizer.phoneNumber = Int((txtPhoneNumberCreate?.text)!)!
@@ -173,7 +174,8 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
         image = selectedImage
-        
+        txtLicenceCreate.text = "License.jpg"
+        txtLicenceCreate.textColor = .brandBlue
         delegate!.dismiss(animated: true, completion: nil)
     }
     
@@ -197,6 +199,19 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             lblErrorUserName.text = ""
             delegate!.resetFieldHighlight(txtUserNameCreate)
         }
+        
+        
+        // Validate Password (Only letters)
+        if let pass = txtPasswordCreate?.text, pass.isEmpty {
+            lblErrorPassword.text = "Password is required."
+            delegate!.highlightField(txtPasswordCreate)
+            isValid = false
+            errorMessage = "Please fill in all required fields correctly."
+        } else {
+            lblErrorPassword.text = ""
+            delegate!.resetFieldHighlight(txtPasswordCreate)
+        }
+        
         
         // Validate txtPhoneNumber (Only numbers)
         if let phoneNumber = txtPhoneNumberCreate?.text, phoneNumber.isEmpty {
@@ -259,6 +274,19 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             
         }
         
+        if let license = txtLicenceCreate.text, license.isEmpty || license == "License is required." {
+                txtLicenceCreate.textColor = .red
+                txtLicenceCreate.text = "License is required."
+                isValid = false
+                errorMessage = "Please fill in all required fields correctly."
+        }else {
+            lblErrorPassword.text = ""
+            delegate!.resetFieldHighlight(txtPasswordCreate)
+        }
+            
+        
+        
+        
         if image == nil {
             isValid = false
 //            txtErrorImage.text = "Image is required."
@@ -268,7 +296,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         
         // Show warning if validation fails
         if !isValid {
-            delegate!.showWarning(message: errorMessage)
+            //delegate!.showWarning(message: errorMessage)
         }
         
         return isValid

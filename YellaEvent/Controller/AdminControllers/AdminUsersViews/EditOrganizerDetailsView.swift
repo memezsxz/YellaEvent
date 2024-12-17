@@ -196,7 +196,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
 
         // Show warning if validation fails
         if !isValid {
-            parent.showWarning(message: errorMessage)
+            //parent.showWarning(message: errorMessage)
         }
 
         return isValid

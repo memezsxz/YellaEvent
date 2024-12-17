@@ -26,7 +26,7 @@ class CustomerProfileViewController: UIViewController {
     @IBOutlet weak var txtFullName: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var txtPassword: UITextField!
+
     
     
     //Outlet Errors
@@ -37,7 +37,7 @@ class CustomerProfileViewController: UIViewController {
     
     @IBOutlet weak var txtBigUserName: UILabel!
     
-    @IBOutlet weak var txtUserType: UILabel!
+    @IBOutlet weak var txtUserType: UIButton!
     //Actions
     @IBAction func ChangeImageTapped(_ sender: UIButton) {
         changeTheUserImage(sender)
@@ -76,7 +76,7 @@ class CustomerProfileViewController: UIViewController {
                 let us = try await UsersManager.getUser(userID: userId) as! Customer
                 
                 txtBigUserName?.text = "\(us.fullName)"
-                txtUserType?.text = "Customer"
+                txtUserType?.titleLabel?.text = "Customer"
                 currentUser = us as? Customer
 
                 PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
@@ -113,6 +113,21 @@ class CustomerProfileViewController: UIViewController {
     
     
     
+    
+    @IBAction func chnagePasswordAction(_ sender: Any) {
+            //need to navigate to the forgate password page --> Ahmed
+
+    }
+    
+    @IBAction func SaveInterest(_ sender: Any) {
+        
+        //save the selected categories
+        
+        
+        // exit the page
+        self.navigationController?.popViewController(animated: true)
+        
+    }
     
     
     
@@ -335,6 +350,8 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
             currentUser?.email = txtEmail.text!
             currentUser?.fullName = txtFullName.text!
             currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
+            currentUser?.dob = K.DFormatter.date(from: txtFieldDate.text!)!
+
             
             if let image = EditProfileImage.image, imageUpdated {
                 PhotoManager.shared.uploadPhoto(image, to: "\(currentUser!.userID)", withNewName: "profile") { result in
