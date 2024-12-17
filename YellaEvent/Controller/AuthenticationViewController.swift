@@ -20,9 +20,9 @@ class AuthenticationViewController: UIViewController {
     
     @IBOutlet weak var registerFullNameField: UITextField!
     
+    @IBOutlet weak var registerDob: UIDatePicker!
     @IBOutlet weak var registerPasswordField: UITextField!
     @IBOutlet weak var registerPhoneNumberField: UITextField!
-    @IBOutlet weak var registerDateOfBirthField: UITextField!
     @IBOutlet weak var registerEmailField: UITextField!
     @IBAction func signInThroughGoogleAction(_ sender: Any) {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
@@ -64,6 +64,31 @@ class AuthenticationViewController: UIViewController {
                 if let user = authResult?.user {
                                  print("User signed in with Google: \(user.email ?? "No email")")
                                  self.saveUserIdInUserDefaults(user.uid)
+                    
+                    let db = Firestore.firestore()
+                    
+                    // Check if user exists in the 'admins' collection
+                    db.collection("admins").document(user.uid).getDocument { [weak self] document, error in
+                        guard let self = self else { return }
+                        
+                        if let document = document, document.exists {
+                            // Navigate to Admin screen
+                            self.performSegue(withIdentifier: "goToAdmin", sender: self)
+                        } else {
+                            // Check if user exists in the 'organizers' collection
+                            db.collection("organizers").document(user.uid).getDocument { [weak self] document, error in
+                                guard let self = self else { return }
+                                
+                                if let document = document, document.exists {
+                                    // Navigate to Organizer screen
+                                    self.performSegue(withIdentifier: "goToOrganizer", sender: self)
+                                } else {
+                                    // Navigate to Normal User screen
+                                    self.performSegue(withIdentifier: "goToCustomer", sender: self)
+                                }
+                            }
+                        }
+                    }
                              }
 
             }
@@ -152,13 +177,17 @@ class AuthenticationViewController: UIViewController {
             return
         }
         
-        guard let phoneNumber = registerPhoneNumberField.text, !phoneNumber.isEmpty else {
-            showAlert(message: "Please enter your phone number.")
+        guard let phoneNumber = registerPhoneNumberField.text, !phoneNumber.isEmpty,
+              phoneNumber.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil else {
+            showAlert(message: "Please enter a valid phone number.")
             return
         }
         
-        guard let dateOfBirth = registerDateOfBirthField.text, !dateOfBirth.isEmpty else {
-            showAlert(message: "Please enter your date of birth.")
+        let dateOfBirth = registerDob.date
+        let minimumDate = Calendar.current.date(from: DateComponents(year: 2014, month: 1, day: 1))!
+        
+        guard dateOfBirth < minimumDate else {
+            showAlert(message: "Date of birth must be before 2014.")
             return
         }
         
@@ -171,30 +200,34 @@ class AuthenticationViewController: UIViewController {
                 return
             }
             
-            guard let user = authResult?.user else { return }
-            print("User registered successfully with UID: \(user.uid)")
+            guard let firebaseUser = authResult?.user else { return }
+            print("User registered successfully with UID: \(firebaseUser.uid)")
             
-            self.saveUserIdInUserDefaults(user.uid)
+            self.saveUserIdInUserDefaults(firebaseUser.uid)
             
-            // Save additional user details to Firestore
-            let db = Firestore.firestore()
-            let userData: [String: Any] = [
-                "fullName": fullName,
-                "email": email,
-                "phoneNumber": phoneNumber,
-                "dateOfBirth": dateOfBirth,
-                "uid": user.uid,
-                "type": "customer",
-                "dateCreated": FieldValue.serverTimestamp()
-            ]
+            let customer = Customer(
+                userID: firebaseUser.uid,
+                fullName: fullName,
+                email: email,
+                dob: dateOfBirth,
+                dateCreated: Date.now,
+                phoneNumber: Int(phoneNumber) ?? 0,
+                profileImageURL: "",
+                badgesArray: [],
+                interestsArray: []
+            )
             
-            db.collection("customers").document(user.uid).setData(userData) { error in
-                if let error = error {
-                    self.showAlert(message: "Failed to save user data: \(error.localizedDescription)")
-                } else {
-                    self.showAlert(message: "Account created successfully!") {
-
+            Task {
+                do {
+                    try await UsersManager.createNewUser(user: customer)
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "goToInterestPicker", sender: self)
                     }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.showAlert(message: "Failed to create user: \(error.localizedDescription)")
+                    }
+                    print("Error creating user: \(error)")
                 }
             }
         }
@@ -223,5 +256,8 @@ class AuthenticationViewController: UIViewController {
         
             self.showAlert(message: "A password reset link has been sent to \(email).")
         }
+    }
+    @IBAction func confirmInterestsAction(_ sender: Any) {
+        performSegue(withIdentifier: "goToHomeThroughInterest", sender: self)
     }
 }
