@@ -16,6 +16,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
     var image : UIImage?
     let imagePickerController = UIImagePickerController()
 
+    
     //Create Organizer Page
     // Outlet
     @IBOutlet weak var txtUserNameCreate: UITextField!
@@ -41,7 +42,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
     
     //    @IBOutlet var txtErrorImage: UILabel!
     
-    //Actions
+    // MARK: Actions
     @IBAction func createUserTapped(_ sender: Any) {
         createOrganizer()
         //            createOrganizer()
@@ -58,6 +59,8 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         }
         
     }
+    
+    
     @IBAction func chnage(_ sender: Any) {
         
         
@@ -71,10 +74,9 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         
     }
     
+    //to hide the duration filed if the never expir option selected
     func setup() {
-        //        setupDatePicker()
         lastField.isHidden = true
-        
     }
     
     
@@ -181,7 +183,6 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
     
     func validateCreateFields() -> Bool {
         var isValid = true
-        var errorMessage = ""
         
         
         // Validate txtFullName (Only letters)
@@ -189,12 +190,10 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             lblErrorUserName.text = "Full name is required."
             delegate!.highlightField(txtUserNameCreate)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let fullName = txtUserNameCreate?.text, !delegate!.isValidFullName(fullName) {
             lblErrorUserName.text = "Full name must contain only letters."
             delegate!.highlightField(txtUserNameCreate)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorUserName.text = ""
             delegate!.resetFieldHighlight(txtUserNameCreate)
@@ -206,7 +205,6 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             lblErrorPassword.text = "Password is required."
             delegate!.highlightField(txtPasswordCreate)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorPassword.text = ""
             delegate!.resetFieldHighlight(txtPasswordCreate)
@@ -218,12 +216,10 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             lblErrorPhoneNumber.text = "Phone number is required."
             delegate!.highlightField(txtPhoneNumberCreate)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let phoneNumber = txtPhoneNumberCreate?.text, !delegate!.isValidPhoneNumber(phoneNumber) {
             lblErrorPhoneNumber.text = "Phone number must be exactly 8 digits."
             delegate!.highlightField(txtPhoneNumberCreate)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorPhoneNumber.text = ""
             delegate!.resetFieldHighlight(txtPhoneNumberCreate)
@@ -234,12 +230,10 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             lblErrorEmail.text = "Email address is required."
             delegate!.highlightField(txtEmailCreate)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let email = txtEmailCreate?.text, !delegate!.isValidEmail(email) {
             lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
             delegate!.highlightField(txtEmailCreate)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorEmail.text = ""
             delegate!.resetFieldHighlight(txtEmailCreate)
@@ -250,7 +244,6 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             lblErrorPassword.text = "Password is required."
             delegate!.highlightField(txtPasswordCreate)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         }else {
             lblErrorPassword.text = ""
             delegate!.resetFieldHighlight(txtPasswordCreate)
@@ -261,12 +254,10 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
                 lblErrorDuration.text = "Duration is required."
                 delegate!.highlightField(txtduration)
                 isValid = false
-                errorMessage = "Please fill in all required fields correctly."
             } else if let duration = txtduration?.text, !isValidDuration(duration) {
                 lblErrorDuration.text = "Duration must be only numbers."
                 delegate!.highlightField(txtduration)
                 isValid = false
-                errorMessage = "Please fill in all required fields correctly."
             } else {
                 lblErrorDuration.text = ""
                 delegate!.resetFieldHighlight(txtduration)
@@ -278,7 +269,6 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
                 txtLicenceCreate.textColor = .red
                 txtLicenceCreate.text = "License is required."
                 isValid = false
-                errorMessage = "Please fill in all required fields correctly."
         }else {
             lblErrorPassword.text = ""
             delegate!.resetFieldHighlight(txtPasswordCreate)
@@ -311,37 +301,6 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
     
     func presentLicenseImagePicker() {
         imagePickerController.delegate = self
-        
-//        let menue = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//        
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-//        menue.addAction(cancelAction)
-//        
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            
-//            let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
-//                imagePicker.sourceType = .camera
-//                self.present(imagePicker, animated: true, completion: nil)
-//            }
-//            
-//            menue.addAction(cameraAction)
-//        }
-//        
-//        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-//            
-//            let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
-//                imagePicker.sourceType = .photoLibrary
-//                self.present(imagePicker, animated: true, completion: nil)
-//            }
-//            
-//            menue.addAction(photoLibraryAction)
-//        }
-//
-//        menue.popoverPresentationController?.sourceView = sender as? UIView
-//        present(menue, animated: true)
-
-        
-        
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.delegate = self
         delegate!.present(imagePickerController, animated: true, completion: nil)

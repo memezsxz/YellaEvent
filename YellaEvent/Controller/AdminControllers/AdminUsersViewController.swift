@@ -596,8 +596,16 @@ func calculateEndDate(from startDate: Date, durationInDays: Int) -> Date {
 
 
 
-//shared functions
+// MARK: Shared functions
 extension AdminUsersViewController{
+    
+    func showAlert(message: String, completion: (() -> Void)? = nil) {
+         let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+             completion?()
+         }))
+         present(alert, animated: true, completion: nil)
+     }
     
     
     // Generalized function to show a dropdown with a list of items

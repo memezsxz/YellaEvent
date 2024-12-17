@@ -7,6 +7,7 @@
 // edit_Fatima include the places where I need to edit the code in
 
 import UIKit
+import FirebaseAuth
 
 class CustomerProfileViewController: UIViewController {
     
@@ -52,6 +53,24 @@ class CustomerProfileViewController: UIViewController {
         DeleteAccount(sender)
     }
     
+    @IBAction func chnagePassword(_ sender: UIButton) {
+        
+        guard let email = txtEmail.text, !email.isEmpty else {
+            showAlert(message: "Please enter your email.")
+            return
+        }
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+        
+                self.showAlert( message: error.localizedDescription)
+                return
+            }
+            
+        
+            self.showAlert(message: "A password reset link has been sent to \(email).")
+        }
+    }
     
     
     
@@ -61,7 +80,8 @@ class CustomerProfileViewController: UIViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         setupEditPage()
-        UserDefaults.standard.set("8qADbVxCtdPu22FDCNrM", forKey: K.bundleUserID) // this will be removed after seting the application
+        
+        /*UserDefaults.standard.set(Auth.auth().currentUser?.uid, forKey: K.bundleUserID)*/ // this will be removed after seting the application
         setup()
     }
     
@@ -77,18 +97,22 @@ class CustomerProfileViewController: UIViewController {
                 
                 txtBigUserName?.text = "\(us.fullName)"
                 txtUserType?.titleLabel?.text = "Customer"
-                currentUser = us as? Customer
+                currentUser = us
 
-                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
-                    
-                    switch result {
-                    case .success(let image):
-                        self.BIgImageProfile?.image = image
-                    case .failure(_):
-                        self.BIgImageProfile?.image = UIImage(named: "DefaultImageProfile")
-                    }
-                    
-                })
+                if !currentUser!.profileImageURL.isEmpty{
+                    PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+                        
+                        switch result {
+                        case .success(let image):
+                            self.BIgImageProfile?.image = image
+                        case .failure(_):
+                            self.BIgImageProfile?.image = UIImage(named: "DefaultImageProfile")
+                        }
+                        
+                    })
+                }
+                
+            
                 
                 
             } catch {
@@ -114,10 +138,6 @@ class CustomerProfileViewController: UIViewController {
     
     
     
-    @IBAction func chnagePasswordAction(_ sender: Any) {
-            //need to navigate to the forgate password page --> Ahmed
-
-    }
     
     @IBAction func SaveInterest(_ sender: Any) {
         
@@ -151,21 +171,30 @@ extension CustomerProfileViewController{
                 let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
                 let us = try await UsersManager.getUser(userID: userId) as! Customer
                 
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy"
+                
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 txtPhoneNumber?.text = "\(us.phoneNumber)"
-                currentUser = us as? Customer
+                txtFieldDate?.text = dateFormatter.string(from: us.dob)
+                currentUser = us
 
-                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+                if !currentUser!.profileImageURL.isEmpty{
+                    PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+                        
+                        switch result {
+                        case .success(let image):
+                            self.EditProfileImage?.image = image
+                        case .failure(_):
+                            self.EditProfileImage?.image = UIImage(named: "DefaultImageProfile")
+                        }
+                        
+                    })
+                }
                     
-                    switch result {
-                    case .success(let image):
-                        self.EditProfileImage?.image = image
-                    case .failure(_):
-                        self.EditProfileImage?.image = UIImage(named: "DefaultImageProfile")
-                    }
-                    
-                })
+                   
+                
                 
                 do {
                     //set a date picker on date of birth field
@@ -188,9 +217,11 @@ extension CustomerProfileViewController{
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        for view in roundedViews{
-            view.layer.cornerRadius = view.frame.height / 2
-            view.clipsToBounds = true
+        if let shape = roundedViews {
+            for view in shape{
+                view.layer.cornerRadius = view.frame.height / 2
+                view.clipsToBounds = true
+            }
         }
         
     }
@@ -245,7 +276,6 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
                 let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
                 let us = try await UsersManager.getUser(userID: userId) as! Customer
                 datePicker.date = us.dob
-                txtFieldDate.text = K.DFormatter.string(from: us.dob)
                 
                 
             } catch {
@@ -452,6 +482,14 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
     }
     
     
+    
+    func showAlert(message: String, completion: (() -> Void)? = nil) {
+         let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+             completion?()
+         }))
+         present(alert, animated: true, completion: nil)
+     }
     
     
     
