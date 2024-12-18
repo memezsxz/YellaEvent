@@ -63,6 +63,10 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
     
     @IBOutlet var collectionView: InterestsCollectionView!
     
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        (cell as! EventSummaryTableViewCell).setup(with: events[indexPath.row])
+//    }
+    
     override func viewDidLoad()  {
         super.viewDidLoad()
 //        DataImport.uploadData() 
@@ -103,6 +107,23 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
+        Task {
+            try await EventsManager.getAllEvents { snapshot, error in
+                guard let snapshot = snapshot else { return }
+                
+                Task {
+                    for doc in snapshot.documents {
+                        self.events.append(try await EventSummary(from : doc.data() ))
+                        
+                        
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
         
 //        Task {
 //           try await  UsersManager.createNewUser(user: Admin(userID: "1", fullName: "das dsa", email: "d@as", dateCreated: Date.now, phoneNumber: 2312312123, profileImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74"))
@@ -206,28 +227,28 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
 //            event.category = try await CategoriesManager.getCategory(categorieID: "IAghDlatAhV2HHce4BXH")
 //           try await EventsManager.updateEvent(event: event)
 //        }
-        
-        EventsManager.getAllEvents { snapshot, error in
-            guard error == nil else { return }
-            
-            if let snapshot {
-                self.events = []
-                Task {
-                    for doc in snapshot.documents {
-                        do {
-                            let event = try await EventSummary(from: doc.data())
-                            self.events.append(event)
-                        } catch {
-                            print(doc.data())
-                            print("Error converting event: \(error)")
-                        }
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            }
-        }
+//        
+//        EventsManager.getAllEvents { snapshot, error in
+//            guard error == nil else { return }
+//            
+//            if let snapshot {
+//                self.events = []
+//                Task {
+//                    for doc in snapshot.documents {
+//                        do {
+//                            let event = try await EventSummary(from: doc.data())
+//                            self.events.append(event)
+//                        } catch {
+//                            print(doc.data())
+//                            print("Error converting event: \(error)")
+//                        }
+//                    }
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadData()
+//                    }
+//                }
+//            }
+//        }
 
         
         

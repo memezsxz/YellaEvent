@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AGS-c8-LY8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AGS-c8-LY8">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -80,27 +79,9 @@
             <point key="canvasLocation" x="-4588" y="644"/>
         </scene>
         <!--Home-->
-        <scene sceneID="hyc-u7-7Bu">
-            <objects>
-                <viewController id="1UO-pd-fJv" customClass="CustomerHomeViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ng5-1D-M3N">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <viewLayoutGuide key="safeArea" id="pqE-4u-Pi6"/>
-                        <color key="backgroundColor" name="BackgroundGray"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" selectedImage="house.fill" id="RWp-zP-u1S">
-                        <color key="badgeColor" name="BrandPurple"/>
-                    </tabBarItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Z4g-eX-9mH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2237.4045801526718" y="200.70422535211267"/>
-        </scene>
-        <!--Home-->
         <scene sceneID="Ika-LF-sQM">
             <objects>
-                <tableViewController id="cRL-az-va1" sceneMemberID="viewController">
+                <tableViewController id="cRL-az-va1" customClass="CustomerHomeViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="0uQ-3G-q04">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -151,6 +132,16 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1GX-33-eQo" id="sYM-AO-XoP">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="XQy-2E-P3x">
+                                                    <rect key="frame" x="178" y="51.666666666666657" width="37" height="37"/>
+                                                    <color key="color" name="BrandPurple"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="XQy-2E-P3x" firstAttribute="centerX" secondItem="sYM-AO-XoP" secondAttribute="centerX" id="4Aj-wp-lBl"/>
+                                                <constraint firstItem="XQy-2E-P3x" firstAttribute="centerY" secondItem="sYM-AO-XoP" secondAttribute="centerY" id="lCX-9Y-bf3"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="BackgroundGray"/>
                                     </tableViewCell>
@@ -158,13 +149,23 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Suggestions" id="gM7-yh-CFY">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="570" id="uaZ-uS-gZE">
-                                        <rect key="frame" x="0.0" y="406" width="393" height="570"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="304" id="uaZ-uS-gZE">
+                                        <rect key="frame" x="0.0" y="406" width="393" height="304"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uaZ-uS-gZE" id="pWC-n0-urz">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="570"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="304"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Dvq-Q3-1RH">
+                                                    <rect key="frame" x="178" y="133.66666666666666" width="37" height="37"/>
+                                                    <color key="color" name="BrandPurple"/>
+                                                </activityIndicatorView>
+                                            </subviews>
                                             <color key="backgroundColor" name="BackgroundGray"/>
+                                            <constraints>
+                                                <constraint firstItem="Dvq-Q3-1RH" firstAttribute="centerY" secondItem="pWC-n0-urz" secondAttribute="centerY" id="fkP-CD-HIb"/>
+                                                <constraint firstItem="Dvq-Q3-1RH" firstAttribute="centerX" secondItem="pWC-n0-urz" secondAttribute="centerX" id="lsX-Rn-KBv"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
