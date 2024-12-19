@@ -148,27 +148,7 @@
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Suggestions" id="gM7-yh-CFY">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="304" id="uaZ-uS-gZE">
-                                        <rect key="frame" x="0.0" y="406" width="393" height="304"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uaZ-uS-gZE" id="pWC-n0-urz">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="304"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Dvq-Q3-1RH">
-                                                    <rect key="frame" x="178" y="133.66666666666666" width="37" height="37"/>
-                                                    <color key="color" name="BrandPurple"/>
-                                                </activityIndicatorView>
-                                            </subviews>
-                                            <color key="backgroundColor" name="BackgroundGray"/>
-                                            <constraints>
-                                                <constraint firstItem="Dvq-Q3-1RH" firstAttribute="centerY" secondItem="pWC-n0-urz" secondAttribute="centerY" id="fkP-CD-HIb"/>
-                                                <constraint firstItem="Dvq-Q3-1RH" firstAttribute="centerX" secondItem="pWC-n0-urz" secondAttribute="centerX" id="lsX-Rn-KBv"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
+                                <cells/>
                             </tableViewSection>
                         </sections>
                         <connections>

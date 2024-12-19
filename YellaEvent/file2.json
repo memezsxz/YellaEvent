@@ -1,0 +1,3050 @@
+{
+  "admins": [
+    {
+      "userID": "admin1",
+      "fullName": "Alice Johnson",
+      "email": "alice.johnson@company.com",
+      "dateCreated": "1 January 2023 at 10:00:00 UTC+3",
+      "phoneNumber": 987643210,
+      "profileImageURL": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+      "type": "admin",
+      "isDeleted": false
+    },
+    {
+      "userID": "admin2",
+      "fullName": "Bob Smith",
+      "email": "bob.smith@company.com",
+      "dateCreated": "5 January 2023 at 12:00:00 UTC+3",
+      "phoneNumber": 91256789,
+      "profileImageURL": "/Users/meme/photos/Family of Saltimbanques [1905].jpeg",
+      "type": "admin",
+      "isDeleted": false
+    },
+    {
+      "userID": "admin3",
+      "fullName": "Clara Davis",
+      "email": "clara.davis@company.com",
+      "dateCreated": "10 January 2023 at 08:00:00 UTC+3",
+      "phoneNumber": 91256788,
+      "profileImageURL": "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
+      "type": "admin",
+      "isDeleted": false
+    }
+  ],
+  "organizers": [
+    {
+      "userID": "organizer1",
+      "fullName": "Event Pros Inc.",
+      "email": "info@eventpros.com",
+      "dateCreated": "10 February 2023 at 14:00:00 UTC+3",
+      "phoneNumber": 82345678,
+      "profileImageURL": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "10 February 2023 at 14:00:00 UTC+3",
+      "endDate": "10 February 2024 at 14:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Family of Saltimbanques [1905].jpeg"
+    },
+    {
+      "userID": "organizer2",
+      "fullName": "Live Event Hub",
+      "email": "contact@eventhub.org",
+      "dateCreated": "20 February 2023 at 15:00:00 UTC+3",
+      "phoneNumber": 83456789,
+      "profileImageURL": "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "20 February 2023 at 15:00:00 UTC+3",
+      "endDate": "20 February 2024 at 15:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Boy with a Pipe [1905].jpeg"
+    },
+    {
+      "userID": "organizer3",
+      "fullName": "Festive Gatherings Ltd.",
+      "email": "support@festivegatherings.com",
+      "dateCreated": "5 March 2023 at 11:00:00 UTC+3",
+      "phoneNumber": 81234567,
+      "profileImageURL": "/Users/meme/photos/Figures by the Sea (The Kiss) [1931].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "5 March 2023 at 11:00:00 UTC+3",
+      "endDate": "5 March 2024 at 11:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Goat's Skull, Bottle, and Candle [1952].jpeg"
+    },
+    {
+      "userID": "organizer4",
+      "fullName": "Event Nexus",
+      "email": "info@eventnexus.com",
+      "dateCreated": "15 March 2023 at 10:30:00 UTC+3",
+      "phoneNumber": 89345678,
+      "profileImageURL": "/Users/meme/photos/Harlequin [1918].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "15 March 2023 at 10:30:00 UTC+3",
+      "endDate": "15 March 2024 at 10:30:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/La Vie [1903].jpeg"
+    },
+    {
+      "userID": "organizer5",
+      "fullName": "World Gala Events",
+      "email": "contact@worldgalaevents.com",
+      "dateCreated": "1 April 2023 at 09:45:00 UTC+3",
+      "phoneNumber": 89346789,
+      "profileImageURL": "/Users/meme/photos/Guitar, Gas-Jet and Bottle [1913].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "1 April 2023 at 09:45:00 UTC+3",
+      "endDate": "1 April 2024 at 09:45:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg"
+    },
+    {
+      "userID": "organizer6",
+      "fullName": "Party Planet Co.",
+      "email": "help@partyplanet.net",
+      "dateCreated": "10 April 2023 at 16:00:00 UTC+3",
+      "phoneNumber": 84345678,
+      "profileImageURL": "/Users/meme/photos/Nude in an Armchair (Seated Woman) [1909].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "10 April 2023 at 16:00:00 UTC+3",
+      "endDate": "10 April 2024 at 16:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Nude [1910].jpeg"
+    },
+    {
+      "userID": "organizer7",
+      "fullName": "Event Connection Group",
+      "email": "support@eventconnection.com",
+      "dateCreated": "20 April 2023 at 14:30:00 UTC+3",
+      "phoneNumber": 81235678,
+      "profileImageURL": "/Users/meme/photos/Nude against a Red Background [1906].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "20 April 2023 at 14:30:00 UTC+3",
+      "endDate": "20 April 2024 at 14:30:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg"
+    },
+    {
+      "userID": "organizer8",
+      "fullName": "Great Events Network",
+      "email": "info@greatevents.org",
+      "dateCreated": "1 May 2023 at 12:00:00 UTC+3",
+      "phoneNumber": 84356789,
+      "profileImageURL": "/Users/meme/photos/Pitcher, Candle and Casserole [1945].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "1 May 2023 at 12:00:00 UTC+3",
+      "endDate": "1 May 2024 at 12:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Pedro Manach [1901].jpeg"
+    },
+    {
+      "userID": "organizer9",
+      "fullName": "Gala Network Solutions",
+      "email": "contact@galanetwork.com",
+      "dateCreated": "10 May 2023 at 10:15:00 UTC+3",
+      "phoneNumber": 81234578,
+      "profileImageURL": "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "10 May 2023 at 10:15:00 UTC+3",
+      "endDate": "10 May 2024 at 10:15:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg"
+    },
+    {
+      "userID": "organizer10",
+      "fullName": "FutureFest Inc.",
+      "email": "support@futurefest.com",
+      "dateCreated": "20 May 2023 at 09:00:00 UTC+3",
+      "phoneNumber": 84346789,
+      "profileImageURL": "/Users/meme/photos/Portrait of Olga [1923].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "20 May 2023 at 09:00:00 UTC+3",
+      "endDate": "20 May 2024 at 09:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Seated Bather [1930].jpeg"
+    },
+    {
+      "userID": "organizer11",
+      "fullName": "EventScape",
+      "email": "info@eventscape.com",
+      "dateCreated": "25 May 2023 at 14:00:00 UTC+3",
+      "phoneNumber": 81245678,
+      "profileImageURL": "/Users/meme/photos/Still Life on a Table [1920].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "25 May 2023 at 14:00:00 UTC+3",
+      "endDate": "25 May 2024 at 14:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Self Portrait- 'Yo Picasso'.jpeg"
+    },
+    {
+      "userID": "organizer12",
+      "fullName": "Mega Events",
+      "email": "contact@megaevents.com",
+      "dateCreated": "30 May 2023 at 10:30:00 UTC+3",
+      "phoneNumber": 84357689,
+      "profileImageURL": "/Users/meme/photos/Seated Nude [1909-10].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "30 May 2023 at 10:30:00 UTC+3",
+      "endDate": "30 May 2024 at 10:30:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Self-Portrait with Palette [1906].jpeg"
+    },
+    {
+      "userID": "organizer13",
+      "fullName": "OrganizeIt",
+      "email": "support@organizeit.com",
+      "dateCreated": "1 June 2023 at 09:00:00 UTC+3",
+      "phoneNumber": 81254678,
+      "profileImageURL": "/Users/meme/photos/The Dryad [1908].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "1 June 2023 at 09:00:00 UTC+3",
+      "endDate": "1 June 2024 at 09:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/The Artist and his Model [1963].jpeg"
+    },
+    {
+      "userID": "organizer14",
+      "fullName": "EventPulse",
+      "email": "info@eventpulse.com",
+      "dateCreated": "5 June 2023 at 14:15:00 UTC+3",
+      "phoneNumber": 84346578,
+      "profileImageURL": "/Users/meme/photos/Still Life with Cards, Glasses and a Bottle of Rum- 'Vive la France' [1914-5].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "5 June 2023 at 14:15:00 UTC+3",
+      "endDate": "5 June 2024 at 14:15:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/The Rape [1920].jpeg"
+    },
+    {
+      "userID": "organizer15",
+      "fullName": "Starry Night Events",
+      "email": "events@starrynight.com",
+      "dateCreated": "10 June 2023 at 10:00:00 UTC+3",
+      "phoneNumber": 84356789,
+      "profileImageURL": "/Users/meme/photos/The Muse [1935].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "10 June 2023 at 10:00:00 UTC+3",
+      "endDate": "10 June 2024 at 10:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/The Old Guitarist [1903].jpeg"
+    },
+    {
+      "userID": "organizer16",
+      "fullName": "Brilliant Gatherings Co.",
+      "email": "support@brilliantgatherings.org",
+      "dateCreated": "15 June 2023 at 12:30:00 UTC+3",
+      "phoneNumber": 81245679,
+      "profileImageURL": "/Users/meme/photos/The Smoker [1953].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "15 June 2023 at 12:30:00 UTC+3",
+      "endDate": "15 June 2024 at 12:30:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/The Sculptor [1931].jpeg"
+    },
+    {
+      "userID": "organizer17",
+      "fullName": "Global Event Creators",
+      "email": "contact@globaleventcreators.com",
+      "dateCreated": "20 June 2023 at 11:45:00 UTC+3",
+      "phoneNumber": 84346589,
+      "profileImageURL": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "20 June 2023 at 11:45:00 UTC+3",
+      "endDate": "20 June 2024 at 11:45:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/The Tragedy [1903].jpeg"
+    },
+    {
+      "userID": "organizer18",
+      "fullName": "NextGen Events Ltd.",
+      "email": "info@nextgenevents.com",
+      "dateCreated": "25 June 2023 at 14:00:00 UTC+3",
+      "phoneNumber": 81246789,
+      "profileImageURL": "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "25 June 2023 at 14:00:00 UTC+3",
+      "endDate": "25 June 2024 at 14:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Three Musicians [1921].jpeg"
+    },
+    {
+      "userID": "organizer19",
+      "fullName": "Innovative Event Planners",
+      "email": "support@innovativeplanners.com",
+      "dateCreated": "1 July 2023 at 10:00:00 UTC+3",
+      "phoneNumber": 84356778,
+      "profileImageURL": "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "1 July 2023 at 10:00:00 UTC+3",
+      "endDate": "1 July 2024 at 10:00:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Three Women [1907-8].jpeg"
+    },
+    {
+      "userID": "organizer20",
+      "fullName": "Dream Big Events",
+      "email": "info@dreambigevents.com",
+      "dateCreated": "5 July 2023 at 13:15:00 UTC+3",
+      "phoneNumber": 81245688,
+      "profileImageURL": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "type": "organizer",
+      "isDeleted": false,
+      "startDate": "5 July 2023 at 13:15:00 UTC+3",
+      "endDate": "5 July 2024 at 13:15:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/Weeping Woman [1937].jpeg"
+    }
+  ],
+  "categories": [
+    {
+      "categoryID": "category1",
+      "name": "Music",
+      "icon": "🎵",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category2",
+      "name": "Technology",
+      "icon": "💻",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category3",
+      "name": "Art",
+      "icon": "🎨",
+      "status": "history"
+    },
+    {
+      "categoryID": "category4",
+      "name": "Food & Drink",
+      "icon": "🍽️",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category5",
+      "name": "Sports",
+      "icon": "🤸🏻‍♂️",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category6",
+      "name": "Movies",
+      "icon": "🎬",
+      "status": "disabled"
+    },
+    {
+      "categoryID": "category7",
+      "name": "Dance",
+      "icon": "💃🏻",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category8",
+      "name": "Photography",
+      "icon": "📷",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category9",
+      "name": "Health & Wellness",
+      "icon": "🩺",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category10",
+      "name": "Comedy",
+      "icon": "😂",
+      "status": "disabled"
+    },
+    {
+      "categoryID": "category11",
+      "name": "Gaming",
+      "icon": "🎮",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category12",
+      "name": "Fashion",
+      "icon": "👗",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category13",
+      "name": "Travel",
+      "icon": "✈️",
+      "status": "history"
+    },
+    {
+      "categoryID": "category14",
+      "name": "Adventure",
+      "icon": "🏕️",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category15",
+      "name": "Fitness",
+      "icon": "🏋️‍♀️",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category16",
+      "name": "Books & Literature",
+      "icon": "📚",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category17",
+      "name": "Theater",
+      "icon": "🎭",
+      "status": "disabled"
+    },
+    {
+      "categoryID": "category18",
+      "name": "Education",
+      "icon": "🎓",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category19",
+      "name": "History",
+      "icon": "📜",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category20",
+      "name": "Science",
+      "icon": "🔬",
+      "status": "history"
+    },
+    {
+      "categoryID": "category21",
+      "name": "Astrology",
+      "icon": "🔮",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category22",
+      "name": "Nature",
+      "icon": "🌳",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category23",
+      "name": "Animals",
+      "icon": "🐾",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category24",
+      "name": "Business",
+      "icon": "📈",
+      "status": "history"
+    },
+    {
+      "categoryID": "category25",
+      "name": "Crafts",
+      "icon": "🧵",
+      "status": "disabled"
+    },
+    {
+      "categoryID": "category26",
+      "name": "Home & Garden",
+      "icon": "🏡",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category27",
+      "name": "Politics",
+      "icon": "🏛️",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category28",
+      "name": "Religion & Spirituality",
+      "icon": "🕊️",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category29",
+      "name": "Networking",
+      "icon": "🤝",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category30",
+      "name": "Family",
+      "icon": "👨‍👩‍👧‍👦",
+      "status": "history"
+    },
+    {
+      "categoryID": "category31",
+      "name": "Environmentalism",
+      "icon": "🌍",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category32",
+      "name": "Coding & Programming",
+      "icon": "👨‍💻",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category33",
+      "name": "Martial Arts",
+      "icon": "🥋",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category34",
+      "name": "Fitness Challenges",
+      "icon": "🤼‍♀️",
+      "status": "history"
+    },
+    {
+      "categoryID": "category35",
+      "name": "Automobiles",
+      "icon": "🚗",
+      "status": "disabled"
+    },
+    {
+      "categoryID": "category36",
+      "name": "Startup & Innovation",
+      "icon": "🚀",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category37",
+      "name": "Sustainability",
+      "icon": "🌱",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category38",
+      "name": "Cooking",
+      "icon": "🍳",
+      "status": "enabled"
+    },
+    {
+      "categoryID": "category39",
+      "name": "Wine & Beverages",
+      "icon": "🍷",
+      "status": "disabled"
+    },
+    {
+      "categoryID": "category40",
+      "name": "Magic Shows",
+      "icon": "🪄",
+      "status": "enabled"
+    }
+  ],
+  "events": [
+    {
+      "eventID": "event1",
+      "organizerID": "organizer1",
+      "name": "Classical Music Night",
+      "description": "An evening of soothing classical music by renowned orchestras.",
+      "startTimeStamp": "5 March 2024 at 19:00:00 UTC+3",
+      "endTimeStamp": "5 March 2024 at 21:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "City Concert Hall",
+      "categoryID": "category1",
+      "locationURL": "https://maps.example.com/classical-music-night",
+      "minimumAge": 10,
+      "maximumAge": 70,
+      "maximumTickets": 300,
+      "price": 50,
+      "coverImageURL": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+        "/Users/meme/photos/Family of Saltimbanques [1905].jpeg",
+        "/Users/meme/photos/Boy with a Pipe [1905].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event2",
+      "organizerID": "organizer2",
+      "name": "Jazz in the Park",
+      "description": "Outdoor jazz performances featuring local and international artists.",
+      "startTimeStamp": "10 March 2024 at 16:00:00 UTC+3",
+      "endTimeStamp": "10 March 2024 at 20:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Riverside Park",
+      "categoryID": "category1",
+      "locationURL": "https://maps.example.com/jazz-in-the-park",
+      "minimumAge": 0,
+      "maximumAge": 99,
+      "maximumTickets": 500,
+      "price": 20,
+      "coverImageURL": "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
+        "/Users/meme/photos/Figures by the Sea (The Kiss) [1931].jpeg",
+        "/Users/meme/photos/Goat's Skull, Bottle, and Candle [1952].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event3",
+      "organizerID": "organizer3",
+      "name": "Electronic Beats Festival",
+      "description": "Dance to the best electronic music with world-famous DJs.",
+      "startTimeStamp": "15 March 2024 at 18:00:00 UTC+3",
+      "endTimeStamp": "15 March 2024 at 23:00:00 UTC+3",
+      "status": "cancelled",
+      "venueName": "Urban Arena",
+      "categoryID": "category1",
+      "locationURL": "https://maps.example.com/electronic-beats-festival",
+      "minimumAge": 18,
+      "maximumAge": 50,
+      "maximumTickets": 1000,
+      "price": 100,
+      "coverImageURL": "/Users/meme/photos/Harlequin [1918].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Harlequin [1918].jpeg",
+        "/Users/meme/photos/La Vie [1903].jpeg",
+        "/Users/meme/photos/Guitar, Gas-Jet and Bottle [1913].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event4",
+      "organizerID": "organizer4",
+      "name": "Tech Innovations Expo",
+      "description": "Explore cutting-edge technologies shaping our future.",
+      "startTimeStamp": "20 March 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "20 March 2024 at 18:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Tech Convention Center",
+      "categoryID": "category2",
+      "locationURL": "https://maps.example.com/tech-innovations-expo",
+      "minimumAge": 15,
+      "maximumAge": 65,
+      "maximumTickets": 800,
+      "price": 30,
+      "coverImageURL": "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
+        "/Users/meme/photos/Nude in an Armchair (Seated Woman) [1909].jpeg",
+        "/Users/meme/photos/Nude [1910].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event5",
+      "organizerID": "organizer5",
+      "name": "AI Summit 2024",
+      "description": "Learn about the latest trends in artificial intelligence.",
+      "startTimeStamp": "25 March 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "25 March 2024 at 17:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Innovation Hub",
+      "categoryID": "category2",
+      "locationURL": "https://maps.example.com/ai-summit-2024",
+      "minimumAge": 18,
+      "maximumAge": 70,
+      "maximumTickets": 600,
+      "price": 120,
+      "coverImageURL": "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
+        "/Users/meme/photos/Pitcher, Candle and Casserole [1945].jpeg",
+        "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event6",
+      "organizerID": "organizer6",
+      "name": "Tech Careers Fair",
+      "description": "Meet tech companies looking for top talent.",
+      "startTimeStamp": "30 March 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "30 March 2024 at 16:00:00 UTC+3",
+      "status": "banned",
+      "venueName": "Career Pavilion",
+      "categoryID": "category2",
+      "locationURL": "https://maps.example.com/tech-careers-fair",
+      "minimumAge": 20,
+      "maximumAge": 60,
+      "maximumTickets": 400,
+      "price": 10,
+      "coverImageURL": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+        "/Users/meme/photos/Seated Bather [1930].jpeg",
+        "/Users/meme/photos/Still Life on a Table [1920].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event7",
+      "organizerID": "organizer7",
+      "name": "Art Renaissance Exhibit",
+      "description": "Explore masterpieces from the Renaissance era.",
+      "startTimeStamp": "10 April 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "10 April 2024 at 18:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Grand Art Gallery",
+      "categoryID": "category3",
+      "locationURL": "https://maps.example.com/art-renaissance-exhibit",
+      "minimumAge": 12,
+      "maximumAge": 70,
+      "maximumTickets": 300,
+      "price": 25,
+      "coverImageURL": "/Users/meme/photos/The Muse [1935].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Muse [1935].jpeg",
+        "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+        "/Users/meme/photos/The Smoker [1953].jpeg",
+        "/Users/meme/photos/The Sculptor [1931].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event8",
+      "organizerID": "organizer8",
+      "name": "Modern Art Immersion",
+      "description": "A journey through contemporary art installations.",
+      "startTimeStamp": "15 April 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "15 April 2024 at 20:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "City Arts Center",
+      "categoryID": "category3",
+      "locationURL": "https://maps.example.com/modern-art-immersion",
+      "minimumAge": 15,
+      "maximumAge": 65,
+      "maximumTickets": 400,
+      "price": 30,
+      "coverImageURL": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/The Tragedy [1903].jpeg",
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/Three Musicians [1921].jpeg",
+        "/Users/meme/photos/Violin and Grapes [1912].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event9",
+      "organizerID": "organizer9",
+      "name": "Abstract Expressions Show",
+      "description": "Dive into the world of abstract art.",
+      "startTimeStamp": "20 April 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "20 April 2024 at 16:00:00 UTC+3",
+      "status": "cancelled",
+      "venueName": "Artistic Hub",
+      "categoryID": "category3",
+      "locationURL": "https://maps.example.com/abstract-expressions-show",
+      "minimumAge": 18,
+      "maximumAge": 60,
+      "maximumTickets": 200,
+      "price": 15,
+      "coverImageURL": "/Users/meme/photos/Three Women [1907-8].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Three Women [1907-8].jpeg",
+        "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+        "/Users/meme/photos/Weeping Woman [1937].jpeg",
+        "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event10",
+      "organizerID": "organizer10",
+      "name": "Gourmet Food Tasting",
+      "description": "Savor dishes from top chefs in a cozy setting.",
+      "startTimeStamp": "25 April 2024 at 11:00:00 UTC+3",
+      "endTimeStamp": "25 April 2024 at 15:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Downtown Culinary Center",
+      "categoryID": "category4",
+      "locationURL": "https://maps.example.com/gourmet-food-tasting",
+      "minimumAge": 21,
+      "maximumAge": 70,
+      "maximumTickets": 150,
+      "price": 50,
+      "coverImageURL": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+        "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
+        "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+        "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event11",
+      "organizerID": "organizer1",
+      "name": "Culinary Fest 2024",
+      "description": "Taste foods from around the world at this exciting festival.",
+      "startTimeStamp": "30 April 2024 at 12:00:00 UTC+3",
+      "endTimeStamp": "30 April 2024 at 18:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Global Cuisine Square",
+      "categoryID": "category4",
+      "locationURL": "https://maps.example.com/culinary-fest-2024",
+      "minimumAge": 0,
+      "maximumAge": 99,
+      "maximumTickets": 600,
+      "price": 20,
+      "coverImageURL": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+        "/Users/meme/photos/Weeping Woman [1937].jpeg",
+        "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+        "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+        "/Users/meme/photos/Woman in a Chemise [1905].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event12",
+      "organizerID": "organizer2",
+      "name": "Farm-to-Table Experience",
+      "description": "Enjoy freshly prepared meals from locally sourced ingredients.",
+      "startTimeStamp": "5 May 2024 at 13:00:00 UTC+3",
+      "endTimeStamp": "5 May 2024 at 17:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Green Meadows",
+      "categoryID": "category4",
+      "locationURL": "https://maps.example.com/farm-to-table-experience",
+      "minimumAge": 15,
+      "maximumAge": 60,
+      "maximumTickets": 300,
+      "price": 40,
+      "coverImageURL": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+        "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg",
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/Three Musicians [1921].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event13",
+      "organizerID": "organizer3",
+      "name": "Photography Showcase 2024",
+      "description": "A display of stunning photography from around the globe.",
+      "startTimeStamp": "10 May 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "10 May 2024 at 17:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Downtown Photo Gallery",
+      "categoryID": "category8",
+      "locationURL": "https://maps.example.com/photography-showcase-2024",
+      "minimumAge": 12,
+      "maximumAge": 65,
+      "maximumTickets": 250,
+      "price": 15,
+      "coverImageURL": "/Users/meme/photos/Three Musicians [1921].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Three Musicians [1921].jpeg",
+        "/Users/meme/photos/Three Women [1907-8].jpeg",
+        "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+        "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+        "/Users/meme/photos/The Smoker [1953].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event14",
+      "organizerID": "organizer4",
+      "name": "Advanced Photography Workshop",
+      "description": "Improve your skills in advanced photography techniques.",
+      "startTimeStamp": "15 May 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "15 May 2024 at 15:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Elite Studio",
+      "categoryID": "category8",
+      "locationURL": "https://maps.example.com/advanced-photography-workshop",
+      "minimumAge": 18,
+      "maximumAge": 50,
+      "maximumTickets": 100,
+      "price": 25,
+      "coverImageURL": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/Three Women [1907-8].jpeg",
+        "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event15",
+      "organizerID": "organizer5",
+      "name": "Outdoor Adventure Photography",
+      "description": "Learn to capture breathtaking outdoor scenes.",
+      "startTimeStamp": "20 May 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "20 May 2024 at 13:00:00 UTC+3",
+      "status": "cancelled",
+      "venueName": "Mountain Peak",
+      "categoryID": "category8",
+      "locationURL": "https://maps.example.com/outdoor-adventure-photography",
+      "minimumAge": 18,
+      "maximumAge": 55,
+      "maximumTickets": 150,
+      "price": 30,
+      "coverImageURL": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+        "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg",
+        "/Users/meme/photos/The Smoker [1953].jpeg",
+        "/Users/meme/photos/Violin and Grapes [1912].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event16",
+      "organizerID": "organizer6",
+      "name": "Wellness Retreat",
+      "description": "Relax and rejuvenate with yoga, meditation, and health tips.",
+      "startTimeStamp": "25 May 2024 at 07:00:00 UTC+3",
+      "endTimeStamp": "25 May 2024 at 16:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Seaside Wellness Center",
+      "categoryID": "category9",
+      "locationURL": "https://maps.example.com/wellness-retreat",
+      "minimumAge": 16,
+      "maximumAge": 65,
+      "maximumTickets": 200,
+      "price": 50,
+      "coverImageURL": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+        "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event17",
+      "organizerID": "organizer7",
+      "name": "Yoga Under the Stars",
+      "description": "A serene yoga session under the evening sky.",
+      "startTimeStamp": "30 May 2024 at 19:00:00 UTC+3",
+      "endTimeStamp": "30 May 2024 at 21:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Hilltop Pavilion",
+      "categoryID": "category9",
+      "locationURL": "https://maps.example.com/yoga-under-the-stars",
+      "minimumAge": 18,
+      "maximumAge": 60,
+      "maximumTickets": 80,
+      "price": 20,
+      "coverImageURL": "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+        "/Users/meme/photos/The Muse [1935].jpeg",
+        "/Users/meme/photos/The Sculptor [1931].jpeg",
+        "/Users/meme/photos/Woman in a Chemise [1905].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event18",
+      "organizerID": "organizer8",
+      "name": "Laughter Therapy Workshop",
+      "description": "Discover the healing power of laughter.",
+      "startTimeStamp": "5 June 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "5 June 2024 at 12:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Community Hall",
+      "categoryID": "category9",
+      "locationURL": "https://maps.example.com/laughter-therapy-workshop",
+      "minimumAge": 16,
+      "maximumAge": 60,
+      "maximumTickets": 100,
+      "price": 10,
+      "coverImageURL": "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/Three Musicians [1921].jpeg",
+        "/Users/meme/photos/Three Women [1907-8].jpeg",
+        "/Users/meme/photos/The Tragedy [1903].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event19",
+      "organizerID": "organizer9",
+      "name": "Game Developers Meetup",
+      "description": "Connect with fellow developers and exchange ideas.",
+      "startTimeStamp": "10 June 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "10 June 2024 at 18:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Tech Hub Center",
+      "categoryID": "category11",
+      "locationURL": "https://maps.example.com/game-developers-meetup",
+      "minimumAge": 18,
+      "maximumAge": 40,
+      "maximumTickets": 150,
+      "price": 25,
+      "coverImageURL": "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+        "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
+        "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+        "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg",
+        "/Users/meme/photos/Three Musicians [1921].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event20",
+      "organizerID": "organizer10",
+      "name": "Gaming Championship 2024",
+      "description": "Compete in thrilling gaming challenges.",
+      "startTimeStamp": "15 June 2024 at 14:00:00 UTC+3",
+      "endTimeStamp": "15 June 2024 at 20:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Arena 360",
+      "categoryID": "category11",
+      "locationURL": "https://maps.example.com/gaming-championship-2024",
+      "minimumAge": 18,
+      "maximumAge": 35,
+      "maximumTickets": 200,
+      "price": 30,
+      "coverImageURL": "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
+        "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/The Smoker [1953].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event21",
+      "organizerID": "organizer1",
+      "name": "Retro Tech Fair",
+      "description": "A showcase of vintage technology and innovations.",
+      "startTimeStamp": "20 June 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "20 June 2024 at 16:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Tech History Museum",
+      "categoryID": "category12",
+      "locationURL": "https://maps.example.com/retro-tech-fair",
+      "minimumAge": 15,
+      "maximumAge": 70,
+      "maximumTickets": 300,
+      "price": 20,
+      "coverImageURL": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+        "/Users/meme/photos/The Old Guitarist [1903].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event22",
+      "organizerID": "organizer2",
+      "name": "Tech Gadgets 2024",
+      "description": "Explore the latest and greatest in tech gadgets.",
+      "startTimeStamp": "25 June 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "25 June 2024 at 17:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Tech Hub Arena",
+      "categoryID": "category12",
+      "locationURL": "https://maps.example.com/tech-gadgets-2024",
+      "minimumAge": 16,
+      "maximumAge": 60,
+      "maximumTickets": 500,
+      "price": 15,
+      "coverImageURL": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+        "/Users/meme/photos/Three Women [1907-8].jpeg",
+        "/Users/meme/photos/The Smoker [1953].jpeg",
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/The Muse [1935].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event23",
+      "organizerID": "organizer3",
+      "name": "AI Summit 2024",
+      "description": "Dive deep into the world of artificial intelligence.",
+      "startTimeStamp": "30 June 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "30 June 2024 at 18:00:00 UTC+3",
+      "status": "cancelled",
+      "venueName": "Innovation Center",
+      "categoryID": "category12",
+      "locationURL": "https://maps.example.com/ai-summit-2024",
+      "minimumAge": 18,
+      "maximumAge": 50,
+      "maximumTickets": 400,
+      "price": 25,
+      "coverImageURL": "/Users/meme/photos/The Sculptor [1931].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Sculptor [1931].jpeg",
+        "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+        "/Users/meme/photos/Three Musicians [1921].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event24",
+      "organizerID": "organizer4",
+      "name": "Street Food Carnival",
+      "description": "A celebration of global street food flavors.",
+      "startTimeStamp": "5 July 2024 at 12:00:00 UTC+3",
+      "endTimeStamp": "5 July 2024 at 20:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "City Square",
+      "categoryID": "category13",
+      "locationURL": "https://maps.example.com/street-food-carnival",
+      "minimumAge": 0,
+      "maximumAge": 99,
+      "maximumTickets": 1000,
+      "price": 10,
+      "coverImageURL": "/Users/meme/photos/The Dryad [1908].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Dryad [1908].jpeg",
+        "/Users/meme/photos/Seated Bather [1930].jpeg",
+        "/Users/meme/photos/Self Portrait- 'Yo Picasso'.jpeg",
+        "/Users/meme/photos/Self-Portrait with Palette [1906].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event25",
+      "organizerID": "organizer5",
+      "name": "Gourmet Cooking Class",
+      "description": "Learn to cook gourmet meals from top chefs.",
+      "startTimeStamp": "10 July 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "10 July 2024 at 15:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Culinary Academy",
+      "categoryID": "category13",
+      "locationURL": "https://maps.example.com/gourmet-cooking-class",
+      "minimumAge": 16,
+      "maximumAge": 60,
+      "maximumTickets": 50,
+      "price": 50,
+      "coverImageURL": "/Users/meme/photos/Still Life with Cards, Glasses and a Bottle of Rum- 'Vive la France' [1914-5].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Still Life with Cards, Glasses and a Bottle of Rum- 'Vive la France' [1914-5].jpeg",
+        "/Users/meme/photos/The Tragedy [1903].jpeg",
+        "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+        "/Users/meme/photos/The Rape [1920].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event26",
+      "organizerID": "organizer6",
+      "name": "Food Photography Workshop",
+      "description": "Learn how to make food look irresistible on camera.",
+      "startTimeStamp": "15 July 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "15 July 2024 at 12:00:00 UTC+3",
+      "status": "banned",
+      "venueName": "Photography Studio X",
+      "categoryID": "category13",
+      "locationURL": "https://maps.example.com/food-photography-workshop",
+      "minimumAge": 18,
+      "maximumAge": 50,
+      "maximumTickets": 30,
+      "price": 35,
+      "coverImageURL": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/The Muse [1935].jpeg",
+        "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+        "/Users/meme/photos/The Rape [1920].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event27",
+      "organizerID": "organizer7",
+      "name": "Cultural Dance Gala",
+      "description": "Experience the vibrant dance performances from around the world.",
+      "startTimeStamp": "20 July 2024 at 18:00:00 UTC+3",
+      "endTimeStamp": "20 July 2024 at 22:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Grand Theater",
+      "categoryID": "category17",
+      "locationURL": "https://maps.example.com/cultural-dance-gala",
+      "minimumAge": 10,
+      "maximumAge": 70,
+      "maximumTickets": 400,
+      "price": 25,
+      "coverImageURL": "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+        "/Users/meme/photos/Still Life on a Table [1920].jpeg",
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/Woman in a Chemise [1905].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event28",
+      "organizerID": "organizer8",
+      "name": "Contemporary Choreography Showcase",
+      "description": "Watch innovative choreography from emerging talents.",
+      "startTimeStamp": "25 July 2024 at 19:00:00 UTC+3",
+      "endTimeStamp": "25 July 2024 at 21:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Art Performance Hall",
+      "categoryID": "category17",
+      "locationURL": "https://maps.example.com/contemporary-showcase",
+      "minimumAge": 15,
+      "maximumAge": 60,
+      "maximumTickets": 350,
+      "price": 20,
+      "coverImageURL": "/Users/meme/photos/Three Women [1907-8].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Three Women [1907-8].jpeg",
+        "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+        "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+        "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event29",
+      "organizerID": "organizer9",
+      "name": "Salsa Night Extravaganza",
+      "description": "An evening of salsa dancing with live music.",
+      "startTimeStamp": "30 July 2024 at 20:00:00 UTC+3",
+      "endTimeStamp": "30 July 2024 at 23:00:00 UTC+3",
+      "status": "cancelled",
+      "venueName": "City Ballroom",
+      "categoryID": "category17",
+      "locationURL": "https://maps.example.com/salsa-night",
+      "minimumAge": 18,
+      "maximumAge": 50,
+      "maximumTickets": 500,
+      "price": 30,
+      "coverImageURL": "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+        "/Users/meme/photos/The Smoker [1953].jpeg",
+        "/Users/meme/photos/The Dryad [1908].jpeg",
+        "/Users/meme/photos/The Tragedy [1903].jpeg",
+        "/Users/meme/photos/The Rape [1920].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event30",
+      "organizerID": "organizer10",
+      "name": "Yoga in the Park",
+      "description": "A serene yoga session in the lush greenery of the park.",
+      "startTimeStamp": "5 August 2024 at 07:00:00 UTC+3",
+      "endTimeStamp": "5 August 2024 at 08:30:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Central Park",
+      "categoryID": "category18",
+      "locationURL": "https://maps.example.com/yoga-park",
+      "minimumAge": 12,
+      "maximumAge": 60,
+      "maximumTickets": 150,
+      "price": 10,
+      "coverImageURL": "/Users/meme/photos/The Artist and his Model [1963].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Artist and his Model [1963].jpeg",
+        "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
+        "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/The Muse [1935].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event31",
+      "organizerID": "organizer11",
+      "name": "Pilates Workshop",
+      "description": "Strengthen your core and improve flexibility with this Pilates session.",
+      "startTimeStamp": "10 August 2024 at 09:00:00 UTC+3",
+      "endTimeStamp": "10 August 2024 at 11:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Wellness Studio",
+      "categoryID": "category18",
+      "locationURL": "https://maps.example.com/pilates-workshop",
+      "minimumAge": 18,
+      "maximumAge": 50,
+      "maximumTickets": 80,
+      "price": 25,
+      "coverImageURL": "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/The Dryad [1908].jpeg",
+        "/Users/meme/photos/Still Life with Cards, Glasses and a Bottle of Rum- 'Vive la France' [1914-5].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event32",
+      "organizerID": "organizer12",
+      "name": "Meditation for Beginners",
+      "description": "Learn basic meditation techniques to reduce stress.",
+      "startTimeStamp": "15 August 2024 at 06:30:00 UTC+3",
+      "endTimeStamp": "15 August 2024 at 08:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Serenity Center",
+      "categoryID": "category18",
+      "locationURL": "https://maps.example.com/meditation-beginners",
+      "minimumAge": 16,
+      "maximumAge": 70,
+      "maximumTickets": 100,
+      "price": 15,
+      "coverImageURL": "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/The Sculptor [1931].jpeg",
+        "/Users/meme/photos/The Muse [1935].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event33",
+      "organizerID": "organizer13",
+      "name": "Film Noir Festival",
+      "description": "A celebration of classic and contemporary noir films.",
+      "startTimeStamp": "20 August 2024 at 18:00:00 UTC+3",
+      "endTimeStamp": "20 August 2024 at 22:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Cineplex Theater",
+      "categoryID": "category22",
+      "locationURL": "https://maps.example.com/film-noir-festival",
+      "minimumAge": 18,
+      "maximumAge": 60,
+      "maximumTickets": 250,
+      "price": 40,
+      "coverImageURL": "/Users/meme/photos/Weeping Woman [1937].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Weeping Woman [1937].jpeg",
+        "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg",
+        "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+        "/Users/meme/photos/The Sculptor [1931].jpeg",
+        "/Users/meme/photos/The Muse [1935].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event34",
+      "organizerID": "organizer14",
+      "name": "Silent Cinema Showcase",
+      "description": "An enchanting journey through the golden age of silent films.",
+      "startTimeStamp": "25 August 2024 at 19:00:00 UTC+3",
+      "endTimeStamp": "25 August 2024 at 21:30:00 UTC+3",
+      "status": "completed",
+      "venueName": "Retro Theater",
+      "categoryID": "category22",
+      "locationURL": "https://maps.example.com/silent-cinema-showcase",
+      "minimumAge": 15,
+      "maximumAge": 65,
+      "maximumTickets": 200,
+      "price": 30,
+      "coverImageURL": "/Users/meme/photos/Self-Portrait with Palette [1906].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Self-Portrait with Palette [1906].jpeg",
+        "/Users/meme/photos/The Dryad [1908].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg",
+        "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg",
+        "/Users/meme/photos/The Rape [1920].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event35",
+      "organizerID": "organizer15",
+      "name": "Documentary Marathon",
+      "description": "A full day of thought-provoking documentaries.",
+      "startTimeStamp": "30 August 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "30 August 2024 at 22:00:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Knowledge Hall",
+      "categoryID": "category22",
+      "locationURL": "https://maps.example.com/documentary-marathon",
+      "minimumAge": 12,
+      "maximumAge": 70,
+      "maximumTickets": 300,
+      "price": 50,
+      "coverImageURL": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+        "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+        "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+        "/Users/meme/photos/Still Life with Cards, Glasses and a Bottle of Rum- 'Vive la France' [1914-5].jpeg",
+        "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event36",
+      "organizerID": "organizer16",
+      "name": "Guitar Mastery Workshop",
+      "description": "Learn advanced guitar techniques from a professional guitarist.",
+      "startTimeStamp": "5 September 2024 at 10:00:00 UTC+3",
+      "endTimeStamp": "5 September 2024 at 12:30:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Music Academy Hall",
+      "categoryID": "category23",
+      "locationURL": "https://maps.example.com/guitar-mastery",
+      "minimumAge": 16,
+      "maximumAge": 55,
+      "maximumTickets": 100,
+      "price": 20,
+      "coverImageURL": "/Users/meme/photos/Guitar, Gas-Jet and Bottle [1913].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Guitar, Gas-Jet and Bottle [1913].jpeg",
+        "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
+        "/Users/meme/photos/Nude against a Red Background [1906].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event37",
+      "organizerID": "organizer17",
+      "name": "Jazz Improvisation Masterclass",
+      "description": "Master the art of jazz improvisation with top musicians.",
+      "startTimeStamp": "10 September 2024 at 14:00:00 UTC+3",
+      "endTimeStamp": "10 September 2024 at 16:30:00 UTC+3",
+      "status": "ongoing",
+      "venueName": "Downtown Jazz Studio",
+      "categoryID": "category23",
+      "locationURL": "https://maps.example.com/jazz-masterclass",
+      "minimumAge": 18,
+      "maximumAge": 50,
+      "maximumTickets": 150,
+      "price": 35,
+      "coverImageURL": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+        "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+        "/Users/meme/photos/The Dryad [1908].jpeg",
+        "/Users/meme/photos/The Three Dancers [1925].jpeg"
+      ],
+      "isDeleted": false
+    },
+    {
+      "eventID": "event38",
+      "organizerID": "organizer18",
+      "name": "Blues Night Special",
+      "description": "An evening of soul-stirring blues performances.",
+      "startTimeStamp": "15 September 2024 at 19:00:00 UTC+3",
+      "endTimeStamp": "15 September 2024 at 22:00:00 UTC+3",
+      "status": "completed",
+      "venueName": "Blues Lounge",
+      "categoryID": "category23",
+      "locationURL": "https://maps.example.com/blues-night-special",
+      "minimumAge": 21,
+      "maximumAge": 65,
+      "maximumTickets": 200,
+      "price": 45,
+      "coverImageURL": "/Users/meme/photos/The Smoker [1953].jpeg",
+      "mediaArray": [
+        "/Users/meme/photos/The Smoker [1953].jpeg",
+        "/Users/meme/photos/The Muse [1935].jpeg",
+        "/Users/meme/photos/The Artist and his Model [1963].jpeg",
+        "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
+        "/Users/meme/photos/The Old Guitarist [1903].jpeg"
+      ],
+      "isDeleted": false
+    }
+  ],
+  "tickets": [
+    {
+      "ticketID": "ticket1",
+      "eventID": "event1",
+      "organizerID": "organizer1",
+      "quantity": 1,
+      "customerID": "customer1",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket2",
+      "eventID": "event3",
+      "organizerID": "organizer3",
+      "quantity": 1,
+      "customerID": "customer1",
+      "didAttend": true,
+      "totalPrice": 75,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket3",
+      "eventID": "event7",
+      "organizerID": "organizer7",
+      "quantity": 1,
+      "customerID": "customer1",
+      "didAttend": true,
+      "totalPrice": 25,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket4",
+      "eventID": "event10",
+      "organizerID": "organizer10",
+      "quantity": 1,
+      "customerID": "customer1",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket5",
+      "eventID": "event13",
+      "organizerID": "organizer3",
+      "quantity": 1,
+      "customerID": "customer1",
+      "didAttend": true,
+      "totalPrice": 40,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket6",
+      "eventID": "event17",
+      "organizerID": "organizer7",
+      "quantity": 1,
+      "customerID": "customer1",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket7",
+      "eventID": "event6",
+      "organizerID": "organizer6",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 10,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket8",
+      "eventID": "event10",
+      "organizerID": "organizer10",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket9",
+      "eventID": "event13",
+      "organizerID": "organizer3",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 40,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket10",
+      "eventID": "event16",
+      "organizerID": "organizer6",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket11",
+      "eventID": "event21",
+      "organizerID": "organizer1",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket12",
+      "eventID": "event26",
+      "organizerID": "organizer6",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 35,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket13",
+      "eventID": "event28",
+      "organizerID": "organizer8",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket14",
+      "eventID": "event30",
+      "organizerID": "organizer10",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 10,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket15",
+      "eventID": "event4",
+      "organizerID": "organizer4",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": true,
+      "totalPrice": 30,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket16",
+      "eventID": "event7",
+      "organizerID": "organizer7",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": true,
+      "totalPrice": 25,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket17",
+      "eventID": "event11",
+      "organizerID": "organizer1",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket18",
+      "eventID": "event15",
+      "organizerID": "organizer5",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": true,
+      "totalPrice": 30,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket19",
+      "eventID": "event18",
+      "organizerID": "organizer8",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket20",
+      "eventID": "event22",
+      "organizerID": "organizer2",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": true,
+      "totalPrice": 15,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket21",
+      "eventID": "event24",
+      "organizerID": "organizer4",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": true,
+      "totalPrice": 10,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket22",
+      "eventID": "event31",
+      "organizerID": "organizer11",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": true,
+      "totalPrice": 25,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket23",
+      "eventID": "event2",
+      "organizerID": "organizer2",
+      "quantity": 1,
+      "customerID": "customer6",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket24",
+      "eventID": "event6",
+      "organizerID": "organizer6",
+      "quantity": 1,
+      "customerID": "customer6",
+      "didAttend": true,
+      "totalPrice": 10,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket25",
+      "eventID": "event10",
+      "organizerID": "organizer10",
+      "quantity": 1,
+      "customerID": "customer6",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket26",
+      "eventID": "event13",
+      "organizerID": "organizer3",
+      "quantity": 1,
+      "customerID": "customer6",
+      "didAttend": true,
+      "totalPrice": 40,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket27",
+      "eventID": "event17",
+      "organizerID": "organizer7",
+      "quantity": 1,
+      "customerID": "customer6",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket28",
+      "eventID": "event21",
+      "organizerID": "organizer1",
+      "quantity": 1,
+      "customerID": "customer6",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket29",
+      "eventID": "event29",
+      "organizerID": "organizer9",
+      "quantity": 1,
+      "customerID": "customer6",
+      "didAttend": true,
+      "totalPrice": 30,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket30",
+      "eventID": "event3",
+      "organizerID": "organizer3",
+      "quantity": 1,
+      "customerID": "customer7",
+      "didAttend": true,
+      "totalPrice": 30,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket31",
+      "eventID": "event5",
+      "organizerID": "organizer5",
+      "quantity": 1,
+      "customerID": "customer7",
+      "didAttend": true,
+      "totalPrice": 60,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket32",
+      "eventID": "event9",
+      "organizerID": "organizer9",
+      "quantity": 1,
+      "customerID": "customer7",
+      "didAttend": true,
+      "totalPrice": 40,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket33",
+      "eventID": "event12",
+      "organizerID": "organizer2",
+      "quantity": 1,
+      "customerID": "customer7",
+      "didAttend": true,
+      "totalPrice": 25,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket34",
+      "eventID": "event15",
+      "organizerID": "organizer5",
+      "quantity": 1,
+      "customerID": "customer7",
+      "didAttend": true,
+      "totalPrice": 30,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket35",
+      "eventID": "event20",
+      "organizerID": "organizer10",
+      "quantity": 1,
+      "customerID": "customer7",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket36",
+      "eventID": "event1",
+      "organizerID": "organizer1",
+      "quantity": 1,
+      "customerID": "customer8",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket37",
+      "eventID": "event4",
+      "organizerID": "organizer4",
+      "quantity": 1,
+      "customerID": "customer8",
+      "didAttend": true,
+      "totalPrice": 30,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket38",
+      "eventID": "event8",
+      "organizerID": "organizer8",
+      "quantity": 1,
+      "customerID": "customer8",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket39",
+      "eventID": "event10",
+      "organizerID": "organizer10",
+      "quantity": 1,
+      "customerID": "customer8",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket40",
+      "eventID": "event14",
+      "organizerID": "organizer4",
+      "quantity": 1,
+      "customerID": "customer8",
+      "didAttend": true,
+      "totalPrice": 25,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket41",
+      "eventID": "event22",
+      "organizerID": "organizer2",
+      "quantity": 1,
+      "customerID": "customer8",
+      "didAttend": true,
+      "totalPrice": 15,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket42",
+      "eventID": "event2",
+      "organizerID": "organizer2",
+      "quantity": 1,
+      "customerID": "customer9",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket43",
+      "eventID": "event6",
+      "organizerID": "organizer6",
+      "quantity": 1,
+      "customerID": "customer9",
+      "didAttend": true,
+      "totalPrice": 10,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket44",
+      "eventID": "event8",
+      "organizerID": "organizer8",
+      "quantity": 1,
+      "customerID": "customer9",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket45",
+      "eventID": "event13",
+      "organizerID": "organizer3",
+      "quantity": 1,
+      "customerID": "customer9",
+      "didAttend": true,
+      "totalPrice": 40,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket46",
+      "eventID": "event17",
+      "organizerID": "organizer7",
+      "quantity": 1,
+      "customerID": "customer9",
+      "didAttend": true,
+      "totalPrice": 50,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket47",
+      "eventID": "event21",
+      "organizerID": "organizer1",
+      "quantity": 1,
+      "customerID": "customer9",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket48",
+      "eventID": "event30",
+      "organizerID": "organizer10",
+      "quantity": 1,
+      "customerID": "customer9",
+      "didAttend": true,
+      "totalPrice": 10,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket49",
+      "eventID": "event5",
+      "organizerID": "organizer5",
+      "quantity": 1,
+      "customerID": "customer10",
+      "didAttend": true,
+      "totalPrice": 60,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket50",
+      "eventID": "event7",
+      "organizerID": "organizer7",
+      "quantity": 1,
+      "customerID": "customer10",
+      "didAttend": true,
+      "totalPrice": 25,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket51",
+      "eventID": "event11",
+      "organizerID": "organizer1",
+      "quantity": 1,
+      "customerID": "customer10",
+      "didAttend": true,
+      "totalPrice": 20,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket52",
+      "eventID": "event15",
+      "organizerID": "organizer5",
+      "quantity": 1,
+      "customerID": "customer10",
+      "didAttend": true,
+      "totalPrice": 30,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket54",
+      "eventID": "event20",
+      "organizerID": "organizer10",
+      "quantity": 1,
+      "customerID": "customer10",
+      "didAttend": true,
+      "totalPrice": 30,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket55",
+      "eventID": "event26",
+      "organizerID": "organizer6",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": true,
+      "totalPrice": 35,
+      "status": "paid"
+    },
+    {
+      "ticketID": "ticket56",
+      "eventID": "event3",
+      "organizerID": "organizer3",
+      "quantity": 1,
+      "customerID": "customer1",
+      "didAttend": false,
+      "totalPrice": 75,
+      "status": "refunded"
+    },
+    {
+      "ticketID": "ticket57",
+      "eventID": "event6",
+      "organizerID": "organizer6",
+      "quantity": 1,
+      "customerID": "customer4",
+      "didAttend": false,
+      "totalPrice": 10,
+      "status": "refunded"
+    },
+    {
+      "ticketID": "ticket58",
+      "eventID": "event9",
+      "organizerID": "organizer9",
+      "quantity": 1,
+      "customerID": "customer7",
+      "didAttend": false,
+      "totalPrice": 40,
+      "status": "refunded"
+    },
+    {
+      "ticketID": "ticket59",
+      "eventID": "event15",
+      "organizerID": "organizer5",
+      "quantity": 1,
+      "customerID": "customer5",
+      "didAttend": false,
+      "totalPrice": 30,
+      "status": "refunded"
+    },
+    {
+      "ticketID": "ticket60",
+      "eventID": "event26",
+      "organizerID": "organizer6",
+      "quantity": 1,
+      "customerID": "customer6",
+      "didAttend": false,
+      "totalPrice": 35,
+      "status": "refunded"
+    }
+  ],
+  "badges": [
+    {
+      "badgeID": "badge1",
+      "image": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+      "eventID": "event1",
+      "categoryID": "category1"
+    },
+    {
+      "badgeID": "badge2",
+      "image": "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
+      "eventID": "event2",
+      "categoryID": "category1"
+    },
+    {
+      "badgeID": "badge3",
+      "image": "/Users/meme/photos/Harlequin [1918].jpeg",
+      "eventID": "event3",
+      "categoryID": "category1"
+    },
+    {
+      "badgeID": "badge4",
+      "image": "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
+      "eventID": "event4",
+      "categoryID": "category2"
+    },
+    {
+      "badgeID": "badge5",
+      "image": "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
+      "eventID": "event5",
+      "categoryID": "category2"
+    },
+    {
+      "badgeID": "badge6",
+      "image": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "eventID": "event6",
+      "categoryID": "category2"
+    },
+    {
+      "badgeID": "badge7",
+      "image": "/Users/meme/photos/The Muse [1935].jpeg",
+      "eventID": "event7",
+      "categoryID": "category3"
+    },
+    {
+      "badgeID": "badge8",
+      "image": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "eventID": "event8",
+      "categoryID": "category3"
+    },
+    {
+      "badgeID": "badge9",
+      "image": "/Users/meme/photos/Three Women [1907-8].jpeg",
+      "eventID": "event9",
+      "categoryID": "category3"
+    },
+    {
+      "badgeID": "badge10",
+      "image": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+      "eventID": "event10",
+      "categoryID": "category4"
+    },
+    {
+      "badgeID": "badge11",
+      "image": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "eventID": "event11",
+      "categoryID": "category4"
+    },
+    {
+      "badgeID": "badge12",
+      "image": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "eventID": "event12",
+      "categoryID": "category4"
+    },
+    {
+      "badgeID": "badge13",
+      "image": "/Users/meme/photos/Three Musicians [1921].jpeg",
+      "eventID": "event13",
+      "categoryID": "category8"
+    },
+    {
+      "badgeID": "badge14",
+      "image": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "eventID": "event14",
+      "categoryID": "category8"
+    },
+    {
+      "badgeID": "badge15",
+      "image": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "eventID": "event15",
+      "categoryID": "category8"
+    },
+    {
+      "badgeID": "badge16",
+      "image": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "eventID": "event16",
+      "categoryID": "category9"
+    },
+    {
+      "badgeID": "badge17",
+      "image": "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+      "eventID": "event17",
+      "categoryID": "category9"
+    },
+    {
+      "badgeID": "badge18",
+      "image": "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+      "eventID": "event18",
+      "categoryID": "category9"
+    },
+    {
+      "badgeID": "badge19",
+      "image": "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+      "eventID": "event19",
+      "categoryID": "category11"
+    },
+    {
+      "badgeID": "badge20",
+      "image": "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
+      "eventID": "event20",
+      "categoryID": "category11"
+    },
+    {
+      "badgeID": "badge21",
+      "image": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "eventID": "event21",
+      "categoryID": "category12"
+    },
+    {
+      "badgeID": "badge22",
+      "image": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+      "eventID": "event22",
+      "categoryID": "category12"
+    },
+    {
+      "badgeID": "badge23",
+      "image": "/Users/meme/photos/The Sculptor [1931].jpeg",
+      "eventID": "event23",
+      "categoryID": "category12"
+    },
+    {
+      "badgeID": "badge24",
+      "image": "/Users/meme/photos/The Dryad [1908].jpeg",
+      "eventID": "event24",
+      "categoryID": "category13"
+    },
+    {
+      "badgeID": "badge25",
+      "image": "/Users/meme/photos/Still Life with Cards, Glasses and a Bottle of Rum- 'Vive la France' [1914-5].jpeg",
+      "eventID": "event25",
+      "categoryID": "category13"
+    },
+    {
+      "badgeID": "badge26",
+      "image": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "eventID": "event26",
+      "categoryID": "category13"
+    },
+    {
+      "badgeID": "badge27",
+      "image": "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+      "eventID": "event27",
+      "categoryID": "category17"
+    },
+    {
+      "badgeID": "badge28",
+      "image": "/Users/meme/photos/Three Women [1907-8].jpeg",
+      "eventID": "event28",
+      "categoryID": "category17"
+    },
+    {
+      "badgeID": "badge29",
+      "image": "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+      "eventID": "event29",
+      "categoryID": "category17"
+    },
+    {
+      "badgeID": "badge30",
+      "image": "/Users/meme/photos/The Artist and his Model [1963].jpeg",
+      "eventID": "event30",
+      "categoryID": "category18"
+    },
+    {
+      "badgeID": "badge31",
+      "image": "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+      "eventID": "event31",
+      "categoryID": "category18"
+    },
+    {
+      "badgeID": "badge32",
+      "image": "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg",
+      "eventID": "event32",
+      "categoryID": "category18"
+    },
+    {
+      "badgeID": "badge33",
+      "image": "/Users/meme/photos/Weeping Woman [1937].jpeg",
+      "eventID": "event33",
+      "categoryID": "category22"
+    },
+    {
+      "badgeID": "badge34",
+      "image": "/Users/meme/photos/Self-Portrait with Palette [1906].jpeg",
+      "eventID": "event34",
+      "categoryID": "category22"
+    },
+    {
+      "badgeID": "badge35",
+      "image": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "eventID": "event35",
+      "categoryID": "category22"
+    },
+    {
+      "badgeID": "badge36",
+      "image": "/Users/meme/photos/Guitar, Gas-Jet and Bottle [1913].jpeg",
+      "eventID": "event36",
+      "categoryID": "category23"
+    },
+    {
+      "badgeID": "badge37",
+      "image": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "eventID": "event37",
+      "categoryID": "category23"
+    },
+    {
+      "badgeID": "badge38",
+      "image": "/Users/meme/photos/The Smoker [1953].jpeg",
+      "eventID": "event38",
+      "categoryID": "category23"
+    }
+  ],
+  "customers": [
+    {
+      "userID": "customer1",
+      "fullName": "Liam Miller",
+      "email": "liam.miller@gmail.com",
+      "dateCreated": "10 January 2023 at 10:00:00 UTC+3",
+      "phoneNumber": "98765432",
+      "profileImageURL": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+      "type": "customer",
+      "dob": "15 February 1990 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge1",
+        "badge3",
+        "badge7",
+        "badge10",
+        "badge13",
+        "badge17"
+      ],
+      "interestsArray": [
+        "category1",
+        "category2",
+        "category4",
+        "category5",
+        "category8",
+        "category9",
+        "category11",
+        "category14",
+        "category15"
+      ]
+    },
+    {
+      "userID": "customer2",
+      "fullName": "Sophia Taylor",
+      "email": "sophia.taylor@gmail.com",
+      "dateCreated": "5 February 2023 at 12:00:00 UTC+3",
+      "phoneNumber": "81234567",
+      "profileImageURL": "/Users/meme/photos/Harlequin [1918].jpeg",
+      "type": "customer",
+      "dob": "22 March 1985 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge2",
+        "badge4",
+        "badge8",
+        "badge11",
+        "badge14",
+        "badge18",
+        "badge19"
+      ],
+      "interestsArray": [
+        "category3",
+        "category6",
+        "category7",
+        "category8",
+        "category9",
+        "category12",
+        "category13",
+        "category15"
+      ]
+    },
+    {
+      "userID": "customer3",
+      "fullName": "James White",
+      "email": "james.white@gmail.com",
+      "dateCreated": "15 March 2023 at 09:00:00 UTC+3",
+      "phoneNumber": "92345678",
+      "profileImageURL": "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
+      "type": "customer",
+      "dob": "5 July 1989 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge3",
+        "badge5",
+        "badge9",
+        "badge12",
+        "badge15",
+        "badge20",
+        "badge25"
+      ],
+      "interestsArray": [
+        "category4",
+        "category5",
+        "category7",
+        "category10",
+        "category11",
+        "category14",
+        "category17",
+        "category19",
+        "category20"
+      ]
+    },
+    {
+      "userID": "customer4",
+      "fullName": "Emma Davis",
+      "email": "emma.davis@gmail.com",
+      "dateCreated": "20 March 2023 at 14:00:00 UTC+3",
+      "phoneNumber": "83456789",
+      "profileImageURL": "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
+      "type": "customer",
+      "dob": "8 August 1995 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge6",
+        "badge10",
+        "badge13",
+        "badge16",
+        "badge21",
+        "badge26",
+        "badge28",
+        "badge30"
+      ],
+      "interestsArray": [
+        "category3",
+        "category4",
+        "category8",
+        "category10",
+        "category13",
+        "category16",
+        "category19",
+        "category21",
+        "category22",
+        "category24"
+      ]
+    },
+    {
+      "userID": "customer5",
+      "fullName": "Lucas Brown",
+      "email": "lucas.brown@gmail.com",
+      "dateCreated": "1 April 2023 at 15:00:00 UTC+3",
+      "phoneNumber": "85678923",
+      "profileImageURL": "/Users/meme/photos/The Muse [1935].jpeg",
+      "type": "customer",
+      "dob": "14 May 1993 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge4",
+        "badge7",
+        "badge11",
+        "badge15",
+        "badge18",
+        "badge22",
+        "badge24",
+        "badge31"
+      ],
+      "interestsArray": [
+        "category1",
+        "category2",
+        "category3",
+        "category5",
+        "category8",
+        "category11",
+        "category14",
+        "category15",
+        "category21",
+        "category23"
+      ]
+    },
+    {
+      "userID": "customer6",
+      "fullName": "Ava Smith",
+      "email": "ava.smith@gmail.com",
+      "dateCreated": "12 April 2023 at 10:00:00 UTC+3",
+      "phoneNumber": "92365487",
+      "profileImageURL": "/Users/meme/photos/Three Women [1907-8].jpeg",
+      "type": "customer",
+      "dob": "20 November 1990 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge2",
+        "badge6",
+        "badge10",
+        "badge13",
+        "badge17",
+        "badge21",
+        "badge29"
+      ],
+      "interestsArray": [
+        "category4",
+        "category5",
+        "category8",
+        "category9",
+        "category12",
+        "category14",
+        "category15",
+        "category20",
+        "category26"
+      ]
+    },
+    {
+      "userID": "customer7",
+      "fullName": "Ethan Johnson",
+      "email": "ethan.johnson@gmail.com",
+      "dateCreated": "25 May 2023 at 11:00:00 UTC+3",
+      "phoneNumber": "85471236",
+      "profileImageURL": "/Users/meme/photos/Three Musicians [1921].jpeg",
+      "type": "customer",
+      "dob": "11 March 1987 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge3",
+        "badge5",
+        "badge9",
+        "badge12",
+        "badge15",
+        "badge18"
+      ],
+      "interestsArray": [
+        "category1",
+        "category3",
+        "category4",
+        "category7",
+        "category8",
+        "category10",
+        "category12",
+        "category14"
+      ]
+    },
+    {
+      "userID": "customer8",
+      "fullName": "Isabella Martinez",
+      "email": "isabella.martinez@gmail.com",
+      "dateCreated": "1 June 2023 at 13:00:00 UTC+3",
+      "phoneNumber": "91725483",
+      "profileImageURL": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "type": "customer",
+      "dob": "17 April 1991 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge1",
+        "badge4",
+        "badge8",
+        "badge10",
+        "badge14",
+        "badge22"
+      ],
+      "interestsArray": [
+        "category2",
+        "category5",
+        "category6",
+        "category8",
+        "category9",
+        "category11",
+        "category12",
+        "category15"
+      ]
+    },
+    {
+      "userID": "customer9",
+      "fullName": "Noah Wilson",
+      "email": "noah.wilson@gmail.com",
+      "dateCreated": "15 June 2023 at 12:00:00 UTC+3",
+      "phoneNumber": "86547891",
+      "profileImageURL": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+      "type": "customer",
+      "dob": "2 July 1995 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge2",
+        "badge6",
+        "badge8",
+        "badge13",
+        "badge17",
+        "badge21",
+        "badge30"
+      ],
+      "interestsArray": [
+        "category3",
+        "category7",
+        "category10",
+        "category12",
+        "category14",
+        "category19",
+        "category21",
+        "category22",
+        "category25"
+      ]
+    },
+    {
+      "userID": "customer10",
+      "fullName": "Emily Adams",
+      "email": "emily.adams@gmail.com",
+      "dateCreated": "20 June 2023 at 14:00:00 UTC+3",
+      "phoneNumber": "97654328",
+      "profileImageURL": "/Users/meme/photos/The Smoker [1953].jpeg",
+      "type": "customer",
+      "dob": "23 December 1998 at 00:00:00 UTC+3",
+      "badgesArray": [
+        "badge5",
+        "badge7",
+        "badge11",
+        "badge15",
+        "badge20",
+        "badge26"
+      ],
+      "interestsArray": [
+        "category1",
+        "category3",
+        "category4",
+        "category5",
+        "category8",
+        "category9",
+        "category15",
+        "category21",
+        "category27"
+      ]
+    }
+  ],
+  "eventBans": [
+    {
+      "eventID": "event6",
+      "adminID": "admin2",
+      "organizerID": "organizer6",
+      "reason": "Violation of community guidelines",
+      "descroption": "The event 'Tech Careers Fair' was banned due to inappropriate conduct or content that violated the platform's community guidelines."
+    },
+    {
+      "eventID": "event26",
+      "adminID": "admin1",
+      "organizerID": "organizer6",
+      "reason": "Repeated complaints from participants",
+      "descroption": "The event 'Food Photography Workshop' was banned after receiving multiple participant complaints about safety and quality."
+    }
+  ],
+  "faqs": [
+    {
+      "faqID": "faq1",
+      "question": "How do I reset my password?",
+      "answer": "You can reset your password by clicking on the 'Forgot Password' link on the login page and following the instructions.",
+      "userType": "all"
+    },
+    {
+      "faqID": "faq2",
+      "question": "What should I do if I encounter a technical issue?",
+      "answer": "If you face any technical issues, contact our support team through the 'Help' section or email us at support@example.com.",
+      "userType": "all"
+    },
+    {
+      "faqID": "faq3",
+      "question": "Is my personal information secure?",
+      "answer": "Yes, we prioritize user security and adhere to strict privacy standards to ensure your data is safe.",
+      "userType": "all"
+    },
+    {
+      "faqID": "faq4",
+      "question": "Can I use this platform on mobile devices?",
+      "answer": "Yes, our platform is fully responsive and works seamlessly on mobile devices.",
+      "userType": "all"
+    },
+    {
+      "faqID": "faq5",
+      "question": "How can I contact customer support?",
+      "answer": "You can contact customer support via our 'Contact Us' page or by emailing support@example.com.",
+      "userType": "all"
+    },
+    {
+      "faqID": "faq6",
+      "question": "How do I ban or delete an event?",
+      "answer": "To ban or delete an event, navigate to the 'Event Management' section, find the event, and select 'Ban' or 'Delete'.",
+      "userType": "admin"
+    },
+    {
+      "faqID": "faq7",
+      "question": "Can I manage user permissions?",
+      "answer": "Yes, you can manage user permissions in the 'User Management' section under the admin dashboard.",
+      "userType": "admin"
+    },
+    {
+      "faqID": "faq8",
+      "question": "How do I generate reports?",
+      "answer": "Go to the 'Reports' section, select the desired report type, and download or view it directly.",
+      "userType": "admin"
+    },
+    {
+      "faqID": "faq9",
+      "question": "What happens when I ban an organizer?",
+      "answer": "When you ban an organizer, they are unable to create or manage events, and their account will be flagged.",
+      "userType": "admin"
+    },
+    {
+      "faqID": "faq10",
+      "question": "How do I monitor event performance?",
+      "answer": "Event performance can be monitored in the 'Event Analytics' section, where you can view attendance, sales, and ratings.",
+      "userType": "admin"
+    },
+    {
+      "faqID": "faq11",
+      "question": "How do I book tickets for an event?",
+      "answer": "To book tickets, browse through the events, select your preferred one, and proceed with the payment on the event page.",
+      "userType": "customer"
+    },
+    {
+      "faqID": "faq12",
+      "question": "What is the refund policy?",
+      "answer": "Refunds are available for canceled or banned events. Please check our refund policy for more details.",
+      "userType": "customer"
+    },
+    {
+      "faqID": "faq13",
+      "question": "How do I view my booked tickets?",
+      "answer": "You can view your booked tickets under the 'My Tickets' section on your dashboard.",
+      "userType": "customer"
+    },
+    {
+      "faqID": "faq14",
+      "question": "Can I transfer my ticket to someone else?",
+      "answer": "Currently, ticket transfers are not allowed. Please contact support for special cases.",
+      "userType": "customer"
+    },
+    {
+      "faqID": "faq15",
+      "question": "How do I rate an event I attended?",
+      "answer": "After attending an event, go to the 'My Tickets' section, find the event, and submit your rating and feedback.",
+      "userType": "customer"
+    },
+    {
+      "faqID": "faq16",
+      "question": "How do I create an event?",
+      "answer": "To create an event, go to the 'My Events' section, click on 'Create Event', and fill out the required details.",
+      "userType": "organizer"
+    },
+    {
+      "faqID": "faq17",
+      "question": "What are the requirements for event approval?",
+      "answer": "Events must comply with our guidelines, including accurate descriptions, valid venues, and appropriate content.",
+      "userType": "organizer"
+    },
+    {
+      "faqID": "faq18",
+      "question": "How do I view ticket sales for my events?",
+      "answer": "Go to the 'My Events' section, select the event, and click on 'Sales Report' to view ticket sales.",
+      "userType": "organizer"
+    },
+    {
+      "faqID": "faq19",
+      "question": "What should I do if my event is banned?",
+      "answer": "If your event is banned, you will receive a notification with the reason. Contact support for further assistance.",
+      "userType": "organizer"
+    },
+    {
+      "faqID": "faq20",
+      "question": "How do I promote my event?",
+      "answer": "You can promote your event by using our platform's marketing tools, including featured listings and social media integrations.",
+      "userType": "organizer"
+    }
+  ],
+  "userBans": [
+    {
+      "userID": "customer2",
+      "adminID": "admin1",
+      "reason": "Violation of community guidelines",
+      "descroption": "The customer engaged in abusive language and behavior towards other users during an event.",
+      "startDate": "18 December 2024 at 10:00:00 UTC+3",
+      "endDate": "18 December 2025 at 10:00:00 UTC+3"
+    },
+    {
+      "userID": "organizer6",
+      "adminID": "admin2",
+      "reason": "Organizing fraudulent events",
+      "descroption": "The organizer was found to have listed events with misleading information and did not provide refunds for canceled events.",
+      "startDate": "18 December 2024 at 10:00:00 UTC+3",
+      "endDate": "18 December 2025 at 10:00:00 UTC+3"
+    }
+  ],
+  "ratings": [
+    {
+        "customerID": "customer1",
+        "eventID": "event1",
+        "organizerID": "organizer1",
+        "rating": 2.2
+    },
+    {
+        "customerID": "customer1",
+        "eventID": "event3",
+        "organizerID": "organizer3",
+        "rating": 2.5
+    },
+    {
+        "customerID": "customer1",
+        "eventID": "event7",
+        "organizerID": "organizer7",
+        "rating": 3.0
+    },
+    {
+        "customerID": "customer1",
+        "eventID": "event10",
+        "organizerID": "organizer10",
+        "rating": 2.9
+    },
+    {
+        "customerID": "customer1",
+        "eventID": "event13",
+        "organizerID": "organizer3",
+        "rating": 2.8
+    },
+    {
+        "customerID": "customer1",
+        "eventID": "event17",
+        "organizerID": "organizer7",
+        "rating": 2.8
+    },
+    {
+        "customerID": "customer4",
+        "eventID": "event10",
+        "organizerID": "organizer10",
+        "rating": 4.0
+    },
+    {
+        "customerID": "customer4",
+        "eventID": "event13",
+        "organizerID": "organizer3",
+        "rating": 2.1
+    },
+    {
+        "customerID": "customer4",
+        "eventID": "event16",
+        "organizerID": "organizer6",
+        "rating": 1.9
+    },
+    {
+        "customerID": "customer4",
+        "eventID": "event21",
+        "organizerID": "organizer1",
+        "rating": 3.4
+    },
+    {
+        "customerID": "customer4",
+        "eventID": "event26",
+        "organizerID": "organizer6",
+        "rating": 4.6
+    },
+    {
+        "customerID": "customer4",
+        "eventID": "event28",
+        "organizerID": "organizer8",
+        "rating": 5.0
+    },
+    {
+        "customerID": "customer4",
+        "eventID": "event30",
+        "organizerID": "organizer10",
+        "rating": 3.8
+    },
+     {
+        "customerID": "customer5",
+        "eventID": "event4",
+        "organizerID": "organizer4",
+        "rating": 3.6
+    },
+    {
+        "customerID": "customer5",
+        "eventID": "event7",
+        "organizerID": "organizer7",
+        "rating": 4.4
+    },
+    {
+        "customerID": "customer5",
+        "eventID": "event11",
+        "organizerID": "organizer1",
+        "rating": 3.0
+    },
+    {
+        "customerID": "customer5",
+        "eventID": "event15",
+        "organizerID": "organizer5",
+        "rating": 2.7
+    },
+    {
+        "customerID": "customer5",
+        "eventID": "event18",
+        "organizerID": "organizer8",
+        "rating": 3.9
+    },
+    {
+        "customerID": "customer5",
+        "eventID": "event22",
+        "organizerID": "organizer2",
+        "rating": 4.2
+    },
+    {
+        "customerID": "customer5",
+        "eventID": "event24",
+        "organizerID": "organizer4",
+        "rating": 2.3
+    },
+    {
+        "customerID": "customer5",
+        "eventID": "event31",
+        "organizerID": "organizer11",
+        "rating": 3.7
+    },
+    {
+        "customerID": "customer6",
+        "eventID": "event2",
+        "organizerID": "organizer2",
+        "rating": 4.8
+    },
+    {
+        "customerID": "customer6",
+        "eventID": "event6",
+        "organizerID": "organizer6",
+        "rating": 1.5
+    },
+     {
+        "customerID": "customer6",
+        "eventID": "event10",
+        "organizerID": "organizer10",
+        "rating": 3.4
+    },
+    {
+        "customerID": "customer6",
+        "eventID": "event13",
+        "organizerID": "organizer3",
+        "rating": 2.7
+    },
+    {
+        "customerID": "customer6",
+        "eventID": "event17",
+        "organizerID": "organizer7",
+        "rating": 4.1
+    },
+    {
+        "customerID": "customer6",
+        "eventID": "event21",
+        "organizerID": "organizer1",
+        "rating": 3.8
+    },
+    {
+        "customerID": "customer6",
+        "eventID": "event29",
+        "organizerID": "organizer9",
+        "rating": 1.9
+    },
+    {
+        "customerID": "customer7",
+        "eventID": "event3",
+        "organizerID": "organizer3",
+        "rating": 2.6
+    },
+    {
+        "customerID": "customer7",
+        "eventID": "event5",
+        "organizerID": "organizer5",
+        "rating": 4.4
+    },
+    {
+        "customerID": "customer7",
+        "eventID": "event9",
+        "organizerID": "organizer9",
+        "rating": 2.3
+    },
+    {
+        "customerID": "customer7",
+        "eventID": "event12",
+        "organizerID": "organizer2",
+        "rating": 3.1
+    },
+    {
+        "customerID": "customer7",
+        "eventID": "event15",
+        "organizerID": "organizer5",
+        "rating": 2.8
+    },
+     {
+        "customerID": "customer7",
+        "eventID": "event20",
+        "organizerID": "organizer10",
+        "rating": 3.5
+    },
+    {
+        "customerID": "customer8",
+        "eventID": "event1",
+        "organizerID": "organizer1",
+        "rating": 4.3
+    },
+    {
+        "customerID": "customer8",
+        "eventID": "event4",
+        "organizerID": "organizer4",
+        "rating": 2.9
+    },
+    {
+        "customerID": "customer8",
+        "eventID": "event8",
+        "organizerID": "organizer8",
+        "rating": 4.7
+    },
+    {
+        "customerID": "customer8",
+        "eventID": "event10",
+        "organizerID": "organizer10",
+        "rating": 3.2
+    },
+    {
+        "customerID": "customer8",
+        "eventID": "event14",
+        "organizerID": "organizer4",
+        "rating": 4.6
+    },
+    {
+        "customerID": "customer8",
+        "eventID": "event22",
+        "organizerID": "organizer2",
+        "rating": 2.8
+    },
+    {
+        "customerID": "customer9",
+        "eventID": "event2",
+        "organizerID": "organizer2",
+        "rating": 3.8
+    },
+    {
+        "customerID": "customer9",
+        "eventID": "event6",
+        "organizerID": "organizer6",
+        "rating": 1.3
+    },
+    {
+        "customerID": "customer9",
+        "eventID": "event8",
+        "organizerID": "organizer8",
+        "rating": 4.9
+    },
+     {
+        "customerID": "customer9",
+        "eventID": "event13",
+        "organizerID": "organizer3",
+        "rating": 3.2
+    },
+    {
+        "customerID": "customer9",
+        "eventID": "event17",
+        "organizerID": "organizer7",
+        "rating": 4.5
+    },
+    {
+        "customerID": "customer9",
+        "eventID": "event21",
+        "organizerID": "organizer1",
+        "rating": 3.7
+    },
+    {
+        "customerID": "customer9",
+        "eventID": "event30",
+        "organizerID": "organizer10",
+        "rating": 2.6
+    },
+    {
+        "customerID": "customer10",
+        "eventID": "event5",
+        "organizerID": "organizer5",
+        "rating": 4.0
+    },
+    {
+        "customerID": "customer10",
+        "eventID": "event7",
+        "organizerID": "organizer7",
+        "rating": 3.3
+    },
+    {
+        "customerID": "customer10",
+        "eventID": "event11",
+        "organizerID": "organizer1",
+        "rating": 3.0
+    },
+    {
+        "customerID": "customer10",
+        "eventID": "event15",
+        "organizerID": "organizer5",
+        "rating": 2.7
+    },
+    {
+        "customerID": "customer10",
+        "eventID": "event20",
+        "organizerID": "organizer10",
+        "rating": 3.5
+    }
+]
+}
