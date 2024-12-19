@@ -75,9 +75,10 @@ class AdminProfileViewController: UIViewController {
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        setupEditPage()
 
-//            UserDefaults.standard.set("9aszi9qERnzUTZdCl0TF", forKey: K.bundleUserID) // this will be removed after seting the application
+        setupEditPage()
+        UserDefaults.standard.set("zxnzNnd9FK8xcnATlYUh", forKey: K.bundleUserID) // this will be removed after seting the application
+
         setup()
 
     }
@@ -96,7 +97,7 @@ class AdminProfileViewController: UIViewController {
                 print("check")
             }
             
-            if !currentUser!.profileImageURL.isEmpty{
+           
                 PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
@@ -107,7 +108,7 @@ class AdminProfileViewController: UIViewController {
                     }
                     
                 })
-            }
+            
         }
             
             //download the current user image
@@ -141,11 +142,11 @@ extension AdminProfileViewController{
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 txtPhoneNumber?.text = "\(us.phoneNumber)"
-                print(us)
                 
 //                txtPhoneNumber?.text = String(us.phoneNumber)
-                if !currentUser!.profileImageURL.isEmpty{
-                    PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+                if !(us.profileImageURL.isEmpty){
+                    
+                    PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
                         
                         switch result {
                         case .success(let image):
@@ -156,6 +157,7 @@ extension AdminProfileViewController{
                         
                     })
                 }
+    
                 
 
                 
@@ -261,7 +263,7 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
             currentUser?.fullName = txtFullName.text!
             currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
             if let image = editProfileImage.image, imageUpdated {
-                PhotoManager.shared.uploadPhoto(image, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+                PhotoManager.shared.uploadPhoto(image, to: "admins/\(currentUser!.userID)", withNewName: "profile") { result in
                     switch result {
                     case .success(let url):
                         

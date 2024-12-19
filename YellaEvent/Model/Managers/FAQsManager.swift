@@ -29,7 +29,7 @@ final class FAQsManager {
         try await FAQDocument(FAQID: FAQID).getDocument(as : FAQ.self)
     }
     
-    static func getFAQs(forUserType type: UserType) async throws -> [FAQ] {
+    static func getFAQs(forUserType type: FAQUserType) async throws -> [FAQ] {
         try await FAQsCollection.whereField(K.FStore.FAQs.userType, isEqualTo: type.rawValue).getDocuments().documents.compactMap { doc in
             try  doc.data(as: FAQ.self)
         }
@@ -44,8 +44,8 @@ final class FAQsManager {
     static func updateFAQ(FAQ: FAQ) async throws {
         try await FAQDocument(FAQID: FAQ.faqID).setData(try K.encoder.encode(FAQ), merge: true)
     }
+    
+    static func deleteFAQ(FAQID: String) async throws {
+        try await FAQDocument(FAQID: FAQID).delete()
+    }
 }
-
-
-
-

@@ -131,7 +131,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             }
             self.organizer.userID = (result!.user.uid)
             
-            PhotoManager.shared.uploadPhoto(self.image!, to: "\(self.organizer.userID)", withNewName: "license", completion: { result in
+            PhotoManager.shared.uploadPhoto(self.image!, to: "organizers/\(self.organizer.userID)", withNewName: "license", completion: { result in
                 switch result {
                     case .success(let url):
                     self.organizer.LicenseDocumentURL = url

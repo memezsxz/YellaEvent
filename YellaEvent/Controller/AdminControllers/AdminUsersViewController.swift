@@ -52,39 +52,6 @@ class AdminUsersViewController: UIViewController {
     
     
     
-    //view customer details Page
-    //outlets
-//
-//    @IBOutlet weak var txtUserNameCustomer: UINavigationItem!
-//    @IBOutlet weak var txtPhoneNumberCustomer: UITextField!
-//    @IBOutlet weak var txtDOBCustomer: UITextField!
-//    @IBOutlet weak var txtEmailCustomer: UITextField!
-//    @IBOutlet weak var txtUserTypeCustomer: UITextField!
-//    @IBOutlet weak var btnBan: UIButton!
-//    
-//    
-//    //Action
-//    @IBAction func ResetCustomerPassword(_ sender: Any) {
-//        //get the user object and reset the password value of the user
-//        //TODO-Fatima
-//        
-//        //show an alert that the password reset
-//        resertPassword()
-//    }
-//    
-//    @IBAction func BanUserButton(_ sender: Any) {
-//            //check if the user in the ban collection
-//        
-//            // if the user not on the ban collection show this function
-//             BanAlert()
-//        
-//            // if the user is in the ban collection use this function
-//            //UnBanAlert
-//        
-//    }
-//    
-//    
-//    
  //Ban Account Page
     //outlets
     @IBOutlet weak var txtDescription: UITextView!

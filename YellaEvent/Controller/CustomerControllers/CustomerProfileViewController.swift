@@ -81,7 +81,9 @@ class CustomerProfileViewController: UIViewController {
         super.viewDidLoad()
         setupEditPage()
         
-        /*UserDefaults.standard.set(Auth.auth().currentUser?.uid, forKey: K.bundleUserID)*/ // this will be removed after seting the application
+//        UserDefaults.standard.set("NwfwZ5fGhM0vz3d9L6Qv", forKey: K.bundleUserID) // this will be removed after seting the application
+        
+        UserDefaults.standard.set(Auth.auth().currentUser?.uid, forKey: K.bundleUserID) // this will be removed after seting the application
         setup()
     }
     
@@ -99,7 +101,7 @@ class CustomerProfileViewController: UIViewController {
                 txtUserType?.titleLabel?.text = "Customer"
                 currentUser = us
 
-                if !currentUser!.profileImageURL.isEmpty{
+                if !(currentUser!.profileImageURL.isEmpty){
                     PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                         
                         switch result {
@@ -180,7 +182,7 @@ extension CustomerProfileViewController{
                 txtFieldDate?.text = dateFormatter.string(from: us.dob)
                 currentUser = us
 
-                if !currentUser!.profileImageURL.isEmpty{
+                if !(currentUser!.profileImageURL.isEmpty){
                     PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                         
                         switch result {
@@ -384,7 +386,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
 
             
             if let image = EditProfileImage.image, imageUpdated {
-                PhotoManager.shared.uploadPhoto(image, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+                PhotoManager.shared.uploadPhoto(image, to: "customers/\(currentUser!.userID)", withNewName: "profile") { result in
                     switch result {
                     case .success(let url):
                         

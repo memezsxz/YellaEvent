@@ -70,7 +70,7 @@ class OrganizerProfileViewController: UIViewController {
 
         setupEditPage()
         
-//        UserDefaults.standard.set("0TgGkZPHew1WhMNVvHcU", forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set("3w50ZBqYl8EHuQbEQcmo", forKey: K.bundleUserID) // this will be removed after seting the application
 
         setup()
 
@@ -141,7 +141,7 @@ extension OrganizerProfileViewController{
                 
                 
                 
-                if !currentUser!.profileImageURL.isEmpty{
+                if !(currentUser!.profileImageURL.isEmpty){
                     PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                         
                         switch result {
@@ -270,7 +270,7 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
             currentUser!.phoneNumber =  Int(txtPhoneNumber!.text!)!
             
             if let image = editProfileImage.image, imageUpdated {
-                PhotoManager.shared.uploadPhoto(image, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+                PhotoManager.shared.uploadPhoto(image, to: "organizers/\(currentUser!.userID)", withNewName: "profile") { result in
                     switch result {
                     case .success(let url):
                         
