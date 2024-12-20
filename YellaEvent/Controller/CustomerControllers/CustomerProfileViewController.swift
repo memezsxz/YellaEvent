@@ -14,6 +14,7 @@ class CustomerProfileViewController: UIViewController {
     var currentUser: Customer?
     var imageUpdated : Bool = false
     
+    @IBOutlet var intrestsCollection: InterestsCollectionView!
     // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
     @IBOutlet weak var BIgImageProfile: UIImageView!
@@ -72,18 +73,23 @@ class CustomerProfileViewController: UIViewController {
         }
     }
     
-    
-    
-    
+        
+    @IBAction func InterestsSaveBtnClicked(_ sender: UIButton) {
+        currentUser?.interestsArray =  intrestsCollection.getInterests()
+        
+        Task {
+            try await UsersManager.updateUser(user: currentUser!)
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
     
     
     override func viewDidLoad(){
         super.viewDidLoad()
         setupEditPage()
+        UserDefaults.standard.set("xsc9s10sj0JKqpoEJH59", forKey: K.bundleUserID) // this will be removed after seting the application
         
-//        UserDefaults.standard.set("NwfwZ5fGhM0vz3d9L6Qv", forKey: K.bundleUserID) // this will be removed after seting the application
-        
-        UserDefaults.standard.set(Auth.auth().currentUser?.uid, forKey: K.bundleUserID) // this will be removed after seting the application
+//        UserDefaults.standard.set(Auth.auth().currentUser?.uid, forKey: K.bundleUserID) // this will be removed after seting the application
         setup()
     }
     
@@ -136,24 +142,6 @@ class CustomerProfileViewController: UIViewController {
         
         setup()
     }
-    
-    
-    
-    
-    
-    @IBAction func SaveInterest(_ sender: Any) {
-        
-        //save the selected categories
-        
-        
-        // exit the page
-        self.navigationController?.popViewController(animated: true)
-        
-    }
-    
-    
-    
-    
 } //end of the class
 
 

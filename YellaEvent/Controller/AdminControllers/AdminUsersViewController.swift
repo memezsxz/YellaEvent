@@ -210,7 +210,10 @@ class AdminUsersViewController: UIViewController {
         super.prepare(for: segue, sender: sender)
     }
     
-    
+    override func viewDidDisappear(_ animated: Bool) {
+        userListSections.selectedSegmentIndex = 0
+        clickOnSegment(userListSections!)
+    }
     
 }
 

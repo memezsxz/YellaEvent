@@ -72,11 +72,11 @@ class AdminStatisticsViewController:UITableViewController{
                 } else {
                     viewcontroller.userListSections.selectedSegmentIndex = 1
                 }
-                
+                viewcontroller.clickOnSegment(viewcontroller.userListSections!)
             }
             
             self.tabBarController?.selectedViewController = usersNavigationController
-
+            
 
         } else if indexPath.section == 4 {
             tabBarController?.selectedIndex = 3

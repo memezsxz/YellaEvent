@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A7O-xi-02z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A7O-xi-02z">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -290,7 +290,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="K9l-tj-Zca" userLabel="Interests">
                     <connections>
-                        <segue destination="PJE-51-Xjd" kind="show" id="weK-nl-mTf"/>
+                        <segue destination="PJE-51-Xjd" kind="show" identifier="toInterests" id="weK-nl-mTf"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="deM-wQ-jTv" userLabel="FAQ">
@@ -327,10 +327,10 @@
             </objects>
             <point key="canvasLocation" x="34" y="568"/>
         </scene>
-        <!--View Controller-->
+        <!--Customer Profile View Controller-->
         <scene sceneID="RZM-eK-IHK">
             <objects>
-                <viewController id="PJE-51-Xjd" sceneMemberID="viewController">
+                <viewController id="PJE-51-Xjd" customClass="CustomerProfileViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hwi-Az-6w1">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -375,7 +375,7 @@
                                     <color key="baseBackgroundColor" name="BrandPurple"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="SaveInterest:" destination="Yj1-DO-36r" eventType="touchUpInside" id="nIU-hU-ecu"/>
+                                    <action selector="InterestsSaveBtnClicked:" destination="PJE-51-Xjd" eventType="touchUpInside" id="icn-Gh-ZCP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -396,9 +396,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="WLO-Kf-Hlz"/>
+                    <connections>
+                        <outlet property="intrestsCollection" destination="3LE-B0-ZC3" id="JhD-jd-XIQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TO7-zG-7KP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="Yj1-DO-36r" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1078.6259541984732" y="736.61971830985919"/>
         </scene>
