@@ -7,6 +7,7 @@
 
 import UIKit
 import Photos
+import FirebaseAuth
 
 class ViewOrganizerDetailsView: UIView {
     
@@ -121,7 +122,22 @@ class ViewOrganizerDetailsView: UIView {
     
     
     @IBAction func resetPassword(_ sender: UIButton) {
-        //TODO_FATIMA
+        
+        guard let email = txtEmail.text, !email.isEmpty else {
+            delegate!.showAlert(message: "Please enter your email.")
+            return
+        }
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+        
+                self.delegate!.showAlert( message: error.localizedDescription)
+                return
+            }
+            
+        
+            self.delegate!.showAlert(message: "A password reset link has been sent to \(email).")
+        }
         
     }
     

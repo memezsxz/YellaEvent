@@ -75,16 +75,25 @@ class ViewCustomerDetailsView: UIView {
     //Action
     @IBAction func ResetCustomerPassword(_ sender: Any) {
         //get the user object and reset the password value of the user
-        //TODO-Fatima
+       
+        guard let email = txtEmailCustomer.text, !email.isEmpty else {
+            delegate!.showAlert(message: "Please enter your email.")
+            return
+        }
         
-//        Auth.auth().sendPasswordReset(withEmail: email) { error in
-//          // ...
-//        }
-
-
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+        
+                self.delegate!.showAlert( message: error.localizedDescription)
+                return
+            }
+            
+        
+            self.delegate!.showAlert(message: "A password reset link has been sent to \(email).")
+        }
         
         //show an alert that the password reset
-        delegate?.resertPassword()
+//        delegate?.resertPassword()
     }
     
     @IBAction func BanUserButton(_ sender: Any)  {
