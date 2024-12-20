@@ -2284,7 +2284,8 @@
       "fullName": "Liam Miller",
       "email": "liam.miller@gmail.com",
       "dateCreated": "10 January 2023 at 10:00:00 UTC+3",
-      "phoneNumber": "98765432",
+      "phoneNumber": 98765432,
+      "isDeleted": false,
       "profileImageURL": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
       "type": "customer",
       "dob": "15 February 1990 at 00:00:00 UTC+3",
@@ -2313,7 +2314,8 @@
       "fullName": "Sophia Taylor",
       "email": "sophia.taylor@gmail.com",
       "dateCreated": "5 February 2023 at 12:00:00 UTC+3",
-      "phoneNumber": "81234567",
+      "phoneNumber": 81234567,
+      "isDeleted": false,
       "profileImageURL": "/Users/meme/photos/Harlequin [1918].jpeg",
       "type": "customer",
       "dob": "22 March 1985 at 00:00:00 UTC+3",
@@ -2342,7 +2344,8 @@
       "fullName": "James White",
       "email": "james.white@gmail.com",
       "dateCreated": "15 March 2023 at 09:00:00 UTC+3",
-      "phoneNumber": "92345678",
+      "phoneNumber": 92345678,
+      "isDeleted": false,
       "profileImageURL": "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
       "type": "customer",
       "dob": "5 July 1989 at 00:00:00 UTC+3",
@@ -2372,8 +2375,9 @@
       "fullName": "Emma Davis",
       "email": "emma.davis@gmail.com",
       "dateCreated": "20 March 2023 at 14:00:00 UTC+3",
-      "phoneNumber": "83456789",
-      "profileImageURL": "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
+      "phoneNumber": 83456789,
+      "isDeleted": false,
+    "profileImageURL": "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
       "type": "customer",
       "dob": "8 August 1995 at 00:00:00 UTC+3",
       "badgesArray": [
@@ -2404,8 +2408,9 @@
       "fullName": "Lucas Brown",
       "email": "lucas.brown@gmail.com",
       "dateCreated": "1 April 2023 at 15:00:00 UTC+3",
-      "phoneNumber": "85678923",
-      "profileImageURL": "/Users/meme/photos/The Muse [1935].jpeg",
+      "phoneNumber": 85678923,
+      "isDeleted": false,
+    "profileImageURL": "/Users/meme/photos/The Muse [1935].jpeg",
       "type": "customer",
       "dob": "14 May 1993 at 00:00:00 UTC+3",
       "badgesArray": [
@@ -2436,8 +2441,9 @@
       "fullName": "Ava Smith",
       "email": "ava.smith@gmail.com",
       "dateCreated": "12 April 2023 at 10:00:00 UTC+3",
-      "phoneNumber": "92365487",
-      "profileImageURL": "/Users/meme/photos/Three Women [1907-8].jpeg",
+      "phoneNumber": 92365487,
+      "isDeleted": false,
+    "profileImageURL": "/Users/meme/photos/Three Women [1907-8].jpeg",
       "type": "customer",
       "dob": "20 November 1990 at 00:00:00 UTC+3",
       "badgesArray": [
@@ -2466,8 +2472,9 @@
       "fullName": "Ethan Johnson",
       "email": "ethan.johnson@gmail.com",
       "dateCreated": "25 May 2023 at 11:00:00 UTC+3",
-      "phoneNumber": "85471236",
-      "profileImageURL": "/Users/meme/photos/Three Musicians [1921].jpeg",
+      "phoneNumber": 85471236,
+      "isDeleted": false,
+    "profileImageURL": "/Users/meme/photos/Three Musicians [1921].jpeg",
       "type": "customer",
       "dob": "11 March 1987 at 00:00:00 UTC+3",
       "badgesArray": [
@@ -2494,8 +2501,9 @@
       "fullName": "Isabella Martinez",
       "email": "isabella.martinez@gmail.com",
       "dateCreated": "1 June 2023 at 13:00:00 UTC+3",
-      "phoneNumber": "91725483",
-      "profileImageURL": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "phoneNumber": 91725483,
+      "isDeleted": false,
+   "profileImageURL": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
       "type": "customer",
       "dob": "17 April 1991 at 00:00:00 UTC+3",
       "badgesArray": [
@@ -2522,8 +2530,9 @@
       "fullName": "Noah Wilson",
       "email": "noah.wilson@gmail.com",
       "dateCreated": "15 June 2023 at 12:00:00 UTC+3",
-      "phoneNumber": "86547891",
-      "profileImageURL": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+      "phoneNumber": 86547891,
+      "isDeleted": false,
+   "profileImageURL": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
       "type": "customer",
       "dob": "2 July 1995 at 00:00:00 UTC+3",
       "badgesArray": [
@@ -2552,9 +2561,10 @@
       "fullName": "Emily Adams",
       "email": "emily.adams@gmail.com",
       "dateCreated": "20 June 2023 at 14:00:00 UTC+3",
-      "phoneNumber": "97654328",
+      "phoneNumber": 97654328,
       "profileImageURL": "/Users/meme/photos/The Smoker [1953].jpeg",
-      "type": "customer",
+      "isDeleted": false,
+   "type": "customer",
       "dob": "23 December 1998 at 00:00:00 UTC+3",
       "badgesArray": [
         "badge5",
@@ -2738,7 +2748,7 @@
         "customerID": "customer1",
         "eventID": "event1",
         "organizerID": "organizer1",
-        "rating": 2.2
+        "rating": 2.5
     },
     {
         "customerID": "customer1",
@@ -2756,19 +2766,19 @@
         "customerID": "customer1",
         "eventID": "event10",
         "organizerID": "organizer10",
-        "rating": 2.9
+        "rating": 3.0
     },
     {
         "customerID": "customer1",
         "eventID": "event13",
         "organizerID": "organizer3",
-        "rating": 2.8
+        "rating": 3.0
     },
     {
         "customerID": "customer1",
         "eventID": "event17",
         "organizerID": "organizer7",
-        "rating": 2.8
+        "rating": 3.0
     },
     {
         "customerID": "customer4",
@@ -2780,25 +2790,25 @@
         "customerID": "customer4",
         "eventID": "event13",
         "organizerID": "organizer3",
-        "rating": 2.1
+        "rating": 2.0
     },
     {
         "customerID": "customer4",
         "eventID": "event16",
         "organizerID": "organizer6",
-        "rating": 1.9
+        "rating": 2.0
     },
     {
         "customerID": "customer4",
         "eventID": "event21",
         "organizerID": "organizer1",
-        "rating": 3.4
+        "rating": 3.5
     },
     {
         "customerID": "customer4",
         "eventID": "event26",
         "organizerID": "organizer6",
-        "rating": 4.6
+        "rating": 4.5
     },
     {
         "customerID": "customer4",
@@ -2810,19 +2820,19 @@
         "customerID": "customer4",
         "eventID": "event30",
         "organizerID": "organizer10",
-        "rating": 3.8
+        "rating": 4.0
     },
      {
         "customerID": "customer5",
         "eventID": "event4",
         "organizerID": "organizer4",
-        "rating": 3.6
+        "rating": 3.5
     },
     {
         "customerID": "customer5",
         "eventID": "event7",
         "organizerID": "organizer7",
-        "rating": 4.4
+        "rating": 4.0
     },
     {
         "customerID": "customer5",
@@ -2834,169 +2844,169 @@
         "customerID": "customer5",
         "eventID": "event15",
         "organizerID": "organizer5",
-        "rating": 2.7
+        "rating": 2
     },
     {
         "customerID": "customer5",
         "eventID": "event18",
         "organizerID": "organizer8",
-        "rating": 3.9
+        "rating": 4
     },
     {
         "customerID": "customer5",
         "eventID": "event22",
         "organizerID": "organizer2",
-        "rating": 4.2
+        "rating": 4.0
     },
     {
         "customerID": "customer5",
         "eventID": "event24",
         "organizerID": "organizer4",
-        "rating": 2.3
+        "rating": 2.5
     },
     {
         "customerID": "customer5",
         "eventID": "event31",
         "organizerID": "organizer11",
-        "rating": 3.7
+        "rating": 0
     },
     {
         "customerID": "customer6",
         "eventID": "event2",
         "organizerID": "organizer2",
-        "rating": 4.8
+        "rating": 1
     },
     {
         "customerID": "customer6",
         "eventID": "event6",
         "organizerID": "organizer6",
-        "rating": 1.5
+        "rating": 1.0
     },
      {
         "customerID": "customer6",
         "eventID": "event10",
         "organizerID": "organizer10",
-        "rating": 3.4
+        "rating": 1.5
     },
     {
         "customerID": "customer6",
         "eventID": "event13",
         "organizerID": "organizer3",
-        "rating": 2.7
+        "rating": 2.5
     },
     {
         "customerID": "customer6",
         "eventID": "event17",
         "organizerID": "organizer7",
-        "rating": 4.1
+        "rating": 4.0
     },
     {
         "customerID": "customer6",
         "eventID": "event21",
         "organizerID": "organizer1",
-        "rating": 3.8
+        "rating": 4.0
     },
     {
         "customerID": "customer6",
         "eventID": "event29",
         "organizerID": "organizer9",
-        "rating": 1.9
+        "rating": 2.0
     },
     {
         "customerID": "customer7",
         "eventID": "event3",
         "organizerID": "organizer3",
-        "rating": 2.6
+        "rating": 2.5
     },
     {
         "customerID": "customer7",
         "eventID": "event5",
         "organizerID": "organizer5",
-        "rating": 4.4
+        "rating": 4.5
     },
     {
         "customerID": "customer7",
         "eventID": "event9",
         "organizerID": "organizer9",
-        "rating": 2.3
+        "rating": 2.5
     },
     {
         "customerID": "customer7",
         "eventID": "event12",
         "organizerID": "organizer2",
-        "rating": 3.1
+        "rating": 3.0
     },
     {
         "customerID": "customer7",
         "eventID": "event15",
         "organizerID": "organizer5",
-        "rating": 2.8
+        "rating": 3.0
     },
      {
         "customerID": "customer7",
         "eventID": "event20",
         "organizerID": "organizer10",
-        "rating": 3.5
+        "rating": 0
     },
     {
         "customerID": "customer8",
         "eventID": "event1",
         "organizerID": "organizer1",
-        "rating": 4.3
+        "rating": 4.5
     },
     {
         "customerID": "customer8",
         "eventID": "event4",
         "organizerID": "organizer4",
-        "rating": 2.9
+        "rating": 3.0
     },
     {
         "customerID": "customer8",
         "eventID": "event8",
         "organizerID": "organizer8",
-        "rating": 4.7
+        "rating": 5.0
     },
     {
         "customerID": "customer8",
         "eventID": "event10",
         "organizerID": "organizer10",
-        "rating": 3.2
+        "rating": 3.0
     },
     {
         "customerID": "customer8",
         "eventID": "event14",
         "organizerID": "organizer4",
-        "rating": 4.6
+        "rating": 5.0
     },
     {
         "customerID": "customer8",
         "eventID": "event22",
         "organizerID": "organizer2",
-        "rating": 2.8
+        "rating": 3.0
     },
     {
         "customerID": "customer9",
         "eventID": "event2",
         "organizerID": "organizer2",
-        "rating": 3.8
+        "rating": 4.0
     },
     {
         "customerID": "customer9",
         "eventID": "event6",
         "organizerID": "organizer6",
-        "rating": 1.3
+        "rating": 1.5
     },
     {
         "customerID": "customer9",
         "eventID": "event8",
         "organizerID": "organizer8",
-        "rating": 4.9
+        "rating": 5.0
     },
      {
         "customerID": "customer9",
         "eventID": "event13",
         "organizerID": "organizer3",
-        "rating": 3.2
+        "rating": 3.5
     },
     {
         "customerID": "customer9",
@@ -3008,13 +3018,13 @@
         "customerID": "customer9",
         "eventID": "event21",
         "organizerID": "organizer1",
-        "rating": 3.7
+        "rating": 4.0
     },
     {
         "customerID": "customer9",
         "eventID": "event30",
         "organizerID": "organizer10",
-        "rating": 2.6
+        "rating": 2.5
     },
     {
         "customerID": "customer10",
@@ -3026,7 +3036,7 @@
         "customerID": "customer10",
         "eventID": "event7",
         "organizerID": "organizer7",
-        "rating": 3.3
+        "rating": 3.5
     },
     {
         "customerID": "customer10",
@@ -3038,7 +3048,7 @@
         "customerID": "customer10",
         "eventID": "event15",
         "organizerID": "organizer5",
-        "rating": 2.7
+        "rating": 3.0
     },
     {
         "customerID": "customer10",

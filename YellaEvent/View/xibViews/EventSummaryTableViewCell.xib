@@ -168,6 +168,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="BackgroundGray"/>
             <connections>
                 <outlet property="catagoryLabel" destination="Yzh-YF-uBs" id="u1e-mC-UP6"/>
                 <outlet property="catagoryWrapper" destination="JjF-om-Uns" id="ddh-l5-ueI"/>
@@ -182,6 +183,9 @@
         </tableViewCell>
     </objects>
     <resources>
+        <namedColor name="BackgroundGray">
+            <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="BrandPurple">
             <color red="0.51800000667572021" green="0.36899998784065247" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

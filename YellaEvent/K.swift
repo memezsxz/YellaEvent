@@ -58,6 +58,7 @@ struct K {
             static let dateCreated = "dateCreated"
             static let phoneNumber = "phoneNumber"
             static let profileImageURL = "profileImageURL"
+            static let isDeleted = "isDeleted"
             static let type = "type"
         }
         

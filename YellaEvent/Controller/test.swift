@@ -69,8 +69,21 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
     
     override func viewDidLoad()  {
         super.viewDidLoad()
-//        DataImport.uploadData() 
         
+        
+        
+//        DataImport.uploadData()
+        
+        
+//        
+//        Task {
+//           try await Firestore.firestore().collection(K.FStore.Customers.collectionName).getDocuments().documents.compactMap {
+//                doc in
+//                
+//                doc.reference.updateData([K.FStore.User.isDeleted : false])
+//            }
+//        }
+//        
 //        Task {
 ////            print(try await RatingManager.getRating(eventID:"event1", userID: "customer1"))
 //            let  r = try await EventsManager.getEvent(eventID: "sJtqjop59LiYQ7QdYrkh")
@@ -108,7 +121,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
         tableView.dataSource = self
         tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
         
-        DataImport.uploadData()
+//        DataImport.uploadData()
         
 //        Task {
 //            try await EventsManager.getAllEvents { snapshot, error in

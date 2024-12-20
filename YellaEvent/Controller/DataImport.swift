@@ -349,6 +349,30 @@ final class DataImport {
                     ref.updateData([K.FStore.Events.eventID: documentID])
                     let oldUserID = event[K.FStore.Events.eventID] as? String ?? ""
                     self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
+                    
+                    if let localImagePath = updatedEvent[K.FStore.Events.coverImageURL] as? String {
+                        let storagePath = "events/\(updatedEvent[K.FStore.Events.organizerID] as! String)/\(documentID)/CoverImage.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedEvent[K.FStore.Events.coverImageURL] = imageUrl
+                                ref.updateData([K.FStore.Events.coverImageURL: imageUrl])
+                            }
+                        }
+                    }
+                    var mediaArray: [String] = []
+var i = 0
+                    (updatedEvent[K.FStore.Events.mediaArray] as? [String])?.forEach({ localImagePath in
+                        let storagePath = "events/\(updatedEvent[K.FStore.Events.organizerID] as! String)/\(documentID)/media\(i).jpg"
+                        i += 1
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                mediaArray.append( imageUrl)
+                                ref.updateData([K.FStore.Events.mediaArray: mediaArray])
+                            }
+                        }
+
+                    })
+                    
                 }
                 
                 dispatchGroup.leave() // Finish tracking this operation

@@ -9,17 +9,45 @@ import UIKit
 import FirebaseFirestore
 
 class CustomerHomeViewController: UITableViewController {
-    var debug = true
+    var debug = false
     var currentPage = 0
     var allRecommendedEvents: [DocumentReference] = []
+    var newEvent : [EventSummary] = []
     var events: [EventSummary] = []
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userID = "bvHZAtqQ0OAVh3GmW25Y"
+        let userID = "1OJ9cN1iMAG5pjNocI7Z"
+        
         tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
+        
+        Task {
+            do {
+                let snapshot = try await Firestore.firestore()
+                    .collection(K.FStore.Events.collectionName)
+                    .whereField(K.FStore.Events.status, isEqualTo: EventStatus.ongoing.rawValue)
+                    .order(by: K.FStore.Events.startTimeStamp)
+                    .limit(to: 5)
+                    .getDocuments()
+                
+                for doc in snapshot.documents {
+                    do {
+                        let eventSummary = try await EventSummary(from: doc.data())
+                        DispatchQueue.main.async {
+                            self.newEvent.append(eventSummary)
+                            self.tableView.insertRows(at: [IndexPath(row: self.newEvent.count - 1, section: 1)], with: .bottom)
+                        }
+                    } catch {
+                        print("Error creating EventSummary for document \(doc.documentID): \(error)")
+                    }
+                }
+            } catch {
+                print("Error fetching documents: \(error)")
+            }
+        }
+        
+        
         
         calculateCategoryScores(userID: userID) { categoryScores in
             
@@ -34,7 +62,7 @@ class CustomerHomeViewController: UITableViewController {
                 
                 self.allRecommendedEvents = events
                 self.loadMoreEvents()
-
+                
                 if self.debug {
                     self.displayEvents(events: self.events)
                 }
@@ -170,10 +198,6 @@ class CustomerHomeViewController: UITableViewController {
                     }
                 }
                 group.notify(queue: .main) { // Wait for all fetches to complete
-                    if self.debug {
-                        print("")
-                    }
-                    
                     completion(updatedScores)
                 }
                 
@@ -254,7 +278,6 @@ class CustomerHomeViewController: UITableViewController {
                     let averageRating = snapshot.get(AggregateField.average(K.FStore.Ratings.rating)) as? Double ?? 0.0
                     
                     let value = categoryScore * (1 + (1 / max(averageRating, 1)) )// to not devide by 0
-//                    print(categoryScore, averageRating, value, max(averageRating, 1))
                     recommendedEvents.append((event: doc.reference, value: value))
                 } catch {
                     print("Error calculating average rating for event \(eventID): \(error)")
@@ -274,7 +297,7 @@ class CustomerHomeViewController: UITableViewController {
     }
     
     
-
+    
     func displayEvents(events: [EventSummary]) {
         // Implement your tableView.reloadData() or collectionView.reloadData() here.
         // For now, just print the event names.
@@ -288,70 +311,160 @@ class CustomerHomeViewController: UITableViewController {
             print("Category: \(category) , Score: \(score)")
         }
     }
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(events)
-    }
 }
 
 
 // MARK: Table view work
 extension CustomerHomeViewController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3 // or the total number of sections you expect
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 {
-            print(2, events.count)
-            return events.count
+        if section == 1 {
+            return newEvent.count
         }
-        
-        return super.tableView(tableView, numberOfRowsInSection: section)
+        if section == 2 {
+                        return events.count
+        }
+
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if indexPath.section == 2 && (indexPath.row+1 == events.count) {
-//            loadMoreEvents()
-//        }
+                if indexPath.section == 2 && (indexPath.row+1 == events.count) {
+                    loadMoreEvents()
+                }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("cellfor row at",indexPath.section, indexPath.row)
-        if indexPath.section == 2 {
-            print("cellfor row at section 2 ", indexPath.row , events.count)
+        if debug {
+            print("cellForRowAt: section \(indexPath.section), row \(indexPath.row)")
+        }
+        if indexPath.section == 1 {
+             let cell = tableView.dequeueReusableCell(withIdentifier: "EventSummaryTableViewCell", for: indexPath) as! EventSummaryTableViewCell
+            
+            cell.setup(with: newEvent[indexPath.row])
+            return cell
+        }
 
-            do {
-                
-                
-              let  cell = try tableView.dequeueReusableCell(withIdentifier: "EventSummaryTableViewCell", for: indexPath) as? EventSummaryTableViewCell
-                
-                    print(events[indexPath.row])
-                    cell!.setup(with: events[indexPath.row])
-                    return cell!
-            }
-            catch {
-                print(error.localizedDescription)
-                return super.tableView(tableView, cellForRowAt: indexPath)
-            }
+        if indexPath.section == 2 {
+             let cell = tableView.dequeueReusableCell(withIdentifier: "EventSummaryTableViewCell", for: indexPath) as! EventSummaryTableViewCell
+            
+            cell.setup(with: events[indexPath.row])
+            return cell
         }
         
-        return super.tableView(tableView, cellForRowAt: indexPath)
-    }
-    func loadMoreEvents(interval: Int = 5) {
-        let currentIndex = events.count
         
-        if currentIndex >= allRecommendedEvents.count { return } // no more events to load
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+//        cell.hay.text = "Hey \(custommer) 👋🏻"
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: need dalal section to move to
+        if indexPath.section == 1 {
+            print(newEvent[indexPath.row])
+        }
+        
+        if indexPath.section == 2 {
+            print(events[indexPath.row])
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return "New Events"
+        }
+        if section == 2 {
+            return "Suggested Events"
+        }
+        
+        return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if section == 1 {
+            return
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if section == 0 {
+            return super.tableView(tableView, viewForHeaderInSection: section)
+        }
+        // Find the UILabel inside the default header view (if it exists)
+        let headerView = UIView()
+        headerView.backgroundColor = .clear // Or set to a desired background color
+        
+        // Add a new UILabel
+        let label = UILabel()
+        if section == 1 {
+            label.text =  "New Events"
+        }
+        if section == 2 {
+            label.text = "Suggested Events"
+        }
+        let HSizeClass = UIScreen.main.traitCollection.horizontalSizeClass
+        let VSizeClass = UIScreen.main.traitCollection.verticalSizeClass
+        if HSizeClass == .regular && VSizeClass == .regular {
+            label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        } else {
+            label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        }
+        label.textColor = UIColor(named: K.BrandColors.darkPurple)
+        //                label.textAlignment = .center
+        
+        // Add the label to the header view
+        headerView.addSubview(label)
+        
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            label.topAnchor.constraint(equalTo: headerView.topAnchor),
+            label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -20)
+        ])
+        
+        
+        return headerView
+        
+        
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        }
+        
+        return K.HSizeclass == .regular && K.VSizeclass == .regular ? 45 : 40
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {return K.HSizeclass == .regular && K.VSizeclass == .regular ? 65 : tableView.frame.width / 6.3}
+        return  tableView.frame.width / 2
+    }
+    
+    func loadMoreEvents(interval: Int = 2) {
+        let currentIndex = events.count
+        guard currentIndex < allRecommendedEvents.count else { return } // Prevent out-of-bounds
+        
         let finalIndex = min(currentIndex + interval, allRecommendedEvents.count)
-        print(finalIndex, allRecommendedEvents.count)
-
-        for index in currentIndex..<finalIndex {
-            Task {
+//        print("Loading events from index \(currentIndex) to \(finalIndex)")
+        
+            for index in currentIndex..<finalIndex {
+                Task {
                 do {
-                    
                     let document = try await allRecommendedEvents[index].getDocument()
                     if let data = document.data() {
                         let eventSummary = try await EventSummary(from: data)
-
+//                        print(eventSummary.name)
                         DispatchQueue.main.async {
                             self.events.append(eventSummary)
-                            self.tableView.reloadData() // Reload after appending
+                            self.tableView.insertRows(at: [IndexPath(row: self.events.count - 1, section: 2)], with: .bottom)
                         }
                     }
                 } catch {
@@ -360,5 +473,4 @@ extension CustomerHomeViewController {
             }
         }
     }
-
 }
