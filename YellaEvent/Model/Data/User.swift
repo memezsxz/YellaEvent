@@ -90,11 +90,11 @@ struct Organizer: User, Codable {
     var type: UserType = .organizer
     var isDeleted: Bool
     
-    var startDate: Date
-    var endDate: Date
+    var startDate: Date?
+    var endDate: Date?
     var LicenseDocumentURL : String
     
-    init(userID: String = "Default", fullName: String, email: String,/* dob: Date,*/ dateCreated: Date, phoneNumber: Int, profileImageURL: String, startDate: Date, endDate: Date, LicenseDocumentURL: String, isDeleted: Bool = false) {
+    init(userID: String = "Default", fullName: String, email: String,/* dob: Date,*/ dateCreated: Date, phoneNumber: Int, profileImageURL: String, startDate: Date?, endDate: Date?, LicenseDocumentURL: String, isDeleted: Bool = false) {
         self.userID = userID
         self.fullName = fullName
         self.email = email

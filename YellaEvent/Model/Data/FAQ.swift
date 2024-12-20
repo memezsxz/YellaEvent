@@ -7,13 +7,20 @@
 
 import Foundation
 
+
+enum FAQUserType: String, Codable {
+    case all = "all"
+    case admin = "admin"
+    case customer = "customer"
+    case organizer = "organizer"
+}
 struct FAQ : Codable {
     var faqID : String
     var question : String
     var answer : String
-    var userType : UserType
+    var userType : FAQUserType
 
-    init(question: String, answer: String, userType: UserType) {
+    init(question: String, answer: String, userType: FAQUserType) {
         self.faqID = "faqID"
         self.question = question
         self.answer = answer

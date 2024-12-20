@@ -10,7 +10,9 @@ import UIKit
 class InterstsCollectionViewCell: UICollectionViewCell{
     static let identifier = "InterstsCollectionViewCell"
         
-    static var fontSize : CGFloat = 26
+    static var fontSize : CGFloat {
+        K.VSizeclass == .regular && K.HSizeclass == .regular ? 24 : 14
+    }
     
     private let titleLabel: UILabel = {
         let label = UILabel()

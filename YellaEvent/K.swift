@@ -12,7 +12,7 @@ struct K {
     static let HSizeclass = UIScreen.main.traitCollection.horizontalSizeClass
     
     static let VSizeclass = UIScreen.main.traitCollection.verticalSizeClass
-
+    
     struct BrandColors {
         static let purple = "BrandPurple"
         static let lightPurple = "BrandLightPurple"
@@ -23,8 +23,11 @@ struct K {
     
     static let DFormatter = {
         let formatter = DateFormatter()
-        formatter.timeStyle = DateFormatter.Style.none
-        formatter .dateStyle = DateFormatter.Style.short
+        formatter.dateFormat = "dd MMMM yyyy 'at' HH:mm:ss 'UTC'Z"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+//        formatter.timeStyle = DateFormatter.Style.none
+//        formatter .dateStyle = DateFormatter.Style.short
         return formatter
     }()
     
@@ -55,6 +58,7 @@ struct K {
             static let dateCreated = "dateCreated"
             static let phoneNumber = "phoneNumber"
             static let profileImageURL = "profileImageURL"
+            static let isDeleted = "isDeleted"
             static let type = "type"
         }
         
@@ -71,12 +75,19 @@ struct K {
         }
         
         struct Customers {
-            
+            static let userID = "userID"
+            static let fullName = "fullName"
+            static let email = "email"
+            static let dateCreated = "dateCreated"
+            static let phoneNumber = "phoneNumber"
+            static let profileImageURL = "profileImageURL"
+            static let type = "type"
+
             static let collectionName = "customers"
             
             static let dob = "dob"
             static let badgesArray = "badgesArray" // array of ids to the badges they have
-            static let intrestArray = "intrestArray" // array of ids to the badges they have
+            static let intrestArray = "interestsArray" // array of ids to the badges they have
         }
         
         struct Events {
@@ -94,11 +105,12 @@ struct K {
             static let categoryID = "categoryID"
             
             static let locationURL = "locationURL"
-            
+            static let venueName = "venueName"
+
             static let minimumAge = "minimumAge"
             static let maximumAge = "maximumAge"
             
-            static let rattingsArray = "rattingsArray" // two dimintional array with user id and a double
+//            static let rattingsArray = "rattingsArray" // two dimintional array with user id and a double
             static let maximumTickets = "maximumTickets"
             static let price = "price"
             
@@ -127,13 +139,13 @@ struct K {
             //            static let locationURL = "locationURL"
         }
         
-        //        struct Rattings {
-        //            static let collectionName = "ratings"
-        //            static let userID = "userID"
-        //            static let eventID = "eventID"
-        //            static let organizerID = "organizerID"
-        //            static let rating = "rating"
-        //        }
+        struct Ratings {
+            static let collectionName = "ratings"
+            static let customerID = "customerID"
+            static let eventID = "eventID"
+            static let organizerID = "organizerID"
+            static let rating = "rating"
+        }
         
         struct Badges {
             static let collectionName = "badges"

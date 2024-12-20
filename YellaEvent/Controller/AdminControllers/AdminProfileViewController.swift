@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class AdminProfileViewController: UIViewController {
     
     
     var currentUser: Admin?
+    var imageUpdated : Bool = false
     
 // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
@@ -40,54 +42,88 @@ class AdminProfileViewController: UIViewController {
         saveUserChanges(sender)
     }
     
+    @IBAction func changePassword(_ sender: Any) {
+        
+        guard let email = txtEmail.text, !email.isEmpty else {
+            showAlert(message: "Please enter your email.")
+            return
+        }
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+        
+                self.showAlert( message: error.localizedDescription)
+                return
+            }
+            
+        
+            self.showAlert(message: "A password reset link has been sent to \(email).")
+        }
+        
+    }
+    
+    
+    
+    
+    @IBOutlet weak var bigUserName: UILabel!
+    @IBOutlet weak var bigUserType: UIButton!
+
+    
+    
+    
     
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        setupEditPage()
 
+        setupEditPage()
+        UserDefaults.standard.set("zxnzNnd9FK8xcnATlYUh", forKey: K.bundleUserID) // this will be removed after seting the application
+
+        setup()
+
+    }
+    
+    func setup() {
+        // get the current user object
+        Task {
+            let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+            currentUser = (us as! Admin)
+            do{
+                if let text = bigUserName{
+                    bigUserName.text = currentUser?.fullName
+                    bigUserType.titleLabel!.text = "Admin"
+                }
+            }catch{
+                print("check")
+            }
             
-            UserDefaults.standard.set("1", forKey: K.bundleUserID) // this will be removed after seting the application
-                
-            // get the current user object
-            Task {
-                let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
-                currentUser = (us as! Admin)
-                //download the current user image
-                PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+           
+                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
-                        //if the user have an image and his/her image
                     case .success(let image):
                         self.BigImageProfile?.image = image
-                        // if the user don't have an image put the defualt image
                     case .failure(_):
                         self.BigImageProfile?.image = UIImage(named: "DefaultImageProfile")
                     }
                     
                 })
-            }
-        
+            
+        }
+            
+            //download the current user image
+       
         
     }
-    
-    
 
     
     override func viewWillAppear(_ animated: Bool) {
         // method to set the edit user profile page
-        
+        setup()
+
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }
 
@@ -106,19 +142,22 @@ extension AdminProfileViewController{
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 txtPhoneNumber?.text = "\(us.phoneNumber)"
-                print(us)
                 
 //                txtPhoneNumber?.text = String(us.phoneNumber)
-                PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+                if !(us.profileImageURL.isEmpty){
                     
-                    switch result {
-                    case .success(let image):
-                        self.editProfileImage?.image = image
-                    case .failure(_):
-                        self.editProfileImage?.image = UIImage(named: "DefaultImageProfile")
-                    }
-                    
-                })
+                    PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+                        
+                        switch result {
+                        case .success(let image):
+                            self.editProfileImage?.image = image
+                        case .failure(_):
+                            self.editProfileImage?.image = UIImage(named: "DefaultImageProfile")
+                        }
+                        
+                    })
+                }
+    
                 
 
                 
@@ -133,10 +172,14 @@ extension AdminProfileViewController{
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        for view in roundedViews{
-            view.layer.cornerRadius = view.frame.height / 2
-            view.clipsToBounds = true
+        if let shape = roundedViews {
+            for view in shape{
+                view.layer.cornerRadius = view.frame.height / 2
+                view.clipsToBounds = true
+            }
         }
+            
+        
     }
     
 }// End of the class
@@ -190,33 +233,8 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
+        editProfileImage.image = selectedImage
         
-        
-        PhotoManager.shared.uploadPhoto(selectedImage, to: "\(currentUser!.userID)", withNewName: "profile") { result in
-            switch result {
-            case .success(let url):
-                
-                
-                // TODO: Update in user
-                
-                print("Image uploaded successfully: \(url)")
-            case .failure(let error):
-                let saveAlert = UIAlertController(
-                    title: "Error",
-                    message: "Error uploading image",
-                    preferredStyle: .alert
-                )
-                
-                let okAction = UIAlertAction(title: "OK", style: .default) { action in
-        //
-                    self.navigationController?.popViewController(animated: true)
-                }
-                
-                saveAlert.addAction(okAction)
-                
-                self.present(saveAlert, animated: true, completion: nil)
-            }
-        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -244,10 +262,42 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
             currentUser?.email = txtEmail.text!
             currentUser?.fullName = txtFullName.text!
             currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
-            
+            if let image = editProfileImage.image, imageUpdated {
+                PhotoManager.shared.uploadPhoto(image, to: "admins/\(currentUser!.userID)", withNewName: "profile") { result in
+                    switch result {
+                    case .success(let url):
+                        
+                        
+                        // TODO: Update in user
+                        
+                        print("Image uploaded successfully: \(url)")
+                        self.currentUser?.profileImageURL = url
+                        self.imageUpdated = false
+                        
+                    case .failure( _):
+                        let saveAlert = UIAlertController(
+                            title: "Error",
+                            message: "Error uploading image",
+                            preferredStyle: .alert
+                        )
+                        
+                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                //
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                        
+                        saveAlert.addAction(okAction)
+                        
+                        self.present(saveAlert, animated: true, completion: nil)
+                    }
+                }
+            }
+
             Task{
                 try await UsersManager.updateUser(user: currentUser!)
             }
+            
+        
         }catch {
             print("error with user saving data")
         }
@@ -262,11 +312,13 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            print("Changes saved.")
+            
+            self.navigationController?.popToRootViewController(animated: true)
         }
         
         saveAlert.addAction(okAction)
         present(saveAlert, animated: true, completion: nil)
+    
     }
 }
 
@@ -468,4 +520,17 @@ extension AdminProfileViewController{
         }
     }
 
+}
+
+
+//shared functions
+extension AdminProfileViewController{
+    
+    func showAlert(message: String, completion: (() -> Void)? = nil) {
+         let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+             completion?()
+         }))
+         present(alert, animated: true, completion: nil)
+     }
 }
