@@ -58,6 +58,7 @@ struct K {
             static let dateCreated = "dateCreated"
             static let phoneNumber = "phoneNumber"
             static let profileImageURL = "profileImageURL"
+            static let isDeleted = "isDeleted"
             static let type = "type"
         }
         
@@ -74,7 +75,14 @@ struct K {
         }
         
         struct Customers {
-            
+            static let userID = "userID"
+            static let fullName = "fullName"
+            static let email = "email"
+            static let dateCreated = "dateCreated"
+            static let phoneNumber = "phoneNumber"
+            static let profileImageURL = "profileImageURL"
+            static let type = "type"
+
             static let collectionName = "customers"
             
             static let dob = "dob"
@@ -133,7 +141,7 @@ struct K {
         
         struct Ratings {
             static let collectionName = "ratings"
-            static let userID = "userID"
+            static let customerID = "customerID"
             static let eventID = "eventID"
             static let organizerID = "organizerID"
             static let rating = "rating"

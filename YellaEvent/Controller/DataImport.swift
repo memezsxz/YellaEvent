@@ -7,13 +7,41 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseStorage
+
 final class DataImport {
     static private var idMappings: [String: String] = [:] // Stores mappings for all referenced IDs (userID, eventID, badgeID, etc.)
     static private let db = Firestore.firestore()
-    
+    static private let storage = Storage.storage()
+
+    static private func uploadImage(localPath: String, storagePath: String, completion: @escaping (String?) -> Void) {
+        guard let imageData = FileManager.default.contents(atPath: localPath) else {
+            print("Image not found at path: \(localPath)")
+            completion(nil)
+            return
+        }
+
+        let storageRef = Storage.storage().reference().child(storagePath)
+        storageRef.putData(imageData, metadata: nil) { _, error in
+            if let error = error {
+                print("Error uploading image: \(error.localizedDescription)")
+                completion(nil)
+            } else {
+                storageRef.downloadURL { url, error in
+                    if let error = error {
+                        print("Error getting image URL: \(error.localizedDescription)")
+                        completion(nil)
+                    } else if let url = url {
+                        completion(url.absoluteString)
+                    }
+                }
+            }
+        }
+    }
+
     static func uploadData() {
         // Locate the JSON file in the app bundle
-        guard let path = Bundle.main.path(forResource: "file", ofType: "json") else {
+        guard let path = Bundle.main.path(forResource: "file2", ofType: "json") else {
             print("JSON file not found.")
             return
         }
@@ -67,7 +95,6 @@ final class DataImport {
                 updatedAdmin[K.FStore.User.dateCreated] = K.DFormatter.date(from: dateCreated)!
             }
             
-            
             let ref = db.collection(K.FStore.Admins.collectionName).addDocument(data: updatedAdmin) { error in
                 if let error = error {
                     print("Error uploading admin: \(error.localizedDescription)")
@@ -78,9 +105,22 @@ final class DataImport {
             
             ref.getDocument { (document, error) in
                 if let documentID = document?.documentID {
-                    ref.updateData(["userID": documentID])
-                    let oldUserID = admin["userID"] as? String ?? ""
+                    ref.updateData([K.FStore.User.userID: documentID])
+                    let oldUserID = admin[K.FStore.User.userID] as? String ?? ""
                     self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
+
+                    if let localImagePath = updatedAdmin[K.FStore.User.profileImageURL] as? String {
+                        let storagePath = "admins/\(documentID)/profile.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedAdmin[K.FStore.User.profileImageURL] = imageUrl
+                                ref.updateData([K.FStore.User.profileImageURL: imageUrl])
+                            }
+                        }
+                        
+                    } else {
+                        print("Admin uploaded with ID: \(documentID) and no profile photo URL.")
+                    }
                 }
             }
         }
@@ -122,9 +162,30 @@ final class DataImport {
             
             ref.getDocument { (document, error) in
                 if let documentID = document?.documentID {
-                    ref.updateData(["userID": documentID])
-                    let oldUserID = organizer["userID"] as? String ?? ""
+                    ref.updateData([K.FStore.User.userID: documentID])
+                    let oldUserID = organizer[K.FStore.User.userID] as? String ?? ""
                     self.idMappings[oldUserID] = documentID
+
+                    if let localImagePath = updatedOrganizer[K.FStore.User.profileImageURL] as? String {
+                        let storagePath = "organizers/\(documentID)/Profile.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedOrganizer[K.FStore.User.profileImageURL] = imageUrl
+                                ref.updateData([K.FStore.User.profileImageURL: imageUrl])
+                            }
+                        }
+                    }
+                    
+                    if let localImagePath = updatedOrganizer[K.FStore.Organizers.LicenseDocumentURL] as? String {
+                        let storagePath = "organizers/\(documentID)/License.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedOrganizer[K.FStore.Organizers.LicenseDocumentURL] = imageUrl
+                                ref.updateData([K.FStore.Organizers.LicenseDocumentURL: imageUrl])
+                            }
+                        }
+                    }
+                    
                     print("Mapped old organizer ID \(oldUserID) to new document ID \(documentID)")
                 }
                 dispatchGroup.leave()  // Leave the DispatchGroup after the async task completes
@@ -161,15 +222,15 @@ final class DataImport {
             }
             
             // Map badgeIDs if present
-            if let badgeIDs = customer["badgesArray"] as? [String] {
+            if let badgeIDs = customer[K.FStore.Customers.badgesArray] as? [String] {
                 let newBadgeIDs = badgeIDs.compactMap { idMappings[$0] }
-                updatedCustomer["badgesArray"] = newBadgeIDs
+                updatedCustomer[K.FStore.Customers.badgesArray] = newBadgeIDs
             }
             
             // Map categoryIDs if present
-            if let categoryIDs = customer["interestArray"] as? [String] {
+            if let categoryIDs = customer[K.FStore.Customers.intrestArray] as? [String] {
                 let newCategoryIDs = categoryIDs.compactMap { idMappings[$0] }
-                updatedCustomer["interestArray"] = newCategoryIDs
+                updatedCustomer[K.FStore.Customers.intrestArray] = newCategoryIDs
             }
             
             let ref = db.collection(K.FStore.Customers.collectionName).addDocument(data: updatedCustomer) { error in
@@ -182,9 +243,19 @@ final class DataImport {
             
             ref.getDocument { (document, error) in
                 if let documentID = document?.documentID {
-                    ref.updateData(["userID": documentID])
-                    let oldUserID = customer["userID"] as? String ?? ""
+                    ref.updateData([K.FStore.User.userID: documentID])
+                    let oldUserID = customer[K.FStore.User.userID] as? String ?? ""
                     self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
+
+                    if let localImagePath = updatedCustomer[K.FStore.User.profileImageURL] as? String {
+                        let storagePath = "customers/\(documentID)/profile.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedCustomer[K.FStore.User.profileImageURL] = imageUrl
+                                ref.updateData([K.FStore.User.profileImageURL: imageUrl])
+                            }
+                        }
+                    }
                 }
                 dispatchGroup.leave()  // Leave the DispatchGroup after the async task completes
             }
@@ -278,6 +349,30 @@ final class DataImport {
                     ref.updateData([K.FStore.Events.eventID: documentID])
                     let oldUserID = event[K.FStore.Events.eventID] as? String ?? ""
                     self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
+                    
+                    if let localImagePath = updatedEvent[K.FStore.Events.coverImageURL] as? String {
+                        let storagePath = "events/\(updatedEvent[K.FStore.Events.organizerID] as! String)/\(documentID)/CoverImage.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedEvent[K.FStore.Events.coverImageURL] = imageUrl
+                                ref.updateData([K.FStore.Events.coverImageURL: imageUrl])
+                            }
+                        }
+                    }
+                    var mediaArray: [String] = []
+var i = 0
+                    (updatedEvent[K.FStore.Events.mediaArray] as? [String])?.forEach({ localImagePath in
+                        let storagePath = "events/\(updatedEvent[K.FStore.Events.organizerID] as! String)/\(documentID)/media\(i).jpg"
+                        i += 1
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                mediaArray.append( imageUrl)
+                                ref.updateData([K.FStore.Events.mediaArray: mediaArray])
+                            }
+                        }
+
+                    })
+                    
                 }
                 
                 dispatchGroup.leave() // Finish tracking this operation
@@ -405,8 +500,8 @@ final class DataImport {
             dispatchGroup.enter() // Start tracking an operation
             
             var updatedBadge = badge
-            if let eventID = badge["eventID"] as? String {
-                updatedBadge["eventID"] = idMappings[eventID] ?? eventID
+            if let eventID = badge[K.FStore.Badges.eventID] as? String {
+                updatedBadge[K.FStore.Badges.eventID] = idMappings[eventID] ?? eventID
             }
             
             if let categoryID = badge[K.FStore.Badges.categoryID] as? String {
@@ -426,6 +521,16 @@ final class DataImport {
                     ref.updateData([K.FStore.Badges.badgeID: documentID])
                     let oldUserID = badge[K.FStore.Badges.badgeID] as? String ?? ""
                     self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
+
+                    if let localImagePath = updatedBadge[K.FStore.Badges.image] as? String {
+                        let storagePath = "events/\(documentID)/Badge.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedBadge[K.FStore.Badges.image] = imageUrl
+                                ref.updateData([K.FStore.Badges.image: imageUrl])
+                            }
+                        }
+                    }
                 }
                 dispatchGroup.leave() // Finish tracking this operation
             }
@@ -497,19 +602,19 @@ final class DataImport {
             dispatchGroup.enter() // Start tracking an operation
             
             var updatedRating = rating
-            if let eventID = rating["eventID"] as? String {
-                updatedRating["eventID"] = idMappings[eventID] ?? eventID
+            if let eventID = rating[K.FStore.Ratings.eventID] as? String {
+                updatedRating[K.FStore.Ratings.eventID] = idMappings[eventID] ?? eventID
             }
             
-            if let userID = rating["userID"] as? String {
-                updatedRating["userID"] = idMappings[userID] ?? userID
+            if let userID = rating[K.FStore.Ratings.customerID] as? String {
+                updatedRating[K.FStore.Ratings.customerID] = idMappings[userID] ?? userID
             }
             
-            if let organizerID = rating["organizerID"] as? String {
-                updatedRating["organizerID"] = idMappings[organizerID] ?? organizerID
+            if let organizerID = rating[K.FStore.Ratings.organizerID] as? String {
+                updatedRating[K.FStore.Ratings.organizerID] = idMappings[organizerID] ?? organizerID
             }
             
-            db.collection(K.FStore.Ratings.collectionName).document("\(updatedRating["eventID"]!)\(updatedRating["userID"]!)").setData(updatedRating) { error in
+            db.collection(K.FStore.Ratings.collectionName).addDocument(data: updatedRating) { error in
                 if let error = error {
                     print("Error uploading rating: \(error.localizedDescription)")
                 } else {

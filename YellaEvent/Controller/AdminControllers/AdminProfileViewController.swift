@@ -146,7 +146,7 @@ class AdminProfileViewController: UIViewController {
         super.viewDidLoad()
         setupEditPage()
 
-            UserDefaults.standard.set("9aszi9qERnzUTZdCl0TF", forKey: K.bundleUserID) // this will be removed after seting the application
+            UserDefaults.standard.set("Zi9Nd7PDXckVbRFUFXZl", forKey: K.bundleUserID) // this will be removed after seting the application
         setup()
 
     }
@@ -329,7 +329,7 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
             currentUser?.fullName = txtFullName.text!
             currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
             if let image = editProfileImage.image, imageUpdated {
-                PhotoManager.shared.uploadPhoto(image, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+                PhotoManager.shared.uploadPhoto(image, to: "admins/\(currentUser!.userID)", withNewName: "profile") { result in
                     switch result {
                     case .success(let url):
                         
