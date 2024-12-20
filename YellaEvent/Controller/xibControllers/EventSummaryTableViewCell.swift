@@ -19,13 +19,9 @@ class EventSummaryTableViewCell: UITableViewCell {
     @IBOutlet weak var catagoryLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        //        view.layer.borderWidth = 1
-        //        view.layer.borderColor = UIColor(named:K.BrandColors.purple)?.cgColor
         view.layer.cornerRadius = contentView.frame.height / 9
-        //        catagoryLabel.layer.cornerRadius = catagoryLabel.frame.size.width / 9
         catagoryWrapper.layer.cornerRadius =  catagoryWrapper.frame.width / 8
         catagoryWrapper.layer.allowsEdgeAntialiasing = true
-        // Initialization code
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,6 +31,7 @@ class EventSummaryTableViewCell: UITableViewCell {
     }
     
     func setup(with event: EventSummary) {
+        if eventImage.image == nil {
         loading.startAnimating()
         let find = "@"
         
@@ -43,7 +40,6 @@ class EventSummaryTableViewCell: UITableViewCell {
         descriptionLabel.text = text
         
         let attributedString = NSMutableAttributedString(string: text)
-        
         if let range = text.range(of: find) {
             let nsRange = NSRange(range, in: text)
             attributedString.addAttribute(.font,
@@ -52,20 +48,20 @@ class EventSummaryTableViewCell: UITableViewCell {
         }
         
         descriptionLabel.attributedText = attributedString
-        
-        PhotoManager.shared.downloadImage(from: URL(string: event.coverImageURL)!) { result in
-            switch result {
-            case .success(let image):
-                self.eventImage.image = image
-                self.loading.removeFromSuperview()
-                
-            case .failure(let error):
-                print(error)
+            PhotoManager.shared.downloadImage(from: URL(string: event.coverImageURL)!) { result in
+                switch result {
+                case .success(let image):
+                    self.eventImage.image = image
+                    self.loading.removeFromSuperview()
+                    
+                case .failure(let error):
+                    print(error)
+                }
             }
+            
+            eventName.text = event.name
+            priceLabel.text = "\(event.price)BD"
+            catagoryLabel.text = "\(event.categoryName) \(event.categoryIcon)"
         }
-        
-        eventName.text = event.name
-        priceLabel.text = "\(event.price)BD"
-        catagoryLabel.text = "\(event.categoryName) \(event.categoryIcon)"
     }
 }
