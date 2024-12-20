@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class OrganizerProfileViewController: UIViewController {
     
@@ -44,6 +45,24 @@ class OrganizerProfileViewController: UIViewController {
         DeleteAccount(sender)
     }
     
+    @IBAction func changePassword(_ sender: Any) {
+        
+        guard let email = txtEmail.text, !email.isEmpty else {
+            showAlert(message: "Please enter your email.")
+            return
+        }
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+        
+                self.showAlert( message: error.localizedDescription)
+                return
+            }
+            
+        
+            self.showAlert(message: "A password reset link has been sent to \(email).")
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -51,7 +70,7 @@ class OrganizerProfileViewController: UIViewController {
 
         setupEditPage()
         
-        UserDefaults.standard.set("0TgGkZPHew1WhMNVvHcU", forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set("3w50ZBqYl8EHuQbEQcmo", forKey: K.bundleUserID) // this will be removed after seting the application
 
         setup()
 
@@ -69,16 +88,20 @@ class OrganizerProfileViewController: UIViewController {
                 bigUserName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 bigUserType?.titleLabel!.text = "Organizer"
-                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
-                    
-                    switch result {
-                    case .success(let image):
-                        self.BigImageProfile?.image = image
-                    case .failure(_):
-                        self.BigImageProfile?.image = UIImage(named: "DefaultImageProfile")
-                    }
-                    
-                })
+                
+                
+                if !currentUser!.profileImageURL.isEmpty{
+                    PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+                        
+                        switch result {
+                        case .success(let image):
+                            self.BigImageProfile?.image = image
+                        case .failure(_):
+                            self.BigImageProfile?.image = UIImage(named: "DefaultImageProfile")
+                        }
+                        
+                    })
+                }
                 
 
             } catch {
@@ -115,16 +138,21 @@ extension OrganizerProfileViewController{
                 txtFullName?.text = "\(currentUser!.fullName)"
                 txtEmail?.text = currentUser!.email
                 txtPhoneNumber?.text = "\(currentUser!.phoneNumber)"
-                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
-                    
-                    switch result {
-                    case .success(let image):
-                        self.editProfileImage?.image = image
-                    case .failure(_):
-                        self.editProfileImage?.image = UIImage(named: "DefaultImageProfile")
-                    }
-                    
-                })
+                
+                
+                
+                if !(currentUser!.profileImageURL.isEmpty){
+                    PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+                        
+                        switch result {
+                        case .success(let image):
+                            self.editProfileImage?.image = image
+                        case .failure(_):
+                            self.editProfileImage?.image = UIImage(named: "DefaultImageProfile")
+                        }
+                        
+                    })
+                }
                 
                 
             } catch {
@@ -141,9 +169,11 @@ extension OrganizerProfileViewController{
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        for view in roundedViews{
-            view.layer.cornerRadius = view.frame.height / 2
-            view.clipsToBounds = true
+        if let shape = roundedViews {
+            for view in shape{
+                view.layer.cornerRadius = view.frame.height / 2
+                view.clipsToBounds = true
+            }
         }
     }
     
@@ -153,6 +183,16 @@ extension OrganizerProfileViewController{
 
 // edit profile page functions
 extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    
+    
+    func showAlert(message: String, completion: (() -> Void)? = nil) {
+         let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+             completion?()
+         }))
+         present(alert, animated: true, completion: nil)
+     }
     
     
     // function show two options (camera, photo library)
@@ -230,7 +270,7 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
             currentUser!.phoneNumber =  Int(txtPhoneNumber!.text!)!
             
             if let image = editProfileImage.image, imageUpdated {
-                PhotoManager.shared.uploadPhoto(image, to: "\(currentUser!.userID)", withNewName: "profile") { result in
+                PhotoManager.shared.uploadPhoto(image, to: "organizers/\(currentUser!.userID)", withNewName: "profile") { result in
                     switch result {
                     case .success(let url):
                         

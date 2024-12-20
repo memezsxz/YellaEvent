@@ -49,7 +49,3 @@ final class FAQsManager {
         try await FAQDocument(FAQID: FAQID).delete()
     }
 }
-
-
-
-

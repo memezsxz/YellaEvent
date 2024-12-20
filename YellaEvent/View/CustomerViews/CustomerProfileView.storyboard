@@ -607,8 +607,7 @@
                                                     <color key="baseForegroundColor" name="BrandBlue"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="chnagePasswordAction:" destination="Ikn-St-sM2" eventType="touchUpInside" id="aev-LD-acg"/>
-                                                    <segue destination="bqI-ci-0vi" kind="show" identifier="chnage" id="oex-1g-qIk"/>
+                                                    <action selector="chnagePassword:" destination="Ikn-St-sM2" eventType="touchUpInside" id="zNO-J3-b3t"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -679,16 +678,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QGA-2A-PjR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1080" y="-2"/>
-        </scene>
-        <!--AuthenticationView-->
-        <scene sceneID="L6N-nO-F1g">
-            <objects>
-                <viewControllerPlaceholder storyboardName="AuthenticationView" id="bqI-ci-0vi" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="e1q-Wa-5si"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gjM-zL-mmn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1873" y="-2"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tFU-7S-9dD">

@@ -95,7 +95,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
         
         //save the given documnet 
         if let image  = image{
-            PhotoManager.shared.uploadPhoto(image, to: "\(currentOrganizer!.userID)", withNewName: "License") { result in
+            PhotoManager.shared.uploadPhoto(image, to: "organizers/\(currentOrganizer!.userID)", withNewName: "License") { result in
                 switch result {
                     case .success(let url):
                     self.currentOrganizer?.LicenseDocumentURL = url

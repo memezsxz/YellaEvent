@@ -42,111 +42,43 @@ class AdminProfileViewController: UIViewController {
         saveUserChanges(sender)
     }
     
+    @IBAction func changePassword(_ sender: Any) {
+        
+        guard let email = txtEmail.text, !email.isEmpty else {
+            showAlert(message: "Please enter your email.")
+            return
+        }
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+        
+                self.showAlert( message: error.localizedDescription)
+                return
+            }
+            
+        
+            self.showAlert(message: "A password reset link has been sent to \(email).")
+        }
+        
+    }
+    
+    
+    
+    
     @IBOutlet weak var bigUserName: UILabel!
     @IBOutlet weak var bigUserType: UIButton!
 
     
     
-// chnage password page
-    //outlet
-    @IBOutlet weak var txtOldPassword: UITextField!
-    @IBOutlet weak var txtNewPassword: UITextField!
-    @IBOutlet weak var txtConfirmPassword: UITextField!
     
-    //error lable
-    @IBOutlet weak var lblErrorOldPassword: UILabel!
-    @IBOutlet weak var lblErrorNewPassword: UILabel!
-    @IBOutlet weak var lblErrorConfirmPassword: UILabel!
-    
-    
-    @IBAction func changePassword(_ sender: Any) {
-   
-        
-                var isValid = true
-                //1. validation
-                if let pass = txtOldPassword.text, pass.isEmpty {
-                    lblErrorOldPassword.text = "This Field is required"
-                    highlightField(txtOldPassword)
-                    isValid = false
-                
-                }else{
-                    lblErrorOldPassword.text = ""
-                    resetFieldHighlight(txtOldPassword)
-                    isValid = true
-                }
-        
-                if let pass = txtNewPassword.text, pass.isEmpty {
-                    lblErrorNewPassword.text = "This Field is required"
-                    highlightField(txtNewPassword)
-                    isValid = false
-        
-                }else{
-                    lblErrorNewPassword.text = ""
-                    resetFieldHighlight(txtNewPassword)
-                    isValid = true
-                }
-        
-                if let pass = txtConfirmPassword.text, pass.isEmpty {
-                    lblErrorConfirmPassword.text = "This Field is required"
-                    highlightField(txtConfirmPassword)
-                    isValid = false
-        
-                }else if (txtConfirmPassword.text != txtNewPassword.text){
-                    lblErrorConfirmPassword.text = "Password does not match"
-                    highlightField(txtConfirmPassword)
-                    isValid = false
-        
-                }else{
-                    lblErrorConfirmPassword.text = ""
-                    resetFieldHighlight(txtConfirmPassword)
-                    isValid = true
-                }
-        
-        
-                //2. change password
-        if (isValid == true){
-                        
-            
-            Auth.auth().currentUser?.updatePassword(to: txtNewPassword.text!) { error in
-                DispatchQueue.main.async {
-                    if let error = error {
-                        // Handle the error case
-                        let errorAlert = UIAlertController(
-                            title: "Error",
-                            message: "Error with changing password: \(error.localizedDescription)",
-                            preferredStyle: .alert
-                        )
-                        
-                        let okAction = UIAlertAction(title: "OK", style: .default)
-                        errorAlert.addAction(okAction)
-                        self.present(errorAlert, animated: true, completion: nil)
-                    } else {
-                        // Handle the success case
-                        let saveAlert = UIAlertController(
-                            title: "Changes Saved",
-                            message: "You can use your new password",
-                            preferredStyle: .alert
-                        )
-                        
-                        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-                            self.navigationController?.popViewController(animated: true)
-                        }
-                        
-                        saveAlert.addAction(okAction)
-                        self.present(saveAlert, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-
-    }
     
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        setupEditPage()
 
-            UserDefaults.standard.set("Zi9Nd7PDXckVbRFUFXZl", forKey: K.bundleUserID) // this will be removed after seting the application
+        setupEditPage()
+        UserDefaults.standard.set("zxnzNnd9FK8xcnATlYUh", forKey: K.bundleUserID) // this will be removed after seting the application
+
         setup()
 
     }
@@ -165,18 +97,18 @@ class AdminProfileViewController: UIViewController {
                 print("check")
             }
             
-            PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
+           
+                PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
-                        //if the user have an image and his/her image
                     case .success(let image):
                         self.BigImageProfile?.image = image
-                        // if the user don't have an image put the defualt image
                     case .failure(_):
                         self.BigImageProfile?.image = UIImage(named: "DefaultImageProfile")
                     }
                     
                 })
+            
         }
             
             //download the current user image
@@ -210,20 +142,22 @@ extension AdminProfileViewController{
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
                 txtPhoneNumber?.text = "\(us.phoneNumber)"
-                print(us)
                 
 //                txtPhoneNumber?.text = String(us.phoneNumber)
-                PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+                if !(us.profileImageURL.isEmpty){
                     
-                    switch result {
-                    case .success(let image):
-                        self.editProfileImage?.image = image
-//                        self.imageUpdated = true
-                    case .failure(_):
-                        self.editProfileImage?.image = UIImage(named: "DefaultImageProfile")
-                    }
-                    
-                })
+                    PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
+                        
+                        switch result {
+                        case .success(let image):
+                            self.editProfileImage?.image = image
+                        case .failure(_):
+                            self.editProfileImage?.image = UIImage(named: "DefaultImageProfile")
+                        }
+                        
+                    })
+                }
+    
                 
 
                 
@@ -588,7 +522,15 @@ extension AdminProfileViewController{
 
 }
 
-//extension AdminProfileViewController{
-//    
-//    
-//}
+
+//shared functions
+extension AdminProfileViewController{
+    
+    func showAlert(message: String, completion: (() -> Void)? = nil) {
+         let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+             completion?()
+         }))
+         present(alert, animated: true, completion: nil)
+     }
+}

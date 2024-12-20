@@ -450,7 +450,7 @@
                                                     <color key="baseForegroundColor" name="BrandBlue"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <segue destination="uUz-xz-S6h" kind="show" id="4Mq-we-7lp"/>
+                                                    <action selector="changePassword:" destination="U3U-xL-wAR" eventType="touchUpInside" id="FPy-dW-aoI"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -519,16 +519,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fXG-j2-tUm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="984" y="-2"/>
-        </scene>
-        <!--AuthenticationView-->
-        <scene sceneID="eMc-ax-Ezt">
-            <objects>
-                <viewControllerPlaceholder storyboardName="AuthenticationView" id="uUz-xz-S6h" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="rFN-0Q-Mot"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SHr-V4-5OU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1680" y="-10"/>
         </scene>
     </scenes>
     <resources>
