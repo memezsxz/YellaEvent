@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="iPad13_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -20,11 +20,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ff0-jR-cJ5">
-                        <rect key="frame" x="5" y="5" width="310" height="34"/>
+                        <rect key="frame" x="15" y="5" width="290" height="34"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ipa-Nl-Rcn">
-                        <rect key="frame" x="6" y="0.0" width="308" height="44"/>
+                        <rect key="frame" x="15" y="0.0" width="290" height="44"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dEB-kc-7O2" userLabel="profilePhoto">
                                 <rect key="frame" x="0.0" y="5" width="35" height="34"/>
@@ -35,10 +35,10 @@
                                 <imageReference key="image" image="calendar.circle.fill" catalog="system" symbolScale="default" variableValue="0.0"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="y32-Lz-mOq">
-                                <rect key="frame" x="40" y="12" width="219" height="20.5"/>
+                                <rect key="frame" x="40" y="12" width="201" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6A-rb-3it">
-                                        <rect key="frame" x="0.0" y="0.0" width="219" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="201" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="BrandDarkPurple"/>
                                         <nil key="highlightedColor"/>
@@ -49,7 +49,7 @@
                                 </constraints>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowshape.right.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YMA-4y-Zdt">
-                                <rect key="frame" x="264" y="9.5" width="44" height="25"/>
+                                <rect key="frame" x="246" y="9.5" width="44" height="25"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
@@ -67,12 +67,12 @@
                 <color key="backgroundColor" name="BackgroundGray"/>
                 <constraints>
                     <constraint firstItem="Ipa-Nl-Rcn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="0AR-i5-jBH"/>
-                    <constraint firstAttribute="trailing" secondItem="ff0-jR-cJ5" secondAttribute="trailing" constant="5" id="7F8-mc-Vkm"/>
-                    <constraint firstItem="Ipa-Nl-Rcn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="CXO-Cd-h1d"/>
+                    <constraint firstAttribute="trailing" secondItem="ff0-jR-cJ5" secondAttribute="trailing" constant="15" id="7F8-mc-Vkm"/>
+                    <constraint firstItem="Ipa-Nl-Rcn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="CXO-Cd-h1d"/>
                     <constraint firstItem="ff0-jR-cJ5" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="H1Z-lA-KIQ"/>
-                    <constraint firstItem="ff0-jR-cJ5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="HMW-KW-XGr"/>
+                    <constraint firstItem="ff0-jR-cJ5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="HMW-KW-XGr"/>
                     <constraint firstAttribute="bottom" secondItem="Ipa-Nl-Rcn" secondAttribute="bottom" id="MHQ-fw-UHG"/>
-                    <constraint firstAttribute="trailing" secondItem="Ipa-Nl-Rcn" secondAttribute="trailing" constant="6" id="OFA-ZE-qeR"/>
+                    <constraint firstAttribute="trailing" secondItem="Ipa-Nl-Rcn" secondAttribute="trailing" constant="15" id="OFA-ZE-qeR"/>
                     <constraint firstItem="ff0-jR-cJ5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="bFK-h0-MKv"/>
                     <constraint firstItem="ff0-jR-cJ5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="bOG-Hy-bO4"/>
                     <constraint firstItem="Ipa-Nl-Rcn" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="r6i-vx-nXt"/>

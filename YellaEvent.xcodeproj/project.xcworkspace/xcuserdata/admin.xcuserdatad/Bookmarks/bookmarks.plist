@@ -34,16 +34,16 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string>extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+				<string>        
 </string>
 				<key>leading</key>
-				<string>
-// edit profile page
+				<string>        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
 </string>
 				<key>trailing</key>
-				<string>    
-    
-    // function to set the date picket on the date of birth field in the user profile page
+				<string>        // Handle maximum date exception
+        if let currentDate = Date() as Date? {
+            datePicker.maximumDate = currentDate
 </string>
 			</dict>
 			<key>title</key>
