@@ -33,7 +33,7 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
         delegate = self
         dataSource = self
         
-        backgroundColor = .white
+        backgroundColor = UIColor(named: K.BrandColors.backgroundGray)
         register(InterstsCollectionViewCell.self, forCellWithReuseIdentifier: InterstsCollectionViewCell.identifier)
         //        alwaysBounceVertical = true
         //        showsVerticalScrollIndicator = true
@@ -138,24 +138,24 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     
     // MARK: - each item size
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let category = interests[indexPath.item]
-        let text = "\(category.name) \(category.icon)"
-        let font = UIFont.systemFont(ofSize: InterstsCollectionViewCell.fontSize, weight: .medium)
-        
-        // Calculate the size of the text
-        let maxSize = CGSize(width: frame.width - 40, height: CGFloat.greatestFiniteMagnitude)
-        let textBoundingBox = NSString(string: text).boundingRect(
-            with: maxSize,
-            options: .usesLineFragmentOrigin,
-            attributes: [.font: font],
-            context: nil
-        )
-        
-        let textWidth = ceil(textBoundingBox.width)
-        let width = max(textWidth, 150)
-        return CGSize(width: width, height: 120)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let category = interests[indexPath.item]
+//        let text = "\(category.name) \(category.icon)"
+//        let font = UIFont.systemFont(ofSize: InterstsCollectionViewCell.fontSize, weight: .medium)
+//        
+//        // Calculate the size of the text
+//        let maxSize = CGSize(width: frame.width - 40, height: CGFloat.greatestFiniteMagnitude)
+//        let textBoundingBox = NSString(string: text).boundingRect(
+//            with: maxSize,
+//            options: .usesLineFragmentOrigin,
+//            attributes: [.font: font],
+//            context: nil
+//        )
+//        
+//        let textWidth = ceil(textBoundingBox.width)
+//        let width = max(textWidth, 150)
+//        return CGSize(width: width, height: 120)
+//    }
 }
 
 // MAARK: flow to the left
