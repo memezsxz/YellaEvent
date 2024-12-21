@@ -14,6 +14,8 @@ class ViewCustomerDetailsView: UIView {
     var currentCustomer : Customer? = nil
     var userBan : Bool = false
     
+    
+    //MARK: Outlets
     @IBOutlet weak var txtUserNameCustomer: UINavigationItem!
     @IBOutlet weak var txtPhoneNumberCustomer: UITextField!
     @IBOutlet weak var txtDOBCustomer: UITextField!
@@ -72,7 +74,7 @@ class ViewCustomerDetailsView: UIView {
         }
     }
     
-    //Action
+    //MARK: Action
     @IBAction func ResetCustomerPassword(_ sender: Any) {
         //get the user object and reset the password value of the user
        
@@ -91,10 +93,9 @@ class ViewCustomerDetailsView: UIView {
         
             self.delegate!.showAlert(message: "A password reset link has been sent to \(email).")
         }
-        
-        //show an alert that the password reset
-//        delegate?.resertPassword()
+
     }
+    
     
     @IBAction func BanUserButton(_ sender: Any)  {
         //check if the user in the ban collection
@@ -111,8 +112,6 @@ class ViewCustomerDetailsView: UIView {
             self.userBan = false
         }
         
-        // if the user is in the ban collection use this function
-        //UnBanAlert
         
     }
     

@@ -14,12 +14,15 @@ class AdminProfileViewController: UIViewController {
     var currentUser: Admin?
     var imageUpdated : Bool = false
     var FAQobject: FAQ?
-// MARK: the profile tab outlet
+
+    
+//MARK: Outlets
+// the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
     @IBOutlet weak var BigImageProfile: UIImageView!
     
     
-// MARK: Edit Profile Page section
+//  Edit Profile Page section
     //Outlet Fields
     @IBOutlet weak var txtFullName: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
@@ -27,13 +30,14 @@ class AdminProfileViewController: UIViewController {
     @IBOutlet weak var editProfileImage: UIImageView!
     
     
-    
+    //MARK: Error Outlets
     //Outlet Errors
     @IBOutlet weak var lblErrorFullName: UILabel!
     @IBOutlet weak var lblErrorPhoneNumber: UILabel!
     @IBOutlet weak var lblErrorEmail: UILabel!
    
-    //Actions
+    
+    //MARK: Actions
     @IBAction func EditImageButtonTapped(_ sender: Any) {
         changeTheUserImage(sender)
     }
@@ -79,7 +83,7 @@ class AdminProfileViewController: UIViewController {
     
     
     
-    
+    //MARK: ViewDidLoad
     override func viewDidLoad(){
         super.viewDidLoad()
 
@@ -100,8 +104,6 @@ class AdminProfileViewController: UIViewController {
                     bigUserName.text = currentUser?.fullName
                     bigUserType.titleLabel!.text = "Admin"
                 }
-            }catch{
-                print("check")
             }
             
            
@@ -126,7 +128,7 @@ class AdminProfileViewController: UIViewController {
         
     }
 
-    
+    //MARK: ViewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         // method to set the edit user profile page
         setup()
@@ -141,6 +143,8 @@ class AdminProfileViewController: UIViewController {
 
 }
 
+
+//MARK: Edit Profile
 //Admin Profile Page Functions
 extension AdminProfileViewController{
     
@@ -157,7 +161,6 @@ extension AdminProfileViewController{
                 txtEmail?.text = us.email
                 txtPhoneNumber?.text = "\(us.phoneNumber)"
                 
-//                txtPhoneNumber?.text = String(us.phoneNumber)
                 if !(us.profileImageURL.isEmpty){
                     
                     PhotoManager.shared.downloadImage(from: URL(string: us.profileImageURL)!, completion: { result in
@@ -177,7 +180,6 @@ extension AdminProfileViewController{
                 
             } catch {
                 print("Failed to fetch user: \(error)")
-                // Handle error appropriately, such as showing an alert to the user
             }
         }
         
@@ -312,8 +314,6 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
             }
             
         
-        }catch {
-            print("error with user saving data")
         }
         
         
@@ -340,13 +340,12 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
 
 
 
-
+//MARK: Validation
 // extention for filds validations --> inclide the function that related to the validation
 extension AdminProfileViewController{
     
     func validateFields() -> Bool {
         var isValid = true
-        var errorMessage = ""
 
 
         // Validate txtFullName (Only letters)
@@ -354,12 +353,10 @@ extension AdminProfileViewController{
             lblErrorFullName.text = "Full name is required."
             highlightField(txtFullName)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let fullName = txtFullName?.text, !isValidFullName(fullName) {
             lblErrorFullName.text = "Full name must contain only letters."
             highlightField(txtFullName)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorFullName.text = ""
             resetFieldHighlight(txtFullName)
@@ -370,12 +367,10 @@ extension AdminProfileViewController{
             lblErrorPhoneNumber.text = "Phone number is required."
             highlightField(txtPhoneNumber)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let phoneNumber = txtPhoneNumber?.text, !isValidPhoneNumber(phoneNumber) {
             lblErrorPhoneNumber.text = "Phone number must be exactly 8 digits."
             highlightField(txtPhoneNumber)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorPhoneNumber.text = ""
             resetFieldHighlight(txtPhoneNumber)
@@ -399,26 +394,19 @@ extension AdminProfileViewController{
             lblErrorEmail.text = "Email address is required."
             highlightField(txtEmail)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let email = txtEmail?.text, !isValidEmail(email) {
             lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
             highlightField(txtEmail)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         }else if thereIs{
             lblErrorEmail.text = "The provided email used by other user"
             highlightField(txtEmail)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         }else {
             lblErrorEmail.text = ""
             resetFieldHighlight(txtEmail)
         }
 
-        // Show warning if validation fails
-        if !isValid {
-            showWarning(message: errorMessage)
-        }
 
         return isValid
     }
@@ -457,87 +445,11 @@ extension AdminProfileViewController{
         textField?.layer.borderColor = UIColor.clear.cgColor
     }
     
-    
-    
-    func showWarning(message: String) {
-        // Check if the warning view already exists
-        if self.view.viewWithTag(999) != nil { return } // Avoid adding duplicate warnings
-        
-        // Create the warning view
-        let warningView = UIView()
-        warningView.backgroundColor = UIColor.red
-        warningView.tag = 999 // Use a unique tag to identify the view
-        warningView.layer.cornerRadius = 5
-        warningView.translatesAutoresizingMaskIntoConstraints = false
-
-        // Create the warning message label
-        let warningLabel = UILabel()
-        warningLabel.text = message
-        warningLabel.textColor = .white
-        warningLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        warningLabel.numberOfLines = 0
-        warningLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // Create the close button
-        let closeButton = UIButton(type: .system)
-        closeButton.setTitle("X", for: .normal)
-        closeButton.setTitleColor(.white, for: .normal)
-        closeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.addTarget(self, action: #selector(hideWarning), for: .touchUpInside)
-
-        // Add subviews to the warning view
-        warningView.addSubview(warningLabel)
-        warningView.addSubview(closeButton)
-
-        // Add the warning view to the main view
-        self.view.addSubview(warningView)
-
-        // Constraints for the warning view
-        NSLayoutConstraint.activate([
-            warningView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            warningView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-            warningView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-            warningView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
-        ])
-
-        // Constraints for the warning label
-        NSLayoutConstraint.activate([
-            warningLabel.leadingAnchor.constraint(equalTo: warningView.leadingAnchor, constant: 10),
-            warningLabel.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
-            warningLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -10),
-        ])
-
-        // Constraints for the close button
-        NSLayoutConstraint.activate([
-            closeButton.trailingAnchor.constraint(equalTo: warningView.trailingAnchor, constant: -10),
-            closeButton.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
-            closeButton.widthAnchor.constraint(equalToConstant: 30),
-            closeButton.heightAnchor.constraint(equalToConstant: 30),
-        ])
-
-        // Animate the warning view appearance
-        warningView.alpha = 0
-        UIView.animate(withDuration: 0.3) {
-            warningView.alpha = 1
-        }
-    }
-
-    
-    @objc func hideWarning() {
-        if let warningView = self.view.viewWithTag(999) {
-            UIView.animate(withDuration: 0.3, animations: {
-                warningView.alpha = 0
-            }) { _ in
-                warningView.removeFromSuperview()
-            }
-        }
-    }
 
 }
 
 
-//shared functions
+//MARK: shared functions
 extension AdminProfileViewController{
     
     func showAlert(message: String, completion: (() -> Void)? = nil) {

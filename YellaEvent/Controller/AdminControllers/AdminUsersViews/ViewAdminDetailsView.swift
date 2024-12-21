@@ -13,7 +13,7 @@ class ViewAdminDetailsView: UIView {
     var currentAdmin : Admin? = nil
     
     
-    
+    //MARK: Outlets
       @IBOutlet weak var txtNameAdmin: UINavigationItem!
       @IBOutlet weak var txtEmailAdmin: UITextField!
       @IBOutlet weak var txtPhoneNumberAdmin: UITextField!

@@ -15,7 +15,7 @@ class ViewOrganizerDetailsView: UIView {
     var currentOrganizer : Organizer? = nil
     var userBan : Bool = false
     
-    
+    //MARK: Outlets
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
     @IBOutlet weak var txtUserType: UITextField!
@@ -67,7 +67,7 @@ class ViewOrganizerDetailsView: UIView {
     }
     
     
-    
+    //MARK: Actions
     @IBAction func BanUserButton(_ sender: Any)  {
         //check if the user in the ban collection
         

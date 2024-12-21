@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
+//MARK: local Exception
 struct RuntimeError: LocalizedError {
     private let message: String
 
@@ -23,8 +24,11 @@ struct RuntimeError: LocalizedError {
 
 var currentUser: User? = nil
 
+//MARK: Class Start
 class AdminUsersViewController: UIViewController {
     
+    
+    //MARK: Outlet
     @IBOutlet var viewCustomerDetailsView: ViewCustomerDetailsView!
     @IBOutlet var viewAdminDetailsView: ViewAdminDetailsView!
     @IBOutlet var viewOrganizerDetailsView: ViewOrganizerDetailsView!
@@ -61,7 +65,7 @@ class AdminUsersViewController: UIViewController {
     
     var banDuration = ["24 Hours", "7 Days", "14 Days", "1 Month", "1 Year", "Permanent", "Custom Duration"]
     
-    //Actions
+    //MARK: Actions
     @IBAction func ConformBan(_ sender: Any) {
         // 1. Validation
         if txtBanReason.titleLabel?.text == "Select Ban Reason" ||
@@ -81,7 +85,7 @@ class AdminUsersViewController: UIViewController {
             let txt = (txtBanReason.titleLabel?.text)!
             
             Task{
-                try await UsersManager.banUser(userID: currentUser!.userID, userType: currentUser!.type, reason: txt, description: txtDescription.text, startDate: startDate, endDate: endDate)
+                try UsersManager.banUser(userID: currentUser!.userID, userType: currentUser!.type, reason: txt, description: txtDescription.text, startDate: startDate, endDate: endDate)
             }
             
             // 5. Show the confirmation alert
@@ -146,27 +150,19 @@ class AdminUsersViewController: UIViewController {
                 } else {
                     print("userListSections is not available on this screen.")
                 }
-            }catch {
-                print("Something went wrong: \(error.localizedDescription)")
             }
             // Safely update users
             do {
                 usersUpdate()
-            } catch {
-                print("Something went wrong during usersUpdate: \(error.localizedDescription)")
             }
-        }catch{
-            print("Something went wrong: \(error.localizedDescription)")
         }
 
 
         do{
-            if let banreason = txtBanReason {
+            if let _ = txtBanReason {
                 txtBanReason.setTitle("Select Ban Reason", for: .normal)
                 txtBanduration.setTitle("Select Ban Duration", for: .normal)
             }
-        }catch {
-            
         }
     
 
@@ -309,16 +305,16 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
             // Handle the selected segment and call appropriate methods
             switch section {
             case 0:
-                try UsersManager.getAllUsers(listener: listner())
+                 UsersManager.getAllUsers(listener: listner())
                 currentSegment = nil
             case 1:
-                try UsersManager.addUsersListener(userType: .customer, listener: listner())
+                 UsersManager.addUsersListener(userType: .customer, listener: listner())
                 currentSegment = .customer
             case 2:
-                try UsersManager.addUsersListener(userType: .organizer, listener: listner())
+                 UsersManager.addUsersListener(userType: .organizer, listener: listner())
                 currentSegment = .organizer
             case 3:
-                try UsersManager.addUsersListener(userType: .admin, listener: listner())
+                 UsersManager.addUsersListener(userType: .admin, listener: listner())
                 currentSegment = .admin
             default:
                 print("Unhandled section index: \(section)")

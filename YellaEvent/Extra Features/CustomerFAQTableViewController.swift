@@ -95,7 +95,7 @@ class CustomerFAQTableViewController: UITableViewController {
                 }
                 
                 // get faq for all
-                var all: [FAQ] = try await FAQsManager.getFAQs(forUserType: .all)
+                let all: [FAQ] = try await FAQsManager.getFAQs(forUserType: .all)
             
                 
                 // Update the `list` and reload the table view on the main thread
