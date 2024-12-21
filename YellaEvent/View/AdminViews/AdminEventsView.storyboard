@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ft0-sw-tzJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ft0-sw-tzJ">
     <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -20,9 +20,6 @@
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="xhV-9p-86L">
                                 <rect key="frame" x="0.0" y="160" width="440" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="iSQ-8b-P5s" id="H2Q-QI-WVj"/>
-                                </connections>
                             </searchBar>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ceD-Hp-0dz" customClass="MainUISegmentedControl" customModule="YellaEvent" customModuleProvider="target">
                                 <rect key="frame" x="8" y="221" width="424" height="32"/>
@@ -34,22 +31,14 @@
                                     <segment title="Cancelled"/>
                                 </segments>
                                 <color key="selectedSegmentTintColor" name="BrandPurple"/>
+                                <connections>
+                                    <action selector="segmentClick:" destination="iSQ-8b-P5s" eventType="valueChanged" id="Ceq-xx-zgw"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NOC-Nf-JRF">
                                 <rect key="frame" x="16" y="268" width="408" height="605"/>
                                 <color key="backgroundColor" name="BackgroundGray"/>
                                 <color key="sectionIndexBackgroundColor" name="BackgroundGray"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UsersTableViewCell" rowHeight="90" id="Htq-sB-uR4" customClass="AdminUserManagmentTableViewCell" customModule="YellaEvent" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="408" height="90"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Htq-sB-uR4" id="xDZ-MD-1uj">
-                                            <rect key="frame" x="0.0" y="0.0" width="408" height="90"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" name="BackgroundGray"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9wb-xG-2gN"/>
@@ -70,6 +59,9 @@
                     <navigationItem key="navigationItem" title="Events" id="cks-2r-Kcx"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="eventsStatusSegment" destination="ceD-Hp-0dz" id="m77-OZ-Ujj"/>
+                        <outlet property="searchBar" destination="xhV-9p-86L" id="Xxm-uq-r3a"/>
+                        <outlet property="tableView" destination="NOC-Nf-JRF" id="bHI-cc-bBd"/>
                         <segue destination="2sn-u2-gWa" kind="show" identifier="showEvent" id="zJy-eb-mX3"/>
                     </connections>
                 </viewController>
