@@ -1023,7 +1023,7 @@
                                 <rect key="frame" x="22" y="180" width="396" height="535.66666666666663"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Te0-ar-rzR">
-                                        <rect key="frame" x="0.0" y="0.0" width="396" height="82"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="396" height="81.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ban Reason" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLv-D8-vzC">
                                                 <rect key="frame" x="0.0" y="0.0" width="93.333333333333329" height="20.333333333333332"/>
@@ -1032,7 +1032,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPr-K6-TYD">
-                                                <rect key="frame" x="0.0" y="27.333333333333339" width="396" height="54.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="27.333333333333346" width="396" height="54.333333333333343"/>
                                                 <color key="backgroundColor" name="BackgroundGray"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
@@ -1052,7 +1052,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="YAh-HL-JTf">
-                                        <rect key="frame" x="0.0" y="123" width="396" height="81.666666666666686"/>
+                                        <rect key="frame" x="0.0" y="122.66666666666669" width="396" height="82"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ban Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFI-42-5Px">
                                                 <rect key="frame" x="0.0" y="0.0" width="103" height="20.333333333333332"/>
@@ -1061,7 +1061,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIe-lt-HWr">
-                                                <rect key="frame" x="0.0" y="27.333333333333318" width="396" height="54.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="27.333333333333311" width="396" height="54.666666666666657"/>
                                                 <color key="backgroundColor" name="BackgroundGray"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
@@ -1743,11 +1743,11 @@
                         <color key="sectionIndexBackgroundColor" name="BackgroundGray"/>
                         <color key="sectionIndexTrackingBackgroundColor" name="BackgroundGray"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FAQTableViewCell" rowHeight="90" id="VAs-5e-syZ">
-                                <rect key="frame" x="0.0" y="50" width="440" height="90"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FAQTableViewCell" rowHeight="180" id="VAs-5e-syZ">
+                                <rect key="frame" x="0.0" y="50" width="440" height="180"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VAs-5e-syZ" id="qSQ-2h-32v">
-                                    <rect key="frame" x="0.0" y="0.0" width="440" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="440" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" name="BackgroundGray"/>
@@ -1802,10 +1802,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

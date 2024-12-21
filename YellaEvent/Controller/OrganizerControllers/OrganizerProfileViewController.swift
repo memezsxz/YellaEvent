@@ -118,6 +118,13 @@ class OrganizerProfileViewController: UIViewController {
         setup()
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "faqOrganizer"{
+            (segue.destination as? CustomerFAQTableViewController)?.type = "Organizer"
+        }
+    }
+    
 }
 
 

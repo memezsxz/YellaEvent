@@ -7,18 +7,19 @@
 
 import UIKit
 
-class FAQTableViewCell: UITableViewCell {
+class FAQUsers: UITableViewCell {
 
     @IBOutlet weak var view: UIView!
-    @IBOutlet weak var profilePhoto: UIImageView!
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var subtext: UILabel!
-   
+    @IBOutlet var answer: UILabel!
+    @IBOutlet var question: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor(named:K.BrandColors.purple)?.cgColor
-        view.layer.cornerRadius = contentView.frame.height / 4
+        view.layer.cornerRadius = contentView.frame.height / 10
         // Initialization code
     }
 

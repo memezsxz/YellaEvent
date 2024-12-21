@@ -228,7 +228,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="sdh-5N-UdM" userLabel="FAQ Button">
                     <connections>
-                        <segue destination="UdT-Y8-8SP" kind="show" id="EEO-GY-VIk"/>
+                        <segue destination="0fi-Zy-YSn" kind="show" identifier="faqOrganizer" id="lIn-1O-m1H"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -267,22 +267,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BWq-qq-p7P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-837" y="-2"/>
-        </scene>
-        <!--FAQ-->
-        <scene sceneID="NRc-ex-cQg">
-            <objects>
-                <viewController id="UdT-Y8-8SP" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="tG2-7u-slt">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="Lsj-rB-H9V"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="FAQ" largeTitleDisplayMode="always" id="4Mc-QR-5G7"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DuJ-ts-xDF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-837" y="734"/>
         </scene>
         <!--Organizer Profile View Controller-->
         <scene sceneID="KvE-4E-qZt">
@@ -520,6 +504,36 @@
             </objects>
             <point key="canvasLocation" x="984" y="-2"/>
         </scene>
+        <!--FAQ-->
+        <scene sceneID="u1y-Gi-sPg">
+            <objects>
+                <tableViewController id="0fi-Zy-YSn" customClass="CustomerFAQTableViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="IJR-IR-huG">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="BackgroundGray"/>
+                        <color key="sectionIndexBackgroundColor" name="BackgroundGray"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FAQUsers" rowHeight="286" id="JmE-ul-HZT" customClass="FAQUsers" customModule="YellaEvent" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="286"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JmE-ul-HZT" id="y4f-eR-X5m">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="286"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="0fi-Zy-YSn" id="Uh9-Db-nYd"/>
+                            <outlet property="delegate" destination="0fi-Zy-YSn" id="NKU-gL-WdW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="FAQ" largeTitleDisplayMode="always" id="Z0r-as-jcy"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LRr-Ll-J7q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-837.40458015267177" y="735.91549295774655"/>
+        </scene>
     </scenes>
     <resources>
         <image name="DefaultImageProfile" width="980" height="980"/>
@@ -528,6 +542,9 @@
         <image name="person.crop.circle" catalog="system" width="128" height="123"/>
         <image name="person.crop.circle.fill" catalog="system" width="128" height="123"/>
         <image name="questionmark" catalog="system" width="94" height="128"/>
+        <namedColor name="BackgroundGray">
+            <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="BrandBlue">
             <color red="0.024000000208616257" green="0.57999998331069946" blue="0.62000000476837158" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

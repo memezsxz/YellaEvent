@@ -89,7 +89,7 @@ class AdminProfileViewController: UIViewController {
             let us = try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
             currentUser = (us as! Admin)
             do{
-                if let text = bigUserName{
+                if let _ = bigUserName{
                     bigUserName.text = currentUser?.fullName
                     bigUserType.titleLabel!.text = "Admin"
                 }
@@ -123,7 +123,11 @@ class AdminProfileViewController: UIViewController {
 
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "faqAdmin"{
+            (segue.destination as? CustomerFAQTableViewController)?.type = "Admin"
+        }
+    }
 
 }
 

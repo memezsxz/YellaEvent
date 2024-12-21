@@ -142,6 +142,15 @@ class CustomerProfileViewController: UIViewController {
         
         setup()
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "faqCustomer"{
+            (segue.destination as? CustomerFAQTableViewController)?.type = "Customer"
+        }
+    }
+    
+    
 } //end of the class
 
 
