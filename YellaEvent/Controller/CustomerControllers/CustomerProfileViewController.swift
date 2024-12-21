@@ -9,10 +9,13 @@
 import UIKit
 import FirebaseAuth
 
+
 class CustomerProfileViewController: UIViewController {
     
     var currentUser: Customer?
     var imageUpdated : Bool = false
+    var FAQobject: FAQ?
+
     
     @IBOutlet var intrestsCollection: InterestsCollectionView!
     // the profile tab outlet
@@ -84,6 +87,13 @@ class CustomerProfileViewController: UIViewController {
     }
     
     
+    
+    //FAQ Outlet
+    @IBOutlet weak var question: UILabel!
+    @IBOutlet weak var answer: UILabel!
+    
+    
+    
     override func viewDidLoad(){
         super.viewDidLoad()
         setupEditPage()
@@ -91,6 +101,11 @@ class CustomerProfileViewController: UIViewController {
         
 //        UserDefaults.standard.set(Auth.auth().currentUser?.uid, forKey: K.bundleUserID) // this will be removed after seting the application
         setup()
+        
+        if let faq = FAQobject{
+            question.text = faq.question
+            answer.text = faq.answer
+        }
     }
     
     

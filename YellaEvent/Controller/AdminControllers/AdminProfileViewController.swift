@@ -13,13 +13,13 @@ class AdminProfileViewController: UIViewController {
     
     var currentUser: Admin?
     var imageUpdated : Bool = false
-    
-// the profile tab outlet
+    var FAQobject: FAQ?
+// MARK: the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
     @IBOutlet weak var BigImageProfile: UIImageView!
     
     
-// Edit Profile Page section
+// MARK: Edit Profile Page section
     //Outlet Fields
     @IBOutlet weak var txtFullName: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
@@ -69,6 +69,13 @@ class AdminProfileViewController: UIViewController {
     @IBOutlet weak var bigUserType: UIButton!
 
     
+    // MARK: FAQ Outlet and action
+    @IBOutlet weak var question: UILabel!
+    @IBOutlet weak var answer: UILabel!
+    
+    
+
+    
     
     
     
@@ -111,7 +118,10 @@ class AdminProfileViewController: UIViewController {
             
         }
             
-            //download the current user image
+        if let faq = FAQobject{
+            question.text = faq.question
+            answer.text = faq.answer
+        }
        
         
     }

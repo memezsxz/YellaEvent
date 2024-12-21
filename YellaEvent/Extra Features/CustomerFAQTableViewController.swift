@@ -13,7 +13,7 @@ class CustomerFAQTableViewController: UITableViewController {
 
     var list: [FAQ] = []
     var type: String = ""
-    
+    var faqObject: FAQ?
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -34,9 +34,8 @@ class CustomerFAQTableViewController: UITableViewController {
         
     }
 
+    
     // MARK: - Table view data source
-
-   
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return list.count
@@ -52,13 +51,38 @@ class CustomerFAQTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        faqObject = list[indexPath.row]
+        
+        if type == "Customer" {
+            performSegue(withIdentifier: "showCustomerFAQ", sender: self)
+        }else if (type == "Admin"){
+            performSegue(withIdentifier: "showFAQ", sender: self)
+
+        }else{
+            performSegue(withIdentifier: "showOrganizerFAQ", sender: self)
+        }
+
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showFAQ"{
+            (segue.destination as! AdminProfileViewController).FAQobject = faqObject
+        }else if segue.identifier == "showCustomerFAQ"{
+            (segue.destination as! CustomerProfileViewController).FAQobject = faqObject
+        }else if segue.identifier == "showOrganizerFAQ"{
+            (segue.destination as! OrganizerProfileViewController).FAQobject = faqObject
+
+        }
+    }
     
     
     
     func faqUpdate() {
         Task {
             do {
-                let fetchedFAQs: [FAQ]
+                var fetchedFAQs: [FAQ]
                 switch type {
                 case "Customer":
                     fetchedFAQs = try await FAQsManager.getFAQs(forUserType: .customer)
@@ -70,12 +94,20 @@ class CustomerFAQTableViewController: UITableViewController {
                     fetchedFAQs = try await FAQsManager.getFAQs(forUserType: .all)
                 }
                 
-                // Fetch FAQs asynchronously
-                 
+                // get faq for all
+                var all: [FAQ] = try await FAQsManager.getFAQs(forUserType: .all)
+            
                 
                 // Update the `list` and reload the table view on the main thread
                 DispatchQueue.main.async {
                     self.list = fetchedFAQs
+                    
+                    //add the all in the list
+                    if !(all.isEmpty){
+                        self.list.append(contentsOf: all)
+                    }
+                   
+                    
                     self.tableView.reloadData()
                 }
             } catch {
@@ -83,51 +115,11 @@ class CustomerFAQTableViewController: UITableViewController {
             }
         }
     }
+  
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    @IBAction func unwindToCustomerFAQTableViewController(segue: UIStoryboardSegue) {
+        
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

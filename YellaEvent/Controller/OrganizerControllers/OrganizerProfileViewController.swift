@@ -12,6 +12,7 @@ class OrganizerProfileViewController: UIViewController {
     
     var currentUser: Organizer?
     var imageUpdated = false
+    var FAQobject: FAQ?
     
     // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
@@ -65,6 +66,14 @@ class OrganizerProfileViewController: UIViewController {
     }
     
     
+    // MARK: FAQ Outlet
+    @IBOutlet weak var answer: UILabel!
+    @IBOutlet weak var question: UILabel!
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,6 +83,10 @@ class OrganizerProfileViewController: UIViewController {
 
         setup()
 
+        if let faq = FAQobject{
+            question.text = faq.question
+            answer.text = faq.answer
+        }
     }
 
 

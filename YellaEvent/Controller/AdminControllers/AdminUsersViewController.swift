@@ -211,8 +211,11 @@ class AdminUsersViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        userListSections.selectedSegmentIndex = 0
-        clickOnSegment(userListSections!)
+        
+        if let userListSections = userListSections{
+            userListSections.selectedSegmentIndex = 0
+            clickOnSegment(userListSections)
+        }
     }
     
 }
