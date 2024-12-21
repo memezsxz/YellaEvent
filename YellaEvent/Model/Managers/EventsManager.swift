@@ -252,9 +252,7 @@ class EventsManager {
         organizerID: String,
         completion: @escaping (Int, Int, Int, Int, Int, Double, Double, Int) -> Void
     ) async throws {
-                
-        // Fetch all events for the organizer
-        // Use async let to perform concurrent tasks
+        // Initialize variables
         var numOngoingEvents = 0
         var numCancelledEvents = 0
         var numCompletedEvents = 0
@@ -264,25 +262,27 @@ class EventsManager {
         var totalRating = 0.0
         var numAllEvents = 0
         var averageRating = 0.0
-
+        
+        // DispatchGroup to wait for asynchronous tasks
+        let dispatchGroup = DispatchGroup()
+        
+        // Fetch events asynchronously
         Task {
             let events = try await EventsManager.getOrganizerEvents(organizerID: organizerID)
+            
             for eventDocument in events.documents {
                 let event = try await Event(from: eventDocument.data())
                 
+                // Update event stats
                 switch event.status {
-                case .ongoing:
-                    numOngoingEvents += 1
-                case .cancelled:
-                    numCancelledEvents += 1
-                case .completed:
-                    numCompletedEvents += 1
-                default:
-                    break
+                case .ongoing: numOngoingEvents += 1
+                case .cancelled: numCancelledEvents += 1
+                case .completed: numCompletedEvents += 1
+                default: break
                 }
                 
+                // Fetch tickets for each event
                 let tickets = try await TicketsManager.getEventTickets(eventID: event.eventID)
-               
                 for ticket in tickets {
                     if (event.status == .ongoing || event.status == .completed) && ticket.didAttend {
                         soldTickets += ticket.quantity
@@ -292,62 +292,68 @@ class EventsManager {
                         totalRevenue += ticket.totalPrice
                     }
                 }
-                
-                RatingManager.getOrganizerRating(organizerID: organizerID, completion: { result in
-                    switch result {
-                    case .success(let rating):
-                        totalRating = rating
-                    case .failure(let error):
-                        totalRating = 0.0
-                    }
-                })
-
             }
             
-            numAllEvents = numOngoingEvents + numCancelledEvents + numCompletedEvents
-            averageRating = events.documents.isEmpty ? 0.0 : totalRating / Double(events.documents.count)
-
-            completion(
-                numCancelledEvents,
-                numCompletedEvents,
-                numOngoingEvents,
-                numAllEvents,
-                totalAttendance,
-                totalRevenue,
-                averageRating,
-                soldTickets
-            )
+            // Add task to DispatchGroup for getting organizer rating
+            dispatchGroup.enter()
+            RatingManager.getOrganizerRating(organizerID: organizerID) { result in
+                switch result {
+                case .success(let rating):
+                    totalRating = rating
+                case .failure(let error):
+                    print("Error fetching rating: \(error.localizedDescription)")
+                    totalRating = 0.0
+                }
+                dispatchGroup.leave()
+            }
             
+            // Wait for all tasks in DispatchGroup to finish
+            dispatchGroup.notify(queue: .main) {
+                numAllEvents = numOngoingEvents + numCancelledEvents + numCompletedEvents
+                averageRating = events.documents.isEmpty ? 0.0 : totalRating 
+                
+                // Call the completion handler with updated stats
+                completion(
+                    numCancelledEvents,
+                    numCompletedEvents,
+                    numOngoingEvents,
+                    numAllEvents,
+                    totalAttendance,
+                    totalRevenue,
+                    averageRating,
+                    soldTickets
+                )
+            }
         }
     }
 
-
-
-// re do
-//    func getEventRating(eventID: String) async throws -> Double {
-//        var count = 0.0
-//        var sum = 0.0
-//        try await Firestore.firestore().collection(K.FStore.Rattings.collectionName).whereField(K.FStore.EventBans.eventID, isEqualTo: eventID).getDocuments().documents.forEach { doc in
-//            sum +=  try doc.data(as: Ratting.self).rating
-//            count += 1
-//        }
-//        return sum / count
-//    }
+    
+    
+    // re do
+    //    func getEventRating(eventID: String) async throws -> Double {
+    //        var count = 0.0
+    //        var sum = 0.0
+    //        try await Firestore.firestore().collection(K.FStore.Rattings.collectionName).whereField(K.FStore.EventBans.eventID, isEqualTo: eventID).getDocuments().documents.forEach { doc in
+    //            sum +=  try doc.data(as: Ratting.self).rating
+    //            count += 1
+    //        }
+    //        return sum / count
+    //    }
     
     static func getEventsSum() async throws  -> Int {
         try await eventsCollection.whereField(K.FStore.Events.isDeleted, isEqualTo: false).getDocuments().documents.count
     }
     
-//    static func getEventsSum() async throws -> Int {
-//        let aggregateQuery = eventsCollection.aggregate([AggregateField.count()])
-//
-//        do {
-//            let snapshot = try await aggregateQuery.getAggregation(source: .server)
-//            
-//            return snapshot.get(AggregateField.count()) as? Int ?? 0
-//        } catch {
-//            // Handle errors appropriately
-//            throw error
-//        }
-//    }
+    //    static func getEventsSum() async throws -> Int {
+    //        let aggregateQuery = eventsCollection.aggregate([AggregateField.count()])
+    //
+    //        do {
+    //            let snapshot = try await aggregateQuery.getAggregation(source: .server)
+    //
+    //            return snapshot.get(AggregateField.count()) as? Int ?? 0
+    //        } catch {
+    //            // Handle errors appropriately
+    //            throw error
+    //        }
+    //    }
 }

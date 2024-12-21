@@ -54,7 +54,7 @@ class OrganizerStatsTableViewCell: UITableViewCell {
                     
                     self.totalAttendence.text = "\(numTotalAttendence)"
                     self.revenueLabel.text = String(format: "%.3f", revenue)
-                    self.averageRatingLabel.text = String(format: "%.1f", averageRating)
+                    self.averageRatingLabel.text = String(format: "%.2f", averageRating)
                     self.soldTicketsLabel.text = "\(soldTickets)"
 
                 }

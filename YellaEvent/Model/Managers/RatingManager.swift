@@ -33,11 +33,15 @@ class RatingManager {
             
             if let result = result,
                let sum = result.get(AggregateField.sum(K.FStore.Ratings.rating)) as? Double,
-               let count = result.get(AggregateField.count()) as? Int, count > 0 {
+               let count = result.get(AggregateField.count()) as? Double, count > 0 {
                 let average = sum / Double(count)
+                print("avarage", average)
+
                 completion(.success(average)) // Successfully return the average
             } else {
                 let error = NSError(domain: "com.app.rating", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to fetch or parse the rating data."])
+                print("error", error)
+
                 completion(.failure(error)) // Handle unexpected cases
             }
         }

@@ -122,23 +122,24 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
         if section == 1 {
 
                 // Find the UILabel inside the default header view (if it exists)
                 let headerView = UIView()
-                headerView.backgroundColor = .clear // Or set to a desired background color
+            headerView.backgroundColor = UIColor(named: K.BrandColors.backgroundGray) // Or set to a desired background color
                 
                 // Add a new UILabel
                 let label = UILabel()
                 label.text = "On Going Events"
             let HSizeClass = UIScreen.main.traitCollection.horizontalSizeClass
             let VSizeClass = UIScreen.main.traitCollection.verticalSizeClass
-            if HSizeClass == .regular && VSizeClass == .regular {
+            if K.HSizeclass == .regular && K.VSizeclass == .regular {
                 label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
             } else {
                 label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             }
+            
+//            print("dsasd")
                 label.textColor = UIColor(named: K.BrandColors.darkPurple)
 //                label.textAlignment = .center
                 
@@ -150,8 +151,8 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
             NSLayoutConstraint.activate([
                 label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
                 label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
-                label.topAnchor.constraint(equalTo: headerView.topAnchor),
-                label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+                label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: -10),
+                label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 10)
             ])
 
             
@@ -159,7 +160,7 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
             
         }
         
-        return super.tableView(tableView, viewForHeaderInSection: section)
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -167,6 +168,6 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
             return 0
         }
         
-        return super.tableView(tableView, heightForHeaderInSection: section)
+        return K.HSizeclass == .regular && K.VSizeclass == .regular ? 50 : 30
     }
 }
