@@ -81,7 +81,7 @@ class AdminUsersViewController: UIViewController {
             let txt = (txtBanReason.titleLabel?.text)!
             
             Task{
-                try await UsersManager.banUser(userID: currentUser!.userID, userType: currentUser!.type, reason: txt, description: txtDescription.text, startDate: startDate, endDate: endDate)
+                try UsersManager.banUser(userID: currentUser!.userID, userType: currentUser!.type, reason: txt, description: txtDescription.text, startDate: startDate, endDate: endDate)
             }
             
             // 5. Show the confirmation alert
@@ -266,7 +266,7 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.width / 6
+        return tableView.frame.width / 5
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -306,16 +306,16 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
             // Handle the selected segment and call appropriate methods
             switch section {
             case 0:
-                try UsersManager.getAllUsers(listener: listner())
+                 UsersManager.getAllUsers(listener: listner())
                 currentSegment = nil
             case 1:
-                try UsersManager.addUsersListener(userType: .customer, listener: listner())
+                 UsersManager.addUsersListener(userType: .customer, listener: listner())
                 currentSegment = .customer
             case 2:
-                try UsersManager.addUsersListener(userType: .organizer, listener: listner())
+                 UsersManager.addUsersListener(userType: .organizer, listener: listner())
                 currentSegment = .organizer
             case 3:
-                try UsersManager.addUsersListener(userType: .admin, listener: listner())
+                 UsersManager.addUsersListener(userType: .admin, listener: listner())
                 currentSegment = .admin
             default:
                 print("Unhandled section index: \(section)")

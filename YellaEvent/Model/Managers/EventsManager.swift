@@ -337,4 +337,17 @@ class EventsManager {
     static func getEventsSum() async throws  -> Int {
         try await eventsCollection.whereField(K.FStore.Events.isDeleted, isEqualTo: false).getDocuments().documents.count
     }
+    
+//    static func getEventsSum() async throws -> Int {
+//        let aggregateQuery = eventsCollection.aggregate([AggregateField.count()])
+//
+//        do {
+//            let snapshot = try await aggregateQuery.getAggregation(source: .server)
+//            
+//            return snapshot.get(AggregateField.count()) as? Int ?? 0
+//        } catch {
+//            // Handle errors appropriately
+//            throw error
+//        }
+//    }
 }

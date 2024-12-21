@@ -17,6 +17,8 @@ class AdminStatisticsViewController:UITableViewController{
     
     @IBOutlet var categoriesSumLabel: UILabel!
     
+    @IBOutlet var faqsSumLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
@@ -29,10 +31,42 @@ class AdminStatisticsViewController:UITableViewController{
     }
     func getData() {
         Task {
-            self.eventsSumLabel.text = "\(try await EventsManager.getEventsSum())"
-            self.usersSumLabel.text = "\(try await UsersManager.getCustomersSum())"
-            self.organizersSumLabel.text = "\(try await UsersManager.getOrganizersSum())"
-            self.categoriesSumLabel.text = "\(try await CategoriesManager.getCategoriesSum())"
+            async let updateEventsSum: () = {
+                let eventsSum = try await EventsManager.getEventsSum()
+                await MainActor.run {
+                    self.eventsSumLabel.text = "\(eventsSum)"
+                }
+            }()
+            
+            async let updateUsersSum: () = {
+                let usersSum = try await UsersManager.getCustomersSum()
+                await MainActor.run {
+                    self.usersSumLabel.text = "\(usersSum)"
+                }
+            }()
+            
+            async let updateOrganizersSum: () = {
+                let organizersSum = try await UsersManager.getOrganizersSum()
+                await MainActor.run {
+                    self.organizersSumLabel.text = "\(organizersSum)"
+                }
+            }()
+            
+            async let updateCategoriesSum: () = {
+                let categoriesSum = try await CategoriesManager.getCategoriesSum()
+                await MainActor.run {
+                    self.categoriesSumLabel.text = "\(categoriesSum)"
+                }
+            }()
+            
+            async let updateFAQsSum: () = {
+                let faqsSum = try await FAQsManager.getFAQsSum()
+                await MainActor.run {
+                    self.faqsSumLabel.text = "\(faqsSum)"
+                }
+            }()
+            
+//           _ = try await (updateEventsSum, updateUsersSum, updateOrganizersSum, updateCategoriesSum)
         }
     }
     
@@ -58,7 +92,7 @@ class AdminStatisticsViewController:UITableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             tabBarController?.selectedIndex = 2
-        } else if indexPath.section == 2  || indexPath.section == 3{
+        } else if indexPath.section == 2  || indexPath.section == 3 || indexPath.section == 5 {
 
             let usersNavigationController = self.tabBarController?.viewControllers?[1] as! UINavigationController
             
@@ -67,9 +101,12 @@ class AdminStatisticsViewController:UITableViewController{
                 
                 _ = viewcontroller.view // loading the view if it is not loaded yet
 
-                if indexPath.section == 3 {
+                if indexPath.section == 5 {
+                    viewcontroller.performSegue(withIdentifier: "GoToFAQs", sender: viewcontroller)
+                }
+                else if indexPath.section == 3 {
                     viewcontroller.userListSections.selectedSegmentIndex = 2
-                } else {
+                } else if indexPath.section == 2{
                     viewcontroller.userListSections.selectedSegmentIndex = 1
                 }
                 viewcontroller.clickOnSegment(viewcontroller.userListSections!)
@@ -80,7 +117,6 @@ class AdminStatisticsViewController:UITableViewController{
 
         } else if indexPath.section == 4 {
             tabBarController?.selectedIndex = 3
-
         }
     }
     

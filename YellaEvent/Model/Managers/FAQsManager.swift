@@ -48,4 +48,8 @@ final class FAQsManager {
     static func deleteFAQ(FAQID: String) async throws {
         try await FAQDocument(FAQID: FAQID).delete()
     }
+    
+    static func getFAQsSum() async throws  -> Int {
+        try await FAQsCollection.getDocuments().documents.count
+    }
 }
