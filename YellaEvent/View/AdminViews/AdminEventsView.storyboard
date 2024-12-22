@@ -60,7 +60,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="eventsStatusSegment" destination="ceD-Hp-0dz" id="m77-OZ-Ujj"/>
-                        <outlet property="searchBar" destination="xhV-9p-86L" id="Xxm-uq-r3a"/>
+                        <outlet property="searchBar" destination="xhV-9p-86L" id="Wef-3S-DbF"/>
                         <outlet property="tableView" destination="NOC-Nf-JRF" id="bHI-cc-bBd"/>
                         <segue destination="2sn-u2-gWa" kind="show" identifier="showEvent" id="zJy-eb-mX3"/>
                     </connections>

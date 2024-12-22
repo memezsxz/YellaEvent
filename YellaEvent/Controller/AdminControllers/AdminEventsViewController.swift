@@ -10,7 +10,7 @@ import FirebaseFirestore
 import SwiftUI
 class AdminEventsViewController: UIViewController  {
     
-        
+    
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var eventsStatusSegment: MainUISegmentedControl!
     @IBOutlet var tableView: UITableView!
@@ -83,11 +83,10 @@ class AdminEventsViewController: UIViewController  {
             segmentEvents  = events
         }
         searchBar(searchBar, textDidChange: searchBar.text ?? "")
-        tableView.reloadData()
     }
 }
 
-
+// MARK: table view
 extension AdminEventsViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  searchEvents.count
@@ -104,8 +103,10 @@ extension AdminEventsViewController : UITableViewDelegate, UITableViewDataSource
     }
 }
 
+// MARK: searchbar
 extension AdminEventsViewController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let searchText = searchText.trimmingCharacters(in: CharacterSet(charactersIn: " "))
         guard !searchText.isEmpty else {
             searchEvents = segmentEvents
             tableView.reloadData()
