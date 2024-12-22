@@ -870,8 +870,8 @@
         <!--View Event-->
         <scene sceneID="WZc-M9-JQH">
             <objects>
-                <viewController id="7bz-y9-COw" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zLN-Dz-Xrd" customClass="OrganizerViewEventView" customModule="YellaEvent" customModuleProvider="target">
+                <viewController id="7bz-y9-COw" customClass="OrganizerViewEventView" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zLN-Dz-Xrd">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1157,21 +1157,6 @@
                             <constraint firstItem="8Kb-A5-RzO" firstAttribute="top" secondItem="5CL-9d-cUg" secondAttribute="bottom" constant="39" id="ngf-Rw-Vwp"/>
                             <constraint firstItem="8Kb-A5-RzO" firstAttribute="centerX" secondItem="zLN-Dz-Xrd" secondAttribute="centerX" id="tCA-9t-lO8"/>
                         </constraints>
-                        <connections>
-                            <outlet property="Month" destination="gIq-WH-vcE" id="u2A-Ya-nnA"/>
-                            <outlet property="Venue" destination="hTc-nD-spX" id="kyc-rL-zEV"/>
-                            <outlet property="avarageRating" destination="cid-7h-x5p" id="2dK-ui-Vwg"/>
-                            <outlet property="dayOfMonth" destination="R72-bz-udn" id="e2G-Qs-e9r"/>
-                            <outlet property="dayOfweek" destination="LIb-vl-IJK" id="9mh-vh-Ouu"/>
-                            <outlet property="eventStatus" destination="rZj-gZ-2QP" id="rMK-K7-YH1"/>
-                            <outlet property="eventTitle" destination="yJz-Fd-gL4" id="vmd-ug-91j"/>
-                            <outlet property="minimumAge" destination="jT6-0O-0ck" id="1PC-UU-wBq"/>
-                            <outlet property="remainingTickets" destination="EFw-J8-gi7" id="uw2-mX-1Nt"/>
-                            <outlet property="startToEndTime" destination="MDN-mV-yxM" id="VQt-MK-rLF"/>
-                            <outlet property="statusCircle" destination="kAT-vs-gZy" id="s3X-pI-1wI"/>
-                            <outlet property="ticketsSold" destination="ygs-GD-XIi" id="KBx-Ww-kev"/>
-                            <outlet property="totalAttendens" destination="Gco-dP-Aa0" id="jv5-oI-Wfk"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="View Event" largeTitleDisplayMode="always" id="YRp-TA-G8l">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="94j-Ku-IVP">
@@ -1179,7 +1164,20 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="M0l-Z3-19x" kind="show" id="QvW-hA-fZl"/>
+                        <outlet property="Month" destination="gIq-WH-vcE" id="jjR-yM-mmp"/>
+                        <outlet property="Venue" destination="hTc-nD-spX" id="HXd-7v-JA4"/>
+                        <outlet property="avarageRating" destination="cid-7h-x5p" id="btZ-mv-Zde"/>
+                        <outlet property="dayOfMonth" destination="R72-bz-udn" id="zDU-7F-vh9"/>
+                        <outlet property="dayOfweek" destination="LIb-vl-IJK" id="eWQ-SQ-tS1"/>
+                        <outlet property="eventStatus" destination="rZj-gZ-2QP" id="LBW-cP-QfO"/>
+                        <outlet property="eventTitle" destination="yJz-Fd-gL4" id="F3A-DD-rWW"/>
+                        <outlet property="minimumAge" destination="jT6-0O-0ck" id="Ep3-0J-LET"/>
+                        <outlet property="remainingTickets" destination="EFw-J8-gi7" id="PSV-Zu-VSf"/>
+                        <outlet property="startToEndTime" destination="MDN-mV-yxM" id="T6K-gK-QSo"/>
+                        <outlet property="statusCircle" destination="kAT-vs-gZy" id="obc-bN-iz2"/>
+                        <outlet property="ticketsSold" destination="ygs-GD-XIi" id="8jq-N1-94b"/>
+                        <outlet property="totalAttendens" destination="Gco-dP-Aa0" id="0Dc-4O-NLn"/>
+                        <segue destination="M0l-Z3-19x" kind="show" identifier="toAttendees" id="QvW-hA-fZl"/>
                         <segue destination="ZcI-ls-T29" kind="show" id="mj2-KX-aX5"/>
                     </connections>
                 </viewController>
@@ -2127,7 +2125,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="g4X-GK-896"/>
+        <segue reference="JKQ-mG-jGw"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.right" catalog="system" width="128" height="95"/>

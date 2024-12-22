@@ -94,7 +94,7 @@ extension AdminEventsViewController : UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as! MainTableViewCell
-        cell.title.text = "\(searchEvents[indexPath.row].eventName) \(searchEvents[indexPath.row].status)"
+        cell.title.text = "\(searchEvents[indexPath.row].eventName)"
         return cell
     }
 

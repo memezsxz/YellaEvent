@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OrganizerViewEventView: UIView {
+class OrganizerViewEventView: UIViewController {
 
     @IBOutlet var eventStatus: UILabel!
     @IBOutlet var eventTitle: UILabel!
@@ -41,8 +41,16 @@ class OrganizerViewEventView: UIView {
             let event =  try await EventsManager.getEvent(eventID: eventID)
              print(event, "in organizer view event view")
 
+             eventStatus.text = event.status.rawValue
              // fill event details
              // do not ferget that the event media array needs to be presented
+                        
+          
+             
         }
     }
+    
+    
+//    performSegue(withIdentifier: "toAttendees", sender: self)
+
 }

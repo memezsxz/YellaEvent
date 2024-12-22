@@ -21,13 +21,6 @@ class OrganizerEventsViewController: UIViewController {
 
     var selectedEventID : String?
 
-    @IBAction func SegmentedControlAction(_ sender: UISegmentedControl) {
-    }
-
-    @IBAction func unwindToOrganizerEventsViewController(segue: UIStoryboardSegue) {
-        print("Unwind to Root View Controller \(segue.identifier)")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -109,8 +102,8 @@ class OrganizerEventsViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toViewEvent" {
-            let viewEventVC = segue.destination.view as! OrganizerViewEventView
-            viewEventVC.setup(eventID: searchEvents[tableView.indexPathForSelectedRow!.row].eventID)
+            let viewEventV = segue.destination as! OrganizerViewEventView
+            viewEventV.setup(eventID: searchEvents[tableView.indexPathForSelectedRow!.row].eventID)
         }
     }
 }
@@ -125,7 +118,7 @@ extension OrganizerEventsViewController : UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as! MainTableViewCell
-        cell.title.text = "\(searchEvents[indexPath.row].eventName) \(searchEvents[indexPath.row].status)"
+        cell.title.text = "\(searchEvents[indexPath.row].eventName)"
         return cell
     }
 
