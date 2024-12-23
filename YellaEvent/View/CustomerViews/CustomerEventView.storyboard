@@ -29,10 +29,10 @@
             </objects>
             <point key="canvasLocation" x="-1033" y="4"/>
         </scene>
-        <!--View Controller-->
+        <!--Customer Event View Controller-->
         <scene sceneID="Leq-bU-42G">
             <objects>
-                <viewController id="tvl-E0-n3s" sceneMemberID="viewController">
+                <viewController id="tvl-E0-n3s" customClass="CustomerEventViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gnk-Pf-RIm">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -187,6 +187,11 @@
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Re1-qj-ThE">
                                                 <rect key="frame" x="0.0" y="20.666666666666629" width="94" height="32"/>
+                                                <connections>
+                                                    <action selector="TicketIderease:" destination="tvl-E0-n3s" eventType="valueChanged" id="o6X-ja-2Gy"/>
+                                                    <action selector="TicketIncrease:" destination="tvl-E0-n3s" eventType="valueChanged" id="U8W-t0-By4"/>
+                                                    <action selector="TicketStepperValueChanged:" destination="tvl-E0-n3s" eventType="valueChanged" id="rRX-Dw-Uhy"/>
+                                                </connections>
                                             </stepper>
                                         </subviews>
                                     </stackView>
@@ -235,15 +240,30 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="dayOfMonthLabel" destination="Jrk-lX-RIc" id="HHy-4H-xGn"/>
+                        <outlet property="dayOfWeekLabel" destination="rTr-c1-T83" id="mPq-gz-pZM"/>
+                        <outlet property="eventAgeLabel" destination="a73-Sa-p0A" id="Ywt-Xw-Yuv"/>
+                        <outlet property="eventDescriptionTextView" destination="CrW-2j-RRZ" id="Ntj-Mj-mMI"/>
+                        <outlet property="eventImageView" destination="C6N-4c-fiB" id="i0k-Uh-sYi"/>
+                        <outlet property="eventNameLabel" destination="jxR-ex-a8I" id="8b9-kr-U4L"/>
+                        <outlet property="eventPriceLabel" destination="EDY-Yt-4Iw" id="Mfd-OJ-LEh"/>
+                        <outlet property="eventStatusLabel" destination="Wpb-rq-m3y" id="bWc-BT-V03"/>
+                        <outlet property="eventTimeLabel" destination="r1t-yf-3Sy" id="Fec-8B-VzS"/>
+                        <outlet property="eventVenueLabel" destination="Mn0-2y-2eo" id="cel-ux-1fK"/>
+                        <outlet property="monthLabel" destination="qtd-v5-rFg" id="J4p-0b-PL2"/>
+                        <outlet property="ticketCountLabel" destination="kyF-1u-UPx" id="v74-At-b2B"/>
+                        <outlet property="ticketStepper" destination="Re1-qj-ThE" id="8ic-wg-Bny"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j3x-Mv-JqJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="76" y="4"/>
         </scene>
-        <!--View Controller-->
+        <!--Customer Event View Controller-->
         <scene sceneID="3Pt-fm-kI9">
             <objects>
-                <viewController id="Z3U-4y-SYO" sceneMemberID="viewController">
+                <viewController id="Z3U-4y-SYO" customClass="CustomerEventViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wbg-IJ-yP8">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -351,7 +371,7 @@
                                                             <color key="tintColor" name="BrandLightPurple"/>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="uy8-M8-iOi">
-                                                            <rect key="frame" x="56.666666666666657" y="0.6666666666666643" width="56.333333333333343" height="49.333333333333329"/>
+                                                            <rect key="frame" x="56.666666666666629" y="0.6666666666666643" width="56.333333333333371" height="49.333333333333329"/>
                                                             <color key="tintColor" name="BrandLightPurple"/>
                                                         </imageView>
                                                     </subviews>
