@@ -110,7 +110,6 @@ extension AdminCategoriesViewController {
             for doc in snapshot.documents {
                 do {
                     let category = try doc.data(as: Category.self)
-                    print(category)
                     self.categories.append(category)
                 } catch {
                     print("Failed to decode category: \(error.localizedDescription)")
