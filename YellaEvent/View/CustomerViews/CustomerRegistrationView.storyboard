@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dAb-eL-LfG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dAb-eL-LfG">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,7 +12,6 @@
         <!--View Controller-->
         <scene sceneID="R2S-Zn-jQF">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bUe-zm-GqT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="md6-aK-fW3" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="auM-iy-MSE">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
@@ -21,6 +20,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bUe-zm-GqT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1708" y="-28"/>
         </scene>
@@ -168,6 +168,9 @@ Fun Begin!</string>
                                         <color key="tintColor" name="BrandPurple"/>
                                         <state key="normal" title="Button" backgroundImage="ticket" catalog="system"/>
                                         <buttonConfiguration key="configuration" style="filled" image="ticket" catalog="system" title="Pay"/>
+                                        <connections>
+                                            <action selector="payButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kxE-G4-nOH"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -190,6 +193,14 @@ Fun Begin!</string>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Payment" id="1lB-Q3-Vk4"/>
+                    <connections>
+                        <outlet property="CardCCV" destination="iGd-mn-k5G" id="XlZ-Ls-SHn"/>
+                        <outlet property="CardExpiry" destination="axS-cw-ud6" id="T80-rc-CmV"/>
+                        <outlet property="CardHolder" destination="iQO-Ab-RCW" id="SUE-tm-4hL"/>
+                        <outlet property="CardNumber" destination="Zrq-2m-VmE" id="onC-Jj-kRp"/>
+                        <outlet property="lblTicketAmount" destination="Ich-66-sx4" id="JLG-1h-nu1"/>
+                        <outlet property="lblTicketQuantity" destination="kD6-xT-YFR" id="EW2-78-soO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

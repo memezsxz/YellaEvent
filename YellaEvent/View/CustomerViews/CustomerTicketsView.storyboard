@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NrR-7s-cUx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NrR-7s-cUx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -83,12 +83,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rWB-xJ-1NP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1121.3740458015266" y="-365.49295774647891"/>
+            <point key="canvasLocation" x="-1115" y="-365"/>
         </scene>
         <!--Event Name-->
         <scene sceneID="XSu-tY-aQS">
             <objects>
-                <viewController id="uBa-51-B3b" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iel-Dg-ISN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="uBa-51-B3b" customClass="CustomerTicketDetailsViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KUV-cj-wdv">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -119,6 +120,9 @@
                                                     <imageReference key="image" image="location.fill" catalog="system" symbolScale="medium"/>
                                                     <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="0.0"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="btnLocation:" destination="uBa-51-B3b" eventType="touchUpInside" id="6lg-KB-UFA"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -254,8 +258,14 @@
                             <color key="tintColor" systemColor="systemRedColor"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="lblDate" destination="6hH-aG-waz" id="Clr-tg-NKu"/>
+                        <outlet property="lblEventName" destination="YlQ-YV-e98" id="P9f-aT-vWA"/>
+                        <outlet property="lblQuantity" destination="XY2-4c-0X4" id="2Kp-gP-UIS"/>
+                        <outlet property="lblTime" destination="SYk-6N-ldK" id="SFD-wU-FR5"/>
+                        <outlet property="lblTotal" destination="d7o-WP-Xpw" id="ADS-Fn-sx6"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Iel-Dg-ISN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-202.29007633587784" y="-365.49295774647891"/>
         </scene>
