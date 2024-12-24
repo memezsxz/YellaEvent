@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
+//MARK: local Exception
 struct RuntimeError: LocalizedError {
     private let message: String
 
@@ -23,8 +24,11 @@ struct RuntimeError: LocalizedError {
 
 var currentUser: User? = nil
 
+//MARK: Class Start
 class AdminUsersViewController: UIViewController {
     
+    
+    //MARK: Outlet
     @IBOutlet var viewCustomerDetailsView: ViewCustomerDetailsView!
     @IBOutlet var viewAdminDetailsView: ViewAdminDetailsView!
     @IBOutlet var viewOrganizerDetailsView: ViewOrganizerDetailsView!
@@ -57,18 +61,28 @@ class AdminUsersViewController: UIViewController {
     @IBOutlet weak var txtDescription: UITextView!
     @IBOutlet weak var txtBanReason: UIButton!
     @IBOutlet weak var txtBanduration: UIButton!
+    @IBOutlet weak var txtDuration: UITextField!
+    @IBOutlet weak var lastField: UIStackView!
+    
+    //Errors lable
+    @IBOutlet weak var lblErrorBanReason: UILabel!
+    @IBOutlet weak var lblErrorBanDuration: UILabel!
+    @IBOutlet weak var lblErrorDescription: UILabel!
+    @IBOutlet weak var lblErrorDuration: UILabel!
+    
     var banReasons = ["Abusive Behavior", "Spam", "Fraudulent Activity", "Harassment", "Other"]
     
     var banDuration = ["24 Hours", "7 Days", "14 Days", "1 Month", "1 Year", "Permanent", "Custom Duration"]
     
-    //Actions
+    
+    
+    
+    //MARK: Actions
     @IBAction func ConformBan(_ sender: Any) {
         // 1. Validation
-        if txtBanReason.titleLabel?.text == "Select Ban Reason" ||
-           txtBanduration.titleLabel?.text == "Select Ban Duration" ||
-           txtDescription.text.isEmpty {
-            showWarning(message: "Please fill in all required fields correctly.")
-        } else {
+        guard validationBan() else {
+            return
+        }
             // 2. Get the selected duration and convert it into days
             let selectedDurationText = txtBanduration.titleLabel?.text ?? ""
             let selectedDurationInDays = getDurationInDays(from: selectedDurationText)
@@ -86,7 +100,7 @@ class AdminUsersViewController: UIViewController {
             
             // 5. Show the confirmation alert
             banConformation()
-        }
+        
     }
     
     @IBAction func BanReasonClicked(_ sender: Any) {
@@ -97,7 +111,7 @@ class AdminUsersViewController: UIViewController {
         showDropdown(options: banDuration, for: txtBanduration, title: "Select Ban Duration")
     }
     
-    
+    //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -146,27 +160,20 @@ class AdminUsersViewController: UIViewController {
                 } else {
                     print("userListSections is not available on this screen.")
                 }
-            }catch {
-                print("Something went wrong: \(error.localizedDescription)")
             }
             // Safely update users
             do {
                 usersUpdate()
-            } catch {
-                print("Something went wrong during usersUpdate: \(error.localizedDescription)")
             }
-        }catch{
-            print("Something went wrong: \(error.localizedDescription)")
         }
 
 
         do{
-            if let banreason = txtBanReason {
+            if let _ = txtBanReason {
                 txtBanReason.setTitle("Select Ban Reason", for: .normal)
                 txtBanduration.setTitle("Select Ban Duration", for: .normal)
+                lastField.isHidden = true
             }
-        }catch {
-            
         }
     
 
@@ -211,8 +218,11 @@ class AdminUsersViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        userListSections.selectedSegmentIndex = 0
-        clickOnSegment(userListSections!)
+        
+        if let userListSections = userListSections{
+            userListSections.selectedSegmentIndex = 0
+            clickOnSegment(userListSections)
+        }
     }
     
 }
@@ -386,15 +396,12 @@ extension AdminUsersViewController : UISearchBarDelegate{
         var searchArray : [User] = []
         
         Task {
-//            print("in")
             let searchText = searchText.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
             searchArray = try await (currentSegment == nil
                                      ? UsersManager.getAllUsers()
                                      : UsersManager.getUsers(ofType: currentSegment!))
             
-//            print(currentSegment == nil
-//                         ? "UsersManager.getAllUsers()"
-//                         : "UsersManager.getUsers(ofType: currentSegment!))")
+
             self.users = searchArray.filter { user in
                 let searchText = searchText.lowercased()
                 let fullName = user.fullName.lowercased()
@@ -440,93 +447,17 @@ extension AdminUsersViewController{
         }
         
         
-        func highlightField(_ textField: UITextField?) {
+    func highlightField(_ textField: UIView?) {
             textField?.layer.borderWidth = 1
             textField?.layer.borderColor = UIColor.red.cgColor
             textField?.layer.cornerRadius = 5
         }
 
-        func resetFieldHighlight(_ textField: UITextField?) {
+        func resetFieldHighlight(_ textField: UIView?) {
             textField?.layer.borderWidth = 0
             textField?.layer.borderColor = UIColor.clear.cgColor
         }
         
-        
-        
-        func showWarning(message: String) {
-            // Check if the warning view already exists
-            if self.view.viewWithTag(999) != nil { return } // Avoid adding duplicate warnings
-            
-            // Create the warning view
-            let warningView = UIView()
-            warningView.backgroundColor = UIColor.red
-            warningView.tag = 999 // Use a unique tag to identify the view
-            warningView.layer.cornerRadius = 5
-            warningView.translatesAutoresizingMaskIntoConstraints = false
-
-            // Create the warning message label
-            let warningLabel = UILabel()
-            warningLabel.text = message
-            warningLabel.textColor = .white
-            warningLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-            warningLabel.numberOfLines = 0
-            warningLabel.translatesAutoresizingMaskIntoConstraints = false
-
-            // Create the close button
-            let closeButton = UIButton(type: .system)
-            closeButton.setTitle("X", for: .normal)
-            closeButton.setTitleColor(.white, for: .normal)
-            closeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-            closeButton.translatesAutoresizingMaskIntoConstraints = false
-            closeButton.addTarget(self, action: #selector(hideWarning), for: .touchUpInside)
-
-            // Add subviews to the warning view
-            warningView.addSubview(warningLabel)
-            warningView.addSubview(closeButton)
-
-            // Add the warning view to the main view
-            self.view.addSubview(warningView)
-
-            // Constraints for the warning view
-            NSLayoutConstraint.activate([
-                warningView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
-                warningView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-                warningView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-                warningView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
-            ])
-
-            // Constraints for the warning label
-            NSLayoutConstraint.activate([
-                warningLabel.leadingAnchor.constraint(equalTo: warningView.leadingAnchor, constant: 10),
-                warningLabel.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
-                warningLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -10),
-            ])
-
-            // Constraints for the close button
-            NSLayoutConstraint.activate([
-                closeButton.trailingAnchor.constraint(equalTo: warningView.trailingAnchor, constant: -10),
-                closeButton.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
-                closeButton.widthAnchor.constraint(equalToConstant: 30),
-                closeButton.heightAnchor.constraint(equalToConstant: 30),
-            ])
-
-            // Animate the warning view appearance
-            warningView.alpha = 0
-            UIView.animate(withDuration: 0.3) {
-                warningView.alpha = 1
-            }
-        }
-
-        
-        @objc func hideWarning() {
-            if let warningView = self.view.viewWithTag(999) {
-                UIView.animate(withDuration: 0.3, animations: {
-                    warningView.alpha = 0
-                }) { _ in
-                    warningView.removeFromSuperview()
-                }
-            }
-        }
 
     }
 
@@ -568,6 +499,62 @@ func calculateEndDate(from startDate: Date, durationInDays: Int) -> Date {
 
 // MARK: Shared functions
 extension AdminUsersViewController{
+    
+    func validationBan() -> Bool{
+        
+        var isValidate = true
+        
+        //Ban reason validation
+        if txtBanReason.titleLabel?.text == "Select Ban Reason"{
+            lblErrorBanReason.text = "Please select a reason."
+            highlightField(txtBanReason)
+            isValidate = false
+        }else{
+            lblErrorBanReason.text = ""
+            resetFieldHighlight(txtBanReason)
+        }
+        
+        //Ban Duration validation
+        if txtBanduration.titleLabel?.text == "Select Ban Duration"{
+            lblErrorBanDuration.text = "Please select a duration."
+            highlightField(txtBanduration)
+            isValidate = false
+        }else{
+            lblErrorBanDuration.text = ""
+            resetFieldHighlight(txtBanduration)
+        }
+        
+        
+        //Duration Validation
+        if lastField.isHidden == false {
+            if txtDuration.text!.isEmpty{
+                lblErrorDuration.text = "Please enter a duration."
+                highlightField(txtDuration)
+                isValidate = false
+            }else{
+                lblErrorDuration.text = ""
+                resetFieldHighlight(txtDuration)
+            }
+            
+        }
+        
+        //Description Validation
+        if txtDescription.text.isEmpty{
+            lblErrorDescription.text = "Please enter a description."
+            highlightField(txtDescription)
+            isValidate = false
+        }else{
+            lblErrorDescription.text = ""
+            resetFieldHighlight(txtDescription)
+        }
+        
+        
+        
+        return isValidate
+    }
+
+    
+    
     
     func showAlert(message: String, completion: (() -> Void)? = nil) {
          let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
@@ -622,6 +609,12 @@ extension AdminUsersViewController{
 
             // Reassign the updated menu to the button
             button.menu = UIMenu(title: "", children: menuActions)
+            
+            if selectedOption == "Custom Duration"{
+                lastField.isHidden = false
+            }else{
+                lastField.isHidden = true
+            }
         }
     
     

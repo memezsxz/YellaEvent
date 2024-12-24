@@ -70,7 +70,7 @@ class FAQTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.width / 5
+        return tableView.frame.width / 4.5
     }
     
     

@@ -14,6 +14,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     var image : UIImage? = nil
     let imagePickerController = UIImagePickerController()
 
+    //MARK: Outlets
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
     @IBOutlet weak var txtUserType: UITextField!
@@ -26,7 +27,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var lastField: UIStackView!
     
     
-    //errors lables
+    //MARK: errors lables
     @IBOutlet weak var lblErrorEmail: UILabel!
     @IBOutlet weak var lblErrorPhoneNumber: UILabel!
     
@@ -41,7 +42,6 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     }
     
     func setup() {
-//        setupDatePicker()
         lastField.isHidden = true
         txtUserType.isUserInteractionEnabled = false
 
@@ -57,7 +57,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
      
     }
     
-
+    //MARK: Actions
     @IBAction func selectedOption(_ sender: UIAction){
         if sender.title == "Never Expire" {
              txtDuraion.setTitle("Never Expire", for: .normal) // Set button title to "Never Expire"
@@ -137,10 +137,9 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     
     
     
-    
+    //MARK: Validation
     func validation() -> Bool {
         var isValid = true
-        var errorMessage = ""
         let parent = (delegate?.delegate!)!
         
 
@@ -149,12 +148,10 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
             lblErrorPhoneNumber.text = "Phone number is required."
             parent.highlightField(txtPhoneNumber)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let phoneNumber = txtPhoneNumber?.text, !parent.isValidPhoneNumber(phoneNumber) {
             lblErrorPhoneNumber.text = "Phone number must be exactly 8 digits."
             parent.highlightField(txtPhoneNumber)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorPhoneNumber.text = ""
             parent.resetFieldHighlight(txtPhoneNumber)
@@ -165,12 +162,10 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
             lblErrorEmail.text = "Email address is required."
             parent.highlightField(txtEmail)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let email = txtEmail?.text, !parent.isValidEmail(email) {
             lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
             parent.highlightField(txtEmail)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorEmail.text = ""
             parent.resetFieldHighlight(txtEmail)
@@ -181,23 +176,16 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
                 lblErrorDuration.text = "Duration is required."
                 parent.highlightField(txtDuration)
                 isValid = false
-                errorMessage = "Please fill in all required fields correctly."
             } else if let duration = txtDuration?.text, !isValidDuration(duration) {
                 lblErrorDuration.text = "Duration must be only numbers."
                 parent.highlightField(txtDuration)
                 isValid = false
-                errorMessage = "Please fill in all required fields correctly."
             } else {
                 lblErrorDuration.text = ""
                 parent.resetFieldHighlight(txtDuration)
             }
         }
         
-
-        // Show warning if validation fails
-        if !isValid {
-            //parent.showWarning(message: errorMessage)
-        }
 
         return isValid
     }

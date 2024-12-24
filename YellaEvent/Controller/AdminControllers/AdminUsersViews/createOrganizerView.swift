@@ -18,7 +18,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
 
     
     //Create Organizer Page
-    // Outlet
+    // MARK: Outlet
     @IBOutlet weak var txtUserNameCreate: UITextField!
     @IBOutlet weak var txtPhoneNumberCreate: UITextField!
     @IBOutlet weak var txtPasswordCreate: UITextField!
@@ -31,7 +31,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
     
     
     
-    //lblError
+    //MARK: lblError
     @IBOutlet weak var lblErrorUserName: UILabel!
     @IBOutlet weak var lblErrorPhoneNumber: UILabel!
     @IBOutlet weak var lblErrorEmail: UILabel!
@@ -157,21 +157,11 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
                 }
             })
         }
-        
-        //2. if everything go well
-        //create new organization user
-        //        let name = txtUserNameCreate.text!
-        //        //        let phone = Int(txtPhoneNumberCreate.text!)
-        //        let email = txtEmailCreate.text
-        //        let pass = txtPasswordCreate.text
-        //        let start = Data()
-        //
-        //user the usersmanager to create user in the firebase
+    
     }
     
     
     // function to show a list
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
@@ -181,6 +171,8 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         delegate!.dismiss(animated: true, completion: nil)
     }
     
+    
+    //MARK: Validation
     func validateCreateFields() -> Bool {
         var isValid = true
         
@@ -279,15 +271,8 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         
         if image == nil {
             isValid = false
-//            txtErrorImage.text = "Image is required."
-        } else {
-//            txtErrorImage.text = ""
         }
         
-        // Show warning if validation fails
-        if !isValid {
-            //delegate!.showWarning(message: errorMessage)
-        }
         
         return isValid
         

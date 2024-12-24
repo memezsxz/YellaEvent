@@ -12,14 +12,17 @@ class OrganizerProfileViewController: UIViewController {
     
     var currentUser: Organizer?
     var imageUpdated = false
+    var FAQobject: FAQ?
     
+    //MARK: Outlets
     // the profile tab outlet
     @IBOutlet var roundedViews: [UIView]!
     @IBOutlet weak var BigImageProfile: UIImageView!
     
     @IBOutlet weak var bigUserName: UILabel!
-    
     @IBOutlet weak var bigUserType: UIButton!
+    
+    
     // Edit Profile Page section
     //Outlet Fields
     @IBOutlet weak var editProfileImage: UIImageView!
@@ -28,19 +31,20 @@ class OrganizerProfileViewController: UIViewController {
     @IBOutlet weak var txtEmail: UITextField!
     
     
-    //Outlet Errors
+    //MARK: Outlet Errors
     @IBOutlet weak var lblErrorFullName: UILabel!
     @IBOutlet weak var lblErrorPhoneNumber: UILabel!
     @IBOutlet weak var lblErrorEmail: UILabel!
     
-    //Actions
- 
+    //MARK: Actions
     @IBAction func editButtonTapped(_ sender: UIButton) {
         changeTheUserImage(sender)
     }
+    
     @IBAction func saveButtonTapped(_ sender: Any) {
         saveUserChanges(sender)
     }
+    
     @IBAction func deleteButtonTapped(_ sender: Any) {
         DeleteAccount(sender)
     }
@@ -65,6 +69,14 @@ class OrganizerProfileViewController: UIViewController {
     }
     
     
+    // MARK: FAQ Outlet
+    @IBOutlet weak var answer: UILabel!
+    @IBOutlet weak var question: UILabel!
+    
+    
+    
+    
+    //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,9 +86,18 @@ class OrganizerProfileViewController: UIViewController {
 
         setup()
 
+        if let faq = FAQobject{
+            question.text = faq.question
+            answer.text = faq.answer
+        }
     }
 
-
+    //MARK: ViewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        setup()
+    }
+    
+    
     func setup() {
         // get the current user object
         Task {
@@ -114,13 +135,18 @@ class OrganizerProfileViewController: UIViewController {
 
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        setup()
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "faqOrganizer"{
+            (segue.destination as? CustomerFAQTableViewController)?.type = "Organizer"
+        }
     }
     
 }
 
-
+//MARK: Edit page setup
 extension OrganizerProfileViewController{
     
     // method set the user profile fields with user information
@@ -307,9 +333,6 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
                 
             }
 
-
-        }catch{
-            print("error with user saving data")
         }
         
         // 3. Show an alert notifying the user that the changes have been saved
@@ -347,8 +370,6 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
                 Task{
                     try await UsersManager.deleteUser(userID: self.currentUser!.userID, userType: self.currentUser!.type)
                 }
-            }catch{
-                
             }
             
             
@@ -373,12 +394,12 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
 } // end of edit profile page functions extension
 
 
+//MARK: Validation
 // extention for filds validations --> inclide the function that related to the validation
 extension OrganizerProfileViewController{
     
     func validateFields() -> Bool {
         var isValid = true
-        var errorMessage = ""
 
 
         // Validate txtFullName (Only letters)
@@ -386,12 +407,10 @@ extension OrganizerProfileViewController{
             lblErrorFullName.text = "Full name is required."
             highlightField(txtFullName)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let fullName = txtFullName?.text, !isValidFullName(fullName) {
             lblErrorFullName.text = "Full name must contain only letters."
             highlightField(txtFullName)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorFullName.text = ""
             resetFieldHighlight(txtFullName)
@@ -402,12 +421,10 @@ extension OrganizerProfileViewController{
             lblErrorPhoneNumber.text = "Phone number is required."
             highlightField(txtPhoneNumber)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let phoneNumber = txtPhoneNumber?.text, !isValidPhoneNumber(phoneNumber) {
             lblErrorPhoneNumber.text = "Phone number must be exactly 8 digits."
             highlightField(txtPhoneNumber)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorPhoneNumber.text = ""
             resetFieldHighlight(txtPhoneNumber)
@@ -431,26 +448,19 @@ extension OrganizerProfileViewController{
             lblErrorEmail.text = "Email address is required."
             highlightField(txtEmail)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else if let email = txtEmail?.text, !isValidEmail(email) {
             lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
             highlightField(txtEmail)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         }else if thereIs{
             lblErrorEmail.text = "The provided email used by other user"
             highlightField(txtEmail)
             isValid = false
-            errorMessage = "Please fill in all required fields correctly."
         } else {
             lblErrorEmail.text = ""
             resetFieldHighlight(txtEmail)
         }
 
-        // Show warning if validation fails
-        if !isValid {
-            showWarning(message: errorMessage)
-        }
 
         return isValid
     }
@@ -489,81 +499,5 @@ extension OrganizerProfileViewController{
         textField?.layer.borderColor = UIColor.clear.cgColor
     }
     
-    
-    
-    func showWarning(message: String) {
-        // Check if the warning view already exists
-        if self.view.viewWithTag(999) != nil { return } // Avoid adding duplicate warnings
-        
-        // Create the warning view
-        let warningView = UIView()
-        warningView.backgroundColor = UIColor.red
-        warningView.tag = 999 // Use a unique tag to identify the view
-        warningView.layer.cornerRadius = 5
-        warningView.translatesAutoresizingMaskIntoConstraints = false
-
-        // Create the warning message label
-        let warningLabel = UILabel()
-        warningLabel.text = message
-        warningLabel.textColor = .white
-        warningLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        warningLabel.numberOfLines = 0
-        warningLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // Create the close button
-        let closeButton = UIButton(type: .system)
-        closeButton.setTitle("X", for: .normal)
-        closeButton.setTitleColor(.white, for: .normal)
-        closeButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.addTarget(self, action: #selector(hideWarning), for: .touchUpInside)
-
-        // Add subviews to the warning view
-        warningView.addSubview(warningLabel)
-        warningView.addSubview(closeButton)
-
-        // Add the warning view to the main view
-        self.view.addSubview(warningView)
-
-        // Constraints for the warning view
-        NSLayoutConstraint.activate([
-            warningView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            warningView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-            warningView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-            warningView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
-        ])
-
-        // Constraints for the warning label
-        NSLayoutConstraint.activate([
-            warningLabel.leadingAnchor.constraint(equalTo: warningView.leadingAnchor, constant: 10),
-            warningLabel.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
-            warningLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -10),
-        ])
-
-        // Constraints for the close button
-        NSLayoutConstraint.activate([
-            closeButton.trailingAnchor.constraint(equalTo: warningView.trailingAnchor, constant: -10),
-            closeButton.centerYAnchor.constraint(equalTo: warningView.centerYAnchor),
-            closeButton.widthAnchor.constraint(equalToConstant: 30),
-            closeButton.heightAnchor.constraint(equalToConstant: 30),
-        ])
-
-        // Animate the warning view appearance
-        warningView.alpha = 0
-        UIView.animate(withDuration: 0.3) {
-            warningView.alpha = 1
-        }
-    }
-
-    
-    @objc func hideWarning() {
-        if let warningView = self.view.viewWithTag(999) {
-            UIView.animate(withDuration: 0.3, animations: {
-                warningView.alpha = 0
-            }) { _ in
-                warningView.removeFromSuperview()
-            }
-        }
-    }
 
 }
