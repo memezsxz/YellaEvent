@@ -342,6 +342,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hc2-fY-rFb"/>
+                    <connections>
+                        <outlet property="organizerNameLabel" destination="lnh-qo-1vx" id="gwG-Am-tBB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IIl-lb-VKr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

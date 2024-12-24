@@ -23,16 +23,14 @@ class CustomerEventViewController: UIViewController {
     @IBOutlet weak var eventVenueLabel: UILabel!
     @IBOutlet weak var ticketCountLabel: UILabel!
     @IBOutlet weak var ticketStepper: UIStepper!
-
+    @IBOutlet weak var organizerNameLabel: UILabel!
     @IBOutlet weak var ViewOrg: UIBarButtonItem!
-    @IBAction func showPage(_ sender: Any) {
-    }
-    
     
     // MARK: - Properties
     var eventID: String = "3jCdiZ7OrVUAksiBrZwr" // The event ID to fetch
     var event: Event? // This will hold the event data for this screen.
     var ticketCount: Int = 0 // Keeps track of the current ticket count
+    var organizer: Organizer? // This will hold the organizer data for this screen.
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -54,6 +52,18 @@ class CustomerEventViewController: UIViewController {
                 // Fetch the event using the EventsManager
                 let fetchedEvent = try await EventsManager.getEvent(eventID: eventID)
                 self.event = fetchedEvent
+                
+                // Fetch the organizer data using the organizer ID
+                // Check if organizerID is not empty
+                if !fetchedEvent.organizerID.isEmpty {
+                    do {
+                        let fetchedOrganizer = try await EventsManager.getOrganizer(organizerID: fetchedEvent.organizerID)
+                        self.organizer = fetchedOrganizer
+                    } catch {
+                        print("Failed to fetch organizer: \(error)")
+                    }
+                }
+
 
                 // Update the UI on the main thread
                 DispatchQueue.main.async {
@@ -134,6 +144,13 @@ class CustomerEventViewController: UIViewController {
         if let eventVenueLabel = eventVenueLabel {
             eventVenueLabel.text = event.venueName
         }
+        
+        // Set organizer name
+        if let organizer = organizer, let organizerNameLabel = organizerNameLabel {
+            organizerNameLabel.text = organizer.fullName
+        }
+
+
     }
 
     // MARK: - Helper Functions
@@ -181,4 +198,41 @@ class CustomerEventViewController: UIViewController {
             ticketCountLabel.text = "\(ticketCount) Ticket"
         }
     }
+
+    // MARK: - Show Organizer Profile
+    @IBAction func showPage(_ sender: Any) {
+        // Check if organizer exists
+        if let organizer = organizer {
+            // Assuming you have a property or method in CustomerEventViewController to display the organizer's details
+            // You can set the organizer data on a property in the current view controller
+            // Example: self.organizerProfile = organizer
+            
+            // If you're navigating within the same view controller, update the UI or transition the view accordingly
+            updateOrganizerProfileView(with: organizer)
+        }
+    }
+
+    
+    func updateOrganizerProfileView(with organizer: Organizer) {
+        // Update the UI with organizer details
+        // For example, updating labels, image views, etc.
+        organizerNameLabel.text = organizer.fullName
+        // Add any other UI elements or logic needed to display organizer's info
+    }
+
+
+    // MARK: - Fetch Events by Organizer
+    func fetchEventsByOrganizerID(organizerID: String) {
+        Task {
+            do {
+                let events = try await EventsManager.searchEvents(byOrganizerID: organizerID)
+                // Use the fetched events (e.g., display them in a list)
+                print("Fetched events: \(events)")
+            } catch {
+                print("Failed to fetch events by organizer: \(error)")
+            }
+        }
+    }
 }
+
+
