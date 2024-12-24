@@ -20,6 +20,7 @@ class CustomerSearchViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet var categoriesCollectioView: InterestsCollectionView!
     
     @IBOutlet weak var catButtons: UIStackView!
     
@@ -29,7 +30,7 @@ class CustomerSearchViewController: UIViewController {
     var filteredSearch: [String] = []
     var eventsList : [EventSummary] = []
     var filteredEventsList : [EventSummary] = []
-    
+    var selectedFilters: [String] = []
     var changesMade: Bool = false
     
     override func viewDidLoad() {
@@ -68,18 +69,25 @@ class CustomerSearchViewController: UIViewController {
     
     
     @IBAction func fliteringunwind(_ unwindSegue: UIStoryboardSegue) {
+        if unwindSegue.identifier == "apply" {
+            self.selectedFilters = (unwindSegue.source as! CustomerSearchViewController).categoriesCollectioView.getInterests()
+            print("unwind apply", selectedFilters)
+
+        }
     }
     
+    @IBAction func applyFliteringunwind(_ unwindSegue: UIStoryboardSegue) {
+    }
     // Search button logic
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         // Hide keyboard and UI elements
-//        searchBar.resignFirstResponder()
+        //        searchBar.resignFirstResponder()
         showHide(condition: true)
         if prevSearch.count >= 5 {
             // Keep only the last 4 elements
             prevSearch = Array(prevSearch.suffix(4))
         }
-
+        
         // Append the new search text
         prevSearch.append(searchBar.text ?? "")
         filteredSearch = prevSearch.reversed()
@@ -133,14 +141,14 @@ class CustomerSearchViewController: UIViewController {
                 print("Error fetching events: \(error)")
             }
         }
-
-
+        
+        
         print("search")
-
-            //        changesMade = true
-//        tableView.reloadData()
+        
+        //        changesMade = true
+        //        tableView.reloadData()
     }
-
+    
     // Cancel button logic
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
@@ -153,7 +161,7 @@ class CustomerSearchViewController: UIViewController {
         tableView.reloadData()
         print("cancel")
     }
-
+    
     // Perform search from selected cell
     func performSearch(for text: String) {
         // Update the search bar text with the selected cell's content
@@ -167,11 +175,21 @@ class CustomerSearchViewController: UIViewController {
         }else{
             previousLbl.text = "Previous Search"
         }
-//        tableView.isHidden = condition
+        //        tableView.isHidden = condition
         searchBar.showsCancelButton = condition
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "filter" {
+            print("prepare", self.selectedFilters)
 
-
+            let vc = (segue.destination as! CustomerSearchViewController)
+            _ = vc.view
+            let collection = vc.categoriesCollectioView
+            collection?.selectForCustomer = false
+            collection?.setSelectedInterests(self.selectedFilters)
+        }
+    }
 }
 
 
@@ -213,7 +231,6 @@ extension CustomerSearchViewController: UITableViewDelegate, UITableViewDataSour
         }
         return 50
     }
-    
 }
 
 
@@ -221,9 +238,9 @@ extension CustomerSearchViewController: UITableViewDelegate, UITableViewDataSour
 extension CustomerSearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" { filteredSearch = prevSearch.reversed()
-} else {
+        } else {
             filteredSearch = prevSearch.filter { item in item.lowercased().contains(searchText.lowercased())
-                    }
+            }
         }
         
         tableView.reloadData()

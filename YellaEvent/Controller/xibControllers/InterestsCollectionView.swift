@@ -11,7 +11,7 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     
     private var interests: [Category] = []
     private var selectedIndices = Set<Int>()
-    
+    public var selectForCustomer = true
     // MARK: - setup
     
     var currentCustomer : Customer?
@@ -46,16 +46,21 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
             flowLayout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         }
         
-        Task {
-            self.interests = try await  CategoriesManager.getActiveCatigories()
-            self.currentCustomer =  try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!) as? Customer
-            
-            DispatchQueue.main.async {
-                self.setSelectedInterests(self.currentCustomer?.interestsArray ?? [])
-                self.reloadData()
+        if selectForCustomer {
+            Task {
+                self.interests = try await  CategoriesManager.getActiveCatigories()
+                self.currentCustomer =  try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!) as? Customer
+                
+                DispatchQueue.main.async {
+                    if self.selectForCustomer {
+                        
+                        self.setSelectedInterests(self.currentCustomer?.interestsArray ?? [])
+                    }
+                    self.reloadData()
+                        
+                }
             }
         }
-        
     }
     
     // MARK: - to get and se data
@@ -95,20 +100,18 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     
     func setSelectedInterests(_ selectedInterests: [String]) {
         selectedIndices.removeAll()
-        
-        selectedInterests.forEach { selectedCategoryID in
-            interests.forEach { interest in
-                if selectedCategoryID == interest.categoryID {
-                    if let index = interests.firstIndex(where: { $0.categoryID == interest.categoryID }) {
-                        selectedIndices.insert(index)
-                    }
-                }
+
+        let interestIndexMap = Dictionary(uniqueKeysWithValues: interests.enumerated().map { ($0.element.categoryID, $0.offset) })
+
+        for selectedCategoryID in selectedInterests {
+            if let index = interestIndexMap[selectedCategoryID] {
+                selectedIndices.insert(index)
             }
         }
         
         reloadData()
     }
-    
+
     // MARK: - data source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

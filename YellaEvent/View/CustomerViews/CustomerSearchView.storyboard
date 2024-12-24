@@ -6,6 +6,7 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -63,7 +64,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="slider.horizontal.3" catalog="system" id="pE7-e6-dBi">
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
-                                <segue destination="T6y-0U-8cg" kind="showDetail" id="enk-sH-q7Y"/>
+                                <segue destination="T6y-0U-8cg" kind="showDetail" identifier="filter" id="enk-sH-q7Y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -104,13 +105,16 @@
                                     <segue destination="Vcs-cO-FIk" kind="unwind" unwindAction="fliteringunwind:" id="xmB-Ok-cAQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bDA-oN-Un6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bDA-oN-Un6" userLabel="ApplyFilter">
                                 <rect key="frame" x="50" y="767.66666666666663" width="302" height="46.333333333333371"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Apply">
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="27"/>
                                     <color key="baseBackgroundColor" name="BrandPurple"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="Vcs-cO-FIk" kind="unwind" identifier="apply" unwindAction="fliteringunwind:" id="3EO-sd-lpM"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="hjb-qg-gRa">
                                 <rect key="frame" x="16" y="119" width="370" height="65"/>
@@ -219,13 +223,36 @@
                                 <color key="textColor" name="BrandPurple"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GF3-vk-VCJ" customClass="InterestsCollectionView" customModule="YellaEvent" customModuleProvider="target">
+                                <rect key="frame" x="16" y="368" width="370" height="389.66666666666674"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ave-W1-k0h" customClass="LeftAlignedFlowLayout" customModule="YellaEvent" customModuleProvider="target">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="interestCell" id="ZUr-hx-QqA" customClass="InterstsCollectionViewCell" customModule="YellaEvent" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xsm-Sx-YWj">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oBe-KZ-uTg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="yZy-12-yaK" firstAttribute="top" secondItem="djI-69-fAX" secondAttribute="bottom" constant="32" id="7PS-9w-Pbn"/>
+                            <constraint firstItem="bDA-oN-Un6" firstAttribute="top" secondItem="GF3-vk-VCJ" secondAttribute="bottom" constant="10" id="Ef0-XS-MAc"/>
                             <constraint firstItem="bDA-oN-Un6" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="50" id="Ftx-ay-oxg"/>
                             <constraint firstItem="qGb-In-P7L" firstAttribute="top" secondItem="oBe-KZ-uTg" secondAttribute="top" constant="20" id="TGt-Y0-2so"/>
+                            <constraint firstItem="GF3-vk-VCJ" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="Tlr-Ir-2oJ"/>
+                            <constraint firstItem="GF3-vk-VCJ" firstAttribute="top" secondItem="yZy-12-yaK" secondAttribute="bottom" constant="17.670000000000002" id="WWt-iR-qgZ"/>
                             <constraint firstItem="oBe-KZ-uTg" firstAttribute="trailing" secondItem="bDA-oN-Un6" secondAttribute="trailing" constant="50" id="WxY-Pt-b2X"/>
                             <constraint firstItem="yZy-12-yaK" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="ad5-eK-20X"/>
                             <constraint firstAttribute="trailing" secondItem="djI-69-fAX" secondAttribute="trailing" constant="16" id="bqe-zJ-1a4"/>
@@ -235,6 +262,7 @@
                             <constraint firstItem="oBe-KZ-uTg" firstAttribute="trailing" secondItem="hjb-qg-gRa" secondAttribute="trailing" constant="16" id="hbr-fO-F5Y"/>
                             <constraint firstItem="hjb-qg-gRa" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="jdL-e9-dqK"/>
                             <constraint firstItem="DKW-Ta-AM6" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="mjq-S5-plU"/>
+                            <constraint firstItem="oBe-KZ-uTg" firstAttribute="trailing" secondItem="GF3-vk-VCJ" secondAttribute="trailing" constant="16" id="u9w-Ww-Ija"/>
                             <constraint firstItem="djI-69-fAX" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="wGU-3k-Tcy"/>
                             <constraint firstItem="oBe-KZ-uTg" firstAttribute="bottom" secondItem="bDA-oN-Un6" secondAttribute="bottom" constant="50" id="xe3-tq-H4P"/>
                             <constraint firstItem="hjb-qg-gRa" firstAttribute="top" secondItem="DKW-Ta-AM6" secondAttribute="bottom" constant="30" id="yhs-P0-Khl"/>
@@ -244,6 +272,7 @@
                     <connections>
                         <outlet property="ageSlider" destination="LYf-Bu-r8Y" id="9st-Fu-vo8"/>
                         <outlet property="ageTextField" destination="LNs-Q4-Fuc" id="qAt-Lh-Dz2"/>
+                        <outlet property="categoriesCollectioView" destination="GF3-vk-VCJ" id="5p4-zk-YVC"/>
                         <outlet property="priceSlider" destination="kpD-jN-zw1" id="WXu-q8-L7Y"/>
                         <outlet property="priceTextField" destination="r6p-Bh-O38" id="y8B-OW-gpe"/>
                     </connections>
