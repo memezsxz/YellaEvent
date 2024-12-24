@@ -16,17 +16,12 @@ class AuthenticationViewController: UIViewController {
     @IBOutlet var intrestsCollection: InterestsCollectionView!
     @IBOutlet weak var signInThroughGoogle: UIButton!
     
+
     @IBOutlet weak var forgotPasswordEmailField: UITextField!
     @IBOutlet weak var loginPasswordField: UITextField!
     @IBOutlet weak var loginEmailField: UITextField!
     
-    @IBOutlet weak var registerFullNameField: UITextField!
-    
-    @IBOutlet weak var registerDob: UIDatePicker!
-    @IBOutlet weak var registerPasswordField: UITextField!
-    @IBOutlet weak var registerPhoneNumberField: UITextField!
-    @IBOutlet weak var registerEmailField: UITextField!
-    @IBAction func signInThroughGoogleAction(_ sender: Any) {
+   @IBAction func signInThroughGoogleAction(_ sender: Any) {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             print("Failed to retrieve Firebase clientID")
             return
@@ -103,12 +98,14 @@ class AuthenticationViewController: UIViewController {
     
     
     func showAlert(message: String, completion: (() -> Void)? = nil) {
-        let alert = UIAlertController(title: "Login", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
             completion?()
         }))
         present(alert, animated: true, completion: nil)
     }
+    
+
     
     
     @IBAction func normalLoginAction(_ sender: Any) {
@@ -163,77 +160,7 @@ class AuthenticationViewController: UIViewController {
             }
         }
     }
-    @IBAction func registerAccountAction(_ sender: Any) {
-        guard let fullName = registerFullNameField.text, !fullName.isEmpty else {
-            showAlert(message: "Please enter your full name.")
-            return
-        }
-        
-        guard let email = registerEmailField.text, !email.isEmpty else {
-            showAlert(message: "Please enter your email.")
-            return
-        }
-        
-        guard let password = registerPasswordField.text, !password.isEmpty, password.count >= 6 else {
-            showAlert(message: "Please enter a password with at least 6 characters.")
-            return
-        }
-        
-        guard let phoneNumber = registerPhoneNumberField.text, !phoneNumber.isEmpty,
-              phoneNumber.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil else {
-            showAlert(message: "Please enter a valid phone number.")
-            return
-        }
-        
-        let dateOfBirth = registerDob.date
-        let minimumDate = Calendar.current.date(from: DateComponents(year: 2014, month: 1, day: 1))!
-        
-        guard dateOfBirth < minimumDate else {
-            showAlert(message: "Date of birth must be before 2014.")
-            return
-        }
-        
-        // Register user with Firebase Authentication
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                self.showAlert(message: "Registration failed: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let firebaseUser = authResult?.user else { return }
-            print("User registered successfully with UID: \(firebaseUser.uid)")
-            
-            self.saveUserIdInUserDefaults(firebaseUser.uid)
-            
-            let customer = Customer(
-                userID: firebaseUser.uid,
-                fullName: fullName,
-                email: email,
-                dob: dateOfBirth,
-                dateCreated: Date.now,
-                phoneNumber: Int(phoneNumber) ?? 0,
-                profileImageURL: "",
-                badgesArray: [],
-                interestsArray: []
-            )
-            
-            Task {
-                do {
-                    try await UsersManager.createNewUser(user: customer)
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "goToInterestPicker", sender: self)
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        self.showAlert(message: "Failed to create user: \(error.localizedDescription)")
-                    }
-                    print("Error creating user: \(error)")
-                }
-            }
-        }
-    }
+
     
     
     func saveUserIdInUserDefaults(_ userId: String) {
@@ -261,6 +188,10 @@ class AuthenticationViewController: UIViewController {
     }
     @IBAction func confirmInterestsAction(_ sender: Any) {
         let interests = intrestsCollection.getInterests()
+        
+        if interests.count <= 0 {
+            self.showAlert(message: "Please pick atleast one interest")
+        }
 
         Task {
             let interestData: [String: Any] = [K.FStore.Customers.intrestArray: interests]
