@@ -38,12 +38,11 @@ class CustomerEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // Set the initial ticket count label text
-      //ticketCountLabel.text = "\(ticketCount) Ticket"
-       
+        if let ticketCountLabel = ticketCountLabel {
+            ticketCountLabel.text = "\(ticketCount) Ticket"
+        }
         
-
         // Fetch and populate event data
         fetchEventAndUpdateUI()
     }
@@ -73,59 +72,83 @@ class CustomerEventViewController: UIViewController {
         // Load event image
         if let url = URL(string: event.coverImageURL) {
             loadImage(from: url) { [weak self] image in
-                self?.eventImageView.image = image
+                if let eventImageView = self?.eventImageView {
+                    eventImageView.image = image
+                }
             }
         }
 
         // Set event name
-        eventNameLabel.text = event.name
+        if let eventNameLabel = eventNameLabel {
+            eventNameLabel.text = event.name
+        }
 
         // Set event price
-        eventPriceLabel.text = "\(event.price) per ticket"
+        if let eventPriceLabel = eventPriceLabel {
+            eventPriceLabel.text = "\(event.price) per ticket"
+        }
 
         // Format date components
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d" // Day of the month
-        dayOfMonthLabel.text = dateFormatter.string(from: event.startTimeStamp)
+        if let dayOfMonthLabel = dayOfMonthLabel {
+            dayOfMonthLabel.text = dateFormatter.string(from: event.startTimeStamp)
+        }
 
         dateFormatter.dateFormat = "MMM" // Month (short)
-        monthLabel.text = dateFormatter.string(from: event.startTimeStamp)
+        if let monthLabel = monthLabel {
+            monthLabel.text = dateFormatter.string(from: event.startTimeStamp)
+        }
 
         dateFormatter.dateFormat = "EEEE" // Day of the week
-        dayOfWeekLabel.text = dateFormatter.string(from: event.startTimeStamp)
+        if let dayOfWeekLabel = dayOfWeekLabel {
+            dayOfWeekLabel.text = dateFormatter.string(from: event.startTimeStamp)
+        }
 
         // Format event time
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "h:mm a" // Time in 12-hour format with AM/PM
         let startTime = timeFormatter.string(from: event.startTimeStamp)
         let endTime = timeFormatter.string(from: event.endTimeStamp)
-        eventTimeLabel.text = "\(startTime) - \(endTime)"
+        if let eventTimeLabel = eventTimeLabel {
+            eventTimeLabel.text = "\(startTime) - \(endTime)"
+        }
 
         // Set event description
-        eventDescriptionTextView.text = event.description
+        if let eventDescriptionTextView = eventDescriptionTextView {
+            eventDescriptionTextView.text = event.description
+        }
 
         // Set event status
-        eventStatusLabel.text = event.status.rawValue.capitalized
-        updateStatusLabelAppearance(status: event.status)
+        if let eventStatusLabel = eventStatusLabel {
+            eventStatusLabel.text = event.status.rawValue.capitalized
+            updateStatusLabelAppearance(status: event.status)
+        }
 
         // Set age range label
-        eventAgeLabel.text = "\(event.minimumAge)-\(event.maximumAge)" // Just the number range
+        if let eventAgeLabel = eventAgeLabel {
+            eventAgeLabel.text = "\(event.minimumAge)-\(event.maximumAge)"
+        }
 
         // Set venue name label
-        eventVenueLabel.text = event.venueName // Just the venue name
+        if let eventVenueLabel = eventVenueLabel {
+            eventVenueLabel.text = event.venueName
+        }
     }
 
     // MARK: - Helper Functions
     func updateStatusLabelAppearance(status: EventStatus) {
-        switch status {
-        case .ongoing:
-            eventStatusLabel.textColor = .systemGreen
-        case .cancelled:
-            eventStatusLabel.textColor = .systemRed
-        case .completed:
-            eventStatusLabel.textColor = .systemBlue
-        case .banned:
-            eventStatusLabel.textColor = .systemGray
+        if let eventStatusLabel = eventStatusLabel {
+            switch status {
+            case .ongoing:
+                eventStatusLabel.textColor = .systemGreen
+            case .cancelled:
+                eventStatusLabel.textColor = .systemRed
+            case .completed:
+                eventStatusLabel.textColor = .systemBlue
+            case .banned:
+                eventStatusLabel.textColor = .systemGray
+            }
         }
     }
 
@@ -145,24 +168,17 @@ class CustomerEventViewController: UIViewController {
 
     // MARK: - Ticket Count Actions
     @IBAction func TicketIncrease(_ sender: UIButton) {
-           
-       }
-
-      @IBAction func TicketIderease(_ sender: UIButton) {
-           
-       }
-
-       
-    @IBAction func TicketStepperValueChanged(_ sender: UIStepper) {
-        guard let ticketStepper = ticketStepper else {
-            print("ticketStepper is nil!")
-            return
-        }
-        
-        ticketCount = Int(ticketStepper.value) // Update ticket count from stepper's value
-        ticketCountLabel.text = "\(ticketCount) Ticket"
+        // Optional placeholder for functionality
     }
 
+    @IBAction func TicketIderease(_ sender: UIButton) {
+        // Optional placeholder for functionality
+    }
 
-
+    @IBAction func TicketStepperValueChanged(_ sender: UIStepper) {
+        if let ticketStepper = ticketStepper, let ticketCountLabel = ticketCountLabel {
+            ticketCount = Int(ticketStepper.value) // Update ticket count from stepper's value
+            ticketCountLabel.text = "\(ticketCount) Ticket"
+        }
+    }
 }
