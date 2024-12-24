@@ -66,7 +66,7 @@ class CategoriesManager {
 
     // do not use for now
     static func deleteCategorie(categorieID: String) async throws {
-        try await categorieDocument(categorieID: categorieID).delete()
+        try await categorieDocument(categorieID: categorieID).updateData([K.FStore.Categories.status: CategoryStaus.disabled.rawValue])
     }
     
     static func getUserSelectedCatigories(userID: String) async throws -> [Category] {
