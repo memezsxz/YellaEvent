@@ -18,57 +18,52 @@ class CustomerEventViewController: UIViewController {
     @IBOutlet weak var dayOfWeekLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
     @IBOutlet weak var eventDescriptionTextView: UITextView!
-    @IBOutlet weak var eventStatusLabel: UILabel! // New status label
-
-    @IBOutlet weak var eventAgeLabel: UILabel! // Age label
-    @IBOutlet weak var eventVenueLabel: UILabel! // Venue label
-    @IBOutlet weak var ticketCountLabel: UILabel! // Ticket count label
+    @IBOutlet weak var eventStatusLabel: UILabel!
+    @IBOutlet weak var eventAgeLabel: UILabel!
+    @IBOutlet weak var eventVenueLabel: UILabel!
+    @IBOutlet weak var ticketCountLabel: UILabel!
     @IBOutlet weak var ticketStepper: UIStepper!
+
+    @IBOutlet weak var ViewOrg: UIBarButtonItem!
+    @IBAction func showPage(_ sender: Any) {
+    }
     
     
-    // MARK: - Local Object
+    // MARK: - Properties
+    var eventID: String = "3jCdiZ7OrVUAksiBrZwr" // The event ID to fetch
     var event: Event? // This will hold the event data for this screen.
-    var ticketCount: Int = 0 // Global ticket count variable
+    var ticketCount: Int = 0 // Keeps track of the current ticket count
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ticketCountLabel.text = "\(ticketCount) Ticket" // Set the initial label format
-
-        // Create a sample event for testing
         
-        let musicCategory = Category(
-            categoryID: "1",
-            name: "Music",
-            icon: "music_icon.png",
-            status: .enabled
-        )
+        // Set the initial ticket count label text
+      //ticketCountLabel.text = "\(ticketCount) Ticket"
+       
         
-        let sampleEvent = Event(
-            organizerID: "123",
-            organizerName: "John Doe",
-            name: "Music Festival",
-            description: "A fun-filled night with live music, food, and entertainment!",
-            startTimeStamp: Date(),
-            endTimeStamp: Date().addingTimeInterval(4 * 3600), // 4 hours later
-            status: .ongoing,
-            category: musicCategory ,
-            locationURL: "https://example.com",
-            venueName: "Aldana",
-            minimumAge: 18,
-            maximumAge: 60,
-            maximumTickets: 500,
-            price: 20.0,
-            coverImageURL: "https://example.com/image.jpg",
-            mediaArray: []
-        )
 
-        // Assign the sample event to the event property
-        self.event = sampleEvent
+        // Fetch and populate event data
+        fetchEventAndUpdateUI()
+    }
 
-        // Populate the UI with the sample event data
-        populateEventData()
+    // MARK: - Fetch Event
+    func fetchEventAndUpdateUI() {
+        Task {
+            do {
+                // Fetch the event using the EventsManager
+                let fetchedEvent = try await EventsManager.getEvent(eventID: eventID)
+                self.event = fetchedEvent
+
+                // Update the UI on the main thread
+                DispatchQueue.main.async {
+                    self.populateEventData()
+                }
+            } catch {
+                print("Failed to fetch event: \(error)")
+            }
+        }
     }
 
     // MARK: - Populate Data
@@ -147,26 +142,27 @@ class CustomerEventViewController: UIViewController {
             }
         }
     }
-    
+
     // MARK: - Ticket Count Actions
-    // Increase ticket count (for "+")
-   
-    
-    
     @IBAction func TicketIncrease(_ sender: UIButton) {
-        
-    }
+           
+       }
 
-   @IBAction func TicketIderease(_ sender: UIButton) {
-        
-    }
+      @IBAction func TicketIderease(_ sender: UIButton) {
+           
+       }
 
-    
+       
     @IBAction func TicketStepperValueChanged(_ sender: UIStepper) {
-        ticketCount = Int(sender.value) // Update ticket count from stepper's value
+        guard let ticketStepper = ticketStepper else {
+            print("ticketStepper is nil!")
+            return
+        }
+        
+        ticketCount = Int(ticketStepper.value) // Update ticket count from stepper's value
         ticketCountLabel.text = "\(ticketCount) Ticket"
     }
 
 
-   
+
 }
