@@ -33,12 +33,14 @@ class CategoriesManager {
         try await EventsManager.updateEventsCategory(category: category)
     }
     
-    static func getAllCategories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
+    static func getAllCategories(listener: @escaping (QuerySnapshot?, Error?) -> Void)  {
         self.listener?.remove()
         self.listener = categoriesCollection
             .order(by: K.FStore.Categories.name)
             .addSnapshotListener(listener)
     }
+    
+
     
     static func getActiveCatigories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
         self.listener?.remove()
