@@ -42,7 +42,7 @@ class CategoriesManager {
     
 
     
-    static func getActiveCatigories(listener: @escaping (QuerySnapshot?, Error?) -> Void) async throws {
+    static func getActiveCatigories(listener: @escaping (QuerySnapshot?, Error?) -> Void)  {
         self.listener?.remove()
         self.listener = categoriesCollection
             .whereField(K.FStore.Categories.status, isEqualTo: CategoryStaus.enabled.rawValue)

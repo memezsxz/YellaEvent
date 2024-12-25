@@ -92,33 +92,37 @@ class AuthenticationRegisterController: UIViewController {
     
     
     @IBAction func registerAccountAction(_ sender: Any) {
+        var hasErrors = false
+
+        // Validate Full Name
         if let fullName = registerFullNameField.text, fullName.isEmpty {
             fullNameValidationLbl.text = "Please enter your full name."
             fullNameValidationLbl.isHidden = false
-            return
+            hasErrors = true
         } else {
+            fullNameValidationLbl.text = ""
             fullNameValidationLbl.isHidden = true
         }
-        
-        // Validate Phone Number
 
+        // Validate Phone Number
         if let phoneNumber = registerPhoneNumberField.text, phoneNumber.isEmpty || phoneNumber.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) != nil {
             phoneNumberValidationLbl.text = "Please enter a valid phone number."
             phoneNumberValidationLbl.isHidden = false
-            return
+            hasErrors = true
         } else {
+            phoneNumberValidationLbl.text = ""
             phoneNumberValidationLbl.isHidden = true
         }
-        
-        
+
         // Validate Date of Birth
         let dateOfBirth = currentDateOfBirth
         let minimumDate = Calendar.current.date(from: DateComponents(year: 2014, month: 1, day: 1))!
         if dateOfBirth >= minimumDate {
             dateOfBirthValidationLbl.text = "Date of birth must be before 2014."
             dateOfBirthValidationLbl.isHidden = false
-            return
+            hasErrors = true
         } else {
+            dateOfBirthValidationLbl.text = ""
             dateOfBirthValidationLbl.isHidden = true
         }
 
@@ -126,12 +130,13 @@ class AuthenticationRegisterController: UIViewController {
         if let email = registerEmailField.text, email.isEmpty {
             emailValidationLbl.text = "Please enter your email."
             emailValidationLbl.isHidden = false
-            return
+            hasErrors = true
         } else if !isValidEmail(registerEmailField.text!) {
             emailValidationLbl.text = "Please enter a valid email address."
             emailValidationLbl.isHidden = false
-            return
+            hasErrors = true
         } else {
+            emailValidationLbl.text = ""
             emailValidationLbl.isHidden = true
         }
 
@@ -139,14 +144,16 @@ class AuthenticationRegisterController: UIViewController {
         if let password = registerPasswordField.text, password.isEmpty || password.count < 6 {
             passwordValidationLbl.text = "Please enter a password with at least 6 characters."
             passwordValidationLbl.isHidden = false
-            return
+            hasErrors = true
         } else {
+            passwordValidationLbl.text = ""
             passwordValidationLbl.isHidden = true
         }
 
-
-
-
+        // Stop execution if there are validation errors
+        if hasErrors {
+            return
+        }
 
         // Register user with Firebase Authentication
         Auth.auth().createUser(withEmail: registerEmailField.text!, password: registerPasswordField.text!) { [weak self] authResult, error in

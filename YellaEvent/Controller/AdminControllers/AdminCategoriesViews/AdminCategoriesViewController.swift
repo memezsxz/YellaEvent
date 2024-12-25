@@ -94,7 +94,7 @@ extension AdminCategoriesViewController {
     }
     
     func loadDataFromFirebase() {
-        CategoriesManager.getAllCategories { snapshot, error in
+        CategoriesManager.getActiveCatigories { snapshot, error in
             if let error = error {
                 print("Error occurred during fetching categories: \(error.localizedDescription)")
                 return

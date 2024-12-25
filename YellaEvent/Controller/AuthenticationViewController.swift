@@ -16,7 +16,9 @@ class AuthenticationViewController: UIViewController {
     @IBOutlet var intrestsCollection: InterestsCollectionView!
     @IBOutlet weak var signInThroughGoogle: UIButton!
     
-
+    @IBOutlet weak var loginPasswordValidationLbl: UILabel!
+    
+    @IBOutlet weak var loginEmailValidationLbl: UILabel!
     @IBOutlet weak var forgotPasswordEmailField: UITextField!
     @IBOutlet weak var loginPasswordField: UITextField!
     @IBOutlet weak var loginEmailField: UITextField!
@@ -97,6 +99,16 @@ class AuthenticationViewController: UIViewController {
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        if (loginEmailValidationLbl != nil) {
+            loginEmailValidationLbl.isHidden = true
+            loginEmailValidationLbl.text = ""
+            loginPasswordValidationLbl.isHidden = true
+            loginPasswordValidationLbl.text = ""
+        }
+    }
+    
+    
     func showAlert(message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
@@ -109,18 +121,37 @@ class AuthenticationViewController: UIViewController {
     
     
     @IBAction func normalLoginAction(_ sender: Any) {
-        guard let email = loginEmailField.text, !email.isEmpty else {
-            showAlert(message: "Please enter your email.")
-            return
-        }
+
         
-        guard let password = loginPasswordField.text, !password.isEmpty else {
-            showAlert(message: "Please enter your password.")
+        var hasErrors = false
+
+        // Validate Email
+        if let email = loginEmailField.text, email.isEmpty {
+            loginEmailValidationLbl.text = "Please enter your email."
+            loginEmailValidationLbl.isHidden = false
+            hasErrors = true
+        } else {
+            loginEmailValidationLbl.text = ""
+            loginEmailValidationLbl.isHidden = true
+        }
+
+        // Validate Password
+        if let password = loginPasswordField.text, password.isEmpty {
+            loginPasswordValidationLbl.text = "Please enter your password."
+            loginPasswordValidationLbl.isHidden = false
+            hasErrors = true
+        } else {
+            loginPasswordValidationLbl.text = ""
+            loginPasswordValidationLbl.isHidden = true
+        }
+
+        // Stop execution if there are validation errors
+        if hasErrors {
             return
         }
         
         // Login with Firebase Auth
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+        Auth.auth().signIn(withEmail: loginEmailField.text!, password: loginPasswordField.text!) { [weak self] authResult, error in
             guard let self = self else { return }
             
             if let error = error {
