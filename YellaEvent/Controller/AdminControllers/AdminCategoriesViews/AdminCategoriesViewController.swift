@@ -93,8 +93,12 @@ extension AdminCategoriesViewController {
         filteredCategories.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return tableView.frame.width / 8
+    }
+    
     func loadDataFromFirebase() {
-        CategoriesManager.getActiveCatigories { snapshot, error in
+        CategoriesManager.getActiveCatigories{ snapshot, error in
             if let error = error {
                 print("Error occurred during fetching categories: \(error.localizedDescription)")
                 return
