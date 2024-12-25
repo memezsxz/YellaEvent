@@ -9,6 +9,7 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
 
     @IBOutlet weak var tableView: UITableView! // Outlet for the table view
 
+    @IBOutlet weak var activeExpired: UISegmentedControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()

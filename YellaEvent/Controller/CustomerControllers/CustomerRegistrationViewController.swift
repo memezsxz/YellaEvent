@@ -13,9 +13,9 @@ class CustomerRegistrationViewController: UIViewController {
     @IBOutlet weak var lblTicketAmount: UILabel!
     @IBOutlet weak var lblTicketQuantity: UILabel!
     
-    // Initialize Firestore
-    let db = Firestore.firestore()
-
+    // Ticket ID (you need to set this to the selected ticket's ID)
+    var selectedTicketID: String = "yourDocumentID" // Update with the actual ticket ID
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Fetch ticket data once the view is loaded
@@ -24,28 +24,18 @@ class CustomerRegistrationViewController: UIViewController {
 
     // MARK: - Fetch Ticket Data
     private func fetchTicketData() {
-        // Replace 'yourDocumentID' with the actual document ID
-        let documentID = "yourDocumentID" // Update this with your actual document ID
-        db.collection("tickets").document(documentID).getDocument { (document, error) in
-            if let error = error {
-                print("Error fetching document: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let document = document, document.exists,
-                  let data = document.data() else {
-                print("Document does not exist")
-                return
-            }
-
-            // Extract quantity and total price
-            let quantity = data["quantity"] as? Int ?? 0
-            let totalPrice = data["totalPrice"] as? Double ?? 0.0
-            
-            // Update labels on the main thread
-            DispatchQueue.main.async {
-                self.lblTicketQuantity.text = "Quantity: \(quantity)"
-                self.lblTicketAmount.text = "Total Amount: $\(totalPrice)"
+        Task {
+            do {
+                // Fetch the ticket using the ticket ID
+                let ticket = try await TicketsManager.getTicket(ticketId: selectedTicketID)
+                
+                // Update labels on the main thread
+                DispatchQueue.main.async {
+                    self.lblTicketQuantity.text = "Quantity: \(ticket.quantity)"
+                    self.lblTicketAmount.text = "Total Amount: $\(ticket.totalPrice)"
+                }
+            } catch {
+                print("Error fetching ticket: \(error.localizedDescription)")
             }
         }
     }

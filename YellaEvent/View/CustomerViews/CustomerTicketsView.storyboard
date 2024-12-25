@@ -77,6 +77,7 @@
                     <navigationItem key="navigationItem" title="Tickets" id="zWg-HI-MpD"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="activeExpired" destination="Dyy-xD-Zg7" id="R75-dP-pl8"/>
                         <outlet property="tableView" destination="l4m-Ps-hbC" id="5w9-Vr-XHT"/>
                         <segue destination="uBa-51-B3b" kind="show" identifier="ShowTicketDetail" id="6vV-ZC-CJA"/>
                     </connections>
@@ -207,8 +208,8 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOJ-lG-hvF">
                                 <rect key="frame" x="52.666666666666657" y="405" width="288" height="272"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="QR xode" translatesAutoresizingMaskIntoConstraints="NO" id="lNs-7m-z0e">
-                                        <rect key="frame" x="-21" y="-60" width="345" height="367"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="qr1" translatesAutoresizingMaskIntoConstraints="NO" id="lNs-7m-z0e">
+                                        <rect key="frame" x="24" y="16" width="239" height="241"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                     </imageView>
                                 </subviews>
@@ -256,6 +257,9 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="TE9-7S-z9S"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="cancel" id="OGE-1s-CYL">
                             <color key="tintColor" systemColor="systemRedColor"/>
+                            <connections>
+                                <action selector="cancelBTN:" destination="uBa-51-B3b" id="XKq-Tk-ock"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -272,9 +276,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="QR xode" width="789" height="604"/>
         <image name="info.circle.fill" catalog="system" width="128" height="123"/>
         <image name="location.fill" catalog="system" width="128" height="119"/>
+        <image name="qr1" width="400" height="400"/>
         <image name="ticket" catalog="system" width="128" height="86"/>
         <image name="ticket.fill" catalog="system" width="128" height="86"/>
         <namedColor name="BackgroundGray">
