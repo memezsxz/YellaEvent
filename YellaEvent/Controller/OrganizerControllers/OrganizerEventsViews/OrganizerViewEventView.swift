@@ -9,6 +9,7 @@ import UIKit
 
 class OrganizerViewEventView: UIViewController {
 
+    // MARK: - Outlets
     @IBOutlet var eventStatus: UILabel!
     @IBOutlet var eventTitle: UILabel!
     @IBOutlet var statusCircle: UIImageView!
@@ -23,34 +24,106 @@ class OrganizerViewEventView: UIViewController {
     @IBOutlet var avarageRating: UILabel!
     @IBOutlet var remainingTickets: UILabel!
     @IBOutlet var totalAttendens: UILabel!
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    @IBOutlet var eventImageView: UIImageView! // Added for event image
 
+    // MARK: - Properties
+    var eventID: String = "" // The event ID to fetch
+    var event: Event? // This will hold the event data
+
+    // MARK: - View Lifecycle
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    func setup(eventID: String) {
-        
-         Task {
-            let event =  try await EventsManager.getEvent(eventID: eventID)
-             print(event, "in organizer view event view")
 
-             eventStatus.text = event.status.rawValue
-             // fill event details
-             // do not ferget that the event media array needs to be presented
-                        
-          
-             
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchEventAndUpdateUI()
+    }
+
+    // MARK: - Fetch event and update UI
+    func setup(eventID: String) {
+        self.eventID = eventID
+        fetchEventAndUpdateUI()
+    }
+
+    func fetchEventAndUpdateUI() {
+        Task {
+            do {
+                // Fetch the event using the EventsManager
+                let fetchedEvent = try await EventsManager.getEvent(eventID: eventID)
+                self.event = fetchedEvent
+
+                // Update the UI with event data
+                DispatchQueue.main.async {
+                    self.populateEventData()
+                }
+            } catch {
+                print("Failed to fetch event: \(error)")
+            }
         }
     }
-    
-    
-//    performSegue(withIdentifier: "toAttendees", sender: self)
 
+    // MARK: - Populate event data into UI
+    func populateEventData() {
+        guard let event = event else { return }
+
+        // Load event image
+        if let url = URL(string: event.coverImageURL) {
+            loadImage(from: url) { [weak self] image in
+                self?.eventImageView.image = image
+            }
+        }
+
+        // Set event title
+        eventTitle.text = event.name
+
+        // Set event status
+        eventStatus.text = event.status.rawValue.capitalized
+
+        // Set event date (day of the month, month, and day of the week)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d" // Day of the month
+        dayOfMonth.text = dateFormatter.string(from: event.startTimeStamp)
+
+        dateFormatter.dateFormat = "MMM" // Month (short)
+        Month.text = dateFormatter.string(from: event.startTimeStamp)
+
+        dateFormatter.dateFormat = "EEEE" // Day of the week
+        dayOfweek.text = dateFormatter.string(from: event.startTimeStamp)
+
+        // Format event time
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "h:mm a" // Time in 12-hour format with AM/PM
+        let startTime = timeFormatter.string(from: event.startTimeStamp)
+        let endTime = timeFormatter.string(from: event.endTimeStamp)
+        startToEndTime.text = "\(startTime) - \(endTime)"
+
+        // Set minimum age
+        minimumAge.text = "\(event.minimumAge)-\(event.maximumAge)"
+
+        // Set venue name
+        Venue.text = event.venueName
+
+        // Set tickets sold, average rating, remaining tickets, total attendees
+      //  ticketsSold.text = "\(event.ticketsSold)"
+    //    avarageRating.text = "\(event.averageRating)"
+    //    remainingTickets.text = "\(event.remainingTickets)"
+    //    totalAttendens.text = "\(event.totalAttendees)"
+    }
+
+    // MARK: - Helper function to load image asynchronously
+    func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }
+    }
 }
+
