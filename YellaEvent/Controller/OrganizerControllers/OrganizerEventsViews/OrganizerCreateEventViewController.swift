@@ -11,7 +11,7 @@ class OrganizerCreateEventViewController: UITableViewController {
     @IBOutlet weak var endTimeTextField: UITextField!
     
     @IBOutlet weak var categoryButton: UIButton!  // UIButton to trigger UIMenu
-    var categoryOptions = ["Jazz", "Family"] // Default options
+   
     var selectedCategory: Category?
     
     @IBOutlet weak var ticketPriceTextField: UITextField!
@@ -25,70 +25,62 @@ class OrganizerCreateEventViewController: UITableViewController {
     var startTimePicker: UIDatePicker!
     var endTimePicker: UIDatePicker!
     
+    
     // Custom Picker Container
     var pickerContainerView: UIView!
+    
+    
+    @IBOutlet weak var eventCoverButton: UIButton!
+    @IBOutlet weak var eventBadgeButton: UIButton!
+    @IBOutlet weak var manageMediaButton: UIButton!
+
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set up default values
-        setDefaultValues()
-        
         // Set up date pickers and time pickers
         setupDatePickers()
-        
-        // Configure category button to show UIMenu
-        configureCategoryMenu()
     }
     
-    func setDefaultValues() {
-        // Set default event title
-        eventTitleTextField.text = "Event Title"
-        
-        // Set default event description
-        eventDescriptionTextView.text = "Event Description"
-        
-        // Set default ticket price, max tickets, and min age
-        ticketPriceTextField.text = "10.00" // Default ticket price
-        maxTicketsTextField.text = "100"    // Default max tickets
-        minAgeTextField.text = "18"         // Default minimum age
-        
-        // Set default location URL
-        locationURLTextField.text = "https://example.com" // Default URL
-        
-        // Set default dates and times (current date/time as defaults)
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        startDateTextField.text = formatter.string(from: Date()) // Current date
-        endDateTextField.text = formatter.string(from: Date())   // Current date
-        startTimeTextField.text = formatter.string(from: Date()) // Current time
-        endTimeTextField.text = formatter.string(from: Date())   // Current time
-    }
     
+    //category
+    
+    @IBAction func optionSelection(_ sender: UIAction) {
+        let title = sender.title
+        print(title)
+        
+        if let button = self.categoryButton {
+            button.setTitle(title, for: .normal)
+        } else {
+            print("categoryButton is nil")
+        }
+    }
+
     func setupDatePickers() {
         // Initialize the date and time pickers
         startDatePicker = UIDatePicker()
         startDatePicker.datePickerMode = .date
-        startDatePicker.date = Date() // Set default to current date
+        startDatePicker.preferredDatePickerStyle = .wheels
         startDateTextField.inputView = startDatePicker
         startDateTextField.inputAccessoryView = createToolbar()
         
         endDatePicker = UIDatePicker()
         endDatePicker.datePickerMode = .date
-        endDatePicker.date = Date() // Set default to current date
+        endDatePicker.preferredDatePickerStyle = .wheels
         endDateTextField.inputView = endDatePicker
         endDateTextField.inputAccessoryView = createToolbar()
         
         startTimePicker = UIDatePicker()
         startTimePicker.datePickerMode = .time
-        startTimePicker.date = Date() // Set default to current time
+        startTimePicker.preferredDatePickerStyle = .wheels
         startTimeTextField.inputView = startTimePicker
         startTimeTextField.inputAccessoryView = createToolbar()
         
         endTimePicker = UIDatePicker()
         endTimePicker.datePickerMode = .time
-        endTimePicker.date = Date() // Set default to current time
+        endTimePicker.preferredDatePickerStyle = .wheels
         endTimeTextField.inputView = endTimePicker
         endTimeTextField.inputAccessoryView = createToolbar()
     }
@@ -140,35 +132,6 @@ class OrganizerCreateEventViewController: UITableViewController {
         endTimeTextField.inputView = endTimePicker // Ensure the time picker is shown for end time
     }
     
-    func configureCategoryMenu() {
-        // Create actions for each category
-        let categoryActions: [UIAction] = categoryOptions.map { category in
-            UIAction(title: category, handler: { [weak self] _ in
-                if let strongSelf = self, let categoryButton = strongSelf.categoryButton {
-                    // Ensure 'icon' is passed along with 'name'
-                    strongSelf.selectedCategory = Category(name: category, icon: "defaultIcon") // Replace "defaultIcon" with the actual icon or path
-                    categoryButton.setTitle(category, for: .normal)
-                }
-            })
-        }
-        
-        // Create the menu with the actions
-        let categoryMenu = UIMenu(title: "Select Category", children: categoryActions)
-        
-        // Assign the UIMenu to the categoryButton if it's not nil
-        if let categoryButton = categoryButton {
-            categoryButton.menu = categoryMenu
-            categoryButton.showsMenuAsPrimaryAction = true  // Make the button display the menu when tapped
-        }
-    }
-
-
-    
-    // Function to update the categories dynamically
-    func updateCategoryOptions(newCategories: [String]) {
-        categoryOptions = newCategories
-        configureCategoryMenu() // Reconfigure the menu with updated categories
-    }
     
     // Action when Create Event button is clicked
     @IBAction func createEventBtnClicked(_ sender: UIButton) {
