@@ -19,7 +19,6 @@ class AuthenticationViewController: UIViewController {
     @IBOutlet weak var forgotBtn: UIButton!
     @IBOutlet weak var loginPasswordValidationLbl: UILabel!
     
-    @IBOutlet weak var loginWithGoogleBtn: UIButton!
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var forgotEmailValidationLbl: UILabel!
     @IBOutlet weak var loginEmailValidationLbl: UILabel!
@@ -66,66 +65,94 @@ class AuthenticationViewController: UIViewController {
                // Successful sign-in
                if let firebaseUser = authResult?.user {
                    print("User signed in with Google: \(firebaseUser.email ?? "No email")")
-                   self.saveUserIdInUserDefaults(firebaseUser.uid)
                    
-                   let db = Firestore.firestore()
-                   
-                   // Check if user exists in the 'admins' collection
-                   db.collection("admins").document(firebaseUser.uid).getDocument { [weak self] document, error in
-                       guard let self = self else { return }
-                       
-                       if let document = document, document.exists {
-                           // Navigate to Admin screen
-                           self.performSegue(withIdentifier: "goToAdmin", sender: self)
-                       } else {
-                           // Check if user exists in the 'organizers' collection
-                           db.collection("organizers").document(firebaseUser.uid).getDocument { [weak self] document, error in
+                   // Check if the user is banned
+                   Task {
+                       do {
+                           let isNotBanned = try await UsersManager.isUserBanned(userID: firebaseUser.uid)
+                           if !isNotBanned {
+                               // Show banned user message and sign out
+                               let alertController = UIAlertController(
+                                   title: "Account Banned",
+                                   message: "Your account has been banned. Please contact support.",
+                                   preferredStyle: .alert
+                               )
+                               alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                               self.present(alertController, animated: true, completion: nil)
+                               try? Auth.auth().signOut()
+                               return
+                           }
+                           
+                           self.saveUserIdInUserDefaults(firebaseUser.uid)
+                           
+                           let db = Firestore.firestore()
+                           
+                           // Check if user exists in the 'admins' collection
+                           db.collection("admins").document(firebaseUser.uid).getDocument { [weak self] document, error in
                                guard let self = self else { return }
                                
                                if let document = document, document.exists {
-                                   // Navigate to Organizer screen
-                                   self.performSegue(withIdentifier: "goToOrganizer", sender: self)
+                                   // Navigate to Admin screen
+                                   self.performSegue(withIdentifier: "goToAdmin", sender: self)
                                } else {
-                                   // Check if user exists in the 'customers' collection
-                                   db.collection("customers").document(firebaseUser.uid).getDocument { [weak self] document, error in
+                                   // Check if user exists in the 'organizers' collection
+                                   db.collection("organizers").document(firebaseUser.uid).getDocument { [weak self] document, error in
                                        guard let self = self else { return }
                                        
                                        if let document = document, document.exists {
-                                           // Navigate to Normal User screen
-                                           self.performSegue(withIdentifier: "goToCustomer", sender: self)
+                                           // Navigate to Organizer screen
+                                           self.performSegue(withIdentifier: "goToOrganizer", sender: self)
                                        } else {
-                                           // Create a new account for the user
-                                           let customer = Customer(
-                                               userID: firebaseUser.uid,
-                                               fullName: user.profile?.name ?? "Unknown",
-                                               email: firebaseUser.email ?? "No email",
-                                               dob: Date(), // Default DOB if not available
-                                               dateCreated: Date.now,
-                                               phoneNumber: 0, // Default phone number if not available
-                                               profileImageURL: user.profile?.imageURL(withDimension: 200)?.absoluteString ?? "",
-                                               badgesArray: [],
-                                               interestsArray: []
-                                           )
-                                           
-                                           Task {
-                                               do {
-                                                   try await UsersManager.createNewUser(user: customer)
-                                                   // Navigate to Interest Picker
-                                                   self.performSegue(withIdentifier: "goToInterestPicker", sender: self)
-                                               } catch {
-                                                   let alertController = UIAlertController(
-                                                       title: "Error",
-                                                       message: "Failed to create user: \(error.localizedDescription)",
-                                                       preferredStyle: .alert
+                                           // Check if user exists in the 'customers' collection
+                                           db.collection("customers").document(firebaseUser.uid).getDocument { [weak self] document, error in
+                                               guard let self = self else { return }
+                                               
+                                               if let document = document, document.exists {
+                                                   // Navigate to Normal User screen
+                                                   self.performSegue(withIdentifier: "goToCustomer", sender: self)
+                                               } else {
+                                                   // Create a new account for the user
+                                                   let customer = Customer(
+                                                       userID: firebaseUser.uid,
+                                                       fullName: user.profile?.name ?? "Unknown",
+                                                       email: firebaseUser.email ?? "No email",
+                                                       dob: Date(), // Default DOB if not available
+                                                       dateCreated: Date.now,
+                                                       phoneNumber: 0, // Default phone number if not available
+                                                       profileImageURL: user.profile?.imageURL(withDimension: 200)?.absoluteString ?? "",
+                                                       badgesArray: [],
+                                                       interestsArray: []
                                                    )
-                                                   alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                                   self.present(alertController, animated: true, completion: nil)
+                                                   
+                                                   Task {
+                                                       do {
+                                                           try await UsersManager.createNewUser(user: customer)
+                                                           // Navigate to Interest Picker
+                                                           self.performSegue(withIdentifier: "goToInterestPicker", sender: self)
+                                                       } catch {
+                                                           let alertController = UIAlertController(
+                                                               title: "Error",
+                                                               message: "Failed to create user: \(error.localizedDescription)",
+                                                               preferredStyle: .alert
+                                                           )
+                                                           alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                                           self.present(alertController, animated: true, completion: nil)
+                                                       }
+                                                   }
                                                }
                                            }
                                        }
                                    }
                                }
                            }
+                       } catch {
+                           let alertController = UIAlertController(
+                               title: "Error",
+                               message: "An error occurred while checking ban status: \(error.localizedDescription)",
+                               preferredStyle: .alert
+                           )
+                           alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                           self.present(alertController, animated: true, completion: nil)
                        }
                    }
                }
@@ -171,13 +198,11 @@ class AuthenticationViewController: UIViewController {
     
     
     @IBAction func normalLoginAction(_ sender: Any) {
- 
-        
         var hasErrors = false
 
         // Validate Email
         if let email = loginEmailField.text, !isValidEmail(email), email.isEmpty {
-            loginEmailValidationLbl.text = "Please enter valid email."
+            loginEmailValidationLbl.text = "Please enter a valid email."
             loginEmailValidationLbl.isHidden = false
             hasErrors = true
         } else {
@@ -199,50 +224,68 @@ class AuthenticationViewController: UIViewController {
         if hasErrors {
             return
         }
-        
+
         loginBtn.isEnabled = false
-        loginWithGoogleBtn.isEnabled = false
+        signInThroughGoogle.isEnabled = false
         loginBtn.setTitle("Loading", for: .normal)
+
         // Login with Firebase Auth
         Auth.auth().signIn(withEmail: loginEmailField.text!, password: loginPasswordField.text!) { [weak self] authResult, error in
             guard let self = self else { return }
             
             loginBtn.isEnabled = true
             loginBtn.setTitle("Login", for: .normal)
-            loginWithGoogleBtn.isEnabled = true
-            
+            signInThroughGoogle.isEnabled = true
+
             if let error = error {
                 // Handle error
                 self.showAlert(message: "Login failed: \(error.localizedDescription)")
                 return
             }
-            
+
             // Successful login
             if let user = authResult?.user {
                 print("Login successful for user: \(user.email ?? "Unknown email")")
-                self.saveUserIdInUserDefaults(user.uid)
-                let db = Firestore.firestore()
-                
-                // Check if user exists in the 'admins' collection
-                db.collection("admins").document(user.uid).getDocument { [weak self] document, error in
-                    guard let self = self else { return }
-                    
-                    if let document = document, document.exists {
-                        // Navigate to Admin screen
-                        self.performSegue(withIdentifier: "goToAdmin", sender: self)
-                    } else {
-                        // Check if user exists in the 'organizers' collection
-                        db.collection("organizers").document(user.uid).getDocument { [weak self] document, error in
+
+                // Check if user is banned
+                Task {
+                    do {
+                        let isNotBanned = try await UsersManager.isUserBanned(userID: user.uid)
+                        if !isNotBanned {
+                            // Show banned user message and sign out
+                            self.showAlert(message: "Your account has been banned. Please contact support.")
+                            try? Auth.auth().signOut()
+                            return
+                        }
+
+                        self.saveUserIdInUserDefaults(user.uid)
+                        let db = Firestore.firestore()
+
+                        // Check if user exists in the 'admins' collection
+                        db.collection("admins").document(user.uid).getDocument { [weak self] document, error in
                             guard let self = self else { return }
-                            
+
                             if let document = document, document.exists {
-                                // Navigate to Organizer screen
-                                self.performSegue(withIdentifier: "goToOrganizer", sender: self)
+                                // Navigate to Admin screen
+                                self.performSegue(withIdentifier: "goToAdmin", sender: self)
                             } else {
-                                // Navigate to Normal User screen
-                                self.performSegue(withIdentifier: "goToCustomer", sender: self)
+                                // Check if user exists in the 'organizers' collection
+                                db.collection("organizers").document(user.uid).getDocument { [weak self] document, error in
+                                    guard let self = self else { return }
+
+                                    if let document = document, document.exists {
+                                        // Navigate to Organizer screen
+                                        self.performSegue(withIdentifier: "goToOrganizer", sender: self)
+                                    } else {
+                                        // Navigate to Normal User screen
+                                        self.performSegue(withIdentifier: "goToCustomer", sender: self)
+                                    }
+                                }
                             }
                         }
+                    } catch {
+                        // Handle error
+                        self.showAlert(message: "An error occurred while checking ban status: \(error.localizedDescription)")
                     }
                 }
             }

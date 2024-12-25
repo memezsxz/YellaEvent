@@ -445,6 +445,7 @@
                         <segue destination="9ck-Rh-03a" kind="presentation" identifier="goToOrganizer" modalPresentationStyle="fullScreen" id="qG6-qW-cuv"/>
                         <segue destination="djk-bo-c5K" kind="presentation" identifier="goToCustomer" modalPresentationStyle="fullScreen" id="0jO-jK-P8v"/>
                         <segue destination="mOl-th-9h3" kind="presentation" identifier="goToAdmin" modalPresentationStyle="fullScreen" id="I60-hX-4yx"/>
+                        <segue destination="g3u-5y-q59" kind="show" identifier="goToInterestPicker" id="8Nq-xZ-D4f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mik-sp-gta" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -847,6 +848,7 @@
                         <outlet property="fullNameValidationLbl" destination="OOI-n9-pbr" id="143-Ig-19M"/>
                         <outlet property="passwordValidationLbl" destination="zfd-Gy-afP" id="Qb6-AL-FBF"/>
                         <outlet property="phoneNumberValidationLbl" destination="iGJ-C0-Jiq" id="Ozw-c0-O95"/>
+                        <outlet property="registerBtn" destination="ySL-zf-utJ" id="Nj7-i2-NSe"/>
                         <outlet property="registerDateFieldText" destination="C7z-Il-yLu" id="rj3-D0-sYn"/>
                         <outlet property="registerEmailField" destination="ogg-d6-efu" id="C73-WC-eO7"/>
                         <outlet property="registerFullNameField" destination="x77-AI-gnN" id="8rL-Zy-UuX"/>
@@ -862,6 +864,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="8Ch-3J-kB4"/>
+        <segue reference="8Nq-xZ-D4f"/>
         <segue reference="8Pc-kk-M61"/>
         <segue reference="0jO-jK-P8v"/>
     </inferredMetricsTieBreakers>
