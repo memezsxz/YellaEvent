@@ -17,6 +17,7 @@ class AuthenticationRegisterController: UIViewController {
     @IBOutlet weak var fullNameValidationLbl: UILabel!
     @IBOutlet weak var registerFullNameField: UITextField!
     
+    @IBOutlet weak var registerBtn: UIButton!
     @IBOutlet weak var registerDob: UIDatePicker!
     @IBOutlet weak var registerPasswordField: UITextField!
     @IBOutlet weak var registerPhoneNumberField: UITextField!
@@ -116,9 +117,9 @@ class AuthenticationRegisterController: UIViewController {
 
         // Validate Date of Birth
         let dateOfBirth = currentDateOfBirth
-        let minimumDate = Calendar.current.date(from: DateComponents(year: 2014, month: 1, day: 1))!
+        let minimumDate = Calendar.current.date(from: DateComponents(year: 2010, month: 1, day: 1))!
         if dateOfBirth >= minimumDate {
-            dateOfBirthValidationLbl.text = "Date of birth must be before 2014."
+            dateOfBirthValidationLbl.text = "Date of birth must be before 2010."
             dateOfBirthValidationLbl.isHidden = false
             hasErrors = true
         } else {
@@ -142,7 +143,7 @@ class AuthenticationRegisterController: UIViewController {
 
         // Validate Password
         if let password = registerPasswordField.text, password.isEmpty || password.count < 6 {
-            passwordValidationLbl.text = "Please enter a password with at least 6 characters."
+            passwordValidationLbl.text = "Please enter password with atleast 6 chars"
             passwordValidationLbl.isHidden = false
             hasErrors = true
         } else {
@@ -155,9 +156,13 @@ class AuthenticationRegisterController: UIViewController {
             return
         }
 
+        registerBtn.isEnabled = false
+        registerBtn.setTitle("Registering", for: .normal)
         // Register user with Firebase Authentication
         Auth.auth().createUser(withEmail: registerEmailField.text!, password: registerPasswordField.text!) { [weak self] authResult, error in
             guard let self = self else { return }
+            registerBtn.isEnabled = true
+            registerBtn.setTitle("Join Us 🚀", for: .normal)
 
             if let error = error {
                 let alertController = UIAlertController(
