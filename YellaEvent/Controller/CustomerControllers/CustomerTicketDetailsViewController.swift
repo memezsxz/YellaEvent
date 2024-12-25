@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseFirestore
 
 class CustomerTicketDetailsViewController: UIViewController {
 
@@ -11,6 +12,9 @@ class CustomerTicketDetailsViewController: UIViewController {
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var lblTime: UILabel!
 
+    // Firestore database reference
+    let db = Firestore.firestore()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -19,6 +23,8 @@ class CustomerTicketDetailsViewController: UIViewController {
 
     @IBAction func btnLocation(_ sender: Any) {
         // Handle location button action
+        guard let ticket = ticket else { return }
+        fetchLocationURL(for: ticket.eventID)
     }
 
     private func updateUI() {
@@ -34,5 +40,29 @@ class CustomerTicketDetailsViewController: UIViewController {
         dateFormatter.timeStyle = .short
         lblDate.text = dateFormatter.string(from: ticket.startTimeStamp)
         lblTime.text = dateFormatter.string(from: ticket.startTimeStamp)
+    }
+    
+    // Fetch the location URL from Firestore based on the event ID
+    private func fetchLocationURL(for eventID: String) {
+        db.collection(K.FStore.Events.collectionName).document(eventID).getDocument { (document, error) in
+            if let error = error {
+                print("Error fetching event details: \(error)")
+                return
+            }
+            
+            guard let document = document, document.exists,
+                  let data = document.data(),
+                  let locationURL = data["locationURL"] as? String else {
+                print("Location URL not found.")
+                return
+            }
+            
+            // Open the location URL in a web view or external browser
+            if let url = URL(string: locationURL) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                print("Invalid URL.")
+            }
+        }
     }
 }
