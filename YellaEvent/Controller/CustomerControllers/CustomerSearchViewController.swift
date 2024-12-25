@@ -94,16 +94,16 @@ class CustomerSearchViewController: UIViewController {
         filteredSearch = prevSearch.reversed()
         // Save the updated array to UserDefaults
         UserDefaults.standard.set(prevSearch, forKey: "prevSearch")
-        changesMade = true
         
-        searchMade()
 
+        searchMade()
 
         //        changesMade = true
         //        tableView.reloadData()
     }
-    
-    func searchMade(){
+
+    func searchMade() {
+        changesMade = true
         Task {
             guard let searchText = searchBar.text, !searchText.isEmpty else {
                 print("Search text is empty")
@@ -240,6 +240,7 @@ extension CustomerSearchViewController: UITableViewDelegate,
 
             // Perform the search logic here
             performSearch(for: selectedText)
+            searchMade()
 
             // Optional: Deselect the cell after selection
             tableView.deselectRow(at: indexPath, animated: true)
@@ -258,17 +259,17 @@ extension CustomerSearchViewController: UITableViewDelegate,
 
 extension CustomerSearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            filteredSearch = prevSearch.reversed()
-        } else {
-            filteredSearch = prevSearch.filter { item in
-                item.lowercased().contains(searchText.lowercased())
+        if !changesMade {
+            if searchText == "" {
+                filteredSearch = prevSearch.reversed()
+            } else {
+                filteredSearch = prevSearch.filter { item in
+                    item.lowercased().contains(searchText.lowercased())
+                }
             }
+            tableView.reloadData()
         }
-
-        tableView.reloadData()
     }
-
 }
 
 func getEvents() async throws -> [EventSummary]? {
