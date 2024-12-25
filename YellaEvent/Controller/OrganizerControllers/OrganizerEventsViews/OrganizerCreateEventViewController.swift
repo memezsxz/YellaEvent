@@ -25,17 +25,12 @@ class OrganizerCreateEventViewController: UITableViewController {
     var startTimePicker: UIDatePicker!
     var endTimePicker: UIDatePicker!
     
-    
     // Custom Picker Container
     var pickerContainerView: UIView!
-    
     
     @IBOutlet weak var eventCoverButton: UIButton!
     @IBOutlet weak var eventBadgeButton: UIButton!
     @IBOutlet weak var manageMediaButton: UIButton!
-
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +39,7 @@ class OrganizerCreateEventViewController: UITableViewController {
         setupDatePickers()
     }
     
-    
-    //category
-    
+    // Category selection
     @IBAction func optionSelection(_ sender: UIAction) {
         let title = sender.title
         print(title)
@@ -83,6 +76,37 @@ class OrganizerCreateEventViewController: UITableViewController {
         endTimePicker.preferredDatePickerStyle = .wheels
         endTimeTextField.inputView = endTimePicker
         endTimeTextField.inputAccessoryView = createToolbar()
+        
+        // Add target actions to update text fields with selected dates/times
+        startDatePicker.addTarget(self, action: #selector(startDatePickerChanged), for: .valueChanged)
+        endDatePicker.addTarget(self, action: #selector(endDatePickerChanged), for: .valueChanged)
+        startTimePicker.addTarget(self, action: #selector(startTimePickerChanged), for: .valueChanged)
+        endTimePicker.addTarget(self, action: #selector(endTimePickerChanged), for: .valueChanged)
+    }
+    
+    // Date Picker Value Changed
+    @objc func startDatePickerChanged() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        startDateTextField.text = formatter.string(from: startDatePicker.date)
+    }
+    
+    @objc func endDatePickerChanged() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        endDateTextField.text = formatter.string(from: endDatePicker.date)
+    }
+    
+    @objc func startTimePickerChanged() {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        startTimeTextField.text = formatter.string(from: startTimePicker.date)
+    }
+    
+    @objc func endTimePickerChanged() {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        endTimeTextField.text = formatter.string(from: endTimePicker.date)
     }
     
     func createToolbar() -> UIToolbar {
@@ -98,21 +122,6 @@ class OrganizerCreateEventViewController: UITableViewController {
     @objc func dismissPicker() {
         // Hide the picker when "Done" is clicked
         view.endEditing(true)
-        
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        
-        // Check which picker is active and update the corresponding text field
-        if startDateTextField.isFirstResponder {
-            startDateTextField.text = formatter.string(from: startDatePicker.date)
-        } else if endDateTextField.isFirstResponder {
-            endDateTextField.text = formatter.string(from: endDatePicker.date)
-        } else if startTimeTextField.isFirstResponder {
-            startTimeTextField.text = formatter.string(from: startTimePicker.date)
-        } else if endTimeTextField.isFirstResponder {
-            endTimeTextField.text = formatter.string(from: endTimePicker.date)
-        }
     }
     
     // Action methods for showing pickers (if needed for additional control)
@@ -132,7 +141,6 @@ class OrganizerCreateEventViewController: UITableViewController {
         endTimeTextField.inputView = endTimePicker // Ensure the time picker is shown for end time
     }
     
-    
     // Action when Create Event button is clicked
     @IBAction func createEventBtnClicked(_ sender: UIButton) {
         createEvent()
@@ -150,22 +158,22 @@ class OrganizerCreateEventViewController: UITableViewController {
             return
         }
         
-        guard let startDate = startDatePicker?.date, !startDateTextField.text!.isEmpty else {
+        guard let startDate = startDateTextField.text, !startDate.isEmpty else {
             showAlert(message: "Please select the start date.")
             return
         }
         
-        guard let endDate = endDatePicker?.date, !endDateTextField.text!.isEmpty else {
+        guard let endDate = endDateTextField.text, !endDate.isEmpty else {
             showAlert(message: "Please select the end date.")
             return
         }
         
-        guard let startTime = startTimePicker?.date, !startTimeTextField.text!.isEmpty else {
+        guard let startTime = startTimeTextField.text, !startTime.isEmpty else {
             showAlert(message: "Please enter the start time.")
             return
         }
         
-        guard let endTime = endTimePicker?.date, !endTimeTextField.text!.isEmpty else {
+        guard let endTime = endTimeTextField.text, !endTime.isEmpty else {
             showAlert(message: "Please enter the end time.")
             return
         }
@@ -195,29 +203,83 @@ class OrganizerCreateEventViewController: UITableViewController {
             return
         }
         
-        // Create the event object
-        let event = Event(
-            organizerID: "organizerID", // Replace with actual organizer ID
-            organizerName: "Organizer Name", // Replace with actual organizer name
-            name: eventName,
-            description: eventDescription,
-            startTimeStamp: startDate,
-            endTimeStamp: endDate,
-            status: .ongoing, // Change if needed
-            category: category,
-            locationURL: locationURL,
-            venueName: "Venue Name", // Replace with actual venue name
-            minimumAge: minAge,
-            maximumAge: 100, // Adjust max age if needed
-            maximumTickets: maxTickets,
-            price: ticketPrice,
-            coverImageURL: "your_image_url", // Replace with actual cover image URL
-            mediaArray: ["your_image_url"], // Replace with actual media URL(s)
-            isDeleted: false
-        )
+        // Prepare event details message
+        let categoryTitle = selectedCategory?.name ?? "None"
+        let eventPreviewMessage = """
+        Event Name: \(eventName)
+        Description: \(eventDescription)
+        Category: \(categoryTitle)
+        Start Date: \(startDate)
+        End Date: \(endDate)
+        Start Time: \(startTime)
+        End Time: \(endTime)
+        Price: $\(ticketPrice)
+        """
         
-        // Handle event saving (Firebase or local storage)
-        saveEventToDatabase(event: event)
+        // Display event preview before saving
+        let alert = UIAlertController(title: "Event Preview", message: eventPreviewMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+            // Convert startDate and endDate strings to Date objects
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateStyle = .none
+            timeFormatter.timeStyle = .short
+            
+            // Parse date and time
+            guard let startDateObject = dateFormatter.date(from: startDate),
+                  let startTimeObject = timeFormatter.date(from: startTime),
+                  let endDateObject = dateFormatter.date(from: endDate),
+                  let endTimeObject = timeFormatter.date(from: endTime) else {
+                self.showAlert(message: "Invalid date or time format.")
+                return
+            }
+            
+            // Combine date and time into a single Date object for start and end
+            let calendar = Calendar.current
+            let startDateTime = calendar.date(bySettingHour: calendar.component(.hour, from: startTimeObject),
+                                              minute: calendar.component(.minute, from: startTimeObject),
+                                              second: 0,
+                                              of: startDateObject)
+            let endDateTime = calendar.date(bySettingHour: calendar.component(.hour, from: endTimeObject),
+                                            minute: calendar.component(.minute, from: endTimeObject),
+                                            second: 0,
+                                            of: endDateObject)
+            
+            // Ensure the combined Date objects are valid
+            guard let validStartDateTime = startDateTime, let validEndDateTime = endDateTime else {
+                self.showAlert(message: "Could not combine date and time.")
+                return
+            }
+            
+            // Proceed with event creation
+            self.saveEventToDatabase(event: Event(
+                organizerID: "organizerID", // Replace with actual organizer ID
+                organizerName: "Organizer Name", // Replace with actual organizer name
+                name: eventName,
+                description: eventDescription,
+                startTimeStamp: validStartDateTime,
+                endTimeStamp: validEndDateTime,
+                status: .ongoing,
+                category: category,
+                locationURL: locationURL,
+                venueName: "Venue Name", // Replace with actual venue name
+                minimumAge: minAge,
+                maximumAge: 100,
+                maximumTickets: maxTickets,
+                price: ticketPrice,
+                coverImageURL: "your_image_url", // Replace with actual cover image URL
+                mediaArray: ["your_image_url"], // Replace with actual media URL(s)
+                isDeleted: false
+            ))
+        }))
+        alert.addAction(UIAlertAction(title: "Edit", style: .cancel))
+        present(alert, animated: true)
+
+        
+        present(alert, animated: true)
     }
     
     func saveEventToDatabase(event: Event) {
