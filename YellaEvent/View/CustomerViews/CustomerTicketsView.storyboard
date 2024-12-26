@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NrR-7s-cUx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NrR-7s-cUx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -119,6 +119,7 @@
                                                 <buttonConfiguration key="configuration" style="filled" title="  View" cornerStyle="capsule">
                                                     <imageReference key="image" image="location.fill" catalog="system" symbolScale="medium"/>
                                                     <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="0.0"/>
+                                                    <color key="baseBackgroundColor" name="BrandPurple"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="btnLocation:" destination="uBa-51-B3b" eventType="touchUpInside" id="6lg-KB-UFA"/>
@@ -232,6 +233,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="  View Event Details" cornerStyle="capsule">
                                     <imageReference key="image" image="info.circle.fill" catalog="system" symbolScale="medium"/>
                                     <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="0.0"/>
+                                    <color key="baseBackgroundColor" name="BrandPurple"/>
                                 </buttonConfiguration>
                             </button>
                         </subviews>
@@ -255,7 +257,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Event Name" id="YlQ-YV-e98">
                         <barButtonItem key="backBarButtonItem" title="Back" id="TE9-7S-z9S"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="cancel" id="OGE-1s-CYL">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="plain" systemItem="cancel" id="OGE-1s-CYL">
                             <color key="tintColor" systemColor="systemRedColor"/>
                             <connections>
                                 <action selector="cancelBTN:" destination="uBa-51-B3b" id="XKq-Tk-ock"/>
@@ -263,6 +265,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="lblBtnCancelTicket" destination="OGE-1s-CYL" id="fot-qO-O8i"/>
                         <outlet property="lblDate" destination="6hH-aG-waz" id="Clr-tg-NKu"/>
                         <outlet property="lblEventName" destination="YlQ-YV-e98" id="P9f-aT-vWA"/>
                         <outlet property="lblQuantity" destination="XY2-4c-0X4" id="2Kp-gP-UIS"/>

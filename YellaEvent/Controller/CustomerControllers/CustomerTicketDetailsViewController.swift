@@ -7,6 +7,7 @@ class CustomerTicketDetailsViewController: UIViewController {
     var ticket: Ticket? // Ensure Ticket is defined in your project
     var ticketDeletedCallback: (() -> Void)? // This will notify when a ticket is deleted
 
+    @IBOutlet weak var lblBtnCancelTicket: UIBarButtonItem!
     // Outlets for UI elements
     @IBOutlet weak var lblEventName: UINavigationItem! // Label for the event name
     @IBOutlet weak var lblTotal: UILabel! // Label for the total price
@@ -25,19 +26,11 @@ class CustomerTicketDetailsViewController: UIViewController {
 
     // Action for the cancel button
     @IBAction func cancelBTN(_ sender: Any) {
-        // Show a confirmation alert to the user
-        let alert = UIAlertController(title: "Cancel Ticket", message: "Are you sure you want to cancel this ticket?", preferredStyle: .alert)
-        
-        // Add 'Yes' action to delete the ticket
-        alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { _ in
+    
             self.deleteTicket() // Call the delete function
-        })
+       
         
-        // Add 'No' action to dismiss the alert
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         
-        // Present the alert
-        present(alert, animated: true, completion: nil)
     }
 
     // Action for the location button
@@ -51,58 +44,91 @@ class CustomerTicketDetailsViewController: UIViewController {
     // Function to update the UI with ticket details
     private func updateUI() {
         guard let ticket = ticket else { return }
+        print(ticket.status)
         
-        // Set the UI elements with the ticket details
-        lblEventName.title = ticket.eventName
-        lblTotal.text = String(format: "$%.2f", ticket.totalPrice)
-        lblQuantity.text = "\(ticket.quantity)"
+        if ticket.status == .paid {
+            lblBtnCancelTicket.isEnabled = true
+        }
+    
         
-        // Format the date and time for display
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .short
-        lblDate.text = dateFormatter.string(from: ticket.startTimeStamp)
-        lblTime.text = dateFormatter.string(from: ticket.startTimeStamp)
+        
+        Task{
+//            var eventobject = try await EventsManager.getEvent(eventID: ticket.eventID)
+            
+            // Set the UI elements with the ticket details
+            lblEventName.title = ticket.eventName
+            lblTotal.text = String(format: "$%.2f", ticket.totalPrice)
+            lblQuantity.text = "\(ticket.quantity)"
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            
+            lblDate.text = dateFormatter.string(from: ticket.startTimeStamp)
+            
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "hh:mm a" // Use "a" for AM/PM format
+
+//            lblTime.text = "\(timeFormatter.string(from: ticket.startTimeStamp))"
+
+            lblTime.text = "\(timeFormatter.string(from: ticket.startTimeStamp) ) -  \(timeFormatter.string(from: ticket.endTimeStamp))"
+            // Format the date and time for display
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateStyle = .medium
+//            dateFormatter.timeStyle = .short
+//            lblDate.text = dateFormatter.string(from: ticket.startTimeStamp)
+//            lblTime.text = dateFormatter.string(from: ticket.startTimeStamp)
+            
+        }
+       
     }
     
     // Function to delete the ticket from Firestore
     private func deleteTicket() {
-        guard let ticket = ticket else { return }
+        let alertController = UIAlertController(
+               title: "Confirm Cancelation",
+               message: "Are you sure you want to cancel this ticket?",
+               preferredStyle: .alert
+           )
+           
+           // Add the "Yes" action
+           let yesAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
+               // Handle the cancellation logic here
+               
+               Task{
+                   self.ticket?.status = .refunded
+//                   print(self.ticket)
+                   try await TicketsManager.updateTicket(ticket: self.ticket!)
+//                   print(self.ticket)
+                   self.navigationController?.popViewController(animated: true)
+               }
+               self.lblBtnCancelTicket.isEnabled = false
+           }
+           
+           // Add the "No" action
+           let noAction = UIAlertAction(title: "No", style: .cancel) { _ in
+               // Handle the case where the user does not want to cancel
+               print("Cancelation aborted")
+           }
+           
+           // Add the actions to the alert controller
+           alertController.addAction(yesAction)
+           alertController.addAction(noAction)
+           
+           // Present the alert
+           self.present(alertController, animated: true, completion: nil)
+  
         
-        // Delete the ticket document from Firestore
-        db.collection(K.FStore.Tickets.collectionName).document(ticket.ticketID).delete { error in
-            if let error = error {
-                print("Error deleting ticket: \(error.localizedDescription)") // Print error if deletion fails
-            } else {
-                print("Ticket successfully deleted.") // Notify successful deletion
-                self.ticketDeletedCallback?() // Call the callback to notify the listing
-                self.navigationController?.popViewController(animated: true) // Go back to the previous screen
-            }
-        }
     }
     
     // Function to fetch the location URL for the event
     private func fetchLocationURL(for eventID: String) {
-        db.collection(K.FStore.Events.collectionName).document(eventID).getDocument { (document, error) in
-            if let error = error {
-                print("Error fetching event details: \(error)") // Print error if fetching fails
-                return
-            }
-            
-            // Check if the document exists and contains a location URL
-            guard let document = document, document.exists,
-                  let data = document.data(),
-                  let locationURL = data["locationURL"] as? String else {
-                print("Location URL not found.") // Notify if URL is not found
-                return
-            }
-            
+
+        print(ticket!.eventID)
             // Open the location URL in a web browser
-            if let url = URL(string: locationURL) {
+        if let url = URL(string: ticket!.locationURL) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
                 print("Invalid URL.") // Notify if the URL is invalid
             }
-        }
     }
 }

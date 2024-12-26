@@ -8,8 +8,8 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
     var currentUserId: String = "" // Current user's ID
 
     @IBOutlet weak var tableView: UITableView! // Outlet for the table view
+    @IBOutlet weak var activeExpired: UISegmentedControl! // Segmented control for filtering
 
-    @IBOutlet weak var activeExpired: UISegmentedControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -17,7 +17,9 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         // Set a default user ID (this will be removed after setting the application)
         UserDefaults.standard.set("xsc9s10sj0JKqpoEJH59", forKey: K.bundleUserID)
         
-        fetchCurrentUserId() // Fetch the current user's ID when the view loads
+        Task {
+            await fetchTickets()
+        }
     }
 
     // Set up table view delegate and data source
@@ -27,33 +29,22 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         tableView.register(UINib(nibName: "TicketsTableViewCell", bundle: .main), forCellReuseIdentifier: "TicketsTableViewCell")
     }
 
-    // Fetch current user ID
-    private func fetchCurrentUserId() {
-        // Retrieve user ID from UserDefaults
-        guard let userId = UserDefaults.standard.string(forKey: K.bundleUserID) else {
-            print("User ID not found.")
-            return
-        }
-        
-        Task {
-            do {
-                // Fetch user data using the retrieved user ID
-                let us = try await UsersManager.getUser(userID: userId) as! Customer
-                self.currentUserId = us.userID // Assuming Customer has a userID property
-                await self.fetchTickets() // Fetch tickets for the user
-            } catch {
-                print("Error fetching user: \(error.localizedDescription)")
-            }
-        }
-    }
-
     // Fetch tickets for the current user
     func fetchTickets() async {
-        do {
-            ticketsList = try await TicketsManager.getUserTickets(userId: currentUserId) // Fetch tickets
-            await MainActor.run { self.tableView.reloadData() } // Reload the table view on the main thread
-        } catch {
-            print("Error fetching tickets: \(error.localizedDescription)")
+        TicketsManager.getUserTickets(userId: UserDefaults.standard.string(forKey: K.bundleUserID)!) { snapshot, error in
+            guard error == nil else {
+                print(error?.localizedDescription ?? "Unknown error")
+                return
+            }
+            
+            guard let snapshot = snapshot else { return }
+            
+            for doc in snapshot.documents {
+                Task {
+                    self.ticketsList.append(try await Ticket(from: doc.data()))
+                    DispatchQueue.main.async { self.tableView.reloadData() } // Reload the table view on the main thread
+                }
+            }
         }
     }
 
@@ -66,9 +57,18 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TicketsTableViewCell", for: indexPath) as! TicketsTableViewCell
         let ticket = ticketsList[indexPath.row]
-        
-        cell.title.text = ticket.eventName // Use eventName
-        cell.subtext.text = "\(ticket.startTimeStamp) - \(ticket.organizerName)" // Display more info
+
+        // Set the event name
+        cell.title.text = ticket.eventName
+
+        // Format the date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy" // Format: 25/12/2024
+        let formattedDate = dateFormatter.string(from: ticket.startTimeStamp)
+
+        // Set the subtitle text with date and venue
+        cell.subtext.text = "\(formattedDate) - \(ticket.eventName)"
+
         return cell
     }
 

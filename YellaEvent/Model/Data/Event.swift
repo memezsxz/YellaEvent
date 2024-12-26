@@ -105,8 +105,8 @@ struct Event : EventProtocol, Codable {
         self.organizerName = try await UsersManager.getOrganizer(organizerID: self.organizerID).fullName
         self.name = data[K.FStore.Events.name] as? String ?? ""
         self.description = data[K.FStore.Events.description] as? String ?? ""
-        self.startTimeStamp =  K.DFormatter.date(from: (data[K.FStore.Events.startTimeStamp] as? String) ?? "") ?? Date()
-        self.endTimeStamp = (data[K.FStore.Events.endTimeStamp] as? Date) ?? Date()
+        self.startTimeStamp =  ((data[K.FStore.Events.startTimeStamp] as? Timestamp) ?? Timestamp()).dateValue()
+        self.endTimeStamp = ((data[K.FStore.Events.endTimeStamp] as? Timestamp) ?? Timestamp()).dateValue() ?? Date()
         self.status = {
             switch data[K.FStore.Events.status] as? String ?? "" {
             case EventStatus.ongoing.rawValue:
