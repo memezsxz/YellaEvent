@@ -32,36 +32,44 @@ class EventSummaryTableViewCell: UITableViewCell {
     
     func setup(with event: EventSummary) {
         if eventImage.image == nil {
-        loading.startAnimating()
-        let find = "@"
-        
-        let text = "\(K.TSFormatter.string(from: event.startTimeStamp)) @ \(event.venueName)"
-        
-        descriptionLabel.text = text
-        
-        let attributedString = NSMutableAttributedString(string: text)
-        if let range = text.range(of: find) {
-            let nsRange = NSRange(range, in: text)
-            attributedString.addAttribute(.font,
-                                          value: UIFont.systemFont(ofSize: descriptionLabel.font.pointSize, weight: .black),
-                                          range: nsRange)
-        }
-        
-        descriptionLabel.attributedText = attributedString
-            PhotoManager.shared.downloadImage(from: URL(string: event.coverImageURL)!) { result in
-                switch result {
-                case .success(let image):
-                    self.eventImage.image = image
-                    self.loading.removeFromSuperview()
-                    
-                case .failure(let error):
-                    print(error)
-                }
+            loading.startAnimating()
+            let find = "@"
+            
+            let text = "\(K.TSFormatter.string(from: event.startTimeStamp)) @ \(event.venueName)"
+            
+            descriptionLabel.text = text
+            
+            let attributedString = NSMutableAttributedString(string: text)
+            if let range = text.range(of: find) {
+                let nsRange = NSRange(range, in: text)
+                attributedString.addAttribute(.font,
+                                              value: UIFont.systemFont(ofSize: descriptionLabel.font.pointSize, weight: .black),
+                                              range: nsRange)
             }
             
-            eventName.text = event.name
-            priceLabel.text = "\(event.price)BD"
-            catagoryLabel.text = "\(event.categoryName) \(event.categoryIcon)"
+            descriptionLabel.attributedText = attributedString
+            if let url = URL(string: event.coverImageURL) {
+                PhotoManager.shared.downloadImage(from: url) { result in
+                    switch result {
+                    case .success(let image):
+                        self.eventImage.image = image
+                        self.loading.removeFromSuperview()
+                        
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+                
+                eventName.text = event.name
+                priceLabel.text = "\(event.price)BD"
+                catagoryLabel.text = "\(event.categoryName) \(event.categoryIcon)"
+            } else {
+                print(event.coverImageURL)
+                print(event)
+                self.eventImage.image = UIImage(named: "circle")
+                self.loading.removeFromSuperview()
+            }
+            
         }
     }
 }

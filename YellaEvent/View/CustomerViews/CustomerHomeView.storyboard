@@ -132,7 +132,7 @@
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="zbO-FU-1Ry" kind="show" identifier="toEvent" id="dPN-cn-Qgn"/>
+                        <segue destination="cfW-wl-M2g" kind="presentation" identifier="toEvent" modalPresentationStyle="fullScreen" id="4bY-3G-Kh1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2yJ-CM-v2m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -140,14 +140,14 @@
             <point key="canvasLocation" x="-3286.2595419847326" y="200.70422535211267"/>
         </scene>
         <!--CustomerEventView-->
-        <scene sceneID="rOt-wh-agq">
+        <scene sceneID="P5r-F3-r8X">
             <objects>
-                <viewControllerPlaceholder storyboardName="CustomerEventView" id="zbO-FU-1Ry" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Ejp-n3-yhN"/>
+                <viewControllerPlaceholder storyboardName="CustomerEventView" id="cfW-wl-M2g" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="WTA-fb-TtW"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="z3k-wK-KQR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uTn-ym-UEJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2535" y="181"/>
+            <point key="canvasLocation" x="-2506" y="201"/>
         </scene>
     </scenes>
     <resources>

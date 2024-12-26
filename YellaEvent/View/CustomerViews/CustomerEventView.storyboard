@@ -22,12 +22,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="tvl-E0-n3s" kind="relationship" relationship="rootViewController" id="1fT-3U-uS7"/>
+                        <segue destination="tvl-E0-n3s" kind="relationship" relationship="rootViewController" id="sUR-hM-3GN"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hMC-CB-fj1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1033" y="4"/>
+            <point key="canvasLocation" x="-917" y="4"/>
         </scene>
         <!--Customer Event View Controller-->
         <scene sceneID="Leq-bU-42G">
@@ -232,7 +232,14 @@
                             <constraint firstItem="IaT-wT-lXI" firstAttribute="centerX" secondItem="gnk-Pf-RIm" secondAttribute="centerX" id="uJy-Jk-svx"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="urM-G9-iIs">
+                        <barButtonItem key="leftBarButtonItem" title="Back" image="chevron.backward" catalog="system" id="nQ2-6X-arI">
+                            <color key="tintColor" name="BrandPurple"/>
+                            <connections>
+                                <action selector="backClicked:" destination="tvl-E0-n3s" id="1Cz-UP-GWQ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="View Organizer" id="CCj-g3-Xkt">
                             <color key="tintColor" name="BrandPurple"/>
                             <connections>
@@ -241,8 +248,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ViewOrg" destination="CCj-g3-Xkt" id="XpO-Gy-v6g"/>
+                        <outlet property="backButton" destination="nQ2-6X-arI" id="9Bt-Wq-Xif"/>
                         <outlet property="dayOfMonthLabel" destination="Jrk-lX-RIc" id="HHy-4H-xGn"/>
                         <outlet property="dayOfWeekLabel" destination="rTr-c1-T83" id="mPq-gz-pZM"/>
                         <outlet property="eventAgeLabel" destination="a73-Sa-p0A" id="Ywt-Xw-Yuv"/>
@@ -302,7 +311,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hok-7V-GVV">
-                                <rect key="frame" x="0.0" y="289" width="393" height="487"/>
+                                <rect key="frame" x="0.0" y="289" width="393" height="438"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -341,8 +350,19 @@
             </objects>
             <point key="canvasLocation" x="1032.824427480916" y="3.5211267605633805"/>
         </scene>
+        <!--CustomerEventView-->
+        <scene sceneID="AF8-cf-Z3j">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6wK-rI-A6w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="CustomerEventView" id="7tO-zh-7xo" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="w0Z-93-fLb"/>
+                </viewControllerPlaceholder>
+            </objects>
+            <point key="canvasLocation" x="1871" y="-10"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="envelope.circle.fill" catalog="system" width="128" height="123"/>
         <image name="phone.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="BackgroundGray">

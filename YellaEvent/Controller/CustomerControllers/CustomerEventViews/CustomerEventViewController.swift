@@ -26,11 +26,13 @@ class CustomerEventViewController: UIViewController {
     @IBOutlet weak var organizerNameLabel: UILabel!
     @IBOutlet weak var ViewOrg: UIBarButtonItem!
     
+    @IBOutlet weak var backButton: UIBarButtonItem!
     // MARK: - Properties
     var eventID: String = "3jCdiZ7OrVUAksiBrZwr" // The event ID to fetch
     var event: Event? // This will hold the event data for this screen.
     var ticketCount: Int = 0 // Keeps track of the current ticket count
     var organizer: Organizer? // This will hold the organizer data for this screen.
+    var delegate : UIViewController?
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -41,6 +43,9 @@ class CustomerEventViewController: UIViewController {
             ticketCountLabel.text = "\(ticketCount) Ticket"
         }
         
+        backButton.title = "Back"
+        navigationItem.leftBarButtonItem = backButton
+//        backButto????n.
         // Fetch and populate event data
         fetchEventAndUpdateUI()
     }
@@ -232,7 +237,9 @@ class CustomerEventViewController: UIViewController {
         }
     }
     
-    
+    @IBAction func backClicked(_ sender: UIBarButtonItem) {
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
 }
 
 

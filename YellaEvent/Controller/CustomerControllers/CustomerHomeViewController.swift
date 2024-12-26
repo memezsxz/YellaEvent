@@ -373,12 +373,6 @@ extension CustomerHomeViewController {
         performSegue(withIdentifier: "toEvent", sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toEvent" {
-            let vc = (segue.destination as! UINavigationController).topViewController as! CustomerEventViewController
-            vc.eventID = selectedEventID!
-        }
-    }
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 {
             return "New Events"
@@ -480,4 +474,17 @@ extension CustomerHomeViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toEvent" {
+            let vc = (segue.destination as! UINavigationController).topViewController as! CustomerEventViewController
+            navigationController?.pushViewController(vc, animated: true)
+            vc.delegate = self
+            vc.eventID = selectedEventID!
+        }
+    }
+    
+//    override func unwindToCustomrHome(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
+//        
+//    }
 }
