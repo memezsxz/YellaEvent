@@ -74,7 +74,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Users" image="person.2" catalog="system" selectedImage="person.2.fill" id="nmL-LD-8YX"/>
                     <navigationItem key="navigationItem" title="Users" id="Iwy-kY-D6G">
-                        <barButtonItem key="leftBarButtonItem" systemItem="compose" id="QaN-2j-R7f">
+                        <barButtonItem key="leftBarButtonItem" title="Manage FAQ" id="QaN-2j-R7f">
                             <connections>
                                 <segue destination="EwN-z7-x1K" kind="show" id="DQS-Zv-OKf"/>
                             </connections>
@@ -341,6 +341,16 @@
             </objects>
             <point key="canvasLocation" x="-703" y="-2"/>
         </scene>
+        <!--AdminEventsView-->
+        <scene sceneID="QuJ-aE-kfU">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AdminEventsView" id="kh7-M8-OJr" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="WMc-vg-OSH"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xGD-Yk-r6a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-626" y="1237"/>
+        </scene>
         <!--Organizer Name-->
         <scene sceneID="dym-SU-ig6">
             <objects>
@@ -487,6 +497,7 @@
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="ViewOrganizerEvents:" destination="6w2-gH-k9e" eventType="touchUpInside" id="I48-VN-3aV"/>
+                                                    <segue destination="kh7-M8-OJr" kind="show" identifier="viewEvents" id="QuI-D9-Wyr"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NhL-vs-TOd">
@@ -1496,7 +1507,7 @@
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wD1-xa-Rna">
                                                                 <rect key="frame" x="0.0" y="27.333333333333318" width="396" height="44.333333333333343"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                                                <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES" textContentType="password"/>
                                                                 <variation key="heightClass=regular-widthClass=regular">
                                                                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                                                 </variation>
@@ -1997,7 +2008,6 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="2LX-R9-3pN">
                             <connections>
                                 <action selector="cancel:" destination="ETC-Lz-tcx" id="kGz-fY-hSi"/>
-                                <segue destination="Maq-Og-NdH" kind="unwind" unwindAction="unWindeToFAQTableViewControllerWithSegue:" id="fPy-uV-Zz0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

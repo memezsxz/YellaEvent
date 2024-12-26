@@ -14,6 +14,7 @@ class ViewOrganizerDetailsView: UIView {
     var delegate : AdminUsersViewController? = nil
     var currentOrganizer : Organizer? = nil
     var userBan : Bool = false
+     
     
     //MARK: Outlets
     @IBOutlet weak var txtEmail: UITextField!
@@ -40,7 +41,9 @@ class ViewOrganizerDetailsView: UIView {
         txtEmail.text = currentOrganizer?.email
         txtUserType.text = "Organizer"
         if let date =  currentOrganizer!.endDate {
-            txtAccountDate.text = K.DFormatter.string(from: date)
+            txtAccountDate.text = delegate?.dateFormatter.string(from: date)
+        }else{
+            txtAccountDate.text = "Never Expire"
         }
         txtPhoneNumber.text = "\(currentOrganizer!.phoneNumber)"
         //        txtDocumnetName.text = currentOrganizer?.LicenseDocumentURL
@@ -127,6 +130,8 @@ class ViewOrganizerDetailsView: UIView {
             delegate!.showAlert(message: "Please enter your email.")
             return
         }
+        
+//        Auth.auth().currentUser?.updatePassword(to: "12345678")
         
         Auth.auth().sendPasswordReset(withEmail: email) { error in
             if let error = error {
