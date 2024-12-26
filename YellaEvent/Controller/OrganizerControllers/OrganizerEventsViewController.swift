@@ -9,100 +9,142 @@ import UIKit
 
 class OrganizerEventsViewController: UIViewController {
 
+    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var SegmentedControlOutlet: UISegmentedControl!
+    @IBOutlet weak var eventsStatusSegment: UISegmentedControl!
+    var currentSegment : EventStatus? = nil
     
-    
-    @IBAction func SegmentedControlAction(_ sender: UISegmentedControl) {
-        
-        
-    }
-    
+    var events : [(eventID: String, eventName : String, organizerID: String, status: String)] = []
+    var segmentEvents : [(eventID: String, eventName : String, organizerID: String, status: String)] = []
+    var searchEvents : [(eventID: String, eventName : String, organizerID: String, status: String)] = []
+
     var selectedEventID : String?
-    
-    var eventSummarys = [EventSummary]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // just for now, remove for final / testing
+//        UserDefaults.standard.set("0VtULKI77gvWkSnnHF45", forKey: K.bundleUserID)
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MainTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "MainTableViewCell")
         
+        searchBar.delegate = self
+        
         Task {
-            
-             EventsManager.getOrganizerEvents(organizerID: "3") { snapshot, error in
-                guard error == nil else {
+            EventsManager.getOrganizerEvents(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!) { snapshot, error in
+                guard error == nil else{
+                    let alert = UIAlertController(title: "Unable To Fetch Events", message: error?.localizedDescription, preferredStyle: .alert)
                     
-                    print(error!.localizedDescription)
-                    
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                     return
                 }
+            
+                guard let snapshot else { return }
                 
-                if let snapshot = snapshot {
-                    Task {
-                        for doc in snapshot.documents {
-                            self.eventSummarys.append(try await EventSummary(from: doc.data()))
-                        }
-                        DispatchQueue.main.async{
-                            self.tableView.reloadData()
-//                            print(self.selectedEventID)
-                            self.moveToSelection()
-                        }
-                    }
+                self.events.removeAll()
+                
+                for document in snapshot.documents {
+
+                    let id = document.documentID
+                    let data = document.data()
+                    let eventName = data[K.FStore.Events.name] as! String
+                    let organizerId = data[K.FStore.Events.organizerID] as! String
+                    let status = data[K.FStore.Events.status] as! String
+                    
+                    self.events.append((id, eventName, organizerId, status))
                 }
-                else{
-                    print("not events found for organizer")
+                
+                DispatchQueue.main.async {
+                    self.setSegmentEvents()
                 }
+                
             }
+            
         }
-        // Do any additional setup after loading the view.
+
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-
-extension OrganizerEventsViewController: UITableViewDelegate , UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    @IBAction func segmentClick(_ sender: Any) {
         
-        return tableView.frame.width / 6
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        eventSummarys.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell") as! MainTableViewCell
+        switch eventsStatusSegment.selectedSegmentIndex {
+        case 0: currentSegment = nil
+        case 1: currentSegment = .ongoing
+        case 2: currentSegment = .completed
+        case 3: currentSegment = .cancelled
+        default:
+            currentSegment = nil
+        }
         
-        cell.setup(event: eventSummarys[indexPath.row])
-        return cell
+        setSegmentEvents()
     }
     
+    func setSegmentEvents() {
+        if let currentSegment = currentSegment  {
+            segmentEvents = events.filter { $0.status == currentSegment.rawValue}
+        } else {
+            segmentEvents  = events
+        }
+        searchBar(searchBar, textDidChange: searchBar.text ?? "")
+    }
+
     func moveToSelection() {
         if selectedEventID != nil {
-            let index = eventSummarys.firstIndex{$0.eventID == selectedEventID!}
-            print(index, selectedEventID, eventSummarys)
+            let index = searchEvents.firstIndex { $0.eventID == selectedEventID! }
+            print(index, selectedEventID, searchEvents)
             tableView.selectRow(at: IndexPath(row: index!, section: 0), animated: true, scrollPosition: .middle)
-
-            
             selectedEventID = nil
         }
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toViewEvent" {
+            let viewEventV = segue.destination as! OrganizerViewEventView
+            viewEventV.setup(eventID: searchEvents[tableView.indexPathForSelectedRow!.row].eventID)
+        }
+    }
+}
+
+
+
+// MARK: table view
+extension OrganizerEventsViewController : UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return  searchEvents.count
+    }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: "toEventDetails", sender: self)
-//    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as! MainTableViewCell
+        cell.title.text = "\(searchEvents[indexPath.row].eventName)"
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        tableView.frame.width / 6
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "toViewEvent", sender: self)
+    }
+}
+
+// MARK: searchbar
+extension OrganizerEventsViewController : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let searchText = searchText.trimmingCharacters(in: CharacterSet(charactersIn: " "))
+        guard !searchText.isEmpty else {
+            searchEvents = segmentEvents
+            tableView.reloadData()
+            return
+        }
+        
+        searchEvents = segmentEvents.filter {
+            $0.eventName.contains(searchText) ||
+            $0.eventName.split(separator: " ").filter {$0.contains(searchText)}.count > 0
+        }
+        tableView.reloadData()
+    }
 }
