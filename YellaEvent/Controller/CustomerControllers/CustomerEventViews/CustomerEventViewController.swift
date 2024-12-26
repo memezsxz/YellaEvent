@@ -26,11 +26,13 @@ class CustomerEventViewController: UIViewController {
     @IBOutlet weak var organizerNameLabel: UILabel!
     @IBOutlet weak var ViewOrg: UIBarButtonItem!
     
+    @IBOutlet weak var backButton: UIBarButtonItem!
     // MARK: - Properties
     var eventID: String = "3jCdiZ7OrVUAksiBrZwr" // The event ID to fetch
     var event: Event? // This will hold the event data for this screen.
     var ticketCount: Int = 0 // Keeps track of the current ticket count
     var organizer: Organizer? // This will hold the organizer data for this screen.
+    var delegate : UIViewController?
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -41,6 +43,9 @@ class CustomerEventViewController: UIViewController {
             ticketCountLabel.text = "\(ticketCount) Ticket"
         }
         
+        backButton.title = "Back"
+        navigationItem.leftBarButtonItem = backButton
+//        backButto????n.
         // Fetch and populate event data
         fetchEventAndUpdateUI()
     }
@@ -52,18 +57,6 @@ class CustomerEventViewController: UIViewController {
                 // Fetch the event using the EventsManager
                 let fetchedEvent = try await EventsManager.getEvent(eventID: eventID)
                 self.event = fetchedEvent
-                
-                // Fetch the organizer data using the organizer ID
-                // Check if organizerID is not empty
-                if !fetchedEvent.organizerID.isEmpty {
-                    do {
-                        let fetchedOrganizer = try await EventsManager.getOrganizer(organizerID: fetchedEvent.organizerID)
-                        self.organizer = fetchedOrganizer
-                    } catch {
-                        print("Failed to fetch organizer: \(error)")
-                    }
-                }
-
 
                 // Update the UI on the main thread
                 DispatchQueue.main.async {
@@ -146,8 +139,8 @@ class CustomerEventViewController: UIViewController {
         }
         
         // Set organizer name
-        if let organizer = organizer, let organizerNameLabel = organizerNameLabel {
-            organizerNameLabel.text = organizer.fullName
+        if let organizerNameLabel = organizerNameLabel {
+            organizerNameLabel.text = event.organizerName
         }
 
 
@@ -216,7 +209,7 @@ class CustomerEventViewController: UIViewController {
     func updateOrganizerProfileView(with organizer: Organizer) {
         // Update the UI with organizer details
         // For example, updating labels, image views, etc.
-        organizerNameLabel.text = organizer.fullName
+        organizerNameLabel.text = event?.organizerName
         // Add any other UI elements or logic needed to display organizer's info
     }
 
@@ -232,6 +225,20 @@ class CustomerEventViewController: UIViewController {
                 print("Failed to fetch events by organizer: \(error)")
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toOrganizerView" {
+            let v = (segue.destination.view as! CustomerEventOrganizerView)
+            v.organizerID = event!.organizerID
+            v.organizerNameLabel.text = event?.organizerName
+            v.delegate = self
+            v.load()
+        }
+    }
+    
+    @IBAction func backClicked(_ sender: UIBarButtonItem) {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 
