@@ -49,6 +49,14 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
     
     
     //MARK: Actions
+    @IBAction func logout(_ sender: UIButton) {
+        do{
+            try Auth.auth().signOut()
+        }catch{
+            print("someting went wrong with log out")
+        }
+    }
+    
     @IBAction func ChangeImageTapped(_ sender: UIButton) {
         changeTheUserImage(sender)
     }
@@ -110,9 +118,12 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
         dateFormatter.dateFormat = "dd/MM/yyyy"
         
         setupEditPage()
-        UserDefaults.standard.set("xsc9s10sj0JKqpoEJH59", forKey: K.bundleUserID) // this will be removed after seting the application
         
-//        UserDefaults.standard.set(Auth.auth().currentUser?.uid, forKey: K.bundleUserID) // this will be removed after seting the application
+//        UserDefaults.standard.set("1OJ9cN1iMAG5pjNocI7Z", forKey: K.bundleUserID) // this will be removed after seting the application
+        
+        UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
+        
+        
         setup()
         
         if let faq = FAQobject{
@@ -390,6 +401,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
         EditProfileImage.image = selectedImage
+        
         imageUpdated = true
         dismiss(animated: true, completion: nil)
     }
@@ -435,7 +447,11 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
                         print("Image uploaded successfully: \(url)")
                         self.currentUser?.profileImageURL = url
                         self.imageUpdated = false
-                        
+                        print("saved", url)
+                        Task{
+                            try await UsersManager.updateUser(user: self.currentUser!, fields: [K.FStore.Customers.profileImageURL: self.currentUser!.profileImageURL])
+                            
+                        }
 
                     case .failure( _):
                         let saveAlert = UIAlertController(
@@ -498,15 +514,20 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
                 Task{
                     try await UsersManager.deleteUser(userID: self.currentUser!.userID, userType: self.currentUser!.type)
                 }
-            }
+                
+                Auth.auth().currentUser?.delete()
+                try Auth.auth().signOut()
             
             
-            // need to be changed to the login screen
-            if let LaunchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController() {
-                LaunchScreen.modalPresentationStyle = .fullScreen
-                self.present(LaunchScreen, animated: true, completion: nil)
-            } else {
-                print("LaunchScreen could not be instantiated.")
+                // need to be changed to the login screen
+                if let LaunchScreen = UIStoryboard(name: "AuthenticationView", bundle: nil).instantiateInitialViewController() {
+                    LaunchScreen.modalPresentationStyle = .fullScreen
+                    self.present(LaunchScreen, animated: true, completion: nil)
+                } else {
+                    print("LaunchScreen could not be instantiated.")
+                }
+            }catch{
+                print("an error with signout occured")
             }
         }
         

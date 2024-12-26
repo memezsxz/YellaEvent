@@ -27,6 +27,7 @@ var currentUser: User? = nil
 //MARK: Class Start
 class AdminUsersViewController: UIViewController {
     
+    let dateFormatter = DateFormatter()
     
     //MARK: Outlet
     @IBOutlet var viewCustomerDetailsView: ViewCustomerDetailsView!
@@ -114,7 +115,7 @@ class AdminUsersViewController: UIViewController {
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        dateFormatter.dateFormat = "dd/MM/yyyy"
         
 
         //load for the list user page

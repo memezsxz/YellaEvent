@@ -103,74 +103,80 @@ class EditAddTableViewController: UITableViewController {
 
     
    
-    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        // Only allow the unwind segue if called manually
+        return false
+    }
     
     // MARK: - Save Info
     @IBAction func saveInfo(_ sender: UIButton) {
         var isValid = true
-        
-        // Validate question field
-        if let question = txtQue.text, question.isEmpty {
-            lblErrorQue.text = "Question is required"
-            isValid = false
-        } else {
-            lblErrorQue.text = ""
-        }
-        
-        // Validate answer field
-        if let answer = txtAnswer.text, answer.isEmpty {
-            lblErrorAnswer.text = "Answer is required"
-            isValid = false
-        } else {
-            lblErrorAnswer.text = ""
-        }
-        
-        // Validate user type field
-        if let type = txtType.text, type.isEmpty {
-            lblErrorFAQ.text = "User Type is required"
-            isValid = false
-        } else {
-            lblErrorFAQ.text = ""
-        }
-        
-        if isValid {
-            let que = txtQue.text!
-            let ans = txtAnswer.text!
-            let type = txtType.text!
-            var choice: FAQUserType = .all
-            
-            if type == "admin" {
-                choice = .admin
-            } else if type == "customer" {
-                choice = .customer
-            } else if type == "organizer" {
-                choice = .organizer
-            } else {
-                choice = .all
-            }
-            
-            // Create or update the FAQ
-            Task {
-                do {
-                    if FAQObject == nil {
-                        let newFAQ = FAQ(question: que, answer: ans, userType: choice)
-                        try await FAQsManager.createNewFAQ(FAQ: newFAQ)
-                    } else {
-                        FAQObject?.question = que
-                        FAQObject?.answer = ans
-                        FAQObject?.userType = choice
-                        try await FAQsManager.updateFAQ(FAQ: FAQObject!)
-                    }
-                    
-                    // Trigger unwind segue after successful operation
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "save", sender: self)
-                    }
-                } catch {
-                    print("Error saving FAQ: \(error.localizedDescription)")
-                }
-            }
-        }
+           
+           // Validate question field
+           if let question = txtQue.text, question.isEmpty {
+               lblErrorQue.text = "Question is required"
+               isValid = false
+           } else {
+               lblErrorQue.text = ""
+           }
+           
+           // Validate answer field
+           if let answer = txtAnswer.text, answer.isEmpty {
+               lblErrorAnswer.text = "Answer is required"
+               isValid = false
+           } else {
+               lblErrorAnswer.text = ""
+           }
+           
+           // Validate user type field
+           if let type = txtType.text, type.isEmpty {
+               lblErrorFAQ.text = "User Type is required"
+               isValid = false
+           } else {
+               lblErrorFAQ.text = ""
+           }
+           
+           if isValid {
+               // All fields are valid, proceed
+               let que = txtQue.text!
+               let ans = txtAnswer.text!
+               let type = txtType.text!
+               var choice: FAQUserType = .all
+               
+               // Determine user type
+               if type.lowercased() == "admin" {
+                   choice = .admin
+               } else if type.lowercased() == "customer" {
+                   choice = .customer
+               } else if type.lowercased() == "organizer" {
+                   choice = .organizer
+               }
+               
+               // Perform database operation asynchronously
+               Task {
+                   do {
+                       if FAQObject == nil {
+                           // Create new FAQ
+                           let newFAQ = FAQ(question: que, answer: ans, userType: choice)
+                           try await FAQsManager.createNewFAQ(FAQ: newFAQ)
+                       } else {
+                           // Update existing FAQ
+                           FAQObject?.question = que
+                           FAQObject?.answer = ans
+                           FAQObject?.userType = choice
+                           try await FAQsManager.updateFAQ(FAQ: FAQObject!)
+                       }
+                       
+                       // Trigger unwind segue after successful operation
+                       DispatchQueue.main.async {
+                           self.performSegue(withIdentifier: "save", sender: self)
+                       }
+                   } catch {
+                       // Handle any errors during the database operation
+                       print("Error saving FAQ: \(error.localizedDescription)")
+                   }
+               }
+           }
     }
 
     // MARK: - Picker Setup
