@@ -108,7 +108,7 @@ struct Ticket : Codable {
         case TicketStatus.cancelled.rawValue:
             self.status =  .cancelled
         case TicketStatus.refunded.rawValue:
-            self.status =  .paid
+            self.status =  .refunded
         default:
             self.status =  .paid
         }

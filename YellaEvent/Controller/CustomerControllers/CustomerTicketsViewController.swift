@@ -36,6 +36,11 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
 
     // Fetch tickets for the current user
     func fetchTickets() async {
+        // Clear the arrays to avoid duplicate entries
+        self.ticketsList.removeAll()
+        self.activeTickets.removeAll()
+        self.expiredTickets.removeAll()
+        
         TicketsManager.getUserTickets(userId: UserDefaults.standard.string(forKey: K.bundleUserID)!) { snapshot, error in
             guard error == nil else {
                 print(error?.localizedDescription ?? "Unknown error")
@@ -52,7 +57,15 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
                     // Print the event ID for debugging purposes
                     print("Event ID: \(ticket.eventID)")
 
-                    // Sort tickets into active and expired arrays based on date
+                    // Remove ticket from both arrays before reassigning
+                    if let index = self.activeTickets.firstIndex(where: { $0.eventID == ticket.eventID }) {
+                        self.activeTickets.remove(at: index)
+                    }
+                    if let index = self.expiredTickets.firstIndex(where: { $0.eventID == ticket.eventID }) {
+                        self.expiredTickets.remove(at: index)
+                    }
+
+                    // Sort tickets into active and expired arrays based on endTimeStamp
                     if ticket.endTimeStamp > Date() {
                         self.activeTickets.append(ticket)
                     } else {
@@ -114,6 +127,7 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         
         // Perform the segue
         let selectedTicket = activeExpired.selectedSegmentIndex == 0 ? activeTickets[indexPath.row] : expiredTickets[indexPath.row]
+        print(selectedTicket)
         performSegue(withIdentifier: "ShowTicketDetail", sender: selectedTicket)
     }
 
@@ -123,8 +137,7 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         if segue.identifier == "ShowTicketDetail" {
             if let destinationVC = segue.destination as? CustomerTicketDetailsViewController,
                let selectedTicket = sender as? Ticket {
-                destinationVC.ticket = selectedTicket
-                // Pass the selected ticket
+                destinationVC.ticket = selectedTicket // Pass the selected ticket
             }
         }
     }
