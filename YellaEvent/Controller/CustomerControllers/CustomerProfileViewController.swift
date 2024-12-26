@@ -119,9 +119,9 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
         
         setupEditPage()
         
-//        UserDefaults.standard.set("xsc9s10sj0JKqpoEJH59", forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set("1OJ9cN1iMAG5pjNocI7Z", forKey: K.bundleUserID) // this will be removed after seting the application
         
-        UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
+//        UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
         
 //        print((Auth.auth().currentUser?.uid)!)
         
@@ -402,6 +402,7 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         
         EditProfileImage.image = selectedImage
+        
         imageUpdated = true
         dismiss(animated: true, completion: nil)
     }
@@ -447,7 +448,11 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
                         print("Image uploaded successfully: \(url)")
                         self.currentUser?.profileImageURL = url
                         self.imageUpdated = false
-                        
+                        print("saved", url)
+                        Task{
+                            try await UsersManager.updateUser(user: self.currentUser!, fields: [K.FStore.Customers.profileImageURL: self.currentUser!.profileImageURL])
+                            
+                        }
 
                     case .failure( _):
                         let saveAlert = UIAlertController(

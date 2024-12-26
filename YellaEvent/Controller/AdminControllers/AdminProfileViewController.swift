@@ -100,7 +100,7 @@ class AdminProfileViewController: UIViewController {
         super.viewDidLoad()
 
         setupEditPage()
-        UserDefaults.standard.set("g6dYhdSdwXNUEvo26X8t", forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
 
         setup()
 
