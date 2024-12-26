@@ -38,6 +38,18 @@ class AdminProfileViewController: UIViewController {
    
     
     //MARK: Actions
+    
+    @IBAction func logout(_ sender: UIButton) {
+        
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
+        }
+    }
+    
+    
     @IBAction func EditImageButtonTapped(_ sender: Any) {
         changeTheUserImage(sender)
     }
@@ -88,11 +100,12 @@ class AdminProfileViewController: UIViewController {
         super.viewDidLoad()
 
         setupEditPage()
-        UserDefaults.standard.set("zxnzNnd9FK8xcnATlYUh", forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set("g6dYhdSdwXNUEvo26X8t", forKey: K.bundleUserID) // this will be removed after seting the application
 
         setup()
 
     }
+    
     
     func setup() {
         // get the current user object
@@ -407,6 +420,8 @@ extension AdminProfileViewController{
             resetFieldHighlight(txtEmail)
         }
 
+        
+        
 
         return isValid
     }

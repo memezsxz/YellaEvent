@@ -49,6 +49,14 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
     
     
     //MARK: Actions
+    @IBAction func logout(_ sender: UIButton) {
+        do{
+            try Auth.auth().signOut()
+        }catch{
+            print("someting went wrong with log out")
+        }
+    }
+    
     @IBAction func ChangeImageTapped(_ sender: UIButton) {
         changeTheUserImage(sender)
     }
@@ -110,9 +118,13 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
         dateFormatter.dateFormat = "dd/MM/yyyy"
         
         setupEditPage()
-        UserDefaults.standard.set("xsc9s10sj0JKqpoEJH59", forKey: K.bundleUserID) // this will be removed after seting the application
         
-//        UserDefaults.standard.set(Auth.auth().currentUser?.uid, forKey: K.bundleUserID) // this will be removed after seting the application
+//        UserDefaults.standard.set("xsc9s10sj0JKqpoEJH59", forKey: K.bundleUserID) // this will be removed after seting the application
+        
+        UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
+        
+//        print((Auth.auth().currentUser?.uid)!)
+        
         setup()
         
         if let faq = FAQobject{

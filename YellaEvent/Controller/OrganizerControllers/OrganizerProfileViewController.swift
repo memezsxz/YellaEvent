@@ -36,7 +36,19 @@ class OrganizerProfileViewController: UIViewController {
     @IBOutlet weak var lblErrorPhoneNumber: UILabel!
     @IBOutlet weak var lblErrorEmail: UILabel!
     
+    
     //MARK: Actions
+    
+    @IBAction func logout(_ sender: UIButton) {
+        let firebaseAuth = Auth.auth()
+        
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
+        }
+    }
+    
     @IBAction func editButtonTapped(_ sender: UIButton) {
         changeTheUserImage(sender)
     }
@@ -82,7 +94,9 @@ class OrganizerProfileViewController: UIViewController {
 
         setupEditPage()
         
-        UserDefaults.standard.set("3w50ZBqYl8EHuQbEQcmo", forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
+//        UserDefaults.standard.set("IkittkxjjWS4RepfbT9p", forKey: K.bundleUserID)
+        
 
         setup()
 
@@ -111,7 +125,9 @@ class OrganizerProfileViewController: UIViewController {
                 bigUserType?.titleLabel!.text = "Organizer"
                 
                 
-                if !currentUser!.profileImageURL.isEmpty{
+                if let profileImageURL = currentUser?.profileImageURL,
+                    !profileImageURL.isEmpty,
+                    let validURL = URL(string: profileImageURL) {
                     PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                         
                         switch result {
@@ -122,6 +138,8 @@ class OrganizerProfileViewController: UIViewController {
                         }
                         
                     })
+                }else{
+                    self.BigImageProfile?.image = UIImage(named: "DefaultImageProfile")
                 }
                 
 
@@ -167,7 +185,9 @@ extension OrganizerProfileViewController{
                 
                 
                 
-                if !(currentUser!.profileImageURL.isEmpty){
+                if let profileImageURL = currentUser?.profileImageURL,
+                    !profileImageURL.isEmpty,
+                    let validURL = URL(string: profileImageURL){
                     PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                         
                         switch result {
@@ -178,6 +198,8 @@ extension OrganizerProfileViewController{
                         }
                         
                     })
+                }else{
+                    self.editProfileImage?.image = UIImage(named: "DefaultImageProfile")
                 }
                 
                 

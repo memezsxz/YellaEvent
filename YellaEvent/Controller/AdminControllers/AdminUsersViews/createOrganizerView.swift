@@ -12,7 +12,7 @@ import Photos
 class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var delegate : AdminUsersViewController? = nil
-    var organizer : Organizer = Organizer(fullName: "name", email: "email", dateCreated: Date.now, phoneNumber: 12345678, profileImageURL: "sdsasdasda", startDate: nil, endDate: nil, LicenseDocumentURL: "sdasad")
+    var organizer : Organizer = Organizer(fullName: "name", email: "email", dateCreated: Date.now, phoneNumber: 12345678, profileImageURL: "", startDate: nil, endDate: nil, LicenseDocumentURL: "")
     var image : UIImage?
     let imagePickerController = UIImagePickerController()
 
@@ -195,11 +195,15 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         // Validate Password (Only letters)
         if let pass = txtPasswordCreate?.text, pass.isEmpty {
             lblErrorPassword.text = "Password is required."
-            delegate!.highlightField(txtPasswordCreate)
+            delegate?.highlightField(txtPasswordCreate) // Use optional chaining for safety
+            isValid = false
+        } else if let pass = txtPasswordCreate?.text, pass.count < 6 {
+            lblErrorPassword.text = "Password must consist of at least 6 characters."
+            delegate?.highlightField(txtPasswordCreate)
             isValid = false
         } else {
             lblErrorPassword.text = ""
-            delegate!.resetFieldHighlight(txtPasswordCreate)
+            delegate?.resetFieldHighlight(txtPasswordCreate)
         }
         
         
@@ -232,14 +236,14 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         }
         
         // Validate txtPasswordCreate (Valid password format)
-        if let password = txtPasswordCreate?.text, password.isEmpty {
-            lblErrorPassword.text = "Password is required."
-            delegate!.highlightField(txtPasswordCreate)
-            isValid = false
-        }else {
-            lblErrorPassword.text = ""
-            delegate!.resetFieldHighlight(txtPasswordCreate)
-        }
+//        if let password = txtPasswordCreate?.text, password.isEmpty {
+//            lblErrorPassword.text = "Password is required."
+//            delegate!.highlightField(txtPasswordCreate)
+//            isValid = false
+//        }else {
+//            lblErrorPassword.text = ""
+//            delegate!.resetFieldHighlight(txtPasswordCreate)
+//        }
         
         if btnActivationAccount.titleLabel?.text == "Custome Duration"{
             if let duration = txtduration.text, duration.isEmpty{
