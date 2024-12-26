@@ -31,6 +31,8 @@ class CustomerSearchViewController: UIViewController {
     var filteredEventsList: [EventSummary] = []
     var selectedFilters: [String] = []
     var changesMade: Bool = false
+    var age: Int = 4
+    var price: Int = 5
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +57,7 @@ class CustomerSearchViewController: UIViewController {
             // in the filter page
             priceTextField.text = String(Int(priceSlider.value))
             ageTextField.text = String(Int(ageSlider.value))
+            categoriesCollectioView.setSelectedInterests(selectedFilters)
         }
 
     }
@@ -69,16 +72,52 @@ class CustomerSearchViewController: UIViewController {
 
     @IBAction func fliteringunwind(_ unwindSegue: UIStoryboardSegue) {
         if unwindSegue.identifier == "apply" {
-            self.selectedFilters =
-                (unwindSegue.source as! CustomerSearchViewController)
-                .categoriesCollectioView.getInterests()
-            print("unwind apply", selectedFilters)
+            guard let sourceVC = unwindSegue.source as? CustomerSearchViewController else {
+                print("Unwind segue source is not of type CustomerSearchViewController")
+                return
+            }
 
+            // Safely retrieve age and price
+            if let ageText = sourceVC.ageTextField.text, let ageValue = Int(ageText) {
+                self.age = ageValue
+            }
+
+            if let priceText = sourceVC.priceTextField.text, let priceValue = Int(priceText) {
+                self.price = priceValue
+            }
+
+            // Retrieve the selected filters from the source view controller
+            self.selectedFilters = sourceVC.categoriesCollectioView.getInterests()
+            print("Unwind apply filters:", self.selectedFilters)
         }
     }
 
+
+
     @IBAction func applyFliteringunwind(_ unwindSegue: UIStoryboardSegue) {
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "filter" {
+            print("prepare", self.selectedFilters)
+            if let vc = segue.destination as? CustomerSearchViewController {
+                _ = vc.view // Force the view to load
+
+                // Pass the selected filters
+                vc.selectedFilters = self.selectedFilters
+                
+                vc.ageTextField.text = String(self.age)
+                vc.priceTextField.text = String(self.price)
+                vc.ageSlider.value = Float(self.age)
+                vc.priceSlider.value = Float(self.price)
+
+                // Update the collection view's selected interests
+                vc.categoriesCollectioView.selectForCustomer = false
+                vc.categoriesCollectioView.setSelectedInterests(vc.selectedFilters)
+            }
+        }
+    }
+
     // Search button logic
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Hide keyboard and UI elements
@@ -189,17 +228,7 @@ class CustomerSearchViewController: UIViewController {
         searchBar.showsCancelButton = condition
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "filter" {
-            print("prepare", self.selectedFilters)
 
-            let vc = (segue.destination as! CustomerSearchViewController)
-            _ = vc.view
-            let collection = vc.categoriesCollectioView
-            collection?.selectForCustomer = false
-            collection?.setSelectedInterests(self.selectedFilters)
-        }
-    }
 }
 
 extension CustomerSearchViewController: UITableViewDelegate,

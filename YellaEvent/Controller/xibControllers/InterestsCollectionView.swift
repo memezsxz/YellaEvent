@@ -99,6 +99,7 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     }
     
     func setSelectedInterests(_ selectedInterests: [String]) {
+        print("this should be there: ", selectedInterests)
         selectedIndices.removeAll()
 
         let interestIndexMap = Dictionary(uniqueKeysWithValues: interests.enumerated().map { ($0.element.categoryID, $0.offset) })
