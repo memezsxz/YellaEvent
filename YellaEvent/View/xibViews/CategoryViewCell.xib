@@ -11,24 +11,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CategoryViewCell" rowHeight="189" id="KGk-i7-Jjw" customClass="CategoryViewCell" customModule="YellaEvent" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="377" height="189"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CategoryViewCell" rowHeight="109" id="KGk-i7-Jjw" customClass="CategoryViewCell" customModule="YellaEvent" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="377" height="109"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="377" height="189"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="377" height="109"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rfy-NX-Bu8">
-                        <rect key="frame" x="5" y="5" width="367" height="179"/>
+                        <rect key="frame" x="5" y="5" width="367" height="70"/>
                         <subviews>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="z0A-sJ-iy9">
-                                <rect key="frame" x="10" y="62.666666666666671" width="104.33333333333333" height="53.666666666666671"/>
+                                <rect key="frame" x="10" y="12.666666666666671" width="99.333333333333329" height="45"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5mh-OW-BHM">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="53.666666666666664"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
                                         <subviews>
                                             <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🏷️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IVO-Ag-2aF">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="53.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -39,14 +39,15 @@
                                         <constraints>
                                             <constraint firstItem="IVO-Ag-2aF" firstAttribute="top" secondItem="5mh-OW-BHM" secondAttribute="top" id="3Zk-me-bHl"/>
                                             <constraint firstItem="IVO-Ag-2aF" firstAttribute="centerY" secondItem="5mh-OW-BHM" secondAttribute="centerY" id="LyT-hi-b5o"/>
+                                            <constraint firstAttribute="height" constant="45" id="WNX-9W-ZYF"/>
                                             <constraint firstItem="IVO-Ag-2aF" firstAttribute="leading" secondItem="5mh-OW-BHM" secondAttribute="leading" id="baN-sZ-50c"/>
-                                            <constraint firstAttribute="width" constant="50" id="cFo-Xa-nUg"/>
+                                            <constraint firstAttribute="width" constant="45" id="cFo-Xa-nUg"/>
                                             <constraint firstAttribute="bottom" secondItem="IVO-Ag-2aF" secondAttribute="bottom" id="h7i-02-A2X"/>
                                             <constraint firstAttribute="trailing" secondItem="IVO-Ag-2aF" secondAttribute="trailing" id="ojc-LG-YfG"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AB4-wD-l8S">
-                                        <rect key="frame" x="60" y="0.0" width="44.333333333333343" height="53.666666666666664"/>
+                                        <rect key="frame" x="55" y="0.0" width="44.333333333333343" height="45"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -54,7 +55,7 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="b0m-tF-r7q">
-                                <rect key="frame" x="329" y="75.333333333333343" width="30" height="28.666666666666671"/>
+                                <rect key="frame" x="325" y="20.666666666666664" width="30" height="28.666666666666664"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="L53-ZY-b1D"/>
@@ -65,9 +66,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="z0A-sJ-iy9" firstAttribute="centerY" secondItem="Rfy-NX-Bu8" secondAttribute="centerY" id="45f-Rr-EM6"/>
+                            <constraint firstAttribute="height" constant="70" id="D5Q-9i-ajB"/>
                             <constraint firstItem="z0A-sJ-iy9" firstAttribute="leading" secondItem="Rfy-NX-Bu8" secondAttribute="leading" constant="10" id="DE7-B5-tBM"/>
-                            <constraint firstAttribute="trailing" secondItem="b0m-tF-r7q" secondAttribute="trailing" constant="8" id="ERy-h9-BhV"/>
-                            <constraint firstItem="5mh-OW-BHM" firstAttribute="height" secondItem="Rfy-NX-Bu8" secondAttribute="height" multiplier="0.298268" id="NVC-dM-6av"/>
+                            <constraint firstAttribute="trailing" secondItem="b0m-tF-r7q" secondAttribute="trailing" constant="12" id="ERy-h9-BhV"/>
                             <constraint firstItem="b0m-tF-r7q" firstAttribute="centerY" secondItem="Rfy-NX-Bu8" secondAttribute="centerY" id="WYq-Q3-bUi"/>
                         </constraints>
                     </view>
@@ -88,7 +89,7 @@
                 <outlet property="categoryLabel" destination="AB4-wD-l8S" id="UER-pF-KAC"/>
                 <outlet property="mainContainer" destination="Rfy-NX-Bu8" id="hyr-Pu-s9g"/>
             </connections>
-            <point key="canvasLocation" x="48.091603053435115" y="77.112676056338032"/>
+            <point key="canvasLocation" x="48.091603053435115" y="48.943661971830991"/>
         </tableViewCell>
     </objects>
     <resources>

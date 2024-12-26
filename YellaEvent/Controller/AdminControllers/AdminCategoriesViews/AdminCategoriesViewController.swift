@@ -26,6 +26,8 @@ class AdminCategoriesViewController: UIViewController, UITableViewDataSource, UI
         categoriesTable.register(UINib(nibName: "CategoryViewCell", bundle: nil), forCellReuseIdentifier: "CategoryViewCell")
         
 
+        categoriesTable.showsVerticalScrollIndicator = false
+        categoriesTable.showsHorizontalScrollIndicator = false
         // Do any additional setup after loading the view.
     }
     
@@ -93,9 +95,9 @@ extension AdminCategoriesViewController {
         filteredCategories.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return tableView.frame.width / 8
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//            return tableView.frame.width / 8
+//    }
     
     func loadDataFromFirebase() {
         CategoriesManager.getActiveCatigories{ snapshot, error in
@@ -139,7 +141,6 @@ extension AdminCategoriesViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryViewCell") as? CategoryViewCell else { return UITableViewCell() }
-        cell.categoryIcon.layer.cornerRadius = 20
         let category = filteredCategories[indexPath.row]
         cell.categoryIcon.text = category.icon
         cell.categoryLabel.text = category.name

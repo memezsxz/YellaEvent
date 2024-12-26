@@ -18,7 +18,7 @@ class CategoryViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        categoryIconContainer.layer.cornerRadius = 20
+        categoryIconContainer.layer.cornerRadius = 22.5
 
         mainContainer.layer.cornerRadius = 15
         mainContainer.layer.borderWidth = 1

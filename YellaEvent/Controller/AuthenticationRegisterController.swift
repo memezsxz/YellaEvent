@@ -106,13 +106,31 @@ class AuthenticationRegisterController: UIViewController {
         }
 
         // Validate Phone Number
-        if let phoneNumber = registerPhoneNumberField.text, phoneNumber.isEmpty || phoneNumber.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) != nil {
+        if let phoneNumber = registerPhoneNumberField.text {
+            if phoneNumber.isEmpty {
+                phoneNumberValidationLbl.text = "Please enter your phone number."
+                phoneNumberValidationLbl.isHidden = false
+                hasErrors = true
+            } else if phoneNumber.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) != nil {
+                phoneNumberValidationLbl.text = "Phone number must contain only digits."
+                phoneNumberValidationLbl.isHidden = false
+                hasErrors = true
+            } else if phoneNumber.count != 8 {
+                phoneNumberValidationLbl.text = "Phone number must be exactly 8 digits."
+                phoneNumberValidationLbl.isHidden = false
+                hasErrors = true
+            } else if !["3", "6", "7"].contains(phoneNumber.prefix(1)) {
+                phoneNumberValidationLbl.text = "Phone number must start with 3, 6, or 7."
+                phoneNumberValidationLbl.isHidden = false
+                hasErrors = true
+            } else {
+                phoneNumberValidationLbl.text = ""
+                phoneNumberValidationLbl.isHidden = true
+            }
+        } else {
             phoneNumberValidationLbl.text = "Please enter a valid phone number."
             phoneNumberValidationLbl.isHidden = false
             hasErrors = true
-        } else {
-            phoneNumberValidationLbl.text = ""
-            phoneNumberValidationLbl.isHidden = true
         }
 
         // Validate Date of Birth
