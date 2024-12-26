@@ -127,6 +127,8 @@ extension OrganizerEventsViewController : UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let event = searchEvents[indexPath.row]
+        print("hjj", event.eventID)
         performSegue(withIdentifier: "toViewEvent", sender: self)
     }
 }

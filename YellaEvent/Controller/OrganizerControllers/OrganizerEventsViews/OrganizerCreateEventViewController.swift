@@ -2,12 +2,17 @@ import UIKit
 
 class OrganizerCreateEventViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    
+    var delegate : OrganizerCreateEventViewController? = nil
+    
+    
     let imagePickerController = UIImagePickerController()
     var Coverimage : UIImage?
     var Badgeimage : UIImage?
     var imagePickerSource: String?
+    var organizer: Organizer?
 
-
+//    @IBOutlet var startDateTextField: UITextField!
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var eventTitleTextField: UITextField!
     @IBOutlet weak var eventDescriptionTextView: UITextView!
@@ -30,7 +35,9 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
     // Error outlets
     @IBOutlet weak var lblErrorEventTitle: UILabel!
     @IBOutlet weak var lblErrorDescription: UILabel!
-    @IBOutlet weak var lblErrorStartDate: UITextField!
+
+    @IBOutlet var lblErrorStartDate: UILabel!
+    
     @IBOutlet weak var lblErrorEndDate: UILabel!
     @IBOutlet weak var lblErrorStartTime: UILabel!
     @IBOutlet weak var lblErrorEndTime: UILabel!
@@ -39,8 +46,13 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
     @IBOutlet weak var lblErrorMinAge: UILabel!
     @IBOutlet weak var lblErrorLocation: UILabel!
     @IBOutlet weak var lblErrorEventCover: UILabel!
+    @IBOutlet var lblErrorCategory: UILabel!
     
     @IBOutlet weak var lblErrorBadgeCover: UILabel!
+    
+    @IBOutlet var VanueNameTextField: UITextField!
+    
+    @IBOutlet var lblErrorVenueName: UILabel!
     
     // Date Pickers and Time Pickers
     var startDatePicker: UIDatePicker!
@@ -61,9 +73,13 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        UserDefaults.standard.set("0VtULKI77gvWkSnnHF45", forKey: K.bundleUserID) // this will be removed after seting the application
+
         // Load categories asynchronously
         Task {
+            
+            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+            
             do {
                 self.categoryList = try await CategoriesManager.getActiveCatigories()
                 print(self.categoryList) // Debugging: Check if categories are loaded correctly
@@ -112,6 +128,19 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
 
     }
 
+    
+    func highlightField(_ textField: UIView?) {
+            textField?.layer.borderWidth = 1
+            textField?.layer.borderColor = UIColor.red.cgColor
+            textField?.layer.cornerRadius = 5
+        }
+
+        func resetFieldHighlight(_ textField: UIView?) {
+            textField?.layer.borderWidth = 0
+            textField?.layer.borderColor = UIColor.clear.cgColor
+        }
+    
+    
     // Function to update the menu with the selected option
     func updateMenuWithSelection(selectedOption: String, options: [String], button: UIButton) {
         // Ensure the selected option is valid
@@ -229,153 +258,170 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
     
     // Action when Create Event button is clicked
     @IBAction func createEventBtnClicked(_ sender: UIButton) {
-        createEvent()
+        guard validateCreateFields() else {
+            return
+        }
+        
+        // Trimmed inputs
+        let et = eventTitleTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let ed = eventDescriptionTextView.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let sd = startDateTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let st = startTimeTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let ett = endTimeTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let tp = Double(ticketPriceTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0.0
+        let maxTicket = Int(maxTicketsTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
+        let minAge = Int(minAgeTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
+        let lu = locationURLTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let vnn = VanueNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Ensure start and end date and time strings are converted to Date objects
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateStyle = .none
+        timeFormatter.timeStyle = .short
+
+        guard let startDate = dateFormatter.date(from: sd),
+              let endDate = dateFormatter.date(from: sd),
+              let startTime = timeFormatter.date(from: st),
+              let endTime = timeFormatter.date(from: ett) else {
+            print("Invalid date or time format")
+            return
+        }
+
+        let calendar = Calendar.current
+
+        // Combine date and time
+        let startDateTime = calendar.date(bySettingHour: calendar.component(.hour, from: startTime),
+                                          minute: calendar.component(.minute, from: startTime),
+                                          second: 0,
+                                          of: startDate)
+
+        let endDateTime = calendar.date(bySettingHour: calendar.component(.hour, from: endTime),
+                                        minute: calendar.component(.minute, from: endTime),
+                                        second: 0,
+                                        of: endDate)
+
+        guard let validStartDateTime = startDateTime, let validEndDateTime = endDateTime else {
+            print("Failed to combine date and time")
+            return
+        }
+
+        for seletcted in categoryList{
+            if seletcted.name == categoryButton.titleLabel?.text{
+                selectedCategory = seletcted
+                break
+            }
+        }
+        // Assuming `selectedCategory` is already set
+        guard let category = selectedCategory else {
+            print("Category is not selected")
+            return
+        }
+
+        // Create Event object
+        var newEvent = Event(
+            organizerID: organizer!.userID,
+            organizerName: organizer!.fullName, // Replace with actual name
+            name: et,
+            description: ed,
+            startTimeStamp: validStartDateTime,
+            endTimeStamp: validEndDateTime,
+            status: .ongoing,
+            category: category,
+            locationURL: lu,
+            venueName: vnn, // Replace with actual venue name
+            minimumAge: minAge,
+            maximumAge: 100,
+            maximumTickets: maxTicket,
+            price: tp,
+            coverImageURL: "", // Replace with actual cover image URL
+            mediaArray: [] // Add media URLs as needed
+        )
+        
+        Task{
+            
+           let id = try await EventsManager.createNewEvent(event: newEvent)
+            newEvent.eventID = id
+            
+            PhotoManager.shared.uploadPhoto(self.Coverimage!, to: "events/\(organizer!.userID)/\(id)/", withNewName: "CoverImage", completion: { result in
+                switch result {
+                case .success(let url):
+                    
+                    newEvent.coverImageURL = url
+                    
+                    Task{
+                        try await EventsManager.updateEvent(event: newEvent)
+                    }
+                    
+                case .failure(let error):
+                    let alert = UIAlertController(title: "Unable to upload image", message: error.localizedDescription, preferredStyle: .alert)
+                    
+                    alert.addAction(
+                        UIAlertAction(title: "OK", style: .default, handler: { action in
+                        }))
+                    self.present(alert, animated: true, completion: {})
+                }
+            })
+            
+            
+            //badge image
+            PhotoManager.shared.uploadPhoto(self.Badgeimage!, to: "events/\(organizer!.userID)/\(id)/", withNewName: "Badge", completion: { result in
+                switch result {
+                case .success(let url):
+                    
+                    var newBadge = Badge(image: "\(url)", eventID: "\(newEvent.eventID)", eventName: "\(newEvent.name)", category: newEvent.category)
+                    
+                    Task{
+                        try await BadgesManager.createNewBadge(badge: newBadge)
+                    }
+                    
+                case .failure(let error):
+                    let alert = UIAlertController(title: "Unable to upload image", message: error.localizedDescription, preferredStyle: .alert)
+                    
+                    alert.addAction(
+                        UIAlertAction(title: "OK", style: .default, handler: { action in
+                        }))
+                    self.present(alert, animated: true, completion: {})
+                }
+            })
+            
+            
+        }
+        
+
+        print("Event successfully created: \(newEvent)")
+        let alert = UIAlertController(
+            title: "Event Created",
+            message: "Your event has been successfully created.",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(
+            title: "OK",
+            style: .default,
+            handler: { _ in
+                // Navigate to the previous page
+                self.navigationController?.popViewController(animated: true)
+            }
+        ))
+
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func createEvent() {
-        // Validation for required fields
-        guard let eventName = eventTitleTextField.text, !eventName.isEmpty else {
-            showAlert(message: "Please enter the event name.")
-            return
-        }
-        
-        guard let eventDescription = eventDescriptionTextView.text, !eventDescription.isEmpty else {
-            showAlert(message: "Please enter the event description.")
-            return
-        }
-        
-        guard let startDate = startDateTextField.text, !startDate.isEmpty else {
-            showAlert(message: "Please select the start date.")
-            return
-        }
-        
-        guard let endDate = endDateTextField.text, !endDate.isEmpty else {
-            showAlert(message: "Please select the end date.")
-            return
-        }
-        
-        guard let startTime = startTimeTextField.text, !startTime.isEmpty else {
-            showAlert(message: "Please enter the start time.")
-            return
-        }
-        
-        guard let endTime = endTimeTextField.text, !endTime.isEmpty else {
-            showAlert(message: "Please enter the end time.")
-            return
-        }
-        
-        guard let ticketPriceText = ticketPriceTextField.text, !ticketPriceText.isEmpty, let ticketPrice = Double(ticketPriceText) else {
-            showAlert(message: "Please enter a valid ticket price.")
-            return
-        }
-        
-        guard let maxTicketsText = maxTicketsTextField.text, !maxTicketsText.isEmpty, let maxTickets = Int(maxTicketsText) else {
-            showAlert(message: "Please enter the maximum number of tickets.")
-            return
-        }
-        
-        guard let minAgeText = minAgeTextField.text, !minAgeText.isEmpty, let minAge = Int(minAgeText) else {
-            showAlert(message: "Please enter the minimum age requirement.")
-            return
-        }
-        
-        guard let locationURL = locationURLTextField.text, !locationURL.isEmpty else {
-            showAlert(message: "Please enter the location URL.")
-            return
-        }
-        
-        guard let category = selectedCategory else {
-            showAlert(message: "Please select a category.")
-            return
-        }
-        
-        // Prepare event details message
-        let categoryTitle = selectedCategory?.name ?? "None"
-        let eventPreviewMessage = """
-        Event Name: \(eventName)
-        Description: \(eventDescription)
-        Category: \(categoryTitle)
-        Start Date: \(startDate)
-        End Date: \(endDate)
-        Start Time: \(startTime)
-        End Time: \(endTime)
-        Price: $\(ticketPrice)
-        """
-        
-        // Display event preview before saving
-        let alert = UIAlertController(title: "Event Preview", message: eventPreviewMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
-            // Convert startDate and endDate strings to Date objects
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
-            dateFormatter.timeStyle = .none
-            
-            let timeFormatter = DateFormatter()
-            timeFormatter.dateStyle = .none
-            timeFormatter.timeStyle = .short
-            
-            // Parse date and time
-            guard let startDateObject = dateFormatter.date(from: startDate),
-                  let startTimeObject = timeFormatter.date(from: startTime),
-                  let endDateObject = dateFormatter.date(from: endDate),
-                  let endTimeObject = timeFormatter.date(from: endTime) else {
-                self.showAlert(message: "Invalid date or time format.")
-                return
-            }
-            
-            // Combine date and time into a single Date object for start and end
-            let calendar = Calendar.current
-            let startDateTime = calendar.date(bySettingHour: calendar.component(.hour, from: startTimeObject),
-                                              minute: calendar.component(.minute, from: startTimeObject),
-                                              second: 0,
-                                              of: startDateObject)
-            let endDateTime = calendar.date(bySettingHour: calendar.component(.hour, from: endTimeObject),
-                                            minute: calendar.component(.minute, from: endTimeObject),
-                                            second: 0,
-                                            of: endDateObject)
-            
-            // Ensure the combined Date objects are valid
-            guard let validStartDateTime = startDateTime, let validEndDateTime = endDateTime else {
-                self.showAlert(message: "Could not combine date and time.")
-                return
-            }
-            
-            // Proceed with event creation
-            self.saveEventToDatabase(event: Event(
-                organizerID: "organizerID", // Replace with actual organizer ID
-                organizerName: "Organizer Name", // Replace with actual organizer name
-                name: eventName,
-                description: eventDescription,
-                startTimeStamp: validStartDateTime,
-                endTimeStamp: validEndDateTime,
-                status: .ongoing,
-                category: category,
-                locationURL: locationURL,
-                venueName: "Venue Name", // Replace with actual venue name
-                minimumAge: minAge,
-                maximumAge: 100,
-                maximumTickets: maxTickets,
-                price: ticketPrice,
-                coverImageURL: "your_image_url", // Replace with actual cover image URL
-                mediaArray: ["your_image_url"], // Replace with actual media URL(s)
-                isDeleted: false
-            ))
-        }))
-        alert.addAction(UIAlertAction(title: "Edit", style: .cancel))
-        present(alert, animated: true)
-    }
     
     func saveEventToDatabase(event: Event) {
         print("Event saved to database: \(event)")
         navigationController?.popViewController(animated: true)
     }
     
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Validation Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
-    
+//    func showAlert(message: String) {
+//        let alert = UIAlertController(title: "Validation Error", message: message, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default))
+//        present(alert, animated: true)
+//    }
+//
     @IBAction func EventCoverBtn(_ sender: Any) {
         imagePickerSource = "cover"
         presentImageImagePicker()
@@ -419,4 +465,135 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
 
     }
     
-}
+    
+    func validateCreateFields() -> Bool {
+            var isValid = true
+
+            // Event Title Validation
+            if let eventName = eventTitleTextField?.text, eventName.isEmpty {
+                lblErrorEventTitle.text = "Event name is required."
+                highlightField(eventTitleTextField)
+                isValid = false
+            } else {
+                lblErrorEventTitle.text = ""
+                resetFieldHighlight(eventTitleTextField)
+            }
+
+            // Event Description Validation
+            if let eventDescription = eventDescriptionTextView?.text, eventDescription.isEmpty {
+                lblErrorDescription.text = "Event description is required."
+                highlightField(eventDescriptionTextView)
+                isValid = false
+            } else {
+                lblErrorDescription.text = ""
+                resetFieldHighlight(eventDescriptionTextView)
+            }
+
+            // Start Date Validation
+            if let startDate = startDateTextField?.text, startDate.isEmpty {
+                lblErrorStartDate.text = "Start date is required."
+                highlightField(startDateTextField)
+                isValid = false
+            } else {
+                lblErrorStartDate.text = ""
+                resetFieldHighlight(startDateTextField)
+            }
+        
+        if let catogarybutton = categoryButton?.titleLabel?.text, catogarybutton == "Select Category" {
+            lblErrorCategory.text = "Category is required."
+            highlightField(categoryButton)
+            isValid = false
+        }else {
+            lblErrorCategory.text = ""
+            resetFieldHighlight(categoryButton)
+        }
+
+            
+        if let vn = VanueNameTextField?.text, vn.isEmpty {
+                lblErrorVenueName.text = "Venue name is required."
+            highlightField(VanueNameTextField)
+            isValid = false
+        }else{
+            resetFieldHighlight(VanueNameTextField)
+            lblErrorVenueName.text = ""
+        }
+            // Start Time Validation
+            if let startTime = startTimeTextField?.text, startTime.isEmpty {
+                lblErrorStartTime.text = "Start time is required."
+                highlightField(startTimeTextField)
+                isValid = false
+            } else {
+                lblErrorStartTime.text = ""
+                resetFieldHighlight(startTimeTextField)
+            }
+
+            // End Time Validation
+            if let endTime = endTimeTextField?.text, endTime.isEmpty {
+                lblErrorEndTime.text = "End time is required."
+                highlightField(endTimeTextField)
+                isValid = false
+            } else {
+                lblErrorEndTime.text = ""
+                resetFieldHighlight(endTimeTextField)
+            }
+
+            // Ticket Price Validation
+            if let ticketPriceText = ticketPriceTextField?.text, ticketPriceText.isEmpty {
+                lblErrorTicketPrice.text = "Ticket price is required."
+                highlightField(ticketPriceTextField)
+                isValid = false
+            } else {
+                lblErrorTicketPrice.text = ""
+                resetFieldHighlight(ticketPriceTextField)
+            }
+
+            // Max Tickets Validation
+            if let maxTicketsText = maxTicketsTextField?.text, maxTicketsText.isEmpty {
+                lblErrorMaxTickets.text = "Maximum tickets are required."
+                highlightField(maxTicketsTextField)
+                isValid = false
+            } else {
+                lblErrorMaxTickets.text = ""
+                resetFieldHighlight(maxTicketsTextField)
+            }
+
+        
+        if let eventcover = lblErrorEventCover.text, eventcover.isEmpty || eventcover == "Cover is required." {
+            lblErrorEventCover.textColor = .red
+            lblErrorEventCover.text = "Cover is required."
+                isValid = false
+        }
+        
+        
+        if let eventBadge = lblErrorBadgeCover.text, eventBadge.isEmpty || eventBadge == "Badge is required." {
+            lblErrorBadgeCover.textColor = .red
+            lblErrorBadgeCover.text = "Badge is required."
+                isValid = false
+        }
+        
+            // Min Age Validation
+            if let minAgeText = minAgeTextField?.text, minAgeText.isEmpty {
+                lblErrorMinAge.text = "Minimum age is required."
+                highlightField(minAgeTextField)
+                isValid = false
+            } else {
+                lblErrorMinAge.text = ""
+                resetFieldHighlight(minAgeTextField)
+            }
+
+            // Location URL Validation
+            if let locationURL = locationURLTextField?.text, locationURL.isEmpty {
+                lblErrorLocation.text = "Location URL is required."
+                highlightField(locationURLTextField)
+                isValid = false
+            } else {
+                lblErrorLocation.text = ""
+                resetFieldHighlight(locationURLTextField)
+            }
+
+            return isValid
+        }
+    
+    
+    
+    }

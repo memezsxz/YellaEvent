@@ -45,6 +45,11 @@ class OrganizerViewEventView: UIViewController {
         fetchEventAndUpdateUI()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEdit" {
+            (segue.destination as? OrganizerEventEditViewController)?.event = self.event
+        }
+    }
     func getStats() {
     }
     func fetchEventAndUpdateUI() {
