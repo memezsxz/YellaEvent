@@ -42,6 +42,12 @@ final class TicketsManager {
         return tickets
     }
     
+    
+    static func getUserTickets(userId: String, listener: @escaping (QuerySnapshot?, Error?) -> Void)  {
+        ticketsCollection.whereField(K.FStore.Tickets.customerID, isEqualTo: userId).addSnapshotListener(listener)
+    }
+
+    
     // not tested
     static func getEventAttendance(eventId: String, completion: @escaping ([String: String], Int, Int) -> Void) async {
         self.listener?.remove()
@@ -111,6 +117,11 @@ final class TicketsManager {
 //        }
     }
     
+    
+    static func updateTicket(ticket: Ticket) async throws {
+        try await ticketDocument(ticketId:  ticket.ticketID).updateData(K.encoder.encode(ticket))
+    }
+
 //    static func updateEventCategory(eventID: String, categoryIcon : String, categoryName : String) async throws {
 //        let tickets = try await getEventTickets(eventID: eventID)
 //        for ticket in tickets {

@@ -30,13 +30,14 @@ struct Ticket : Codable {
     var eventName : String
     var organizerName : String
     var startTimeStamp : Date
+    var endTimeStamp : Date
     var didAttend : Bool
     var totalPrice : Double
     var locationURL : String
     var quantity : Int
     var status : TicketStatus
     
-    init(ticketID: String, eventID: String, customerID: String, organizerID: String, eventName: String, organizerName: String, startTimeStamp: Date, didAttend: Bool, totalPrice: Double, locationURL: String, quantity: Int, status: TicketStatus) {
+    init(ticketID: String, eventID: String, customerID: String, organizerID: String, eventName: String, organizerName: String, startTimeStamp: Date, endTimeStamp: Date,  didAttend: Bool, totalPrice: Double, locationURL: String, quantity: Int, status: TicketStatus) {
         self.ticketID = ticketID
         self.eventID = eventID
         self.customerID = customerID
@@ -44,6 +45,7 @@ struct Ticket : Codable {
         self.eventName = eventName
         self.organizerName = organizerName
         self.startTimeStamp = startTimeStamp
+        self.endTimeStamp = endTimeStamp
         self.didAttend = didAttend
         self.totalPrice = totalPrice
         self.locationURL = locationURL
@@ -81,6 +83,7 @@ struct Ticket : Codable {
             self.organizerName = event.organizerName
             self.locationURL = event.locationURL
             self.startTimeStamp = event.startTimeStamp
+            self.endTimeStamp = event.endTimeStamp
         }
         catch {
             //           self.eventName = data[K.FStore.Tickets.eventName] as? String ?? ""
@@ -92,6 +95,7 @@ struct Ticket : Codable {
             self.organizerName = ""
             self.locationURL = ""
             self.startTimeStamp = Date()
+            self.endTimeStamp = Date()
         }
         
         self.didAttend = (data[K.FStore.Tickets.didAttend] as? Bool) ?? false
