@@ -28,7 +28,7 @@ class OrganizerViewEventView: UIViewController {
     // MARK: - Properties
     var eventID: String = "" // The event ID to fetch
     var event: Event? // This will hold the event data
-    
+    var usersDec : [String:String] = [:]
     // MARK: - View Lifecycle
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -45,6 +45,8 @@ class OrganizerViewEventView: UIViewController {
         fetchEventAndUpdateUI()
     }
     
+    func getStats() {
+    }
     func fetchEventAndUpdateUI() {
         Task {
             do {
@@ -52,6 +54,12 @@ class OrganizerViewEventView: UIViewController {
                 let fetchedEvent = try await EventsManager.getEvent(eventID: eventID)
                 self.event = fetchedEvent
                 
+//                TicketsManager.getEventAttendance(eventId: eventID) { usersDec, totalTickets, attendedTickets in
+//                    self.ticketsSold.text = "\(totalTickets)"
+//                    self.totalAttendens.text = "\(attendedTickets)"
+//                    self.remainingTickets.text = self.event?.maximumTickets - totalTickets
+//                }
+
                 // Update the UI with event data
                 DispatchQueue.main.async {
                     self.populateEventData()
@@ -65,6 +73,26 @@ class OrganizerViewEventView: UIViewController {
             }
         }
     }
+    
+    
+    @IBAction func optionSelectionDelete(_ sender: UIAction) {
+        let title = sender.title
+        print(title)
+    
+    }
+    
+    @IBAction func optionSelectionEdit(_ sender: UIAction) {
+        performSegue(withIdentifier: "showEdit", sender: self)
+    
+    }
+    
+    @IBAction func optionSelectionCnacel(_ sender: UIAction) {
+        let title = sender.title
+        print(title)
+    
+    }
+    
+    
     
     // MARK: - Populate event data into UI
     func populateEventData() {

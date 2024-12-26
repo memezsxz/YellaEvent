@@ -1,7 +1,13 @@
 import UIKit
 
-class OrganizerCreateEventViewController: UITableViewController {
+class OrganizerCreateEventViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    let imagePickerController = UIImagePickerController()
+    var Coverimage : UIImage?
+    var Badgeimage : UIImage?
+    var imagePickerSource: String?
+
+
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var eventTitleTextField: UITextField!
     @IBOutlet weak var eventDescriptionTextView: UITextView!
@@ -11,13 +17,30 @@ class OrganizerCreateEventViewController: UITableViewController {
     @IBOutlet weak var endTimeTextField: UITextField!
     
     @IBOutlet weak var categoryButton: UIButton!  // UIButton to trigger UIMenu
-   
+    
+    var categoryList: [Category] = []
+    var StringCategoryList: [String] = []
     var selectedCategory: Category?
     
     @IBOutlet weak var ticketPriceTextField: UITextField!
     @IBOutlet weak var maxTicketsTextField: UITextField!
     @IBOutlet weak var minAgeTextField: UITextField!
     @IBOutlet weak var locationURLTextField: UITextField!
+    
+    // Error outlets
+    @IBOutlet weak var lblErrorEventTitle: UILabel!
+    @IBOutlet weak var lblErrorDescription: UILabel!
+    @IBOutlet weak var lblErrorStartDate: UITextField!
+    @IBOutlet weak var lblErrorEndDate: UILabel!
+    @IBOutlet weak var lblErrorStartTime: UILabel!
+    @IBOutlet weak var lblErrorEndTime: UILabel!
+    @IBOutlet weak var lblErrorTicketPrice: UILabel!
+    @IBOutlet weak var lblErrorMaxTickets: UILabel!
+    @IBOutlet weak var lblErrorMinAge: UILabel!
+    @IBOutlet weak var lblErrorLocation: UILabel!
+    @IBOutlet weak var lblErrorEventCover: UILabel!
+    
+    @IBOutlet weak var lblErrorBadgeCover: UILabel!
     
     // Date Pickers and Time Pickers
     var startDatePicker: UIDatePicker!
@@ -32,25 +55,87 @@ class OrganizerCreateEventViewController: UITableViewController {
     @IBOutlet weak var eventBadgeButton: UIButton!
     @IBOutlet weak var manageMediaButton: UIButton!
     
+    @IBAction func catogarymenue(_ sender: Any) {
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Load categories asynchronously
+        Task {
+            do {
+                self.categoryList = try await CategoriesManager.getActiveCatigories()
+                print(self.categoryList) // Debugging: Check if categories are loaded correctly
+                self.StringCategoryList = self.categoryList.compactMap({ $0.name })
+                // Update the category menu after loading the data
+//                self.showDropdown(options: self.StringCategoryList, for: self.categoryButton, title: "Select Category")
+               
+                if let categoryButton = categoryButton {
+                    categoryButton.setTitle("Select Category", for: .normal)
+                }
+                
+            } catch {
+                print("Failed to fetch categories: \(error.localizedDescription)")
+            }
+        }
         
         // Set up date pickers and time pickers
         setupDatePickers()
     }
     
-    // Category selection
-    @IBAction func optionSelection(_ sender: UIAction) {
-        let title = sender.title
-        print(title)
-        
-        if let button = self.categoryButton {
-            button.setTitle(title, for: .normal)
-        } else {
-            print("categoryButton is nil")
+    @IBAction func categoryBtnClicked(_ sender: UIButton) {
+        showDropdown(options: StringCategoryList, for: sender, title: "Select Category")
+    }
+    
+    // Generalized function to show a dropdown with a list of items
+    func showDropdown(options: [String], for button: UIButton, title: String) {
+        // Ensure the options list is not empty
+        guard !options.isEmpty else {
+            print("The options list cannot be empty.")
+            return
         }
+        
+        // Create UIActions from options
+        let menuActions = options.map { option in
+            UIAction(title: option, image: nil) { action in
+                self.updateMenuWithSelection(selectedOption: option, options: options, button: button)
+            }
+        }
+        
+        
+        // Create the menu and assign it to the button
+        let menu = UIMenu(title: "", children: menuActions)
+        button.menu = menu
+        button.showsMenuAsPrimaryAction = true
+        button.setTitle("Select Category", for: .normal)
+
     }
 
+    // Function to update the menu with the selected option
+    func updateMenuWithSelection(selectedOption: String, options: [String], button: UIButton) {
+        // Ensure the selected option is valid
+        guard options.contains(selectedOption) else {
+            print("Invalid selected option: \(selectedOption).")
+            return
+        }
+
+        // Update the button's title to the selected option
+        button.setTitle(selectedOption, for: .normal)
+    }
+    
+    // Category selection
+//    @IBAction func optionSelection(_ sender: UIAction) {
+//        let title = sender.title
+//        print(title)
+//        
+//        if let button = self.categoryButton {
+////            button.setTitle(title, for: .normal)
+//        } else {
+//            print("categoryButton is nil")
+//        }
+//    }
+    
     func setupDatePickers() {
         // Initialize the date and time pickers
         startDatePicker = UIDatePicker()
@@ -62,8 +147,9 @@ class OrganizerCreateEventViewController: UITableViewController {
         endDatePicker = UIDatePicker()
         endDatePicker.datePickerMode = .date
         endDatePicker.preferredDatePickerStyle = .wheels
-        endDateTextField.inputView = endDatePicker
-        endDateTextField.inputAccessoryView = createToolbar()
+
+//        endDateTextField.inputView = endDatePicker
+//        endDateTextField.inputAccessoryView = createToolbar()
         
         startTimePicker = UIDatePicker()
         startTimePicker.datePickerMode = .time
@@ -277,9 +363,6 @@ class OrganizerCreateEventViewController: UITableViewController {
         }))
         alert.addAction(UIAlertAction(title: "Edit", style: .cancel))
         present(alert, animated: true)
-
-        
-        present(alert, animated: true)
     }
     
     func saveEventToDatabase(event: Event) {
@@ -292,4 +375,48 @@ class OrganizerCreateEventViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    
+    @IBAction func EventCoverBtn(_ sender: Any) {
+        imagePickerSource = "cover"
+        presentImageImagePicker()
+
+    }
+    
+    @IBAction func EventBadgeBtn(_ sender: Any) {
+        imagePickerSource = "badge"
+        presentImageImagePicker()
+    }
+    
+    func presentImageImagePicker() {
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let selectedImage = info[.originalImage] as? UIImage else {return}
+
+        if let source = imagePickerSource {
+                switch source {
+                case "cover":
+                    // Handle cover image selection
+                    Coverimage = selectedImage
+                    lblErrorEventCover.text = "EventCover.jpg"
+                    lblErrorEventCover.textColor = .brandBlue
+                case "badge":
+                    // Handle location image selection
+                    // Set the image for location (example: locationImage)
+                    Badgeimage = selectedImage
+                    lblErrorBadgeCover.text = "Badgeimage.jpg"
+                    lblErrorBadgeCover.textColor = .brandBlue
+                default:
+                    break
+                }
+            }
+            
+            dismiss(animated: true, completion: nil)
+
+    }
+    
 }
