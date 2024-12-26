@@ -209,8 +209,8 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOJ-lG-hvF">
                                 <rect key="frame" x="52.666666666666657" y="405" width="288" height="272"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="qr1" translatesAutoresizingMaskIntoConstraints="NO" id="lNs-7m-z0e">
-                                        <rect key="frame" x="24" y="16" width="239" height="241"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qr1" translatesAutoresizingMaskIntoConstraints="NO" id="lNs-7m-z0e">
+                                        <rect key="frame" x="39.333333333333343" y="28" width="209" height="216"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                     </imageView>
                                 </subviews>
@@ -257,7 +257,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Event Name" id="YlQ-YV-e98">
                         <barButtonItem key="backBarButtonItem" title="Back" id="TE9-7S-z9S"/>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="plain" systemItem="cancel" id="OGE-1s-CYL">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="cancel" id="OGE-1s-CYL">
                             <color key="tintColor" systemColor="systemRedColor"/>
                             <connections>
                                 <action selector="cancelBTN:" destination="uBa-51-B3b" id="XKq-Tk-ock"/>
@@ -297,7 +297,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

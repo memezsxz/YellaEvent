@@ -20,17 +20,27 @@ class CustomerTicketDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Update the UI with ticket details when the view loads
-        updateUI()
+        
+   
+            
+            // Update the UI with ticket details when the view loads
+            updateUI()
+            
+            // Additional logic to hide cancel button for expired tickets
+            if let ticket = ticket, ticket.endTimeStamp < Date() {
+                lblBtnCancelTicket.isHidden = true
+            }
+            
+            if let ticket = ticket?.status, ticket != .paid {
+                lblBtnCancelTicket.isEnabled = false
+   
+            }
+        
     }
 
     // Action for the cancel button
     @IBAction func cancelBTN(_ sender: Any) {
-    
-            self.deleteTicket() // Call the delete function
-       
-        
-        
+        self.deleteTicket() // Call the delete function
     }
 
     // Action for the location button
@@ -48,9 +58,13 @@ class CustomerTicketDetailsViewController: UIViewController {
         
         if ticket.status == .paid {
             lblBtnCancelTicket.isEnabled = true
+
+        } else if ticket.status == .cancelled || ticket.status == .refunded {
+            lblBtnCancelTicket.isEnabled = false
+
         }
     
-        
+    
         
         Task{
 //            var eventobject = try await EventsManager.getEvent(eventID: ticket.eventID)
@@ -95,13 +109,13 @@ class CustomerTicketDetailsViewController: UIViewController {
                // Handle the cancellation logic here
                
                Task{
-                   self.ticket?.status = .refunded
+                   self.ticket!.status = .refunded
 //                   print(self.ticket)
                    try await TicketsManager.updateTicket(ticket: self.ticket!)
-//                   print(self.ticket)
+                   print(self.ticket)
                    self.navigationController?.popViewController(animated: true)
                }
-               self.lblBtnCancelTicket.isEnabled = false
+               self.lblBtnCancelTicket.isHidden = true
            }
            
            // Add the "No" action
