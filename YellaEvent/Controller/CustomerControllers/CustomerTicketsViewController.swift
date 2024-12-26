@@ -4,7 +4,9 @@ import FirebaseAuth
 
 class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var ticketsList: [Ticket] = [] // Array to hold the tickets
+    var ticketsList: [Ticket] = [] // Array to hold all tickets
+    var activeTickets: [Ticket] = [] // Array to hold active tickets
+    var expiredTickets: [Ticket] = [] // Array to hold expired tickets
     var currentUserId: String = "" // Current user's ID
 
     @IBOutlet weak var tableView: UITableView! // Outlet for the table view
@@ -17,6 +19,9 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         // Set a default user ID (this will be removed after setting the application)
         UserDefaults.standard.set("xsc9s10sj0JKqpoEJH59", forKey: K.bundleUserID)
         
+        // Add target to segmented control for filtering
+        activeExpired.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
+
         Task {
             await fetchTickets()
         }
@@ -41,22 +46,47 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
             
             for doc in snapshot.documents {
                 Task {
-                    self.ticketsList.append(try await Ticket(from: doc.data()))
-                    DispatchQueue.main.async { self.tableView.reloadData() } // Reload the table view on the main thread
+                    let ticket = try await Ticket(from: doc.data())
+                    self.ticketsList.append(ticket)
+
+                    // Print the event ID for debugging purposes
+                    print("Event ID: \(ticket.eventID)")
+
+                    // Sort tickets into active and expired arrays based on date
+                    if ticket.endTimeStamp > Date() {
+                        self.activeTickets.append(ticket)
+                    } else {
+                        self.expiredTickets.append(ticket)
+                    }
+
+                    DispatchQueue.main.async {
+                        self.updateVisibleTickets()
+                    }
                 }
             }
         }
     }
 
+    // Update table view based on the selected segment
+    private func updateVisibleTickets() {
+        tableView.reloadData()
+    }
+
+    // Handle segmented control value change
+    @objc func segmentValueChanged() {
+        updateVisibleTickets()
+    }
+
     // MARK: - Table View Data Source
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ticketsList.count // Return the number of tickets
+        return activeExpired.selectedSegmentIndex == 0 ? activeTickets.count : expiredTickets.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TicketsTableViewCell", for: indexPath) as! TicketsTableViewCell
-        let ticket = ticketsList[indexPath.row]
+        
+        let ticket = activeExpired.selectedSegmentIndex == 0 ? activeTickets[indexPath.row] : expiredTickets[indexPath.row]
 
         // Set the event name
         cell.title.text = ticket.eventName
@@ -83,7 +113,8 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         tableView.deselectRow(at: indexPath, animated: true)
         
         // Perform the segue
-        performSegue(withIdentifier: "ShowTicketDetail", sender: ticketsList[indexPath.row])
+        let selectedTicket = activeExpired.selectedSegmentIndex == 0 ? activeTickets[indexPath.row] : expiredTickets[indexPath.row]
+        performSegue(withIdentifier: "ShowTicketDetail", sender: selectedTicket)
     }
 
     // MARK: - Navigation
@@ -92,7 +123,8 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         if segue.identifier == "ShowTicketDetail" {
             if let destinationVC = segue.destination as? CustomerTicketDetailsViewController,
                let selectedTicket = sender as? Ticket {
-                destinationVC.ticket = selectedTicket // Pass the selected ticket
+                destinationVC.ticket = selectedTicket
+                // Pass the selected ticket
             }
         }
     }
