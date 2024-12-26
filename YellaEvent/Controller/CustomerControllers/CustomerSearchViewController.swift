@@ -8,7 +8,9 @@
 import FirebaseFirestore
 import UIKit
 
-class CustomerSearchViewController: UIViewController {
+class CustomerSearchViewController: UIViewController, InterestsCollectionViewDelegate {
+
+    
 
     @IBOutlet weak var previousLbl: UILabel!
 
@@ -57,7 +59,7 @@ class CustomerSearchViewController: UIViewController {
             // in the filter page
             priceTextField.text = String(Int(priceSlider.value))
             ageTextField.text = String(Int(ageSlider.value))
-            categoriesCollectioView.setSelectedInterests(selectedFilters)
+            categoriesCollectioView.controllerDelegate = self
         }
 
     }
@@ -99,7 +101,7 @@ class CustomerSearchViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "filter" {
-            print("prepare", self.selectedFilters)
+            InterestsCollectionView.selectForCustomer = false
             if let vc = segue.destination as? CustomerSearchViewController {
                 _ = vc.view // Force the view to load
 
@@ -110,14 +112,14 @@ class CustomerSearchViewController: UIViewController {
                 vc.priceTextField.text = String(self.price)
                 vc.ageSlider.value = Float(self.age)
                 vc.priceSlider.value = Float(self.price)
-
                 // Update the collection view's selected interests
-                vc.categoriesCollectioView.selectForCustomer = false
-                vc.categoriesCollectioView.setSelectedInterests(vc.selectedFilters)
             }
         }
     }
 
+    func setInterests() {
+        categoriesCollectioView.setSelectedInterests(self.selectedFilters)
+    }
     // Search button logic
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Hide keyboard and UI elements
