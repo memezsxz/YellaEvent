@@ -119,11 +119,10 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
         
         setupEditPage()
         
-        UserDefaults.standard.set("1OJ9cN1iMAG5pjNocI7Z", forKey: K.bundleUserID) // this will be removed after seting the application
+//        UserDefaults.standard.set("1OJ9cN1iMAG5pjNocI7Z", forKey: K.bundleUserID) // this will be removed after seting the application
         
-//        UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
+        UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
         
-//        print((Auth.auth().currentUser?.uid)!)
         
         setup()
         
@@ -515,15 +514,20 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
                 Task{
                     try await UsersManager.deleteUser(userID: self.currentUser!.userID, userType: self.currentUser!.type)
                 }
-            }
+                
+                Auth.auth().currentUser?.delete()
+                try Auth.auth().signOut()
             
             
-            // need to be changed to the login screen
-            if let LaunchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController() {
-                LaunchScreen.modalPresentationStyle = .fullScreen
-                self.present(LaunchScreen, animated: true, completion: nil)
-            } else {
-                print("LaunchScreen could not be instantiated.")
+                // need to be changed to the login screen
+                if let LaunchScreen = UIStoryboard(name: "AuthenticationView", bundle: nil).instantiateInitialViewController() {
+                    LaunchScreen.modalPresentationStyle = .fullScreen
+                    self.present(LaunchScreen, animated: true, completion: nil)
+                } else {
+                    print("LaunchScreen could not be instantiated.")
+                }
+            }catch{
+                print("an error with signout occured")
             }
         }
         
