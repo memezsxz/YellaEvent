@@ -67,6 +67,16 @@ class EventsManager {
             .getDocuments()
     }
     
+    static func getOrganizerOngoingEvents(organizerID: String, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+             eventsCollection
+            .whereField(K.FStore.Events.organizerID, isEqualTo: organizerID)
+            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
+            .whereField(K.FStore.Events.status, isEqualTo: EventStatus.ongoing.rawValue)
+            .order(by: K.FStore.Events.startTimeStamp)
+            .addSnapshotListener(listener)
+    }
+
+    
     //    static func updateEventOrganizer(organizer: Organizer) async throws {
     //        let snapshot = try await getOrganizerEvents(organizerID: organizer.userID)
     //

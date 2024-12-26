@@ -45,35 +45,62 @@ class OrganizerViewEventView: UIViewController {
         fetchEventAndUpdateUI()
     }
     
-    func getStats() {
-    }
     func fetchEventAndUpdateUI() {
         Task {
             do {
+                
                 // Fetch the event using the EventsManager
                 let fetchedEvent = try await EventsManager.getEvent(eventID: eventID)
                 self.event = fetchedEvent
                 
-//                TicketsManager.getEventAttendance(eventId: eventID) { usersDec, totalTickets, attendedTickets in
-//                    self.ticketsSold.text = "\(totalTickets)"
-//                    self.totalAttendens.text = "\(attendedTickets)"
-//                    self.remainingTickets.text = self.event?.maximumTickets - totalTickets
-//                }
-
-                // Update the UI with event data
                 DispatchQueue.main.async {
                     self.populateEventData()
                 }
-                
-                // Fetch and display the average rating
-               
-                
             } catch {
                 print("Failed to fetch event: \(error)")
             }
+            
+            async let attend: Int = {
+                let v = await TicketsManager.getEventAttendedTickets(eventId: self.eventID)
+                return v
+            }()
+            
+            async let total: Int = {
+                let v = await TicketsManager.getEventTotalTickets(eventId: self.eventID)
+
+                return v
+            }()
+            
+            // Await both tasks and calculate the remaining tickets
+            let (attendedCount, totalCount) = await (attend, total)
+            
+            // Update the remaining tickets on the main thread
+            await MainActor.run {
+                let remainingTickets = self.event!.maximumTickets - totalCount
+                self.ticketsSold.text = "\(totalCount)"
+                self.totalAttendens.text = "\(attendedCount)"
+                self.remainingTickets.text = "\(remainingTickets)"
+            }
+            
+            RatingManager.getEventRating(eventID: self.eventID) { result in
+                switch result {
+                case .success(let rating):
+                    self.avarageRating.text = "\(rating)"
+                case .failure(let error):
+                    print(error)
+                }
+            }
+
         }
-    }
+        // Update the UI with event data
+        
+        // Fetch and display the average rating
+        
+        
     
+        
+        }
+
     
     @IBAction func optionSelectionDelete(_ sender: UIAction) {
         let title = sender.title

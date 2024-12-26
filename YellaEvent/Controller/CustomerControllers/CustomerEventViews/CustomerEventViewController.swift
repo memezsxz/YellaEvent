@@ -52,18 +52,6 @@ class CustomerEventViewController: UIViewController {
                 // Fetch the event using the EventsManager
                 let fetchedEvent = try await EventsManager.getEvent(eventID: eventID)
                 self.event = fetchedEvent
-                
-                // Fetch the organizer data using the organizer ID
-                // Check if organizerID is not empty
-                if !fetchedEvent.organizerID.isEmpty {
-                    do {
-                        let fetchedOrganizer = try await EventsManager.getOrganizer(organizerID: fetchedEvent.organizerID)
-                        self.organizer = fetchedOrganizer
-                    } catch {
-                        print("Failed to fetch organizer: \(error)")
-                    }
-                }
-
 
                 // Update the UI on the main thread
                 DispatchQueue.main.async {
@@ -146,8 +134,8 @@ class CustomerEventViewController: UIViewController {
         }
         
         // Set organizer name
-        if let organizer = organizer, let organizerNameLabel = organizerNameLabel {
-            organizerNameLabel.text = organizer.fullName
+        if let organizerNameLabel = organizerNameLabel {
+            organizerNameLabel.text = event.organizerName
         }
 
 
@@ -216,7 +204,7 @@ class CustomerEventViewController: UIViewController {
     func updateOrganizerProfileView(with organizer: Organizer) {
         // Update the UI with organizer details
         // For example, updating labels, image views, etc.
-        organizerNameLabel.text = organizer.fullName
+        organizerNameLabel.text = event?.organizerName
         // Add any other UI elements or logic needed to display organizer's info
     }
 
@@ -233,6 +221,18 @@ class CustomerEventViewController: UIViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toOrganizerView" {
+            let v = (segue.destination.view as! CustomerEventOrganizerView)
+            v.organizerID = event!.organizerID
+            v.organizerNameLabel.text = event?.organizerName
+            v.delegate = self
+            v.load()
+        }
+    }
+    
+    
 }
 
 

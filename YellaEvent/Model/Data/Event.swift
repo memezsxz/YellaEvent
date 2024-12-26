@@ -167,12 +167,12 @@ struct Event : EventProtocol, Codable {
         var ticketsSold = 0
         var attendedTickets = 0
         
-        await TicketsManager.getEventAttendance(eventId: event.eventID) { _, totalTickets, attendedTicketsTotal in
-            remainingTickets = totalTickets - attendedTickets
-            ticketsSold = totalTickets
-            attendedTickets = attendedTicketsTotal
-        }
-        
+//        await TicketsManager.getEventAttendance(eventId: event.eventID) { totalTickets, attendedTicketsTotal in
+//            remainingTickets = totalTickets - attendedTickets
+//            ticketsSold = totalTickets
+//            attendedTickets = attendedTicketsTotal
+//        }
+//        
         return (ticketsSold, attendedTickets, remainingTickets, rating)
     }
 }
