@@ -52,6 +52,15 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
     @IBAction func logout(_ sender: UIButton) {
         do{
             try Auth.auth().signOut()
+            
+            // need to be changed to the login screen
+            if let LaunchScreen = UIStoryboard(name: "AuthenticationView", bundle: nil).instantiateInitialViewController() {
+                LaunchScreen.modalPresentationStyle = .fullScreen
+                self.present(LaunchScreen, animated: true, completion: nil)
+            } else {
+                print("LaunchScreen could not be instantiated.")
+            }
+            
         }catch{
             print("someting went wrong with log out")
         }
@@ -63,6 +72,11 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func SaveButtonTaped(_ sender: Any) {
         saveUserChanges(sender)
+        
+//        createAdmin()
+
+
+
     }
     
     
@@ -110,10 +124,14 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
     
     
     
+    override func viewWillDisappear(_ animated: Bool) {
+        setup()
+    }
     
     //MARK: ViewDidLoad
     override func viewDidLoad(){
         super.viewDidLoad()
+       
         //set the date format
         dateFormatter.dateFormat = "dd/MM/yyyy"
         
@@ -130,6 +148,10 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
             question.text = faq.question
             answer.text = faq.answer
         }
+        
+        
+        print(currentUser?.type)
+        print(currentUser?.userID)
     }
     
     
@@ -145,7 +167,6 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
         // get the current user object
         Task {
             do {
-                
                 let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
                 let us = try await UsersManager.getUser(userID: userId) as! Customer
                 
@@ -425,75 +446,105 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
             return
         }
         
-        // 2. Proceed to save changes if validation passes
-        do{
-            currentUser?.email = txtEmail.text!
-            currentUser?.fullName = txtFullName.text!
-            currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
-            if let date = txtFieldDate.text,  let dateInDate = dateFormatter.date(from: date) {
-                    currentUser?.dob = dateInDate
-                
-            }
-
+        
+        Task {
             
-            if let image = EditProfileImage.image, imageUpdated {
-                PhotoManager.shared.uploadPhoto(image, to: "customers/\(currentUser!.userID)", withNewName: "profile") { result in
-                    switch result {
-                    case .success(let url):
-                        
-                        
-                        // TODO: Update in user
-                        
-                        print("Image uploaded successfully: \(url)")
-                        self.currentUser?.profileImageURL = url
-                        self.imageUpdated = false
-                        print("saved", url)
-                        Task{
-                            try await UsersManager.updateUser(user: self.currentUser!, fields: [K.FStore.Customers.profileImageURL: self.currentUser!.profileImageURL])
+                
+        
+        // 1. Proceed to save changes if validation passes
+            do{
+                
+                
+                currentUser?.fullName = txtFullName.text!
+                currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
+                if let date = txtFieldDate.text,  let dateInDate = dateFormatter.date(from: date) {
+                    currentUser?.dob = dateInDate
+                    
+                }
+                
+                
+                if let image = EditProfileImage.image, imageUpdated {
+                    PhotoManager.shared.uploadPhoto(image, to: "customers/\(currentUser!.userID)", withNewName: "profile") { result in
+                        switch result {
+                        case .success(let url):
                             
+                            
+                            // TODO: Update in user
+                            
+                            print("Image uploaded successfully: \(url)")
+                            self.currentUser?.profileImageURL = url
+                            self.imageUpdated = false
+                            print("saved", url)
+                            Task{
+                                try await UsersManager.updateUser(user: self.currentUser!, fields: [K.FStore.Customers.profileImageURL: self.currentUser!.profileImageURL])
+                                
+                            }
+                            
+                        case .failure( _):
+                            let saveAlert = UIAlertController(
+                                title: "Error",
+                                message: "Error uploading image",
+                                preferredStyle: .alert
+                            )
+                            
+                            let okAction = UIAlertAction(title: "OK", style: .default) { action in
+                                //
+                                self.navigationController?.popViewController(animated: true)
+                                
+                            }
+                            
+                            saveAlert.addAction(okAction)
+                            
+                            self.present(saveAlert, animated: true, completion: nil)
                         }
-
-                    case .failure( _):
-                        let saveAlert = UIAlertController(
-                            title: "Error",
-                            message: "Error uploading image",
-                            preferredStyle: .alert
-                        )
-                        
-                        let okAction = UIAlertAction(title: "OK", style: .default) { action in
-                            //
-                            self.navigationController?.popViewController(animated: true)
-
-                        }
-                        
-                        saveAlert.addAction(okAction)
-                        
-                        self.present(saveAlert, animated: true, completion: nil)
                     }
                 }
-            }
-            
-            Task{
-                try await UsersManager.updateUser(user: self.currentUser!)
                 
+                // Update the user in your database
+                           try await UsersManager.updateUser(user: currentUser!)
+                           
+                           // Show success message
+                           DispatchQueue.main.async {
+                               let successAlert = UIAlertController(
+                                   title: "Success",
+                                   message: "Your changes have been saved successfully.",
+                                   preferredStyle: .alert
+                               )
+                               successAlert.addAction(UIAlertAction(title: "OK", style: .default) { action in
+                                   
+                                   self.navigationController?.popToRootViewController(animated: true)
+                               })
+                               self.present(successAlert, animated: true, completion: nil)
+                           }
+               
+            }catch{
+                DispatchQueue.main.async {
+                               let errorAlert = UIAlertController(
+                                   title: "Error",
+                                   message: error.localizedDescription,
+                                   preferredStyle: .alert
+                               )
+                               errorAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                               self.present(errorAlert, animated: true, completion: nil)
+                           }
             }
 
             
         }
         
-        // 3. Show an alert notifying the user that the changes have been saved
-        let saveAlert = UIAlertController(
-            title: "Save Changes",
-            message: "Your changes have been saved successfully.",
-            preferredStyle: .alert
-        )
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-        
-        saveAlert.addAction(okAction)
-        self.present(saveAlert, animated: true, completion: nil)
+//        // 3. Show an alert notifying the user that the changes have been saved
+//        let saveAlert = UIAlertController(
+//            title: "Save Changes",
+//            message: "Your changes have been saved successfully.",
+//            preferredStyle: .alert
+//        )
+//        
+//        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+//            self.navigationController?.popToRootViewController(animated: true)
+//        }
+//        
+//        saveAlert.addAction(okAction)
+//        self.present(saveAlert, animated: true, completion: nil)
     }
     
     
@@ -510,24 +561,44 @@ extension CustomerProfileViewController: UIImagePickerControllerDelegate, UINavi
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             
-            do{
-                Task{
+            guard let user = Auth.auth().currentUser else {
+                        print("No current user found.")
+                        return
+                    }
+            
+            Task{
+                do{
+                    
+                    // Delete Firestore or Database documents
                     try await UsersManager.deleteUser(userID: self.currentUser!.userID, userType: self.currentUser!.type)
+                    print("User document deleted successfully.")
+                    
+                    
+                    user.delete { error in
+                      if let _ = error {
+                        // An error happened.
+                      } else {
+                        // Account deleted.
+                      }
+                    }
+                    print("User account deleted successfully.")
+
+                    
+                    
+                    
+                    try Auth.auth().signOut()
+                    
+                    
+                    // need to be changed to the login screen
+                    if let LaunchScreen = UIStoryboard(name: "AuthenticationView", bundle: nil).instantiateInitialViewController() {
+                        LaunchScreen.modalPresentationStyle = .fullScreen
+                        self.present(LaunchScreen, animated: true, completion: nil)
+                    } else {
+                        print("LaunchScreen could not be instantiated.")
+                    }
+                }catch{
+                    print("an error with signout occured")
                 }
-                
-                Auth.auth().currentUser?.delete()
-                try Auth.auth().signOut()
-            
-            
-                // need to be changed to the login screen
-                if let LaunchScreen = UIStoryboard(name: "AuthenticationView", bundle: nil).instantiateInitialViewController() {
-                    LaunchScreen.modalPresentationStyle = .fullScreen
-                    self.present(LaunchScreen, animated: true, completion: nil)
-                } else {
-                    print("LaunchScreen could not be instantiated.")
-                }
-            }catch{
-                print("an error with signout occured")
             }
         }
         
@@ -606,35 +677,45 @@ extension CustomerProfileViewController{
         
         
         var users: [User] = []
-        Task{
-            users = try await  UsersManager.getAllUsers()
-        }
-        
         var thereIs: Bool = false
-        for user in users {
-            if txtEmail.text != currentUser?.email && txtEmail.text == user.email{
-                thereIs = true
+
+        Task {
+            users = try await UsersManager.getAllUsers()
+            
+            // Trim the email in the text field
+            let trimmedEmail = txtEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            for user in users {
+                let userEmailTrimmed = user.email.trimmingCharacters(in: .whitespacesAndNewlines)
+                if trimmedEmail != currentUser?.email && trimmedEmail == userEmailTrimmed {
+                    thereIs = true
+                    break // Exit the loop early if a match is found
+                }
+            }
+            
+            // Perform validation after the Task completes
+            DispatchQueue.main.async {
+                // Validate txtEmail (Valid email format)
+                if let email = self.txtEmail?.text, email.isEmpty {
+                    self.lblErrorEmail.text = "Email address is required."
+                    self.highlightField(self.txtEmail)
+                    isValid = false
+                } else if let email = self.txtEmail?.text, !self.isValidEmail(email) {
+                    self.lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
+                    self.highlightField(self.txtEmail)
+                    isValid = false
+                }else if thereIs{
+                    self.lblErrorEmail.text = "The provided email used by other user"
+                    self.highlightField(self.txtEmail)
+                    isValid = false
+                }else {
+                    self.lblErrorEmail.text = ""
+                    self.resetFieldHighlight(self.txtEmail)
+                }
             }
         }
         
-        
-        // Validate txtEmail (Valid email format)
-        if let email = txtEmail?.text, email.isEmpty {
-            lblErrorEmail.text = "Email address is required."
-            highlightField(txtEmail)
-            isValid = false
-        } else if let email = txtEmail?.text, !isValidEmail(email) {
-            lblErrorEmail.text = "Enter a valid email address (e.g., example@domain.com)."
-            highlightField(txtEmail)
-            isValid = false
-        }else if thereIs{
-            lblErrorEmail.text = "The provided email used by other user"
-            highlightField(txtEmail)
-            isValid = false
-        }else {
-            lblErrorEmail.text = ""
-            resetFieldHighlight(txtEmail)
-        }
+  
         
         
         return isValid
@@ -687,5 +768,58 @@ extension CustomerProfileViewController{
         textField?.layer.borderWidth = 0
         textField?.layer.borderColor = UIColor.clear.cgColor
     }
+    
+    func createAdmin(){
+        
+        Task {
+            var admin = Admin(
+                userID: "placeholder",
+                fullName: "Fatima Hasan",
+                email: "ffooffy35@gmail.com",
+                dateCreated: Date(),
+                phoneNumber: 35303815,
+                profileImageURL: ""
+            )
+            
+            do {
+                // Explicitly specify the type of the continuation
+                let authResult: AuthDataResult = try await withCheckedThrowingContinuation { continuation in
+                    Auth.auth().createUser(withEmail: admin.email, password: "123456") { result, error in
+                        if let error = error {
+                            continuation.resume(throwing: error)
+                        } else if let result = result {
+                            continuation.resume(returning: result)
+                        }
+                    }
+                }
+                
+                // Update admin's userID with the newly created user's UID
+                admin.userID = authResult.user.uid
+                print("Firebase Auth UID: \(authResult.user.uid)")
+                print("Admin userID: \(admin.userID)")
+                
+                // Create the user document in Firestore
+                try await UsersManager.createNewUser(user: admin)
+                print("Admin created successfully with UID: \(admin.userID)")
+                
+            } catch {
+                // Handle errors (Firebase Auth or Firestore)
+                let alert = UIAlertController(
+                    title: "Error Creating Admin",
+                    message: error.localizedDescription,
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                DispatchQueue.main.async { [weak self] in
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+        
+    }
+    
+    
+
+
     
 }

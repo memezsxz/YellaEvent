@@ -43,7 +43,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="logout:" destination="8Hq-uX-Crr" eventType="touchUpInside" id="9HU-Hq-xZe"/>
-                                    <segue destination="mCc-1a-1pz" kind="presentation" modalPresentationStyle="fullScreen" id="nqa-oC-y2P"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bPp-ps-aXH">
@@ -244,16 +243,6 @@
             </objects>
             <point key="canvasLocation" x="127" y="-2"/>
         </scene>
-        <!--Main-->
-        <scene sceneID="Br9-ZN-zXT">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" id="mCc-1a-1pz" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="yHW-D2-Dgl"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pKa-Df-t3u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="126" y="457"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="6xf-mh-DXP">
             <objects>
@@ -397,8 +386,10 @@
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
                                                                 </variation>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mio-mj-oaE">
+                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mio-mj-oaE">
                                                                 <rect key="frame" x="0.0" y="22.333333333333318" width="353.66666666666669" height="43.333333333333343"/>
+                                                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                                <color key="textColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <variation key="heightClass=regular-widthClass=regular">
@@ -660,6 +651,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
