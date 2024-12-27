@@ -33,12 +33,13 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
     var filteredEventsList: [EventSummary] = []
     var selectedFilters: [String] = []
     var changesMade: Bool = false
-    var age: Int = 4
+    var age: Int = 5
     var price: Int = 5
+    var filterApplied: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         prevSearch = userDefaults.array(forKey: "prevSearch") as? [String] ?? []
         filteredSearch = prevSearch.reversed()
 
@@ -75,7 +76,6 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
     @IBAction func fliteringunwind(_ unwindSegue: UIStoryboardSegue) {
         if unwindSegue.identifier == "apply" {
             guard let sourceVC = unwindSegue.source as? CustomerSearchViewController else {
-                print("Unwind segue source is not of type CustomerSearchViewController")
                 return
             }
 
@@ -90,7 +90,7 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
 
             // Retrieve the selected filters from the source view controller
             self.selectedFilters = sourceVC.categoriesCollectioView.getInterests()
-            print("Unwind apply filters:", self.selectedFilters)
+            self.filterApplied = true
         }
     }
 
@@ -145,6 +145,7 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
 
     func searchMade() {
         changesMade = true
+
         Task {
             guard let searchText = searchBar.text, !searchText.isEmpty else {
                 print("Search text is empty")
@@ -159,18 +160,23 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
                     .getDocuments()
 
                 // Process and filter documents locally
-                let tempEventsList = await withTaskGroup(of: EventSummary?.self)
-                { group -> [EventSummary] in
+                let tempEventsList = await withTaskGroup(of: EventSummary?.self) { group -> [EventSummary] in
                     for doc in snapshot.documents {
                         group.addTask {
-                            let event = try? await EventSummary(
-                                from: doc.data())
-                            // filter to check if the event is ongoing
+                            let event = try? await EventSummary(from: doc.data())
 
-                            // Filter locally for partial matches
-                            if let eventName = event?.name.lowercased(),
-                                eventName.contains(normalizedSearchText)
-                            {
+                            if let eventName = event?.name.lowercased(), eventName.contains(normalizedSearchText) {
+                                // Additional filtering if `filterApplied` is true
+                                if await self.filterApplied {
+                                    // Filter by selected filters, age, and price
+                                    let matchesCategory = await self.selectedFilters.isEmpty || self.selectedFilters.contains(event?.categoryID ?? "")
+                                    let matchesAge = await self.age >= 0 // Adjust if age criteria exist in your model
+                                    let matchesPrice = await self.price >= Int(event?.price ?? 0)
+                                    if matchesCategory && matchesAge && matchesPrice {
+                                        return event
+                                    }
+                                    return nil
+                                }
                                 return event
                             }
                             return nil
@@ -197,8 +203,9 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
         }
 
         print("search")
-
     }
+
+
 
     // Cancel button logic
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
