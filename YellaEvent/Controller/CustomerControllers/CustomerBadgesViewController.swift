@@ -51,7 +51,7 @@ class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, 
         let totalSpacing = spacing * (numberOfItemsPerRow + 1) // Total spacing = spaces between + insets
         let itemWidth = (UIScreen.main.bounds.width - totalSpacing) / numberOfItemsPerRow
 
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth) // Equal width and height
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth + itemWidth / 8) // Equal width and height
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
 
         return layout

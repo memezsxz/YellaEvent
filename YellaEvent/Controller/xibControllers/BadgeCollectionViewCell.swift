@@ -10,46 +10,20 @@ import UIKit
 import UIKit
 
 extension UIImageView {
-    func clipToRoundedHexagon(cornerRadius: CGFloat) {
+    func clipToHexagon() {
         let path = UIBezierPath()
         
-        // Define the hexagon dimensions
+        // Define the hexagon path
         let width = self.bounds.width
         let height = self.bounds.height
         let sideLength = width / 2.0
-        let radius = cornerRadius
         
-        // Start drawing the rounded hexagon
-        path.move(to: CGPoint(x: width / 2.0, y: 0)) // Top point
-        path.addArc(withCenter: CGPoint(x: width - radius, y: height * 0.25),
-                    radius: radius,
-                    startAngle: CGFloat(-Double.pi / 2),
-                    endAngle: 0,
-                    clockwise: true) // Top-right corner
-        path.addLine(to: CGPoint(x: width, y: height * 0.75 - radius))
-        path.addArc(withCenter: CGPoint(x: width - radius, y: height * 0.75),
-                    radius: radius,
-                    startAngle: 0,
-                    endAngle: CGFloat(Double.pi / 2),
-                    clockwise: true) // Bottom-right corner
-        path.addLine(to: CGPoint(x: width / 2.0 + radius, y: height))
-        path.addArc(withCenter: CGPoint(x: width / 2.0, y: height - radius),
-                    radius: radius,
-                    startAngle: CGFloat(Double.pi / 2),
-                    endAngle: CGFloat(Double.pi),
-                    clockwise: true) // Bottom point
-        path.addLine(to: CGPoint(x: radius, y: height * 0.75))
-        path.addArc(withCenter: CGPoint(x: radius, y: height * 0.75),
-                    radius: radius,
-                    startAngle: CGFloat(Double.pi),
-                    endAngle: CGFloat(Double.pi * 1.5),
-                    clockwise: true) // Bottom-left corner
-        path.addLine(to: CGPoint(x: 0, y: height * 0.25 + radius))
-        path.addArc(withCenter: CGPoint(x: radius, y: height * 0.25),
-                    radius: radius,
-                    startAngle: CGFloat(Double.pi * 1.5),
-                    endAngle: CGFloat(Double.pi * 2),
-                    clockwise: true) // Top-left corner
+        path.move(to: CGPoint(x: width / 2.0, y: 0))
+        path.addLine(to: CGPoint(x: width, y: height * 0.25))
+        path.addLine(to: CGPoint(x: width, y: height * 0.75))
+        path.addLine(to: CGPoint(x: width / 2.0, y: height))
+        path.addLine(to: CGPoint(x: 0, y: height * 0.75))
+        path.addLine(to: CGPoint(x: 0, y: height * 0.25))
         path.close()
         
         // Create a shape layer mask
@@ -69,7 +43,7 @@ class BadgeCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor(named:K.BrandColors.purple)?.cgColor
-        view.layer.cornerRadius = contentView.frame.height / (K.HSizeclass == .regular && K.VSizeclass == .regular ? 5 : 8)
+        view.layer.cornerRadius = contentView.frame.height / (K.HSizeclass == .regular && K.VSizeclass == .regular ? 10 : 16)
 
         // Initialization code
     }
@@ -83,7 +57,7 @@ class BadgeCollectionViewCell: UICollectionViewCell {
                 case .success(let image):
                 DispatchQueue.main.async {
                     self.badgeImageView.image = image
-                    self.badgeImageView.clipToRoundedHexagon(cornerRadius: 5)
+                    self.badgeImageView.clipToHexagon()
                 }
             case .failure(let error):
                 print("Error downloading badge image: \(error)")
