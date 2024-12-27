@@ -74,11 +74,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Users" image="person.2" catalog="system" selectedImage="person.2.fill" id="nmL-LD-8YX"/>
                     <navigationItem key="navigationItem" title="Users" id="Iwy-kY-D6G">
-                        <barButtonItem key="leftBarButtonItem" title="Manage FAQ" id="QaN-2j-R7f">
-                            <connections>
-                                <segue destination="EwN-z7-x1K" kind="show" id="DQS-Zv-OKf"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ple-4Y-bCR">
                             <connections>
                                 <action selector="CreateButtonTapped:" destination="q1V-aj-IzI" id="OaV-Ln-KPA"/>
@@ -96,6 +91,7 @@
                         <segue destination="yXY-tj-GaV" kind="show" identifier="ViewOrganizerPage" id="JZX-h3-MFH"/>
                         <segue destination="S2w-G6-e57" kind="show" identifier="ViewAdminPage" id="b2Q-gQ-nlD"/>
                         <segue destination="nzk-E5-Xey" kind="show" identifier="BanPage" id="i8V-rG-W4l"/>
+                        <segue destination="EwN-z7-x1K" kind="show" identifier="GoToFAQs" id="qzB-zJ-ewD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G5K-dN-OI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
