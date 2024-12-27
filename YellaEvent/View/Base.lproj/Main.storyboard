@@ -126,10 +126,10 @@
             </objects>
             <point key="canvasLocation" x="3323" y="288"/>
         </scene>
-        <!--CustomerSearchView-->
+        <!--CustomerLeaderboardView-->
         <scene sceneID="iuE-ef-uMn">
             <objects>
-                <viewControllerPlaceholder storyboardName="CustomerSearchView" id="rTy-kN-tR1" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="CustomerLeaderboardView" id="rTy-kN-tR1" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEO-DO-3gN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3296" y="354"/>
