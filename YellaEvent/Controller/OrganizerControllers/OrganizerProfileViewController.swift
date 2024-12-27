@@ -44,6 +44,15 @@ class OrganizerProfileViewController: UIViewController {
         
         do {
           try firebaseAuth.signOut()
+            
+            // need to be changed to the login screen
+            if let LaunchScreen = UIStoryboard(name: "AuthenticationView", bundle: nil).instantiateInitialViewController() {
+                LaunchScreen.modalPresentationStyle = .fullScreen
+                self.present(LaunchScreen, animated: true, completion: nil)
+                
+            } else {
+                print("LaunchScreen could not be instantiated.")
+            }
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
         }
@@ -87,6 +96,10 @@ class OrganizerProfileViewController: UIViewController {
     
     
     
+    override func viewWillDisappear(_ animated: Bool) {
+        setup()
+    }
+    
     
     //MARK: ViewDidLoad
     override func viewDidLoad() {
@@ -126,8 +139,8 @@ class OrganizerProfileViewController: UIViewController {
                 
                 
                 if let profileImageURL = currentUser?.profileImageURL,
-                    !profileImageURL.isEmpty,
-                    let validURL = URL(string: profileImageURL) {
+                    !(profileImageURL.isEmpty),
+                    let _ = URL(string: profileImageURL) {
                     PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                         
                         switch result {
@@ -186,8 +199,8 @@ extension OrganizerProfileViewController{
                 
                 
                 if let profileImageURL = currentUser?.profileImageURL,
-                    !profileImageURL.isEmpty,
-                    let validURL = URL(string: profileImageURL){
+                    !(profileImageURL.isEmpty),
+                    let _ = URL(string: profileImageURL){
                     PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                         
                         switch result {
@@ -287,8 +300,8 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
         editProfileImage.image = selectedImage
+        
         imageUpdated = true
-
         dismiss(animated: true, completion: nil)
     }
     
@@ -327,8 +340,14 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
                         
                         print("Image uploaded successfully: \(url)")
                         self.currentUser?.profileImageURL = url
-                        self.imageUpdated = false
                         
+                    self.imageUpdated = false
+                        
+                        Task{
+                            if let user = self.currentUser{
+                                try await UsersManager.updateUser(user: user)
+                            }
+                        }
 
                     case .failure( _):
                         let saveAlert = UIAlertController(
@@ -387,21 +406,44 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             
-            //delete the user from database -- edit_Fatima
-            do{
-                Task{
+            guard let user = Auth.auth().currentUser else {
+                        print("No current user found.")
+                        return
+                    }
+            
+            Task{
+                do{
+                    
+                    // Delete Firestore or Database documents
                     try await UsersManager.deleteUser(userID: self.currentUser!.userID, userType: self.currentUser!.type)
+                    print("User document deleted successfully.")
+                    
+                    
+                    user.delete { error in
+                      if let error = error {
+                        // An error happened.
+                      } else {
+                        // Account deleted.
+                      }
+                    }
+                    print("User account deleted successfully.")
+
+                    
+                    
+                    
+                    try Auth.auth().signOut()
+                    
+                    
+                    // need to be changed to the login screen
+                    if let LaunchScreen = UIStoryboard(name: "AuthenticationView", bundle: nil).instantiateInitialViewController() {
+                        LaunchScreen.modalPresentationStyle = .fullScreen
+                        self.present(LaunchScreen, animated: true, completion: nil)
+                    } else {
+                        print("LaunchScreen could not be instantiated.")
+                    }
+                }catch{
+                    print("an error with signout occured")
                 }
-            }
-            
-            
-            
-            
-            if let LaunchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController() {
-                LaunchScreen.modalPresentationStyle = .fullScreen
-                self.present(LaunchScreen, animated: true, completion: nil)
-            } else {
-                print("LaunchScreen could not be instantiated.")
             }
         }
         
