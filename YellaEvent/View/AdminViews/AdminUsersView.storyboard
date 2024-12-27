@@ -20,11 +20,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="gSe-iV-ePm">
-                                <rect key="frame" x="0.0" y="160" width="440" height="56"/>
+                                <rect key="frame" x="0.0" y="158" width="440" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dJf-uT-sma" customClass="MainUISegmentedControl" customModule="YellaEvent" customModuleProvider="target">
-                                <rect key="frame" x="16" y="239" width="408" height="32"/>
+                                <rect key="frame" x="16" y="237" width="408" height="32"/>
                                 <color key="backgroundColor" red="0.51764705882352935" green="0.36862745098039218" blue="0.76078431372549016" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <segments>
                                     <segment title="All"/>
@@ -38,7 +38,7 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YA0-eY-7S3">
-                                <rect key="frame" x="16" y="286" width="408" height="587"/>
+                                <rect key="frame" x="16" y="284" width="408" height="589"/>
                                 <color key="backgroundColor" name="BackgroundGray"/>
                                 <color key="sectionIndexBackgroundColor" name="BackgroundGray"/>
                                 <prototypes>
@@ -96,6 +96,7 @@
                         <segue destination="yXY-tj-GaV" kind="show" identifier="ViewOrganizerPage" id="JZX-h3-MFH"/>
                         <segue destination="S2w-G6-e57" kind="show" identifier="ViewAdminPage" id="b2Q-gQ-nlD"/>
                         <segue destination="nzk-E5-Xey" kind="show" identifier="BanPage" id="i8V-rG-W4l"/>
+                        <segue destination="kh7-M8-OJr" kind="show" identifier="viewEvents" id="Ian-lW-uQF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G5K-dN-OI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -320,7 +321,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mzc-sj-T3I" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Z3K-4g-cce">
-                        <rect key="frame" x="0.0" y="62" width="440" height="98"/>
+                        <rect key="frame" x="0.0" y="62" width="440" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" name="BrandPurple"/>
                         <textAttributes key="titleTextAttributes">
@@ -328,7 +329,7 @@
                             <color key="textColor" name="BrandDarkPurple"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
                             <color key="textColor" name="BrandDarkPurple"/>
                         </textAttributes>
                     </navigationBar>
@@ -349,7 +350,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xGD-Yk-r6a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-626" y="1237"/>
+            <point key="canvasLocation" x="-529" y="1163"/>
         </scene>
         <!--Organizer Name-->
         <scene sceneID="dym-SU-ig6">
@@ -497,7 +498,6 @@
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="ViewOrganizerEvents:" destination="6w2-gH-k9e" eventType="touchUpInside" id="I48-VN-3aV"/>
-                                                    <segue destination="kh7-M8-OJr" kind="show" identifier="viewEvents" id="QuI-D9-Wyr"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NhL-vs-TOd">
@@ -660,7 +660,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="41" translatesAutoresizingMaskIntoConstraints="NO" id="HUl-3c-h8O">
-                                <rect key="frame" x="22" y="186.99999999999997" width="396" height="315.33333333333326"/>
+                                <rect key="frame" x="22" y="184.99999999999997" width="396" height="315.33333333333326"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="eh3-uR-Yr3">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="77.666666666666671"/>
@@ -806,8 +806,10 @@
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
                                                                 </variation>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pB8-xH-ix2">
+                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pB8-xH-ix2">
                                                                 <rect key="frame" x="0.0" y="28" width="396" height="47"/>
+                                                                <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <variation key="heightClass=regular-widthClass=regular">
@@ -1121,6 +1123,7 @@
                             <outlet property="lblErrorDuration" destination="5PK-t2-vsb" id="5UR-7O-W1l"/>
                             <outlet property="lblErrorEmail" destination="1z7-ag-VZi" id="nMj-b8-rHB"/>
                             <outlet property="lblErrorPhoneNumber" destination="lLg-QW-Wd4" id="63R-qO-rqG"/>
+                            <outlet property="menu" destination="CYd-vO-hdf" id="XUR-Pa-l1g"/>
                             <outlet property="txtDocumnetName" destination="XuM-qF-oGp" id="4fl-mg-5bC"/>
                             <outlet property="txtDuraion" destination="1HH-4V-1yS" id="Vjb-fX-6wV"/>
                             <outlet property="txtDuration" destination="1Dl-nt-11C" id="OMY-4i-jQe"/>
@@ -1148,7 +1151,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Wtf-Lf-gjb">
-                                <rect key="frame" x="22" y="180" width="396" height="535.66666666666663"/>
+                                <rect key="frame" x="22" y="178" width="396" height="535.66666666666663"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Te0-ar-rzR">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="94.333333333333329"/>
@@ -1319,7 +1322,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eH5-tE-JjS">
-                                <rect key="frame" x="148.33333333333337" y="765.66666666666663" width="143.66666666666663" height="39.333333333333371"/>
+                                <rect key="frame" x="148.33333333333337" y="763.66666666666663" width="143.66666666666663" height="39.333333333333371"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Ban Account">

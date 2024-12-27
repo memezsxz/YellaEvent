@@ -94,7 +94,12 @@ class ViewOrganizerDetailsView: UIView {
     
     @IBAction func ViewOrganizerEvents(_ sender: UIButton) {
         //TODO_FATIMA
+        delegate?.orgName = currentOrganizer?.fullName
+        delegate?.showEvents()
+
+//        searchBar
     }
+    
     
     @IBAction func DownloadDocumnets(_ sender: UIButton) {
         //        currentOrganizer?.profileImageURL?

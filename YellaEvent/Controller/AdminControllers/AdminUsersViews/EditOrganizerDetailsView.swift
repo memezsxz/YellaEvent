@@ -35,7 +35,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var lblErrorDuration: UILabel!
     
-    
+    @IBOutlet weak var menu: UIMenu!
     
     
     required init?(coder: NSCoder) {
@@ -44,12 +44,54 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     }
     
     func setup() {
+       
+        
+        
+        
         
         Task{
             usersList =  try await UsersManager.getAllUsers()
         }
         
         lastField.isHidden = true
+
+        if currentOrganizer?.startDate == nil && currentOrganizer?.endDate == nil {
+            txtDuraion.setTitle("Never Expire", for: .normal)
+            setupMenu(isNeverExpire: true)
+
+        }
+        else{
+            lastField.isHidden = false
+            setupMenu(isNeverExpire: false)
+            
+            if let endDate = self.currentOrganizer?.endDate {
+                let currentDate = Date()
+                let duration = Calendar.current.dateComponents([.day], from: currentDate, to: endDate)
+                if let days = duration.day {
+                    if days <= 0 {
+                        self.txtDuration.text = "0"
+                    }
+                } else {
+                    self.txtDuration.text = "Duration unavailable"
+                }
+            }
+
+
+//            lastField.isHidden = false
+//            txtDuraion.setTitle("Custome Duration", for: .normal)
+//            
+//            if let endDate = currentOrganizer?.endDate {
+//                let currentDate = Date()
+//                let duration = Calendar.current.dateComponents([.day], from: currentDate, to: endDate)
+//                if let days = duration.day {
+//                    txtDuration.text = "\(days) days remaining"
+//                } else {
+//                    txtDuration.text = "Duration unavailable"
+//                }
+//            }
+        }
+        
+        
         txtUserType.isUserInteractionEnabled = false
 
         txtName.title = currentOrganizer?.fullName
@@ -70,6 +112,8 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
              txtDuraion.setTitle("Never Expire", for: .normal) // Set button title to "Never Expire"
             lastField.isHidden = true
          } else {
+             
+             txtDuraion.setTitle("Custome Duration", for: .normal)
              lastField.isHidden = false
          }
         
@@ -93,10 +137,16 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
             let farFutureDate = Calendar.current.date(from: DateComponents(year: 9999, month: 12, day: 31))
                 currentOrganizer?.endDate = farFutureDate
         }else if (txtDuraion.titleLabel!.text == "Custome Duration"){
-            let days = Calendar.current.date(byAdding: .day, value: Int(txtDuration.text!)!, to: Date())
-            if let newdate = days {
-                currentOrganizer?.endDate = newdate
+            
+            if Int(txtDuration.text!)! > 0 {
+                let days = Calendar.current.date(byAdding: .day, value: Int(txtDuration.text!)!, to: Date())
+                
+                
+                if let newdate = days {
+                    currentOrganizer?.endDate = newdate
+                }
             }
+            
         }
         
         
@@ -194,14 +244,15 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
         
         
         
-        
         if txtDuraion.titleLabel?.text == "Custome Duration"{
+            print("check2")
+
             if let duration = txtDuration.text, duration.isEmpty{
                 lblErrorDuration.text = "Duration is required."
                 parent.highlightField(txtDuration)
                 isValid = false
             } else if let duration = txtDuration?.text, !isValidDuration(duration) {
-                lblErrorDuration.text = "Duration must be only numbers."
+                lblErrorDuration.text = "Duration must valid number."
                 parent.highlightField(txtDuration)
                 isValid = false
             } else {
@@ -236,6 +287,55 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
         imagePickerController.delegate = self
         delegate!.delegate!.present(imagePickerController, animated: true, completion: nil)
     }
+    
 
+    
+    func createMenuElements(isNeverExpire: Bool) -> [UIMenuElement] {
+        let neverExpireAction = UIAction(
+            title: "Never Expire",
+            state: isNeverExpire ? .on : .off
+        ) { _ in
+            print("Never Expire selected")
+            // Handle selection logic for Never Expire
+            self.lastField.isHidden = true
+            self.txtDuraion.setTitle("Never Expire", for: .normal)
+        }
+
+        let customDurationAction = UIAction(
+            title: "Custome Duration",
+            state: isNeverExpire ? .off : .on
+        ) { _ in
+            print("Custom Duration selected")
+            // Handle selection logic for Custom Duration
+            self.lastField.isHidden = false
+            
+            
+            if let endDate = self.currentOrganizer?.endDate {
+                let currentDate = Date()
+                let duration = Calendar.current.dateComponents([.day], from: currentDate, to: endDate)
+                if let days = duration.day {
+                    if days <= 0 {
+                        self.txtDuration.text = "0"
+                    }
+                } else {
+                    self.txtDuration.text = "Duration unavailable"
+                }
+            }
+            
+        }
+
+        return [neverExpireAction, customDurationAction]
+    }
          
+    func setupMenu(isNeverExpire: Bool) {
+        // Create the menu elements
+        let menuElements = createMenuElements(isNeverExpire: isNeverExpire)
+        
+        // Create the menu
+        let menu = UIMenu(title: "Select Duration", options: .displayInline, children: menuElements)
+        
+        // Assign the menu to the button
+        txtDuraion.menu = menu
+        txtDuraion.showsMenuAsPrimaryAction = true
+    }
 }

@@ -28,7 +28,7 @@ var currentUser: User? = nil
 class AdminUsersViewController: UIViewController {
     
     let dateFormatter = DateFormatter()
-    
+    var orgName: String? 
     //MARK: Outlet
     @IBOutlet var viewCustomerDetailsView: ViewCustomerDetailsView!
     @IBOutlet var viewAdminDetailsView: ViewAdminDetailsView!
@@ -213,6 +213,10 @@ class AdminUsersViewController: UIViewController {
             createOrganizerView = segue.destination.view as? createOrganizerView
             createOrganizerView.delegate = self
             createOrganizerView.setup()
+        }else if (segue.identifier == "viewEvents"){
+            print("2")
+
+//            (segue.destination as? AdminEventsViewController)?.searchBar.text = orgName
         }
         
         super.prepare(for: segue, sender: sender)
@@ -526,18 +530,22 @@ extension AdminUsersViewController{
         }
         
         
-        //Duration Validation
-        if lastField.isHidden == false {
-            if txtDuration.text!.isEmpty{
+        // Duration Validation
+        if !lastField.isHidden {
+            if txtDuration.text!.isEmpty {
                 lblErrorDuration.text = "Please enter a duration."
                 highlightField(txtDuration)
                 isValidate = false
-            }else{
+            } else if Int(txtDuration.text!) == nil { // Check if it's a valid number
+                lblErrorDuration.text = "Please enter a valid numeric duration."
+                highlightField(txtDuration)
+                isValidate = false
+            } else {
                 lblErrorDuration.text = ""
                 resetFieldHighlight(txtDuration)
             }
-            
         }
+        
         
         //Description Validation
         if txtDescription.text.isEmpty{
@@ -553,70 +561,70 @@ extension AdminUsersViewController{
         
         return isValidate
     }
-
+    
     
     
     
     func showAlert(message: String, completion: (() -> Void)? = nil) {
-         let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
-         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-             completion?()
-         }))
-         present(alert, animated: true, completion: nil)
-     }
+        let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            completion?()
+        }))
+        present(alert, animated: true, completion: nil)
+    }
     
     
     // Generalized function to show a dropdown with a list of items
     func showDropdown(options: [String], for button: UIButton, title: String) {
         // Ensure the options list is not empty
-            guard !options.isEmpty else {
-                print("The options list cannot be empty.")
-                return
-            }
-
-            // Create UIActions from options
-            let menuActions = options.map { option in
-                UIAction(title: option, image: nil) { action in
-                    self.updateMenuWithSelection(selectedOption: option, options: options, button: button)
-                }
-            }
-
-            // Create the menu and assign it to the button
-            let menu = UIMenu(title: "", children: menuActions)
-            button.menu = menu
-            button.showsMenuAsPrimaryAction = true
+        guard !options.isEmpty else {
+            print("The options list cannot be empty.")
+            return
         }
-
-        // Function to update the menu with the selected option
-        func updateMenuWithSelection(selectedOption: String, options: [String], button: UIButton) {
-            // Ensure the selected option is valid
-            guard options.contains(selectedOption) else {
-                print("Invalid selected option: \(selectedOption).")
-                return
-            }
-
-            // Create updated menu actions with checkmark for the selected option
-            let menuActions = options.map { option in
-                UIAction(
-                    title: option,
-                    image: option == selectedOption ? UIImage(systemName: "checkmark") : nil
-                ) { action in
-                    self.updateMenuWithSelection(selectedOption: option, options: options, button: button)
-                }
-            }
-
-            // Update the button's title to the selected option
-            button.setTitle(selectedOption, for: .normal)
-
-            // Reassign the updated menu to the button
-            button.menu = UIMenu(title: "", children: menuActions)
-            
-            if selectedOption == "Custom Duration"{
-                lastField.isHidden = false
-            }else{
-                lastField.isHidden = true
+        
+        // Create UIActions from options
+        let menuActions = options.map { option in
+            UIAction(title: option, image: nil) { action in
+                self.updateMenuWithSelection(selectedOption: option, options: options, button: button)
             }
         }
+        
+        // Create the menu and assign it to the button
+        let menu = UIMenu(title: "", children: menuActions)
+        button.menu = menu
+        button.showsMenuAsPrimaryAction = true
+    }
+    
+    // Function to update the menu with the selected option
+    func updateMenuWithSelection(selectedOption: String, options: [String], button: UIButton) {
+        // Ensure the selected option is valid
+        guard options.contains(selectedOption) else {
+            print("Invalid selected option: \(selectedOption).")
+            return
+        }
+        
+        // Create updated menu actions with checkmark for the selected option
+        let menuActions = options.map { option in
+            UIAction(
+                title: option,
+                image: option == selectedOption ? UIImage(systemName: "checkmark") : nil
+            ) { action in
+                self.updateMenuWithSelection(selectedOption: option, options: options, button: button)
+            }
+        }
+        
+        // Update the button's title to the selected option
+        button.setTitle(selectedOption, for: .normal)
+        
+        // Reassign the updated menu to the button
+        button.menu = UIMenu(title: "", children: menuActions)
+        
+        if selectedOption == "Custom Duration"{
+            lastField.isHidden = false
+        }else{
+            lastField.isHidden = true
+        }
+    }
     
     
     
@@ -638,8 +646,8 @@ extension AdminUsersViewController{
         saveAlert.addAction(okAction)
         
         self.present(saveAlert, animated: true, completion: nil)
-    
-
+        
+        
     }
     
     //function shows the ban alert
@@ -662,9 +670,9 @@ extension AdminUsersViewController{
         saveAlert.addAction(banlAction)
         
         self.present(saveAlert, animated: true, completion: nil)
-    
-
-
+        
+        
+        
     }
     
     
@@ -678,15 +686,15 @@ extension AdminUsersViewController{
         )
         
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-
+            
             self.navigationController?.popViewController(animated: true)
         }
         
         saveAlert.addAction(okAction)
         
         self.present(saveAlert, animated: true, completion: nil)
-    
-
+        
+        
     }
     
     
@@ -728,5 +736,16 @@ extension AdminUsersViewController{
         saveAlert.addAction(okAction)
         present(saveAlert, animated: true, completion: nil)
     }
+    
+    
+    func showEvents(){
+        print("1")
+        performSegue(withIdentifier: "viewEvents", sender: self)
+        print("2")
+
+    }
+    
+    
+    
     
 }
