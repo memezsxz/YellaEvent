@@ -6,44 +6,71 @@
 //
 
 import UIKit
-import FirebaseAuth
+import FirebaseFirestore
 
 class CustomerLeaderboardViewController: UIViewController {
     
-    var users: [User] = []
+    var customers: [Customer] = []
+    var currentUserID = "n9V3tQMdScYwZPZvEb7tN8Gi3R42"
+    @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var tableView
-    : UITableView!
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        Task{
-            do{
-                self.users = try await UsersManager.getAllUsers()
-            }
-            
-            catch{
-                
-            }
-            
-        }
-        print(users)
+        setupTableView()
+        fetchLeaderboard()
     }
     
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "LeaderboardTableViewCell", bundle: nil), forCellReuseIdentifier: "LeaderboardTableViewCell")
+    }
     
-}
+    private func fetchLeaderboard() {
+        Task {
+            do {
+                let fetchedCustomers = try await UsersManager.getUsers(ofType: .customer) as! [Customer]
+                self.customers = fetchedCustomers.sorted {
+                    $0.badgesArray.count > $1.badgesArray.count
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    
+                    // Automatically scroll to the current user's cell
+                    if let currentUserIndex = self.indexOfCurrentUser() {
+                        let indexPath = IndexPath(row: currentUserIndex, section: 0)
+                        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                    }
+                }
+            } catch {
+                print("Error fetching leaderboard: \(error.localizedDescription)")
+            }
+        }
+    }
 
+    
+    private func indexOfCurrentUser() -> Int? {
+        return customers.firstIndex { $0.userID == currentUserID }
+    }
+
+}
 
 extension CustomerLeaderboardViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return customers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LeaderboardTableViewCell", for: indexPath) as! LeaderboardTableViewCell
+            let customer = customers[indexPath.row]
+            let rank = indexPath.row + 1
+            let score = "\(customer.badgesArray.count) Badges"
+            let isCurrentUser = customer.userID == currentUserID
+            cell.setup(rank: rank, username: customer.fullName, score: score, isCurrentUser: isCurrentUser)
+            return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.width / 5
     }
 }
