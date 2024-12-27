@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BadgeCollectionViewCell" id="gTV-IL-0wX" customClass="BadgeCollectionViewCell" customModule="YellaEvent" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ze-i0-p1M" userLabel="Content View">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bBA-hc-7S7">
+                                <rect key="frame" x="15" y="15" width="270" height="270"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ewW-f1-GcN">
+                                        <rect key="frame" x="67.666666666666686" y="10" width="135" height="135"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ewW-f1-GcN" secondAttribute="height" multiplier="1:1" id="kAp-CV-rmm"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s5T-ht-Iiv">
+                                        <rect key="frame" x="27" y="165" width="216" height="95"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" name="BrandPurple"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        </variation>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="ewW-f1-GcN" firstAttribute="top" secondItem="bBA-hc-7S7" secondAttribute="top" constant="10" id="1ct-Br-xHg"/>
+                                    <constraint firstItem="s5T-ht-Iiv" firstAttribute="width" secondItem="bBA-hc-7S7" secondAttribute="width" multiplier="0.8" id="3N1-1w-GIM"/>
+                                    <constraint firstItem="s5T-ht-Iiv" firstAttribute="top" secondItem="ewW-f1-GcN" secondAttribute="bottom" constant="20" id="7di-Zs-HcZ"/>
+                                    <constraint firstItem="ewW-f1-GcN" firstAttribute="width" secondItem="bBA-hc-7S7" secondAttribute="width" multiplier="0.5" id="7fO-nV-sm0"/>
+                                    <constraint firstItem="s5T-ht-Iiv" firstAttribute="centerX" secondItem="bBA-hc-7S7" secondAttribute="centerX" id="KmZ-nk-gbE"/>
+                                    <constraint firstAttribute="bottom" secondItem="s5T-ht-Iiv" secondAttribute="bottom" constant="10" id="StG-IF-9Qf"/>
+                                    <constraint firstItem="ewW-f1-GcN" firstAttribute="centerX" secondItem="bBA-hc-7S7" secondAttribute="centerX" id="tRf-Ij-Chg"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" name="BackgroundGray"/>
+                        <constraints>
+                            <constraint firstItem="bBA-hc-7S7" firstAttribute="height" secondItem="8Ze-i0-p1M" secondAttribute="height" multiplier="0.9" id="KdW-Bb-VmI"/>
+                            <constraint firstItem="bBA-hc-7S7" firstAttribute="centerY" secondItem="8Ze-i0-p1M" secondAttribute="centerY" id="Zay-zC-7b2"/>
+                            <constraint firstItem="bBA-hc-7S7" firstAttribute="width" secondItem="8Ze-i0-p1M" secondAttribute="width" multiplier="0.9" id="gXz-xR-psQ"/>
+                            <constraint firstItem="bBA-hc-7S7" firstAttribute="centerX" secondItem="8Ze-i0-p1M" secondAttribute="centerX" id="ojI-BI-MDz"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="8Ze-i0-p1M" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="CrB-Ba-LMR"/>
+                <constraint firstItem="8Ze-i0-p1M" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="VvH-22-sOm"/>
+                <constraint firstAttribute="trailing" secondItem="8Ze-i0-p1M" secondAttribute="trailing" id="sSn-Mx-gh8"/>
+                <constraint firstAttribute="bottom" secondItem="8Ze-i0-p1M" secondAttribute="bottom" id="woI-t1-mB2"/>
+            </constraints>
+            <size key="customSize" width="277" height="286"/>
+            <connections>
+                <outlet property="badgeImageView" destination="ewW-f1-GcN" id="Fqc-aO-Yj5"/>
+                <outlet property="badgeTitleLabel" destination="s5T-ht-Iiv" id="AVA-Rf-GCM"/>
+                <outlet property="view" destination="bBA-hc-7S7" id="Lya-gU-j3K"/>
+            </connections>
+            <point key="canvasLocation" x="280.15267175572518" y="102.8169014084507"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="BackgroundGray">
+            <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BrandPurple">
+            <color red="0.51800000667572021" green="0.36899998784065247" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -11,8 +11,9 @@ import FirebaseFirestore
 class CustomerLeaderboardViewController: UIViewController {
     
     var customers: [Customer] = []
-    var currentUserID = "n9V3tQMdScYwZPZvEb7tN8Gi3R42"
+    var currentUserID = "33brgcsMG9uSJeylJT9t"
     @IBOutlet weak var tableView: UITableView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,11 +67,37 @@ extension CustomerLeaderboardViewController: UITableViewDelegate, UITableViewDat
             let rank = indexPath.row + 1
             let score = "\(customer.badgesArray.count) Badges"
             let isCurrentUser = customer.userID == currentUserID
-            cell.setup(rank: rank, username: customer.fullName, score: score, isCurrentUser: isCurrentUser)
+        cell.setup(rank: rank, username: customer.fullName, score: score, isCurrentUser: isCurrentUser, userID: currentUserID)
+        cell.delegate = self
             return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.width / 5
     }
+    
+    
 }
+
+extension CustomerLeaderboardViewController: LeaderboardTableViewCellDelegate {
+    func didTapMyBadges(for userID: String) {
+        guard let badgesVC = storyboard?.instantiateViewController(withIdentifier: "CustomerBadgesViewController") as? CustomerBadgesViewController else {
+            return
+        }
+
+        // Fetch the badges asynchronously
+        
+            
+            // Pass the fetched badges to the next view controller
+        badgesVC.userID = currentUserID
+
+            // Navigate to the badges view controller on the main thread
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(badgesVC, animated: true)
+            }
+        }
+    }
+
+
+
+
