@@ -243,6 +243,17 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mC1-V1-bpY">
+                                <rect key="frame" x="286" y="317" width="106" height="39"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Reset filter">
+                                    <color key="baseForegroundColor" name="BrandBlue"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="resetFilter:" destination="T6y-0U-8cg" eventType="touchUpInside" id="qaa-WX-iEu"/>
+                                    <segue destination="Vcs-cO-FIk" kind="unwind" unwindAction="resetFilter:" id="smY-MC-Ey1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oBe-KZ-uTg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -250,6 +261,8 @@
                             <constraint firstItem="yZy-12-yaK" firstAttribute="top" secondItem="djI-69-fAX" secondAttribute="bottom" constant="32" id="7PS-9w-Pbn"/>
                             <constraint firstItem="bDA-oN-Un6" firstAttribute="top" secondItem="GF3-vk-VCJ" secondAttribute="bottom" constant="10" id="Ef0-XS-MAc"/>
                             <constraint firstItem="bDA-oN-Un6" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="50" id="Ftx-ay-oxg"/>
+                            <constraint firstItem="oBe-KZ-uTg" firstAttribute="trailing" secondItem="mC1-V1-bpY" secondAttribute="trailing" constant="10" id="IRj-Bf-6b9"/>
+                            <constraint firstItem="GF3-vk-VCJ" firstAttribute="top" secondItem="mC1-V1-bpY" secondAttribute="bottom" constant="12" id="OHc-82-jjT"/>
                             <constraint firstItem="qGb-In-P7L" firstAttribute="top" secondItem="oBe-KZ-uTg" secondAttribute="top" constant="20" id="TGt-Y0-2so"/>
                             <constraint firstItem="GF3-vk-VCJ" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="Tlr-Ir-2oJ"/>
                             <constraint firstItem="GF3-vk-VCJ" firstAttribute="top" secondItem="yZy-12-yaK" secondAttribute="bottom" constant="17.670000000000002" id="WWt-iR-qgZ"/>
@@ -257,11 +270,13 @@
                             <constraint firstItem="yZy-12-yaK" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="ad5-eK-20X"/>
                             <constraint firstAttribute="trailing" secondItem="djI-69-fAX" secondAttribute="trailing" constant="16" id="bqe-zJ-1a4"/>
                             <constraint firstItem="djI-69-fAX" firstAttribute="top" secondItem="hjb-qg-gRa" secondAttribute="bottom" constant="42" id="c3D-2d-hyA"/>
+                            <constraint firstItem="mC1-V1-bpY" firstAttribute="top" secondItem="djI-69-fAX" secondAttribute="bottom" constant="19" id="cah-Lc-0HT"/>
                             <constraint firstItem="oBe-KZ-uTg" firstAttribute="trailing" secondItem="qGb-In-P7L" secondAttribute="trailing" constant="10" id="eR8-Fx-GmX"/>
                             <constraint firstItem="DKW-Ta-AM6" firstAttribute="top" secondItem="oBe-KZ-uTg" secondAttribute="top" constant="47" id="ghv-TY-afe"/>
                             <constraint firstItem="oBe-KZ-uTg" firstAttribute="trailing" secondItem="hjb-qg-gRa" secondAttribute="trailing" constant="16" id="hbr-fO-F5Y"/>
                             <constraint firstItem="hjb-qg-gRa" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="jdL-e9-dqK"/>
                             <constraint firstItem="DKW-Ta-AM6" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="mjq-S5-plU"/>
+                            <constraint firstItem="mC1-V1-bpY" firstAttribute="leading" secondItem="yZy-12-yaK" secondAttribute="trailing" constant="187" id="pwd-ej-iPv"/>
                             <constraint firstItem="oBe-KZ-uTg" firstAttribute="trailing" secondItem="GF3-vk-VCJ" secondAttribute="trailing" constant="16" id="u9w-Ww-Ija"/>
                             <constraint firstItem="djI-69-fAX" firstAttribute="leading" secondItem="oBe-KZ-uTg" secondAttribute="leading" constant="16" id="wGU-3k-Tcy"/>
                             <constraint firstItem="oBe-KZ-uTg" firstAttribute="bottom" secondItem="bDA-oN-Un6" secondAttribute="bottom" constant="50" id="xe3-tq-H4P"/>

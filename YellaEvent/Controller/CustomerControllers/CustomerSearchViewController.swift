@@ -91,12 +91,20 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
             // Retrieve the selected filters from the source view controller
             self.selectedFilters = sourceVC.categoriesCollectioView.getInterests()
             self.filterApplied = true
+            searchMade()
         }
     }
 
-
-
+    
     @IBAction func applyFliteringunwind(_ unwindSegue: UIStoryboardSegue) {
+    }
+    
+    @IBAction func resetFilter(_ unwindSegue: UIStoryboardSegue) {
+        filterApplied = false
+        selectedFilters = []
+        age = 5
+        price = 5
+        searchMade()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -122,77 +130,68 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
     }
     // Search button logic
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        // Hide keyboard and UI elements
-        //        searchBar.resignFirstResponder()
-        showHide(condition: true)
-        if prevSearch.count >= 5 {
-            // Keep only the last 4 elements
-            prevSearch = Array(prevSearch.suffix(4))
-        }
-
-        // Append the new search text
-        prevSearch.append(searchBar.text ?? "")
-        filteredSearch = prevSearch.reversed()
-        // Save the updated array to UserDefaults
-        UserDefaults.standard.set(prevSearch, forKey: "prevSearch")
-        
-
-        searchMade()
-
-        //        changesMade = true
-        //        tableView.reloadData()
+            searchMade()
     }
 
     func searchMade() {
-        changesMade = true
-
         Task {
-            guard let searchText = searchBar.text, !searchText.isEmpty else {
-                print("Search text is empty")
-                return
+            // Allow empty input if filterApplied is true
+            if !filterApplied {
+                guard let searchBar = searchBar, let searchText = searchBar.text, !searchText.isEmpty else {
+                    print("Search text is empty")
+                    return
+                }
             }
 
-            let normalizedSearchText = searchText.lowercased()
+            if prevSearch.count >= 5 {
+                prevSearch = Array(prevSearch.suffix(4)) // Keep only the last 4 elements
+            }
+
+            if let searchText = searchBar.text, !searchText.isEmpty {
+                prevSearch.append(searchText)
+                filteredSearch = prevSearch.reversed()
+                UserDefaults.standard.set(prevSearch, forKey: "prevSearch")
+            }
+
+            changesMade = true
+            showHide(condition: true)
+
+            let normalizedSearchText = searchBar.text?.lowercased() ?? ""
             do {
                 let snapshot = try await Firestore.firestore()
                     .collection(K.FStore.Events.collectionName)
                     .whereField("status", isEqualTo: "ongoing")
                     .getDocuments()
 
-                // Process and filter documents locally
                 let tempEventsList = await withTaskGroup(of: EventSummary?.self) { group -> [EventSummary] in
                     for doc in snapshot.documents {
                         group.addTask {
-                            let event = try? await EventSummary(from: doc.data())
-
-                            if let eventName = event?.name.lowercased(), eventName.contains(normalizedSearchText) {
-                                // Additional filtering if `filterApplied` is true
-                                if await self.filterApplied {
-                                    // Filter by selected filters, age, and price
-                                    let matchesCategory = await self.selectedFilters.isEmpty || self.selectedFilters.contains(event?.categoryID ?? "")
-                                    let matchesAge = await self.age >= 0 // Adjust if age criteria exist in your model
-                                    let matchesPrice = await self.price >= Int(event?.price ?? 0)
-                                    if matchesCategory && matchesAge && matchesPrice {
-                                        return event
-                                    }
-                                    return nil
-                                }
-                                return event
-                            }
-                            return nil
+                            return try? await EventSummary(from: doc.data())
                         }
                     }
 
                     var results: [EventSummary] = []
                     for await event in group {
                         if let event = event {
-                            results.append(event)
+                            // Filter by search text if filterApplied is false
+                            let matchesSearchText = normalizedSearchText.isEmpty || event.name.lowercased().contains(normalizedSearchText)
+                            if matchesSearchText {
+                                if filterApplied {
+                                    let matchesCategory = selectedFilters.isEmpty || selectedFilters.contains(event.categoryID)
+                                    let matchesAge = age >= 0 // Replace with actual age logic if needed
+                                    let matchesPrice = price >= Int(event.price)
+                                    if matchesCategory && matchesAge && matchesPrice {
+                                        results.append(event)
+                                    }
+                                } else {
+                                    results.append(event)
+                                }
+                            }
                         }
                     }
                     return results
                 }
 
-                // Update UI on the main thread
                 DispatchQueue.main.async {
                     self.eventsList = tempEventsList
                     self.tableView.reloadData()
@@ -204,8 +203,6 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
 
         print("search")
     }
-
-
 
     // Cancel button logic
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
