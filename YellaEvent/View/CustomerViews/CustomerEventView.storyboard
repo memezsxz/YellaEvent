@@ -101,7 +101,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="lEo-sR-sBC">
-                                        <rect key="frame" x="241.00000000000003" y="0.0" width="54.333333333333343" height="36"/>
+                                        <rect key="frame" x="241" y="0.0" width="54.333333333333371" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a73-Sa-p0A">
                                                 <rect key="frame" x="0.0" y="0.0" width="54.333333333333336" height="17"/>
@@ -202,6 +202,10 @@
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="baseBackgroundColor" name="BrandPurple"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="goToTicketButtonTapped:" destination="tvl-E0-n3s" eventType="touchUpInside" id="tE3-Fc-HpM"/>
+                                            <segue destination="Rng-Yy-23g" kind="show" identifier="goToTicket" id="HQ5-ZE-Be4"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -271,6 +275,16 @@
             </objects>
             <point key="canvasLocation" x="76" y="4"/>
         </scene>
+        <!--CustomerTicketsView-->
+        <scene sceneID="2aQ-Wa-87K">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CustomerTicketsView" id="Rng-Yy-23g" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gDW-xW-cf0"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rX2-gS-yaM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="75" y="432"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="3Pt-fm-kI9">
             <objects>
@@ -287,7 +301,7 @@
                                         <color key="tintColor" name="BrandLightPurple"/>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0fm-lo-Rax">
-                                        <rect key="frame" x="52.666666666666657" y="0.66666666666666785" width="52.333333333333343" height="49.666666666666657"/>
+                                        <rect key="frame" x="52.666666666666629" y="0.66666666666666785" width="52.333333333333371" height="49.666666666666657"/>
                                         <color key="tintColor" name="BrandLightPurple"/>
                                     </imageView>
                                 </subviews>
@@ -353,10 +367,10 @@
         <!--CustomerEventView-->
         <scene sceneID="AF8-cf-Z3j">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6wK-rI-A6w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="CustomerEventView" id="7tO-zh-7xo" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="w0Z-93-fLb"/>
                 </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6wK-rI-A6w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1871" y="-10"/>
         </scene>
