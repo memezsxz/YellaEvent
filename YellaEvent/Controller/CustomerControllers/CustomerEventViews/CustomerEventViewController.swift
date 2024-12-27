@@ -227,19 +227,67 @@ class CustomerEventViewController: UIViewController {
         }
     }
     
+    
+    @IBAction func goToTicketButtonTapped(_ sender: UIButton) {
+        print("Segue triggered!")
+        performSegue(withIdentifier: "goToTicket", sender: self)
+    }
+
+    // MARK: - Prepare for Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toOrganizerView" {
-            let v = (segue.destination.view as! CustomerEventOrganizerView)
-            v.organizerID = event!.organizerID
-            v.organizerNameLabel.text = event?.organizerName
-            v.delegate = self
-            v.load()
+        if segue.identifier == "goToTicket" {
+            // Get the destination view controller
+            if let ticketDetailsVC = segue.destination as? CustomerTicketDetailsViewController {
+                
+                print("Preparing to pass data:")
+                           print("Event ID: \(self.eventID)")
+                print("Organizer ID: \(self.organizer?.userID ?? "No Organizer ID")")
+                           print("Ticket Quantity: \(self.ticketCount)")
+                           print("Ticket Price: \(self.event?.price ?? 0.0)")
+                           
+                
+                // Pass the required values to the destination view controller
+                ticketDetailsVC.eventID = self.eventID
+                ticketDetailsVC.organizerID = self.organizer?.userID
+                ticketDetailsVC.ticketQuantity = self.ticketCount
+                ticketDetailsVC.ticketPrice = self.event?.price ?? 0.0  
+            }
         }
     }
-    
+
+
+
+
+
     @IBAction func backClicked(_ sender: UIBarButtonItem) {
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 
 
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "toOrganizerView" {
+//            // Handle the "toOrganizerView" segue
+//            if let organizerView = segue.destination.view as? CustomerEventOrganizerView {
+//                organizerView.organizerID = event!.organizerID
+//                organizerView.organizerNameLabel.text = event?.organizerName
+//                organizerView.delegate = self
+//                organizerView.load()
+//            }
+//        } else if segue.identifier == "goToTicket" {
+//            // Handle the "goToTicket" segue
+//            if let ticketViewController = segue.destination as? CustomerTicketsViewController {
+//                // Pass the event ID to the destination view controller
+//            //    ticketViewController.organizerID = event!.organizerID
+//
+////                // Pass the organizer ID to the destination view controller
+////                ticketViewController.organizerID = self.event?.organizerID
+////
+////                // Pass the ticket quantity to the destination view controller
+////                ticketViewController.ticketQuantity = self.event?.ticketQuantity
+////
+////                // Pass the ticket price to the destination view controller
+////                ticketViewController.ticketPrice = self.event?.ticketPrice
+//            }
+//        }
+//    }
