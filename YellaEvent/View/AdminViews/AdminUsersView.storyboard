@@ -930,7 +930,7 @@
                                                                                 <action selector="selectedOption:" destination="Ox6-4C-Flg" id="UOS-8U-3tx"/>
                                                                             </connections>
                                                                         </command>
-                                                                        <command title="Custome Duration" id="wbV-I2-n3I">
+                                                                        <command title="Custom Duration" id="wbV-I2-n3I">
                                                                             <connections>
                                                                                 <action selector="selectedOption:" destination="Ox6-4C-Flg" id="7Qi-9Y-xFh"/>
                                                                             </connections>
@@ -1553,7 +1553,7 @@
                                                                                 <action selector="selectedOption:" destination="CaA-zf-eu8" id="5EO-Du-1aH"/>
                                                                             </connections>
                                                                         </command>
-                                                                        <command title="Custome Duration" id="p3m-49-eJR">
+                                                                        <command title="Custom Duration" id="p3m-49-eJR">
                                                                             <connections>
                                                                                 <action selector="selectedOption:" destination="CaA-zf-eu8" id="622-b7-F7U"/>
                                                                             </connections>
