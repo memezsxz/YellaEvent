@@ -163,7 +163,7 @@ class AuthenticationViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+ 
     }
     
     func isValidEmail(_ email: String) -> Bool {
@@ -261,7 +261,7 @@ class AuthenticationViewController: UIViewController {
 
                         self.saveUserIdInUserDefaults(user.uid)
                         let db = Firestore.firestore()
-
+                        PushNotificationService.showNotification(title: "Welcome Back!", description: "Nice to see you always!")
                         // Check if user exists in the 'admins' collection
                         db.collection("admins").document(user.uid).getDocument { [weak self] document, error in
                             guard let self = self else { return }
@@ -349,4 +349,9 @@ class AuthenticationViewController: UIViewController {
             }
         }
     }
+    
+    
 }
+
+
+

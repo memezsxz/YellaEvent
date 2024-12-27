@@ -95,6 +95,7 @@ class AuthenticationRegisterController: UIViewController {
     @IBAction func registerAccountAction(_ sender: Any) {
         var hasErrors = false
 
+        
         // Validate Full Name
         if let fullName = registerFullNameField.text, fullName.isEmpty {
             fullNameValidationLbl.text = "Please enter your full name."
@@ -213,6 +214,7 @@ class AuthenticationRegisterController: UIViewController {
             Task {
                 do {
                     try await UsersManager.createNewUser(user: customer)
+                    PushNotificationService.showNotification(title: "Welcome!", description: "We hope you enjoy the journey with Yalla Event!")
                     self.performSegue(withIdentifier: "goToInterestPicker", sender: self)
                 } catch {
                     let alertController = UIAlertController(

@@ -27,7 +27,7 @@
         <!--View Controller-->
         <scene sceneID="lgv-Bh-ra5">
             <objects>
-                <viewController id="eTe-6L-Idc" sceneMemberID="viewController">
+                <viewController id="eTe-6L-Idc" customClass="ViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qu2-xH-PgO">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

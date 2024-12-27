@@ -548,7 +548,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42F-sf-z8u">
-                                <rect key="frame" x="0.0" y="167.66666666666669" width="402" height="672.33333333333326"/>
+                                <rect key="frame" x="0.0" y="167.66666666666671" width="402" height="672.33333333333337"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1Xu-d4-2xZ">
                                         <rect key="frame" x="0.0" y="0.0" width="402" height="703.66666666666663"/>
@@ -727,7 +727,7 @@
                                                             <constraint firstAttribute="height" constant="40" id="KtX-19-841"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zfd-Gy-afP">
                                                         <rect key="frame" x="20.000000000000007" y="79" width="110.66666666666669" height="20.666666666666671"/>
@@ -863,8 +863,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="8Ch-3J-kB4"/>
-        <segue reference="8Nq-xZ-D4f"/>
+        <segue reference="EN3-2U-SDQ"/>
+        <segue reference="el7-mU-ZCD"/>
         <segue reference="S89-I1-ide"/>
         <segue reference="0jO-jK-P8v"/>
     </inferredMetricsTieBreakers>
