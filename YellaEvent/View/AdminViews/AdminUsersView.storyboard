@@ -20,11 +20,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="gSe-iV-ePm">
-                                <rect key="frame" x="0.0" y="160" width="440" height="56"/>
+                                <rect key="frame" x="0.0" y="158" width="440" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dJf-uT-sma" customClass="MainUISegmentedControl" customModule="YellaEvent" customModuleProvider="target">
-                                <rect key="frame" x="16" y="239" width="408" height="32"/>
+                                <rect key="frame" x="16" y="237" width="408" height="32"/>
                                 <color key="backgroundColor" red="0.51764705882352935" green="0.36862745098039218" blue="0.76078431372549016" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <segments>
                                     <segment title="All"/>
@@ -38,7 +38,7 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YA0-eY-7S3">
-                                <rect key="frame" x="16" y="286" width="408" height="587"/>
+                                <rect key="frame" x="16" y="284" width="408" height="589"/>
                                 <color key="backgroundColor" name="BackgroundGray"/>
                                 <color key="sectionIndexBackgroundColor" name="BackgroundGray"/>
                                 <prototypes>
@@ -320,7 +320,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mzc-sj-T3I" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Z3K-4g-cce">
-                        <rect key="frame" x="0.0" y="62" width="440" height="98"/>
+                        <rect key="frame" x="0.0" y="62" width="440" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" name="BrandPurple"/>
                         <textAttributes key="titleTextAttributes">
@@ -328,7 +328,7 @@
                             <color key="textColor" name="BrandDarkPurple"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
                             <color key="textColor" name="BrandDarkPurple"/>
                         </textAttributes>
                     </navigationBar>
@@ -660,7 +660,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="41" translatesAutoresizingMaskIntoConstraints="NO" id="HUl-3c-h8O">
-                                <rect key="frame" x="22" y="186.99999999999997" width="396" height="315.33333333333326"/>
+                                <rect key="frame" x="22" y="184.99999999999997" width="396" height="315.33333333333326"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="eh3-uR-Yr3">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="77.666666666666671"/>
@@ -1148,7 +1148,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Wtf-Lf-gjb">
-                                <rect key="frame" x="22" y="180" width="396" height="535.66666666666663"/>
+                                <rect key="frame" x="22" y="178" width="396" height="535.66666666666663"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Te0-ar-rzR">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="94.333333333333329"/>
@@ -1319,7 +1319,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eH5-tE-JjS">
-                                <rect key="frame" x="148.33333333333337" y="765.66666666666663" width="143.66666666666663" height="39.333333333333371"/>
+                                <rect key="frame" x="148.33333333333337" y="763.66666666666663" width="143.66666666666663" height="39.333333333333371"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Ban Account">

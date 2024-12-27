@@ -76,6 +76,8 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
                     if let days = duration.day {
                         if days <= 0 {
                             self.txtDuration.text = "0"
+                        }else{
+                            self.txtDuration.text = "\(days)"
                         }
                     } else {
                         self.txtDuration.text = "Duration unavailable"
