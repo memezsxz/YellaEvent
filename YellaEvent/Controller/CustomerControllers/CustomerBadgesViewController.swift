@@ -3,6 +3,7 @@ import UIKit
 class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet var collectionView: UICollectionView!
 
+    
     var badges: [Badge] = []
     
     override func viewDidLoad() {
