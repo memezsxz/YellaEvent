@@ -11,7 +11,7 @@ import FirebaseFirestore
 class CustomerLeaderboardViewController: UIViewController {
     
     var customers: [Customer] = []
-    var currentUserID = "33brgcsMG9uSJeylJT9t"
+    var currentUserID = "r91ayZkyBvM21oL4akWY"
     @IBOutlet weak var tableView: UITableView!
 
     
@@ -40,7 +40,7 @@ class CustomerLeaderboardViewController: UIViewController {
                     // Automatically scroll to the current user's cell
                     if let currentUserIndex = self.indexOfCurrentUser() {
                         let indexPath = IndexPath(row: currentUserIndex, section: 0)
-                        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                        self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
                     }
                 }
             } catch {

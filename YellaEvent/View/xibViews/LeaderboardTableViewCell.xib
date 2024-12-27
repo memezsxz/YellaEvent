@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,17 +39,6 @@
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HoQ-HN-XOq">
-                                <rect key="frame" x="228" y="0.0" width="80" height="34"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="number Badges" titleAlignment="center">
-                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="13"/>
-                                    <color key="baseForegroundColor" systemColor="labelColor"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="badgesButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fBn-UE-Iei"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbY-QE-rHq">
                                 <rect key="frame" x="5" y="3.5" width="27" height="27"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="18"/>
@@ -63,6 +51,17 @@
                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="30"/>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HoQ-HN-XOq">
+                                <rect key="frame" x="202" y="0.0" width="111" height="34"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="My Badges" titleAlignment="automatic">
+                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="15"/>
+                                    <color key="baseForegroundColor" name="BrandPurple"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="badgesButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fBn-UE-Iei"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -72,10 +71,10 @@
                             <constraint firstItem="vpF-lV-5pK" firstAttribute="leading" secondItem="ff0-jR-cJ5" secondAttribute="leading" constant="5" id="AOV-XM-lRw"/>
                             <constraint firstItem="HoQ-HN-XOq" firstAttribute="centerY" secondItem="ff0-jR-cJ5" secondAttribute="centerY" id="BL9-PO-1mk"/>
                             <constraint firstItem="vpF-lV-5pK" firstAttribute="height" secondItem="ff0-jR-cJ5" secondAttribute="height" multiplier="0.8" id="CsM-v4-zir"/>
-                            <constraint firstItem="HoQ-HN-XOq" firstAttribute="width" secondItem="ff0-jR-cJ5" secondAttribute="width" multiplier="0.26" id="FOG-qI-NaG"/>
+                            <constraint firstItem="HoQ-HN-XOq" firstAttribute="width" secondItem="ff0-jR-cJ5" secondAttribute="width" multiplier="0.26" constant="12.920000000000002" id="FOG-qI-NaG"/>
                             <constraint firstAttribute="trailing" secondItem="HoQ-HN-XOq" secondAttribute="trailing" id="Hur-rA-hG7"/>
                             <constraint firstItem="wbY-QE-rHq" firstAttribute="width" secondItem="vpF-lV-5pK" secondAttribute="width" id="ZyG-US-lqJ"/>
-                            <constraint firstItem="HoQ-HN-XOq" firstAttribute="leading" secondItem="qLG-WU-WbV" secondAttribute="trailing" id="dSL-Zz-zQp"/>
+                            <constraint firstItem="HoQ-HN-XOq" firstAttribute="leading" secondItem="qLG-WU-WbV" secondAttribute="trailing" constant="-13" id="dSL-Zz-zQp"/>
                             <constraint firstItem="vpF-lV-5pK" firstAttribute="centerY" secondItem="ff0-jR-cJ5" secondAttribute="centerY" id="eah-J3-bPM"/>
                             <constraint firstItem="qLG-WU-WbV" firstAttribute="centerY" secondItem="ff0-jR-cJ5" secondAttribute="centerY" id="fYQ-Dc-AuA"/>
                             <constraint firstItem="qLG-WU-WbV" firstAttribute="leading" secondItem="vpF-lV-5pK" secondAttribute="trailing" constant="10" id="kTw-Uf-b1x"/>
@@ -110,8 +109,8 @@
         <namedColor name="BrandLightPurple">
             <color red="0.70200002193450928" green="0.6119999885559082" blue="0.81599998474121094" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="BrandPurple">
+            <color red="0.51800000667572021" green="0.36899998784065247" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
