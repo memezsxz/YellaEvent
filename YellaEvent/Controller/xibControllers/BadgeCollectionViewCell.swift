@@ -42,19 +42,14 @@ class BadgeCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(named:K.BrandColors.purple)?.cgColor
-        view.layer.cornerRadius = contentView.frame.height / (K.HSizeclass == .regular && K.VSizeclass == .regular ? 10 : 16)
-
-        // Initialization code
+        view.layer.borderColor = UIColor(named: K.BrandColors.purple)?.cgColor
+        view.layer.cornerRadius = contentView.frame.height / 16
     }
 
-    
-    // Update the cell with badge data
     func update(with badge: Badge) {
-        // Set the image and title for the badge
-        PhotoManager.shared.downloadImage(from: URL(string: badge.image)!) {result in
+        PhotoManager.shared.downloadImage(from: URL(string: badge.image)!) { result in
             switch result {
-                case .success(let image):
+            case .success(let image):
                 DispatchQueue.main.async {
                     self.badgeImageView.image = image
                     self.badgeImageView.clipToHexagon()
@@ -63,7 +58,11 @@ class BadgeCollectionViewCell: UICollectionViewCell {
                 print("Error downloading badge image: \(error)")
             }
         }
-        badgeTitleLabel.text = badge.eventName // assuming `Badge` has a `name` property
+        badgeTitleLabel.text = badge.eventName
     }
 
+    func showPlaceholder() {
+        badgeImageView.image = UIImage(named: "placeholder") // Placeholder image
+        badgeTitleLabel.text = "Loading..." // Placeholder text
+    }
 }
