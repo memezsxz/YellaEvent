@@ -177,8 +177,11 @@ class AuthenticationRegisterController: UIViewController {
 
         registerBtn.isEnabled = false
         registerBtn.setTitle("Registering", for: .normal)
+        
+        let emailNoSpace = registerEmailField.text?.replacingOccurrences(of: " ", with: "") ?? ""
+
         // Register user with Firebase Authentication
-        Auth.auth().createUser(withEmail: registerEmailField.text!, password: registerPasswordField.text!) { [weak self] authResult, error in
+        Auth.auth().createUser(withEmail: emailNoSpace, password: registerPasswordField.text!) { [weak self] authResult, error in
             guard let self = self else { return }
             registerBtn.isEnabled = true
             registerBtn.setTitle("Join Us 🚀", for: .normal)

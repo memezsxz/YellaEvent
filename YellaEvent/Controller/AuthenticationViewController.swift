@@ -230,8 +230,10 @@ class AuthenticationViewController: UIViewController {
         signInThroughGoogle.isEnabled = false
         loginBtn.setTitle("Loading", for: .normal)
 
+        let emailNoSpace = loginEmailField.text?.replacingOccurrences(of: " ", with: "") ?? ""
+
         // Login with Firebase Auth
-        Auth.auth().signIn(withEmail: loginEmailField.text!, password: loginPasswordField.text!) { [weak self] authResult, error in
+        Auth.auth().signIn(withEmail: emailNoSpace, password: loginPasswordField.text!) { [weak self] authResult, error in
             guard let self = self else { return }
             
             loginBtn.isEnabled = true
