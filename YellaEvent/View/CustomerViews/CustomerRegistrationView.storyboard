@@ -59,64 +59,88 @@
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="91.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7J-6A-mQb">
-                                                <rect key="frame" x="0.0" y="0.0" width="361" height="46"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="361" height="30.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                 <color key="textColor" name="BrandDarkPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrq-2m-VmE">
-                                                <rect key="frame" x="0.0" y="46.000000000000028" width="361" height="45.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="30.666666666666686" width="361" height="30.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gs0-U0-a4K">
+                                                <rect key="frame" x="0.0" y="61.33333333333335" width="361" height="30.333333333333336"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                                                <color key="textColor" systemColor="systemRedColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Rgu-bd-TBX">
                                         <rect key="frame" x="0.0" y="108.66666666666666" width="361" height="92"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Holder Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EP8-z5-S6v">
-                                                <rect key="frame" x="0.0" y="0.0" width="361" height="46"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="361" height="30.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                 <color key="textColor" name="BrandDarkPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-Ab-RCW">
-                                                <rect key="frame" x="0.0" y="46" width="361" height="46"/>
+                                                <rect key="frame" x="0.0" y="30.666666666666686" width="361" height="30.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RkK-cQ-Wg7">
+                                                <rect key="frame" x="0.0" y="61.333333333333364" width="361" height="30.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                                                <color key="textColor" systemColor="systemRedColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2aE-GS-uAk">
                                         <rect key="frame" x="0.0" y="217.66666666666666" width="361" height="91.666666666666657"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Expiry Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmw-6a-5Kc">
-                                                <rect key="frame" x="0.0" y="0.0" width="361" height="45.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="361" height="30.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                 <color key="textColor" name="BrandDarkPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="axS-cw-ud6">
-                                                <rect key="frame" x="0.0" y="45.666666666666686" width="361" height="46"/>
+                                                <rect key="frame" x="0.0" y="30.333333333333371" width="361" height="30.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UoZ-Bb-fAT">
+                                                <rect key="frame" x="0.0" y="60.999999999999993" width="361" height="30.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                                                <color key="textColor" systemColor="systemRedColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="zW2-Vo-xk3">
                                         <rect key="frame" x="0.0" y="326.33333333333337" width="361" height="91.666666666666686"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card CCV" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prm-cc-Jj8">
-                                                <rect key="frame" x="0.0" y="0.0" width="361" height="45.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="361" height="30.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                 <color key="textColor" name="BrandDarkPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iGd-mn-k5G">
-                                                <rect key="frame" x="0.0" y="45.666666666666629" width="361" height="46"/>
+                                                <rect key="frame" x="0.0" y="30.666666666666629" width="361" height="30.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXI-Ta-F7v">
+                                                <rect key="frame" x="0.0" y="60.999999999999993" width="361" height="30.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                                                <color key="textColor" systemColor="systemRedColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -142,34 +166,30 @@ Fun Begin!</string>
                                 <rect key="frame" x="30" y="714.33333333333337" width="333" height="38.333333333333371"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="TU3-eS-RbS">
-                                        <rect key="frame" x="0.0" y="0.0" width="115" height="38.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="67.666666666666671" height="38.333333333333336"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Total Price for X Tickets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ich-66-sx4">
-                                                <rect key="frame" x="0.0" y="0.0" width="115" height="16.666666666666668"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XX Tickets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kD6-xT-YFR">
+                                                <rect key="frame" x="0.0" y="0.0" width="67.666666666666671" height="15.666666666666666"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                 <color key="textColor" name="BrandPurple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BHD XXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kD6-xT-YFR">
-                                                <rect key="frame" x="0.0" y="16.666666666666629" width="115" height="21.666666666666671"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="BHD XX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ich-66-sx4">
+                                                <rect key="frame" x="0.0" y="15.666666666666631" width="67.666666666666671" height="22.666666666666679"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Ich-66-sx4" secondAttribute="trailing" id="S7w-2C-qJI"/>
-                                            <constraint firstItem="Ich-66-sx4" firstAttribute="leading" secondItem="TU3-eS-RbS" secondAttribute="leading" id="tjZ-SL-lFL"/>
-                                            <constraint firstItem="Ich-66-sx4" firstAttribute="top" secondItem="TU3-eS-RbS" secondAttribute="top" id="yT3-yJ-0HF"/>
-                                        </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14l-pc-xyh">
-                                        <rect key="frame" x="135" y="0.0" width="198" height="38.333333333333336"/>
+                                        <rect key="frame" x="87.666666666666671" y="0.0" width="245.33333333333331" height="38.333333333333336"/>
                                         <color key="tintColor" name="BrandPurple"/>
                                         <state key="normal" title="Button" backgroundImage="ticket" catalog="system"/>
                                         <buttonConfiguration key="configuration" style="filled" image="ticket" catalog="system" title="Pay"/>
                                         <connections>
                                             <action selector="payButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kxE-G4-nOH"/>
+                                            <segue destination="Do7-d8-JXh" kind="presentation" identifier="ShowCustomerTickets" id="vlW-pX-Mnr"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -198,6 +218,10 @@ Fun Begin!</string>
                         <outlet property="CardExpiry" destination="axS-cw-ud6" id="T80-rc-CmV"/>
                         <outlet property="CardHolder" destination="iQO-Ab-RCW" id="SUE-tm-4hL"/>
                         <outlet property="CardNumber" destination="Zrq-2m-VmE" id="onC-Jj-kRp"/>
+                        <outlet property="cardCCVErrorLabel" destination="kXI-Ta-F7v" id="GEx-mw-t8i"/>
+                        <outlet property="cardExpiryErrorLabel" destination="UoZ-Bb-fAT" id="81M-bm-Dbw"/>
+                        <outlet property="cardHolderErrorLabel" destination="RkK-cQ-Wg7" id="47U-hl-PR7"/>
+                        <outlet property="cardNumberErrorLabel" destination="gs0-U0-a4K" id="vfV-gm-3cf"/>
                         <outlet property="lblTicketAmount" destination="Ich-66-sx4" id="JLG-1h-nu1"/>
                         <outlet property="lblTicketQuantity" destination="kD6-xT-YFR" id="EW2-78-soO"/>
                     </connections>
@@ -205,6 +229,14 @@ Fun Begin!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="115.26717557251908" y="-2.1126760563380285"/>
+        </scene>
+        <!--CustomerTicketDetailsView-->
+        <scene sceneID="EXQ-CW-N6V">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CustomerTicketsView" referencedIdentifier="CustomerTicketDetailsView" id="Do7-d8-JXh" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hCT-LG-C6T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="127" y="432"/>
         </scene>
     </scenes>
     <resources>
@@ -219,7 +251,10 @@ Fun Begin!</string>
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

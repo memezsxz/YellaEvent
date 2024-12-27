@@ -237,7 +237,7 @@ class CustomerEventViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToTicket" {
             // Get the destination view controller
-            if let ticketDetailsVC = segue.destination as? CustomerTicketDetailsViewController {
+            if let ticketDetailsVC = segue.destination as? CustomerRegistrationViewController {
                 
                 print("Preparing to pass data:")
                            print("Event ID: \(self.eventID)")
@@ -248,7 +248,7 @@ class CustomerEventViewController: UIViewController {
                 
                 // Pass the required values to the destination view controller
                 ticketDetailsVC.eventID = self.eventID
-                ticketDetailsVC.organizerID = self.organizer?.userID
+                ticketDetailsVC.organizerID = self.organizer!.userID
                 ticketDetailsVC.ticketQuantity = self.ticketCount
                 ticketDetailsVC.ticketPrice = self.event?.price ?? 0.0  
             }
