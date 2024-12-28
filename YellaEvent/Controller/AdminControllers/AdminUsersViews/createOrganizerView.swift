@@ -87,7 +87,6 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
             lastField.isHidden = true
             // Set button title to "Never Expire"
         } else {
-            print("Enerd")
             lastField.isHidden = false
         }
         
@@ -245,7 +244,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
 //            delegate!.resetFieldHighlight(txtPasswordCreate)
 //        }
         
-        if btnActivationAccount.titleLabel?.text == "Custome Duration"{
+        if btnActivationAccount.titleLabel?.text == "Custom Duration"{
             if let duration = txtduration.text, duration.isEmpty{
                 lblErrorDuration.text = "Duration is required."
                 delegate!.highlightField(txtduration)
@@ -281,7 +280,7 @@ class createOrganizerView: UIView, UIImagePickerControllerDelegate, UINavigation
         return isValid
         
     }
-    
+
     func isValidDuration(_ duration: String) -> Bool {
         let durationRegex = "^[0-9]+$" // Allows one or more digits
         let durationTest = NSPredicate(format: "SELF MATCHES %@", durationRegex)

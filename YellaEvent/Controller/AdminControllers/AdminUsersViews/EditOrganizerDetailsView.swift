@@ -44,12 +44,51 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     }
     
     func setup() {
+       
+        
+        
+        
         
         Task{
             usersList =  try await UsersManager.getAllUsers()
         }
         
         lastField.isHidden = true
+
+        if currentOrganizer?.endDate == nil {
+            txtDuraion.setTitle("Never Expire", for: .normal)
+            setupMenu(isNeverExpire: true)
+
+        }
+        else{
+            
+            if currentOrganizer?.endDate == delegate?.delegate?.dateFormatter.date(from: "31/12/9999"){
+                txtDuraion.setTitle("Never Expire", for: .normal)
+                setupMenu(isNeverExpire: true)
+            }else{
+                
+                lastField.isHidden = false
+                setupMenu(isNeverExpire: false)
+                
+                if let endDate = self.currentOrganizer?.endDate {
+                    let currentDate = Date()
+                    let duration = Calendar.current.dateComponents([.day], from: currentDate, to: endDate)
+                    if let days = duration.day {
+                        if days <= 0 {
+                            self.txtDuration.text = "0"
+                        }else{
+                            self.txtDuration.text = "\(days)"
+                        }
+                    } else {
+                        self.txtDuration.text = "Duration unavailable"
+                    }
+                }
+            }
+
+
+        }
+        
+        
         txtUserType.isUserInteractionEnabled = false
 
         txtName.title = currentOrganizer?.fullName
@@ -70,8 +109,11 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
              txtDuraion.setTitle("Never Expire", for: .normal) // Set button title to "Never Expire"
             lastField.isHidden = true
          } else {
+             
+             txtDuraion.setTitle("Custom Duration", for: .normal)
              lastField.isHidden = false
          }
+        
         
     }
     
@@ -90,9 +132,11 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
         }
         
         if txtDuraion.titleLabel!.text == "Never Expire"{
-            let farFutureDate = Calendar.current.date(from: DateComponents(year: 9999, month: 12, day: 31))
-                currentOrganizer?.endDate = farFutureDate
-        }else if (txtDuraion.titleLabel!.text == "Custome Duration"){
+                currentOrganizer?.endDate = nil
+                currentOrganizer?.startDate = nil
+                currentOrganizer?.endDate = delegate?.delegate?.dateFormatter.date(from: "31/12/9999")
+
+        }else if (txtDuraion.titleLabel!.text == "Custom Duration"){
             let days = Calendar.current.date(byAdding: .day, value: Int(txtDuration.text!)!, to: Date())
             if let newdate = days {
                 currentOrganizer?.endDate = newdate
@@ -195,7 +239,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
         
         
         
-        if txtDuraion.titleLabel?.text == "Custome Duration"{
+        if txtDuraion.titleLabel?.text == "Custom Duration"{
             if let duration = txtDuration.text, duration.isEmpty{
                 lblErrorDuration.text = "Duration is required."
                 parent.highlightField(txtDuration)
@@ -237,5 +281,54 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
         delegate!.delegate!.present(imagePickerController, animated: true, completion: nil)
     }
 
+    
+    func createMenuElements(isNeverExpire: Bool) -> [UIMenuElement] {
+        let neverExpireAction = UIAction(
+            title: "Never Expire",
+            state: isNeverExpire ? .on : .off
+        ) { _ in
+            print("Never Expire selected")
+            // Handle selection logic for Never Expire
+            self.lastField.isHidden = true
+            self.txtDuraion.setTitle("Never Expire", for: .normal)
+        }
+
+        let customDurationAction = UIAction(
+            title: "Custom Duration",
+            state: isNeverExpire ? .off : .on
+        ) { _ in
+            print("Custom Duration selected")
+            // Handle selection logic for Custom Duration
+            self.lastField.isHidden = false
+            
+            
+            if let endDate = self.currentOrganizer?.endDate {
+                let currentDate = Date()
+                let duration = Calendar.current.dateComponents([.day], from: currentDate, to: endDate)
+                if let days = duration.day {
+                    if days <= 0 {
+                        self.txtDuration.text = "0"
+                    }
+                } else {
+                    self.txtDuration.text = "Duration unavailable"
+                }
+            }
+            
+        }
+
+        return [neverExpireAction, customDurationAction]
+    }
+         
+    func setupMenu(isNeverExpire: Bool) {
+        // Create the menu elements
+        let menuElements = createMenuElements(isNeverExpire: isNeverExpire)
+        
+        // Create the menu
+        let menu = UIMenu(title: "", options: .displayInline, children: menuElements)
+        
+        // Assign the menu to the button
+        txtDuraion.menu = menu
+        txtDuraion.showsMenuAsPrimaryAction = true
+    }
          
 }

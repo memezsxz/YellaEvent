@@ -44,6 +44,15 @@ class AdminProfileViewController: UIViewController {
         let firebaseAuth = Auth.auth()
         do {
           try firebaseAuth.signOut()
+            
+            // need to be changed to the login screen
+            if let LaunchScreen = UIStoryboard(name: "AuthenticationView", bundle: nil).instantiateInitialViewController() {
+                LaunchScreen.modalPresentationStyle = .fullScreen
+                self.present(LaunchScreen, animated: true, completion: nil)
+            } else {
+                print("LaunchScreen could not be instantiated.")
+            }
+            
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
         }
@@ -93,7 +102,9 @@ class AdminProfileViewController: UIViewController {
 
     
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        setup()
+    }
     
     //MARK: ViewDidLoad
     override func viewDidLoad(){
@@ -101,6 +112,10 @@ class AdminProfileViewController: UIViewController {
 
         setupEditPage()
         UserDefaults.standard.set((Auth.auth().currentUser?.uid)!, forKey: K.bundleUserID) // this will be removed after seting the application
+//        UserDefaults.standard.set("g6dYhdSdwXNUEvo26X8t", forKey: K.bundleUserID) // this will be removed after seting the application
+                
+        
+        
 
         setup()
 
@@ -119,7 +134,7 @@ class AdminProfileViewController: UIViewController {
                 }
             }
             
-           
+            if !(currentUser!.profileImageURL.isEmpty){
                 PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
                     switch result {
@@ -130,6 +145,7 @@ class AdminProfileViewController: UIViewController {
                     }
                     
                 })
+            }
             
         }
             
@@ -168,7 +184,7 @@ extension AdminProfileViewController{
             do {
                 
                 let userId: String = UserDefaults.standard.string(forKey: K.bundleUserID)!
-                let us = try await UsersManager.getUser(userID: userId)
+                let us = try await UsersManager.getUser(userID: userId) as! Admin
                 
                 txtFullName?.text = "\(us.fullName)"
                 txtEmail?.text = us.email
@@ -264,6 +280,7 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
         
         editProfileImage.image = selectedImage
         
+        imageUpdated = true
         dismiss(animated: true, completion: nil)
     }
     
@@ -291,6 +308,7 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
             currentUser?.email = txtEmail.text!
             currentUser?.fullName = txtFullName.text!
             currentUser?.phoneNumber = Int(txtPhoneNumber.text!)!
+            
             if let image = editProfileImage.image, imageUpdated {
                 PhotoManager.shared.uploadPhoto(image, to: "admins/\(currentUser!.userID)", withNewName: "profile") { result in
                     switch result {
@@ -302,6 +320,11 @@ extension AdminProfileViewController: UIImagePickerControllerDelegate, UINavigat
                         print("Image uploaded successfully: \(url)")
                         self.currentUser?.profileImageURL = url
                         self.imageUpdated = false
+                        
+                        Task{
+                            try await UsersManager.updateUser(user: self.currentUser!)
+                        }
+                        
                         
                     case .failure( _):
                         let saveAlert = UIAlertController(

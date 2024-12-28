@@ -40,11 +40,27 @@ class ViewOrganizerDetailsView: UIView {
         txtName.title = currentOrganizer?.fullName
         txtEmail.text = currentOrganizer?.email
         txtUserType.text = "Organizer"
-        if let date =  currentOrganizer!.endDate {
-            txtAccountDate.text = delegate?.dateFormatter.string(from: date)
-        }else{
+        
+        
+        
+        if currentOrganizer?.endDate == nil {
             txtAccountDate.text = "Never Expire"
+        }else{
+            
+            if currentOrganizer?.endDate == delegate?.dateFormatter.date(from: "31/12/9999")
+            {
+                txtAccountDate.text = "Never Expire"
+            }else{
+                txtAccountDate.text = delegate?.dateFormatter.string(from: (currentOrganizer?.endDate)!)
+                
+            }
         }
+        
+//        if let date =  currentOrganizer!.endDate {
+//            txtAccountDate.text = delegate?.dateFormatter.string(from: date)
+//        }else{
+//            txtAccountDate.text = "Never Expire"
+//        }
         txtPhoneNumber.text = "\(currentOrganizer!.phoneNumber)"
         //        txtDocumnetName.text = currentOrganizer?.LicenseDocumentURL
         
@@ -72,8 +88,6 @@ class ViewOrganizerDetailsView: UIView {
     
     //MARK: Actions
     @IBAction func BanUserButton(_ sender: Any)  {
-        //check if the user in the ban collection
-        
         // if the user not on the ban collection show this function
         if userBan {
             delegate?.BanAlert()
@@ -88,7 +102,6 @@ class ViewOrganizerDetailsView: UIView {
         
         // if the user is in the ban collection use this function
         //UnBanAlert
-        
     }
     
     

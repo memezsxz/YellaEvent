@@ -20,11 +20,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="gSe-iV-ePm">
-                                <rect key="frame" x="0.0" y="160" width="440" height="56"/>
+                                <rect key="frame" x="0.0" y="158" width="440" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dJf-uT-sma" customClass="MainUISegmentedControl" customModule="YellaEvent" customModuleProvider="target">
-                                <rect key="frame" x="16" y="239" width="408" height="32"/>
+                                <rect key="frame" x="16" y="237" width="408" height="32"/>
                                 <color key="backgroundColor" red="0.51764705882352935" green="0.36862745098039218" blue="0.76078431372549016" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <segments>
                                     <segment title="All"/>
@@ -38,7 +38,7 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YA0-eY-7S3">
-                                <rect key="frame" x="16" y="286" width="408" height="587"/>
+                                <rect key="frame" x="16" y="284" width="408" height="589"/>
                                 <color key="backgroundColor" name="BackgroundGray"/>
                                 <color key="sectionIndexBackgroundColor" name="BackgroundGray"/>
                                 <prototypes>
@@ -74,11 +74,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Users" image="person.2" catalog="system" selectedImage="person.2.fill" id="nmL-LD-8YX"/>
                     <navigationItem key="navigationItem" title="Users" id="Iwy-kY-D6G">
-                        <barButtonItem key="leftBarButtonItem" title="Manage FAQ" id="QaN-2j-R7f">
-                            <connections>
-                                <segue destination="EwN-z7-x1K" kind="show" id="DQS-Zv-OKf"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ple-4Y-bCR">
                             <connections>
                                 <action selector="CreateButtonTapped:" destination="q1V-aj-IzI" id="OaV-Ln-KPA"/>
@@ -96,6 +91,7 @@
                         <segue destination="yXY-tj-GaV" kind="show" identifier="ViewOrganizerPage" id="JZX-h3-MFH"/>
                         <segue destination="S2w-G6-e57" kind="show" identifier="ViewAdminPage" id="b2Q-gQ-nlD"/>
                         <segue destination="nzk-E5-Xey" kind="show" identifier="BanPage" id="i8V-rG-W4l"/>
+                        <segue destination="EwN-z7-x1K" kind="show" identifier="GoToFAQs" id="qzB-zJ-ewD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G5K-dN-OI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -320,7 +316,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mzc-sj-T3I" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Z3K-4g-cce">
-                        <rect key="frame" x="0.0" y="62" width="440" height="98"/>
+                        <rect key="frame" x="0.0" y="62" width="440" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" name="BrandPurple"/>
                         <textAttributes key="titleTextAttributes">
@@ -328,7 +324,7 @@
                             <color key="textColor" name="BrandDarkPurple"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
                             <color key="textColor" name="BrandDarkPurple"/>
                         </textAttributes>
                     </navigationBar>
@@ -660,7 +656,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="41" translatesAutoresizingMaskIntoConstraints="NO" id="HUl-3c-h8O">
-                                <rect key="frame" x="22" y="186.99999999999997" width="396" height="315.33333333333326"/>
+                                <rect key="frame" x="22" y="184.99999999999997" width="396" height="315.33333333333326"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="eh3-uR-Yr3">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="77.666666666666671"/>
@@ -930,7 +926,7 @@
                                                                                 <action selector="selectedOption:" destination="Ox6-4C-Flg" id="UOS-8U-3tx"/>
                                                                             </connections>
                                                                         </command>
-                                                                        <command title="Custome Duration" id="wbV-I2-n3I">
+                                                                        <command title="Custom Duration" id="wbV-I2-n3I">
                                                                             <connections>
                                                                                 <action selector="selectedOption:" destination="Ox6-4C-Flg" id="7Qi-9Y-xFh"/>
                                                                             </connections>
@@ -1148,7 +1144,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Wtf-Lf-gjb">
-                                <rect key="frame" x="22" y="180" width="396" height="535.66666666666663"/>
+                                <rect key="frame" x="22" y="178" width="396" height="535.66666666666663"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Te0-ar-rzR">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="94.333333333333329"/>
@@ -1319,7 +1315,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eH5-tE-JjS">
-                                <rect key="frame" x="148.33333333333337" y="765.66666666666663" width="143.66666666666663" height="39.333333333333371"/>
+                                <rect key="frame" x="148.33333333333337" y="763.66666666666663" width="143.66666666666663" height="39.333333333333371"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Ban Account">
@@ -1380,8 +1376,8 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="kLS-T9-2cR">
                                                         <rect key="frame" x="0.0" y="0.0" width="396" height="94.333333333333329"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2F-zW-7C1">
-                                                                <rect key="frame" x="0.0" y="0.0" width="92.333333333333329" height="20.333333333333332"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2F-zW-7C1">
+                                                                <rect key="frame" x="0.0" y="0.0" width="83" height="20.333333333333332"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                                 <color key="textColor" red="0.29411764709999999" green="0.2666666667" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <nil key="highlightedColor"/>
@@ -1553,7 +1549,7 @@
                                                                                 <action selector="selectedOption:" destination="CaA-zf-eu8" id="5EO-Du-1aH"/>
                                                                             </connections>
                                                                         </command>
-                                                                        <command title="Custome Duration" id="p3m-49-eJR">
+                                                                        <command title="Custom Duration" id="p3m-49-eJR">
                                                                             <connections>
                                                                                 <action selector="selectedOption:" destination="CaA-zf-eu8" id="622-b7-F7U"/>
                                                                             </connections>
@@ -2097,10 +2093,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
