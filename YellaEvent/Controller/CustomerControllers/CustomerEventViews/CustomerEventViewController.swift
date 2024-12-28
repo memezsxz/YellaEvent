@@ -235,8 +235,15 @@ class CustomerEventViewController: UIViewController {
 
     // MARK: - Prepare for Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToTicket" {
-            // Get the destination view controller
+        if segue.identifier == "toOrganizerView" {
+                    // Handle the "toOrganizerView" segue
+                    if let organizerView = segue.destination.view as? CustomerEventOrganizerView {
+                        organizerView.organizerID = event!.organizerID
+                        organizerView.organizerNameLabel.text = event?.organizerName
+                        organizerView.delegate = self
+                        organizerView.load()
+                    }
+            
             if let ticketDetailsVC = segue.destination as? CustomerRegistrationViewController {
                 
                 print("Preparing to pass data:")
