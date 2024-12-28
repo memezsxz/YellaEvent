@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ft0-sw-tzJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ft0-sw-tzJ">
     <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -69,10 +69,10 @@
             </objects>
             <point key="canvasLocation" x="1020.6106870229007" y="-2.1126760563380285"/>
         </scene>
-        <!--View Controller-->
+        <!--Admin Events View Controller-->
         <scene sceneID="RPs-NW-CUo">
             <objects>
-                <viewController id="2sn-u2-gWa" sceneMemberID="viewController">
+                <viewController id="2sn-u2-gWa" customClass="AdminEventsViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="X1r-RQ-PPz">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -261,6 +261,19 @@
                             <color key="tintColor" name="BrandPurple"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="EventDescription" destination="dau-OK-qEp" id="mEH-PU-YML"/>
+                        <outlet property="Month" destination="K2O-8H-LLm" id="pi3-0i-TI0"/>
+                        <outlet property="Venue" destination="SHh-dP-Pts" id="n6v-td-Yb5"/>
+                        <outlet property="dayOfMonth" destination="SSe-4v-8Mt" id="qQN-WO-RVK"/>
+                        <outlet property="dayOfweek" destination="c1c-YC-Q8F" id="JPS-HA-KDP"/>
+                        <outlet property="eventImageView" destination="oO5-7t-0WA" id="zgD-LE-6hG"/>
+                        <outlet property="eventStatus" destination="BOL-27-pmz" id="e6U-J9-j1P"/>
+                        <outlet property="eventTitle" destination="aZU-ru-OJa" id="gZH-Q4-kwa"/>
+                        <outlet property="minimumAge" destination="J4E-qq-Fge" id="Tny-Ge-3ki"/>
+                        <outlet property="price" destination="8DX-pC-spc" id="aS2-Hd-tvN"/>
+                        <outlet property="startToEndTime" destination="Cbe-5P-C1s" id="eQB-qj-wvR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="blO-WG-l84" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -308,7 +321,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
