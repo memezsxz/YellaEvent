@@ -7,63 +7,28 @@
 
 import UIKit
 
-class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTableViewCellDelegate {
-    func didUpdateOngoingEvents(_ events: [String : String]) {
-        self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
-        print(statCell?.onGoingEvents.count)
-    }
+class OrganizerDashboardViewController: UITableViewController {
     
     var organizer: Organizer?
     var statCell: OrganizerStatsTableViewCell? = nil
+    
     var onGoingEvents: [String: String] = [:]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        Task {
-        //            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
-        //        }
-        
         UserDefaults.standard.set("VxVB0GrEFw5ToXf2dO6q", forKey: K.bundleUserID) // this will be removed after seting the application
-        
-        
-//        tableView.register(UINib(nibName: "OrganizerStatsTableViewCell", bundle: .main), forCellReuseIdentifier: "OrganizerStatsTableViewCell")
-
-        //        Task {
-        //            self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
-        //        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         statCell?.update()
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        }
-        
-        if section == 1 {
-            return statCell?.onGoingEvents.count ?? 0
-        }
-        
-        return 0
-    }
-    
+}
+
+extension OrganizerDashboardViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         2
     }
-    
-    
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 1 {
             tableView.register(UINib(nibName: "MainTableViewCell", bundle: .main), forCellReuseIdentifier: "MainTableViewCell")
@@ -71,7 +36,7 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
             cell.title.text = Array(statCell!.onGoingEvents)[indexPath.row].value
             return cell
         }
-
+        
         tableView.register(UINib(nibName: "OrganizerStatsTableViewCell", bundle: .main), forCellReuseIdentifier: "OrganizerStatsTableViewCell")
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrganizerStatsTableViewCell", for: indexPath) as! OrganizerStatsTableViewCell
         
@@ -81,8 +46,7 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
         
         return cell
     }
-
-
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 {
             return tableView.frame.width / 6
@@ -123,28 +87,23 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 1 {
-
-                // Find the UILabel inside the default header view (if it exists)
-                let headerView = UIView()
+            
+            // Find the UILabel inside the default header view (if it exists)
+            let headerView = UIView()
             headerView.backgroundColor = UIColor(named: K.BrandColors.backgroundGray) // Or set to a desired background color
-                
-                // Add a new UILabel
-                let label = UILabel()
-                label.text = "On Going Events"
-            let HSizeClass = UIScreen.main.traitCollection.horizontalSizeClass
-            let VSizeClass = UIScreen.main.traitCollection.verticalSizeClass
+            
+            // Add a new UILabel
+            let label = UILabel()
+            label.text = "On Going Events"
             if K.HSizeclass == .regular && K.VSizeclass == .regular {
                 label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
             } else {
                 label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             }
             
-//            print("dsasd")
-                label.textColor = UIColor(named: K.BrandColors.darkPurple)
-//                label.textAlignment = .center
-                
-                // Add the label to the header view
-                headerView.addSubview(label)
+            label.textColor = UIColor(named: K.BrandColors.darkPurple)
+            
+            headerView.addSubview(label)
             
             
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -154,9 +113,9 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
                 label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: -10),
                 label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 10)
             ])
-
             
-                return headerView
+            
+            return headerView
             
         }
         
@@ -169,5 +128,23 @@ class OrganizerDashboardViewController: UITableViewController, OrganizerStatsTab
         }
         
         return K.HSizeclass == .regular && K.VSizeclass == .regular ? 50 : 30
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
+        
+        if section == 1 {
+            return statCell?.onGoingEvents.count ?? 0
+        }
+        
+        return 0
+    }
+}
+
+extension OrganizerDashboardViewController : OrganizerStatsTableViewCellDelegate {
+    func didUpdateOngoingEvents(_ events: [String : String]) {
+        self.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
     }
 }

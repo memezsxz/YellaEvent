@@ -48,6 +48,14 @@ class RatingManager {
     }
 
     
+    static func getOrganizerRating(organizerID: String) async throws -> Double {
+        let query = ratingCollection
+            .whereField(K.FStore.Ratings.organizerID, isEqualTo: organizerID)
+            .aggregate([AggregateField.average(K.FStore.Ratings.rating)])
+        
+       return  try await query.getAggregation(source: .server).get(AggregateField.average(K.FStore.Ratings.rating)) as? Double ?? 0.0
+        }
+    
     static func getEventRating(eventID: String, completion: @escaping (Result<Double, Error>) -> Void) {
         let query = ratingCollection
             .whereField(K.FStore.Ratings.eventID, isEqualTo: eventID)

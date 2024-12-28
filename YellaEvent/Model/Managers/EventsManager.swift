@@ -59,7 +59,7 @@ class EventsManager {
             .addSnapshotListener(listener)
     }
     
-    private static func getOrganizerEvents(organizerID: String) async throws -> QuerySnapshot {
+    static func getOrganizerEvents(organizerID: String) async throws -> QuerySnapshot {
         try await eventsCollection
             .whereField(K.FStore.Events.organizerID, isEqualTo: organizerID)
             .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
@@ -365,4 +365,26 @@ class EventsManager {
     //            throw error
     //        }
     //    }
+    
+//    static func getOrganizerEvents(organizerID: String) async throws -> QuerySnapshot {
+//        try await eventsCollection
+//            .whereField(K.FStore.Events.organizerID, isEqualTo: organizerID)
+//            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
+//            .getDocuments()
+//    }
+
+    private static func getOrganizerEventsQuery(organizerID: String) async throws -> Query {
+         eventsCollection
+            .whereField(K.FStore.Events.organizerID, isEqualTo: organizerID)
+            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
+    }
+
+    static func getEventsSum(organizerID: String, withStatus status: EventStatus) async throws -> Int {
+        try await getOrganizerEventsQuery(organizerID: organizerID)
+            .whereField(K.FStore.Events.status, isEqualTo: status.rawValue)
+            .getDocuments()
+            .documents
+            .count
+    }
+
 }

@@ -44,22 +44,7 @@ class OrganizerStatsTableViewCell: UITableViewCell {
 
     func setup() {
         Task {
-            try await EventsManager.getDashboardStats(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!, completion: { canceledEvents,overEvents,ongoingEvents,allEvents,numTotalAttendence,revenue,averageRating,soldTickets in
-                
-                DispatchQueue.main.async {
-                    self.canceledEventsLabel.text = "\(canceledEvents)"
-                    self.overEventsLabel.text = "\(overEvents)"
-                    self.ongoingEventsLabel.text = "\(ongoingEvents)"
-                    self.allEventsLabel.text = "\(allEvents)"
-                    
-                    self.totalAttendence.text = "\(numTotalAttendence)"
-                    self.revenueLabel.text = String(format: "%.3f", revenue)
-                    self.averageRatingLabel.text = String(format: "%.2f", averageRating)
-                    self.soldTicketsLabel.text = "\(soldTickets)"
-
-                }
-            }
-            )
+            try await loadStats()
         }
         
         Task {
@@ -85,6 +70,10 @@ class OrganizerStatsTableViewCell: UITableViewCell {
     }
     
     func update() {
+        Task {
+            try await loadStats()
+        }
+        
         Task{
             EventsManager.getOrganizerEvents(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!) { snapshot, error in
                 guard let snapshot else { return }
@@ -107,4 +96,63 @@ class OrganizerStatsTableViewCell: UITableViewCell {
         }
     }
 
+    
+    func loadStats() async throws {
+        let id = UserDefaults.standard.string(forKey: K.bundleUserID)!
+        async let _: () = {
+            let eventsSum = try await EventsManager.getOrganizerEvents(organizerID: id).documents.count
+            await MainActor.run {
+                self.allEventsLabel.text = "\(eventsSum)"
+            }
+        }()
+        
+        async let _: () = {
+            let ongoing = try await EventsManager.getEventsSum(organizerID: id, withStatus: .ongoing)
+            await MainActor.run {
+                self.ongoingEventsLabel.text = "\(ongoing)"
+            }
+        }()
+        
+        async let _: () = {
+            let over = try await EventsManager.getEventsSum(organizerID: id, withStatus: .completed)
+            await MainActor.run {
+                self.overEventsLabel.text = "\(over)"
+            }
+        }()
+        
+        async let _: () = {
+            let canceled = try await EventsManager.getEventsSum(organizerID: id, withStatus: .cancelled)
+            await MainActor.run {
+                self.canceledEventsLabel.text = "\(canceled)"
+            }
+        }()
+        
+        async let _: () = {
+            let sold = try await TicketsManager.getOrginizerSoldTicketsSum(organizerID: id)
+            await MainActor.run {
+                self.soldTicketsLabel.text = "\(sold)"
+            }
+        }()
+
+        async let _: () = {
+            let revenue = try await TicketsManager.getOrginizerSoldTicketsRevenue(organizerID: id)
+            await MainActor.run {
+                self.revenueLabel.text = String(format: "%.3f", revenue)
+            }
+        }()
+        
+        async let _: () = {
+            let rating = try await RatingManager.getOrganizerRating(organizerID: id)
+            await MainActor.run {
+                self.averageRatingLabel.text = String(format: "%.2f", rating)
+            }
+        }()
+        
+        async let _: () = {
+            let attended = try await TicketsManager.getOrginizerAttendedTicketsSum(organizerID: id)
+            await MainActor.run {
+                self.totalAttendence.text = "\(attended)"
+            }
+        }()
+    }
 }

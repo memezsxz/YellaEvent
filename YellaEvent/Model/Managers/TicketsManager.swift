@@ -184,6 +184,35 @@ final class TicketsManager {
         try await ticketDocument(ticketId:  ticket.ticketID).updateData(K.encoder.encode(ticket))
     }
 
+    
+    static func getOrginizerSoldTicketsSum(organizerID: String) async throws -> Int {
+        try await ticketsCollection
+            .whereField(K.FStore.Tickets.organizerID, isEqualTo: organizerID)
+            .whereField(K.FStore.Tickets.status, isEqualTo: TicketStatus.paid.rawValue)
+            .getDocuments()
+            .count
+        
+    }
+    
+    static func getOrginizerAttendedTicketsSum(organizerID: String) async throws -> Int {
+        try await ticketsCollection
+            .whereField(K.FStore.Tickets.organizerID, isEqualTo: organizerID)
+            .whereField(K.FStore.Tickets.status, isEqualTo: TicketStatus.paid.rawValue)
+            .whereField(K.FStore.Tickets.didAttend, isEqualTo: true)
+            .getDocuments()
+            .count
+    }
+
+    static func getOrginizerSoldTicketsRevenue(organizerID: String) async throws -> Double {
+        try await ticketsCollection
+            .whereField(K.FStore.Tickets.organizerID, isEqualTo: organizerID)
+            .whereField(K.FStore.Tickets.status, isEqualTo: TicketStatus.paid.rawValue)
+            .aggregate([AggregateField.sum(K.FStore.Tickets.totalPrice)])
+.getAggregation(source: .server).get(AggregateField.sum(K.FStore.Tickets.totalPrice)) as? Double ?? 0
+
+    }
+
+    
 //    static func updateEventCategory(eventID: String, categoryIcon : String, categoryName : String) async throws {
 //        let tickets = try await getEventTickets(eventID: eventID)
 //        for ticket in tickets {
