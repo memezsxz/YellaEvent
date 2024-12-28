@@ -15,6 +15,8 @@ class AdminEventsViewController: UIViewController  {
     @IBOutlet var eventsStatusSegment: MainUISegmentedControl!
     @IBOutlet var tableView: UITableView!
     var currentSegment : EventStatus? = nil
+    var organizerCache: [String: String] = [:] // Cache for organizer names (organizerID -> organizerName)
+
     
     var orgName: String?{
         didSet {
@@ -41,7 +43,7 @@ class AdminEventsViewController: UIViewController  {
         
         
         Task {
-        EventsManager.getAllEvents { snapshot, error in
+            EventsManager.getAllEvents { snapshot, error in
                 guard error == nil else{
                     let alert = UIAlertController(title: "Unable To Fetch Events", message: error?.localizedDescription, preferredStyle: .alert)
                     
@@ -49,13 +51,13 @@ class AdminEventsViewController: UIViewController  {
                     self.present(alert, animated: true, completion: nil)
                     return
                 }
-            
+                
                 guard let snapshot else { return }
                 
                 self.events.removeAll()
                 
                 for document in snapshot.documents {
-
+                    
                     let id = document.documentID
                     let data = document.data()
                     let eventName = data[K.FStore.Events.name] as! String
@@ -72,14 +74,25 @@ class AdminEventsViewController: UIViewController  {
             }
             
         }
+        
+        
+        if let orgName = orgName {
+               searchBar.text = orgName // Set the search bar text
+               performSearch(with: orgName) // Trigger the search programmatically
+           }
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if let orgName = orgName{
-            setOrganizerName(orgName)
-            searchBar(searchBar, textDidChange: searchBar.text ?? "")
-        }
+        super.viewDidAppear(animated)
+           
+           if let orgName = orgName {
+               searchBar.text = orgName // Set the search bar text
+               performSearch(with: orgName) // Trigger the search programmatically
+           }
     }
+    
+    
     
     
     @IBAction func segmentClick(_ sender: Any) {
@@ -125,19 +138,35 @@ extension AdminEventsViewController : UITableViewDelegate, UITableViewDataSource
 
 // MARK: searchbar
 extension AdminEventsViewController : UISearchBarDelegate {
+    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let searchText = searchText.trimmingCharacters(in: CharacterSet(charactersIn: " "))
+        let searchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() // Convert search text to lowercase
+
         guard !searchText.isEmpty else {
             searchEvents = segmentEvents
             tableView.reloadData()
             return
         }
         
-        searchEvents = segmentEvents.filter {
-            $0.eventName.contains(searchText) ||
-            $0.eventName.split(separator: " ").filter {$0.contains(searchText)}.count > 0
+        // Filter events synchronously using the preloaded cache
+        searchEvents = segmentEvents.filter { event in
+            let eventNameMatches = event.eventName.lowercased().contains(searchText) || // Convert event name to lowercase
+                event.eventName.split(separator: " ").contains { $0.lowercased().contains(searchText) } // Split and compare in lowercase
+            
+            let organizerNameMatches = organizerCache[event.organizerID]?.contains(searchText) ?? false
+            return eventNameMatches || organizerNameMatches
         }
+        
         tableView.reloadData()
+    }
+    
+    
+    // Helper function to get the organizer name from the organizer ID
+    func organizerName(for organizerID: String) async throws -> String {
+        // Fetch the organizer details from the database or API
+        let organizer = try await UsersManager.getOrganizer(organizerID: organizerID)
+        return organizer.fullName
     }
     
     
@@ -149,5 +178,42 @@ extension AdminEventsViewController : UISearchBarDelegate {
             }
         }
     }
+    
+    func preloadOrganizerNames(completion: @escaping () -> Void) {
+        Task {
+            for event in events {
+                if organizerCache[event.organizerID] == nil {
+                    if let organizer = try? await UsersManager.getOrganizer(organizerID: event.organizerID) {
+                        organizerCache[event.organizerID] = organizer.fullName.lowercased()
+                    }
+                }
+            }
+            completion() // Notify when preloading is complete
+        }
+    }
+    
+    func performSearch(with text: String) {
+        let searchText = text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        
+        guard !searchText.isEmpty else {
+            searchEvents = segmentEvents
+            tableView.reloadData()
+            return
+        }
+        
+        preloadOrganizerNames {
+            DispatchQueue.main.async {
+                // Perform filtering after preloading is complete
+                self.searchEvents = self.segmentEvents.filter { event in
+                    let eventNameMatches = event.eventName.lowercased().contains(searchText)
+                    let organizerNameMatches = self.organizerCache[event.organizerID]?.contains(searchText) ?? false
+                    return eventNameMatches || organizerNameMatches
+                }
+                
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     
 }
