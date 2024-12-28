@@ -10,8 +10,10 @@ import FirebaseFirestore
 
 class CustomerHomeViewController: UITableViewController {
     let db = Firestore.firestore()
+    let userID = UserDefaults.standard.string(forKey: K.bundleUserID)!
     var debug = true
-    var currentPage = 0
+    var user : Customer?
+    var currentIndex = 0
     var allRecommendedEvents: [DocumentReference] = []
     var newEvent : [EventSummary] = []
     var events: [EventSummary] = []
@@ -19,9 +21,15 @@ class CustomerHomeViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userID = "1OJ9cN1iMAG5pjNocI7Z"
+                UserDefaults.standard.set("1OJ9cN1iMAG5pjNocI7Z", forKey: K.bundleUserID) // this will be removed after seting the application
+
         
         tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
+        
+        Task {
+            user =  try await  UsersManager.getCustomer(customerID:userID)
+
+        }
         
         Task { // get the latest 5 evnts
             do {
@@ -58,7 +66,7 @@ class CustomerHomeViewController: UITableViewController {
                 print("")
             }
             
-            self.fetchRecommendedEvents(userID: userID, categoryScores: categoryScores) { events in
+            self.fetchRecommendedEvents(userID: self.userID, categoryScores: categoryScores) { events in
                 
                 
                 self.allRecommendedEvents = events
@@ -366,8 +374,13 @@ extension CustomerHomeViewController {
         }
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        cell.hay.text = "Hey \(custommer) 👋🏻"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomerHayCell
+        
+        Task {
+            self.user =  try await  UsersManager.getCustomer(customerID:self.userID)
+            cell.hayLabel.text = "Hey \(user!.fullName) 👋🏻"
+        }
+        
         return cell
     }
     
@@ -460,11 +473,12 @@ extension CustomerHomeViewController {
     }
     
     func loadMoreEvents(interval: Int = 2) {
-        let currentIndex = events.count
+//        let currentIndex = events.count
         guard currentIndex < allRecommendedEvents.count else { return } // Prevent out-of-bounds
         
         let finalIndex = min(currentIndex + interval, allRecommendedEvents.count)
-        print("Loading events from index \(currentIndex) to \(finalIndex)")
+        
+//        print("Loading events from index \(currentIndex) to \(finalIndex)")
         
             for index in currentIndex..<finalIndex {
                 Task {
@@ -472,10 +486,13 @@ extension CustomerHomeViewController {
                     let document = try await allRecommendedEvents[index].getDocument()
                     if let data = document.data() {
                         let eventSummary = try await EventSummary(from: data)
-//                        print(eventSummary.name)
-                        DispatchQueue.main.async {
+                        await MainActor.run {
+                            print(index)
+                            self.tableView.beginUpdates()
                             self.events.append(eventSummary)
                             self.tableView.insertRows(at: [IndexPath(row: self.events.count - 1, section: 2)], with: .bottom)
+                            self.tableView.endUpdates()
+
                         }
                     }
                 } catch {
@@ -483,6 +500,8 @@ extension CustomerHomeViewController {
                 }
             }
         }
+        currentIndex = finalIndex
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -497,4 +516,12 @@ extension CustomerHomeViewController {
 //    override func unwindToCustomrHome(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
 //        
 //    }
+    
+
+
 }
+
+class CustomerHayCell: UITableViewCell {
+    @IBOutlet weak var hayLabel: UILabel!
+}
+
