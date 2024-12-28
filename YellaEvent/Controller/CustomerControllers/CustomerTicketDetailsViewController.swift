@@ -15,9 +15,6 @@ class CustomerTicketDetailsViewController: UIViewController {
     @IBOutlet weak var lblDate: UILabel! // Label for the event date
     @IBOutlet weak var lblTime: UILabel! // Label for the event time
 
-    
-    @IBOutlet weak var qrCode: UIImageView!
-    
     // Firestore database reference
     let db = Firestore.firestore()
 
@@ -38,7 +35,6 @@ class CustomerTicketDetailsViewController: UIViewController {
                 lblBtnCancelTicket.isEnabled = false
    
             }
-        
         
     }
 
@@ -96,12 +92,6 @@ class CustomerTicketDetailsViewController: UIViewController {
 //            lblDate.text = dateFormatter.string(from: ticket.startTimeStamp)
 //            lblTime.text = dateFormatter.string(from: ticket.startTimeStamp)
             
-            if let qrImage = generateQRCode(from: ticket.ticketID) {
-                qrCode.image = qrImage // Set the generated QR code to the image view
-            } else {
-                qrCode.image = nil // Clear the image view if generation fails
-            }
-            
         }
        
     }
@@ -155,29 +145,4 @@ class CustomerTicketDetailsViewController: UIViewController {
                 print("Invalid URL.") // Notify if the URL is invalid
             }
     }
-    private func generateQRCode(from ticketID: String) -> UIImage? {
-        // Convert the ticket ID to data
-        guard let data = ticketID.data(using: .ascii) else { return nil }
-        
-        // Create the QR code filter
-        if let filter = CIFilter(name: "CIQRCodeGenerator") {
-            filter.setValue(data, forKey: "inputMessage")
-            filter.setValue("H", forKey: "inputCorrectionLevel") // High error correction level
-            
-            // Get the QR code image
-            if let outputImage = filter.outputImage {
-                // Scale up the QR code
-                let transform = CGAffineTransform(scaleX: 10, y: 10)
-                let scaledImage = outputImage.transformed(by: transform)
-                
-                // Convert to UIImage
-                let context = CIContext()
-                if let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) {
-                    return UIImage(cgImage: cgImage)
-                }
-            }
-        }
-        return nil
-    }
-
 }
