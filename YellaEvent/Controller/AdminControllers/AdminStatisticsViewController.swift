@@ -31,35 +31,35 @@ class AdminStatisticsViewController:UITableViewController{
     }
     func getData() {
         Task {
-            async let updateEventsSum: () = {
+            async let _: () = {
                 let eventsSum = try await EventsManager.getEventsSum()
                 await MainActor.run {
                     self.eventsSumLabel.text = "\(eventsSum)"
                 }
             }()
             
-            async let updateUsersSum: () = {
+            async let _: () = {
                 let usersSum = try await UsersManager.getCustomersSum()
                 await MainActor.run {
                     self.usersSumLabel.text = "\(usersSum)"
                 }
             }()
             
-            async let updateOrganizersSum: () = {
+            async let _: () = {
                 let organizersSum = try await UsersManager.getOrganizersSum()
                 await MainActor.run {
                     self.organizersSumLabel.text = "\(organizersSum)"
                 }
             }()
             
-            async let updateCategoriesSum: () = {
+            async let _: () = {
                 let categoriesSum = try await CategoriesManager.getCategoriesSum()
                 await MainActor.run {
                     self.categoriesSumLabel.text = "\(categoriesSum)"
                 }
             }()
             
-            async let updateFAQsSum: () = {
+            async let _: () = {
                 let faqsSum = try await FAQsManager.getFAQsSum()
                 await MainActor.run {
                     self.faqsSumLabel.text = "\(faqsSum)"
