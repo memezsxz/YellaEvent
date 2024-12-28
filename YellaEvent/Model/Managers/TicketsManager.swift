@@ -48,48 +48,110 @@ final class TicketsManager {
     }
 
     
-    // not tested
-    static func getEventAttendance(eventId: String, completion: @escaping ([String: String], Int, Int) -> Void) async {
-        self.listener?.remove()
-        
-        self.listener = ticketsCollection.whereField(K.FStore.Tickets.eventID, isEqualTo: eventId).addSnapshotListener { snapshot, error in
-//            guard error == nil else {
-//                print("Error fetching tickets: \(error!.localizedDescription)")
-//                return
-//            }
-            
-            guard let snapshot = snapshot else {
-                completion([:], 0, 0)
-                return
-            }
-            
-            var usersDec: [String: String] = [:]
-            var totalTickets = 0
-            var attendedTickets = 0
-            
-            Task {
-                for doc in snapshot.documents {
-                    do {
-                        let ticket = try await Ticket(from: doc.data())
+    static func getEventAttendance(eventId: String, completion: @escaping ([String: String]) -> Void) {
+        self.listener = ticketsCollection
+            .whereField(K.FStore.Tickets.eventID, isEqualTo: eventId)
+            .whereField(K.FStore.Tickets.status, isEqualTo: TicketStatus.paid.rawValue)
+            .addSnapshotListener { snapshot, error in
+                Task {
+                    var usersDec: [String: String] = [:]
+                    guard let snapshot = snapshot else {
+                        completion([:])
+                        return
+                    }
+
+                    for doc in snapshot.documents {
                         do {
-                            let user = try await UsersManager.getUser(userID: ticket.customerID)
-                            usersDec[user.email] = user.fullName
-                            if ticket.didAttend {attendedTickets += 1}
-                            totalTickets += 1
+                            let ticket = try await Ticket(from: doc.data())
+                            do {
+                                let user = try await UsersManager.getUser(userID: ticket.customerID)
+                                usersDec[user.email] = user.fullName
+                            } catch {
+                                print("Error fetching user for userId \(ticket.customerID): \(error)")
+                                throw error
+                            }
                         } catch {
-                            print("Error fetching user for userId \(ticket.customerID): \(error)")
+                            print("Error decoding Ticket: \(error)")
                             throw error
                         }
-                    } catch {
-                        print("Error decoding Ticket: \(error)")
-                        throw error
                     }
+                    completion(usersDec)
                 }
-                completion(usersDec, totalTickets, attendedTickets) 
             }
-        }
+    
     }
     
+         
+     static func getEventTotalTickets(eventId: String) async -> Int    {
+         do {
+          return try await ticketsCollection
+                 .whereField(K.FStore.Tickets.eventID, isEqualTo: eventId)
+                 .whereField(K.FStore.Tickets.status, isEqualTo: TicketStatus.paid.rawValue)
+                 .getDocuments()
+                 .count
+             
+         } catch {
+             return 0
+         }
+     }
+     
+     static func getEventAttendedTickets(eventId: String) async -> Int  {
+         do {
+             return try await ticketsCollection
+                 .whereField(K.FStore.Tickets.eventID, isEqualTo: eventId)
+                 .whereField(K.FStore.Tickets.status, isEqualTo: TicketStatus.paid.rawValue)
+                 .whereField(K.FStore.Tickets.didAttend, isEqualTo: true)
+                 .getDocuments()
+                 .count
+             
+         } catch {
+             return 0
+         }
+     }
+
+     // not tested
+     static func getEventStats(eventId: String, completion: @escaping (Int, Int) -> Void) async {
+         self.listener?.remove()
+         
+         self.listener = ticketsCollection
+             .whereField(K.FStore.Tickets.eventID, isEqualTo: eventId)
+             .whereField(K.FStore.Tickets.status, isEqualTo: TicketStatus.paid.rawValue)
+             .addSnapshotListener { snapshot, error in
+ //            guard error == nil else {
+ //                print("Error fetching tickets: \(error!.localizedDescription)")
+ //                return
+ //            }
+             
+             guard let snapshot = snapshot else {
+                 completion( 0, 0)
+                 return
+             }
+             
+             var totalTickets = 0
+             var attendedTickets = 0
+             
+             Task {
+                 for doc in snapshot.documents {
+                     do {
+                         let ticket = try await Ticket(from: doc.data())
+                         do {
+                             let user = try await UsersManager.getUser(userID: ticket.customerID)
+                             if ticket.didAttend {attendedTickets += 1}
+                             totalTickets += 1
+                         } catch {
+                             print("Error fetching user for userId \(ticket.customerID): \(error)")
+                             throw error
+                         }
+                     } catch {
+                         print("Error decoding Ticket: \(error)")
+                         throw error
+                     }
+                 }
+                 completion(totalTickets, attendedTickets)
+             }
+         }
+     }
+     
     static func getEventTickets(eventID: String) async throws -> [Ticket] {
         let snapshot = try await ticketsCollection.whereField(K.FStore.Tickets.eventID, isEqualTo: eventID).getDocuments()
         var tickets: [Ticket] = []

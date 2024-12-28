@@ -14,7 +14,7 @@ class CustomerHomeViewController: UITableViewController {
     var allRecommendedEvents: [DocumentReference] = []
     var newEvent : [EventSummary] = []
     var events: [EventSummary] = []
-    
+    var selectedEventID : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -364,12 +364,13 @@ extension CustomerHomeViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: need dalal section to move to
         if indexPath.section == 1 {
-            print(newEvent[indexPath.row])
+            selectedEventID =  newEvent[indexPath.row].eventID
         }
         
         if indexPath.section == 2 {
-            print(events[indexPath.row])
+            selectedEventID =  events[indexPath.row].eventID
         }
+        performSegue(withIdentifier: "toEvent", sender: self)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -473,4 +474,17 @@ extension CustomerHomeViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toEvent" {
+            let vc = (segue.destination as! UINavigationController).topViewController as! CustomerEventViewController
+            navigationController?.pushViewController(vc, animated: true)
+            vc.delegate = self
+            vc.eventID = selectedEventID!
+        }
+    }
+    
+//    override func unwindToCustomrHome(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
+//        
+//    }
 }

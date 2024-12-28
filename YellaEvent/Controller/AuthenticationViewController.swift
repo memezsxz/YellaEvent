@@ -65,7 +65,7 @@ class AuthenticationViewController: UIViewController {
                // Successful sign-in
                if let firebaseUser = authResult?.user {
                    print("User signed in with Google: \(firebaseUser.email ?? "No email")")
-                   
+            
                    // Check if the user is banned
                    Task {
                        do {
@@ -104,6 +104,7 @@ class AuthenticationViewController: UIViewController {
                                            self.performSegue(withIdentifier: "goToOrganizer", sender: self)
                                        } else {
                                            // Check if user exists in the 'customers' collection
+                                           print(firebaseUser)
                                            db.collection("customers").document(firebaseUser.uid).getDocument { [weak self] document, error in
                                                guard let self = self else { return }
                                                
@@ -114,11 +115,11 @@ class AuthenticationViewController: UIViewController {
                                                    // Create a new account for the user
                                                    let customer = Customer(
                                                        userID: firebaseUser.uid,
-                                                       fullName: user.profile?.name ?? "Unknown",
-                                                       email: firebaseUser.email ?? "No email",
+                                                       fullName: user.profile?.name ?? "No Name",
+                                                       email: user.profile?.email ?? "No email",
                                                        dob: Date(), // Default DOB if not available
                                                        dateCreated: Date.now,
-                                                       phoneNumber: 0, // Default phone number if not available
+                                                       phoneNumber:  00, // Default phone number if not available
                                                        profileImageURL: user.profile?.imageURL(withDimension: 200)?.absoluteString ?? "",
                                                        badgesArray: [],
                                                        interestsArray: []
@@ -162,7 +163,7 @@ class AuthenticationViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+ 
     }
     
     func isValidEmail(_ email: String) -> Bool {
@@ -229,8 +230,10 @@ class AuthenticationViewController: UIViewController {
         signInThroughGoogle.isEnabled = false
         loginBtn.setTitle("Loading", for: .normal)
 
+        let emailNoSpace = loginEmailField.text?.replacingOccurrences(of: " ", with: "") ?? ""
+
         // Login with Firebase Auth
-        Auth.auth().signIn(withEmail: loginEmailField.text!, password: loginPasswordField.text!) { [weak self] authResult, error in
+        Auth.auth().signIn(withEmail: emailNoSpace, password: loginPasswordField.text!) { [weak self] authResult, error in
             guard let self = self else { return }
             
             loginBtn.isEnabled = true
@@ -260,7 +263,7 @@ class AuthenticationViewController: UIViewController {
 
                         self.saveUserIdInUserDefaults(user.uid)
                         let db = Firestore.firestore()
-
+                        PushNotificationService.showNotification(title: "Welcome Back!", description: "Nice to see you always!")
                         // Check if user exists in the 'admins' collection
                         db.collection("admins").document(user.uid).getDocument { [weak self] document, error in
                             guard let self = self else { return }
@@ -348,4 +351,9 @@ class AuthenticationViewController: UIViewController {
             }
         }
     }
+    
+    
 }
+
+
+

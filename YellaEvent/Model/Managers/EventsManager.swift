@@ -19,14 +19,13 @@ class EventsManager {
         eventsCollection.document(eventID)
     }
     
-    static func createNewEvent(event: Event) async throws {
-        Task {
+    static func createNewEvent(event: Event) async throws -> String {
             let doc = try await eventsCollection.addDocument(data: event.toFirestoreData())
             try await doc.updateData([K.FStore.Events.eventID: doc.documentID])
-            var badge = try await BadgesManager.getBadge(eventID: event.eventID)
-            badge.eventID = doc.documentID
-            try await BadgesManager.updateBadge(badge: badge)
-        }
+//            var badge = try await BadgesManager.getBadge(eventID: event.eventID)
+//            badge.eventID = doc.documentID
+//            try await BadgesManager.updateBadge(badge: badge)
+        return doc.documentID
     }
     
     static func getEvent(eventID: String) async throws -> Event {
@@ -48,7 +47,7 @@ class EventsManager {
         //            try await TicketsManager.updateEventStartTimeStamp(eventID: event.eventID, startTimeStamp: event.startTimeStamp)
         //        }
         
-        try await eventDocument(eventID: event.eventID).setData(event.toFirestoreData(), merge: true)
+        try await eventDocument(eventID: event.eventID).updateData((event.toFirestoreData()))
     }
     
     static func getOrganizerEvents(organizerID: String, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
@@ -66,6 +65,16 @@ class EventsManager {
             .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
             .getDocuments()
     }
+    
+    static func getOrganizerOngoingEvents(organizerID: String, listener: @escaping (QuerySnapshot?, Error?) -> Void) {
+             eventsCollection
+            .whereField(K.FStore.Events.organizerID, isEqualTo: organizerID)
+            .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
+            .whereField(K.FStore.Events.status, isEqualTo: EventStatus.ongoing.rawValue)
+            .order(by: K.FStore.Events.startTimeStamp)
+            .addSnapshotListener(listener)
+    }
+
     
     //    static func updateEventOrganizer(organizer: Organizer) async throws {
     //        let snapshot = try await getOrganizerEvents(organizerID: organizer.userID)

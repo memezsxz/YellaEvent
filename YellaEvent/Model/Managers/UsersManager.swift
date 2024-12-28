@@ -111,9 +111,23 @@ final class UsersManager {
         }
     }
     
-    //        func updateUser(user: User, fields: [String: Any]) async throws {
-    //            try await userDocument(userId: user.id).updateData(fields)
-    //        }
+    static func updateUser(user: User, fields: [String: Any]) async throws {
+        switch user {
+        case is Customer:
+            try await customerDocument(userID: user.userID).updateData(fields)
+        case is Organizer:
+            try await organizerDocument(userID: user.userID).updateData(fields)
+//            try await EventsManager.updateEventOrganizer(organizer: user as! Organizer)
+        case is Admin:
+            try await adminDocument(userID: user.userID).updateData(fields)
+        default:
+            throw NSError(
+                domain: "UnrecognizedUserType",
+                code: 404,
+                userInfo: [NSLocalizedDescriptionKey: "User Type \(user) not recognized."]
+            )
+        }
+    }
     
     
     // important -- better add a listner snapshot

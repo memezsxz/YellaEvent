@@ -27,7 +27,7 @@
         <!--View Controller-->
         <scene sceneID="lgv-Bh-ra5">
             <objects>
-                <viewController id="eTe-6L-Idc" sceneMemberID="viewController">
+                <viewController id="eTe-6L-Idc" customClass="ViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qu2-xH-PgO">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -42,7 +42,7 @@
                                             <color key="baseBackgroundColor" name="BrandPurple"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="uZj-sc-iJG" kind="presentation" modalPresentationStyle="fullScreen" id="id8-Xf-0kH"/>
+                                            <segue destination="yTh-BB-cag" kind="presentation" modalPresentationStyle="fullScreen" id="P8F-au-gvl"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3uM-HT-vNM">
@@ -118,10 +118,10 @@
             </objects>
             <point key="canvasLocation" x="3329" y="169"/>
         </scene>
-        <!--AuthenticationView-->
+        <!--CustomerEventView-->
         <scene sceneID="FXl-tL-E1n">
             <objects>
-                <viewControllerPlaceholder storyboardName="AuthenticationView" id="be5-5D-04A" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="CustomerEventView" id="be5-5D-04A" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPb-gn-r6S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3323" y="288"/>
@@ -133,6 +133,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEO-DO-3gN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3296" y="354"/>
+        </scene>
+        <!--AuthenticationView-->
+        <scene sceneID="87b-PW-k40">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AuthenticationView" id="yTh-BB-cag" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JW0-oI-7c8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2974" y="36"/>
         </scene>
         <!--CustomerRegistrationView-->
         <scene sceneID="bQS-E2-LFt">

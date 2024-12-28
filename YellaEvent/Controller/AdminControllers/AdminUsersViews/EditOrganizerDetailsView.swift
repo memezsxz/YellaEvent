@@ -13,6 +13,8 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     var currentOrganizer : Organizer? = nil
     var image : UIImage? = nil
     let imagePickerController = UIImagePickerController()
+    var usersList: [User]? = []
+    
 
     //MARK: Outlets
     @IBOutlet weak var txtEmail: UITextField!
@@ -42,6 +44,11 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
     }
     
     func setup() {
+        
+        Task{
+            usersList =  try await UsersManager.getAllUsers()
+        }
+        
         lastField.isHidden = true
         txtUserType.isUserInteractionEnabled = false
 
@@ -49,7 +56,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
         txtEmail.text = currentOrganizer?.email
         txtUserType.text = "Organizer"
         if let date = currentOrganizer!.endDate {
-            txtDuraion.titleLabel?.text = K.DFormatter.string(from: date)
+            txtDuraion.titleLabel?.text = delegate?.delegate?.dateFormatter.string(from: date)
         }
         txtPhoneNumber.text = "\(currentOrganizer!.phoneNumber)"
         txtDocumnetName.text = "License.jpg"
@@ -63,7 +70,6 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
              txtDuraion.setTitle("Never Expire", for: .normal) // Set button title to "Never Expire"
             lastField.isHidden = true
          } else {
-             print("Enerd")
              lastField.isHidden = false
          }
         
@@ -84,8 +90,9 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
         }
         
         if txtDuraion.titleLabel!.text == "Never Expire"{
-            currentOrganizer?.endDate = nil
-        }else{
+            let farFutureDate = Calendar.current.date(from: DateComponents(year: 9999, month: 12, day: 31))
+                currentOrganizer?.endDate = farFutureDate
+        }else if (txtDuraion.titleLabel!.text == "Custome Duration"){
             let days = Calendar.current.date(byAdding: .day, value: Int(txtDuration.text!)!, to: Date())
             if let newdate = days {
                 currentOrganizer?.endDate = newdate
@@ -111,6 +118,7 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
                 try await UsersManager.updateUser(user: self.currentOrganizer!)
             }
         }
+        
         
         
 //        take the value from the text fields
@@ -170,6 +178,22 @@ class EditOrganizerDetailsView: UIView, UIImagePickerControllerDelegate, UINavig
             lblErrorEmail.text = ""
             parent.resetFieldHighlight(txtEmail)
         }
+        
+        if let listOfUsers = usersList{
+            
+            for i in listOfUsers{
+                if i.email == txtEmail?.text && currentOrganizer?.email != txtEmail.text {
+                    lblErrorEmail.text = "The provided email used by other user"
+                    parent.highlightField(txtEmail)
+                    isValid = false
+                    break
+                }
+            }
+        }
+            
+        
+        
+        
         
         if txtDuraion.titleLabel?.text == "Custome Duration"{
             if let duration = txtDuration.text, duration.isEmpty{

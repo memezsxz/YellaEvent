@@ -89,7 +89,7 @@
         <!--Event Name-->
         <scene sceneID="XSu-tY-aQS">
             <objects>
-                <viewController id="uBa-51-B3b" customClass="CustomerTicketDetailsViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CustomerTicketDetailsView" id="uBa-51-B3b" customClass="CustomerTicketDetailsViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KUV-cj-wdv">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

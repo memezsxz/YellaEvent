@@ -95,6 +95,7 @@ class AuthenticationRegisterController: UIViewController {
     @IBAction func registerAccountAction(_ sender: Any) {
         var hasErrors = false
 
+        
         // Validate Full Name
         if let fullName = registerFullNameField.text, fullName.isEmpty {
             fullNameValidationLbl.text = "Please enter your full name."
@@ -176,8 +177,11 @@ class AuthenticationRegisterController: UIViewController {
 
         registerBtn.isEnabled = false
         registerBtn.setTitle("Registering", for: .normal)
+        
+        let emailNoSpace = registerEmailField.text?.replacingOccurrences(of: " ", with: "") ?? ""
+
         // Register user with Firebase Authentication
-        Auth.auth().createUser(withEmail: registerEmailField.text!, password: registerPasswordField.text!) { [weak self] authResult, error in
+        Auth.auth().createUser(withEmail: emailNoSpace, password: registerPasswordField.text!) { [weak self] authResult, error in
             guard let self = self else { return }
             registerBtn.isEnabled = true
             registerBtn.setTitle("Join Us 🚀", for: .normal)
@@ -213,6 +217,7 @@ class AuthenticationRegisterController: UIViewController {
             Task {
                 do {
                     try await UsersManager.createNewUser(user: customer)
+                    PushNotificationService.showNotification(title: "Welcome!", description: "We hope you enjoy the journey with Yalla Event!")
                     self.performSegue(withIdentifier: "goToInterestPicker", sender: self)
                 } catch {
                     let alertController = UIAlertController(
