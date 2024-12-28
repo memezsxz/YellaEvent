@@ -134,6 +134,8 @@ class AdminProfileViewController: UIViewController {
                 }
             }
             
+    
+            
             if !(currentUser!.profileImageURL.isEmpty){
                 PhotoManager.shared.downloadImage(from: URL(string: currentUser!.profileImageURL)!, completion: { result in
                     
@@ -491,10 +493,13 @@ extension AdminProfileViewController{
 extension AdminProfileViewController{
     
     func showAlert(message: String, completion: (() -> Void)? = nil) {
-         let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
-         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-             completion?()
-         }))
-         present(alert, animated: true, completion: nil)
-     }
+        let alert = UIAlertController(title: "Reset Password", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            completion?()
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+ 
+    
 }
