@@ -9,7 +9,8 @@ import UIKit
 import FirebaseFirestore
 
 class CustomerHomeViewController: UITableViewController {
-    var debug = false
+    let db = Firestore.firestore()
+    var debug = true
     var currentPage = 0
     var allRecommendedEvents: [DocumentReference] = []
     var newEvent : [EventSummary] = []
@@ -22,7 +23,7 @@ class CustomerHomeViewController: UITableViewController {
         
         tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
         
-        Task {
+        Task { // get the latest 5 evnts
             do {
                 let snapshot = try await Firestore.firestore()
                     .collection(K.FStore.Events.collectionName)
@@ -84,9 +85,8 @@ class CustomerHomeViewController: UITableViewController {
         }
     }
     
-    // 2
+    // 2 - getting all the catigories and inisializing them to 1
     func fetchCategories(completion: @escaping ([String: Double]) -> Void) {
-        let db = Firestore.firestore()
         let categoriesRef = db.collection(K.FStore.Categories.collectionName)
         
         categoriesRef.getDocuments { (snapshot, error) in
@@ -107,10 +107,9 @@ class CustomerHomeViewController: UITableViewController {
         }
     }
     
-    // 3
+    // 3 -
     func updateScoresForInterests(userID: String, categoryScores: [String: Double], completion: @escaping ([String: Double]) -> Void) {
         var updatedScores = categoryScores // Create a local copy of the scores
-        let db = Firestore.firestore()
         let userRef = db.collection(K.FStore.Customers.collectionName).document(userID)
         
         userRef.getDocument { (document, error) in
@@ -127,7 +126,6 @@ class CustomerHomeViewController: UITableViewController {
     // 4
     func updateScoresForTickets(userID: String, categoryScores: [String: Double], completion: @escaping ([String: Double]) -> Void) {
         var updatedScores = categoryScores // Create a local copy of the scores
-        let db = Firestore.firestore()
         let ticketsRef = db.collection(K.FStore.Tickets.collectionName)
         
         ticketsRef.whereField(K.FStore.Tickets.customerID, isEqualTo: userID).getDocuments { (snapshot, error) in
@@ -140,7 +138,7 @@ class CustomerHomeViewController: UITableViewController {
                         
                         group.enter() // Enter the dispatch group
                         // Fetch event details
-                        db.collection(K.FStore.Events.collectionName).document(eventID).getDocument { (eventDoc, _) in
+                        self.db.collection(K.FStore.Events.collectionName).document(eventID).getDocument { (eventDoc, _) in
                             if let eventDoc = eventDoc, let eventData = eventDoc.data(),
                                let categoryID = eventData[K.FStore.Events.categoryID] as? String {
                                 updatedScores[categoryID, default: 0] += 1 // Add 1 point for booking
@@ -188,7 +186,7 @@ class CustomerHomeViewController: UITableViewController {
                                let categoryID = eventData[K.FStore.Events.categoryID] as? String {
                                 
                                 if self.debug {
-                                    print(eventData[K.FStore.Events.name] as! String, rating)
+                                    print(eventData[K.FStore.Events.name] as! String, rating, categoryID)
                                 }
                                 
                                 updatedScores[categoryID] = updatedScores[categoryID, default: 0] * (1 + (rating * 0.1))
@@ -338,9 +336,6 @@ extension CustomerHomeViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if debug {
-            print("cellForRowAt: section \(indexPath.section), row \(indexPath.row)")
-        }
         if indexPath.section == 1 {
              let cell = tableView.dequeueReusableCell(withIdentifier: "EventSummaryTableViewCell", for: indexPath) as! EventSummaryTableViewCell
             

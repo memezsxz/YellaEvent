@@ -11,10 +11,12 @@
         <!--CustomerHomeView-->
         <scene sceneID="yPH-6a-nzY">
             <objects>
-                <viewControllerPlaceholder storyboardName="CustomerHomeView" id="uZj-sc-iJG" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="CustomerHomeView" id="uZj-sc-iJG" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="t3v-WA-Qbg"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E5M-B7-tmM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3310" y="48"/>
+            <point key="canvasLocation" x="3391" y="344"/>
         </scene>
         <!--OrganizerDashboardView-->
         <scene sceneID="NHP-zU-qel">
@@ -82,7 +84,7 @@
                                             <color key="baseBackgroundColor" name="BrandPurple"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="rTy-kN-tR1" kind="presentation" modalPresentationStyle="fullScreen" id="VGx-mo-NZf"/>
+                                            <segue destination="uZj-sc-iJG" kind="presentation" modalPresentationStyle="fullScreen" id="zka-J3-aq2"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gf7-Ba-QpI">
@@ -125,14 +127,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPb-gn-r6S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3323" y="288"/>
-        </scene>
-        <!--CustomerSearchView-->
-        <scene sceneID="iuE-ef-uMn">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CustomerSearchView" id="rTy-kN-tR1" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aEO-DO-3gN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3296" y="354"/>
         </scene>
         <!--AuthenticationView-->
         <scene sceneID="87b-PW-k40">
