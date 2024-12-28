@@ -112,18 +112,24 @@ class CustomerHomeViewController: UITableViewController {
         var updatedScores = categoryScores // Create a local copy of the scores
         let userRef = db.collection(K.FStore.Customers.collectionName).document(userID)
         
+        if debug {
+            print("updateScoresForInterests: ")
+        }
         userRef.getDocument { (document, error) in
             if let document = document, let userData = document.data(),
                let interests = userData[K.FStore.Customers.intrestArray] as? [String] {
                 for interest in interests {
                     updatedScores[interest, default: 0] += 5
+                    if self.debug {
+                        print(interest, updatedScores[interest]!)
+                    }
                 }
             }
             completion(updatedScores)
         }
     }
     
-    // 4
+    // 4 - checks if the the user booked an event in a spicific category (+1) checks if the user attende theat event (+1)
     func updateScoresForTickets(userID: String, categoryScores: [String: Double], completion: @escaping ([String: Double]) -> Void) {
         var updatedScores = categoryScores // Create a local copy of the scores
         let ticketsRef = db.collection(K.FStore.Tickets.collectionName)
@@ -131,7 +137,9 @@ class CustomerHomeViewController: UITableViewController {
         ticketsRef.whereField(K.FStore.Tickets.customerID, isEqualTo: userID).getDocuments { (snapshot, error) in
             if let documents = snapshot?.documents {
                 let group = DispatchGroup() // To handle async fetches for events
-                
+                if self.debug {
+                    print("updateScoresForTickets: ")
+                }
                 for doc in documents {
                     if let eventID = doc[K.FStore.Tickets.eventID] as? String {
                         let didAttend = doc[K.FStore.Tickets.didAttend] as? Bool ?? false
@@ -145,6 +153,10 @@ class CustomerHomeViewController: UITableViewController {
                                 
                                 if didAttend {
                                     updatedScores[categoryID, default: 0] += 1 // Add another point for attendance
+                                    
+                                }
+                                if self.debug {
+                                    print(categoryID, updatedScores[categoryID, default: 0])
                                 }
                             }
                             group.leave() // Leave the dispatch group
@@ -160,10 +172,10 @@ class CustomerHomeViewController: UITableViewController {
             }
         }
     }
-    // 5
+    
+    // 5 checks if the user has ratted an event that they attended, if they have it multiplies the catigory score by 1.(user rating)
     func updateScoresForRatings(userID: String, categoryScores: [String: Double], completion: @escaping ([String: Double]) -> Void) {
         var updatedScores = categoryScores // Create a local copy of the scores
-        let db = Firestore.firestore()
         let ratingsRef = db.collection(K.FStore.Ratings.collectionName)
         
         ratingsRef.whereField(K.FStore.Ratings.customerID, isEqualTo: userID).getDocuments { (snapshot, error) in
@@ -171,7 +183,7 @@ class CustomerHomeViewController: UITableViewController {
                 let group = DispatchGroup() // To handle async fetches for events
                 
                 if self.debug {
-                    print("updateScoresForRatings: event the user have rated: ")
+                    print("updateScoresForRatings: ")
                 }
                 
                 for doc in documents {
@@ -181,15 +193,20 @@ class CustomerHomeViewController: UITableViewController {
                         group.enter() // Enter the dispatch group
                         
                         // Fetch event details
-                        db.collection(K.FStore.Events.collectionName).document(eventID).getDocument { (eventDoc, _) in
+                        self.db.collection(K.FStore.Events.collectionName).document(eventID).getDocument { (eventDoc, _) in
                             if let eventDoc = eventDoc, let eventData = eventDoc.data(),
                                let categoryID = eventData[K.FStore.Events.categoryID] as? String {
                                 
                                 if self.debug {
-                                    print(eventData[K.FStore.Events.name] as! String, rating, categoryID)
+                                    print("before", eventData[K.FStore.Events.name] as! String, rating, categoryID, updatedScores[categoryID]!)
                                 }
                                 
                                 updatedScores[categoryID] = updatedScores[categoryID, default: 0] * (1 + (rating * 0.1))
+                                
+                                if self.debug {
+                                    print("after", eventData[K.FStore.Events.name] as! String, rating, categoryID, updatedScores[categoryID]!)
+                                }
+
                             }
                             group.leave() // Leave the dispatch group
                         }
@@ -214,9 +231,8 @@ class CustomerHomeViewController: UITableViewController {
         }
     }
     
-    // 7
+    // 7 - gets the events the user have attended -- for later exclution
     func fetchAttendedEvents(userID: String, completion: @escaping (Set<String>) -> Void) {
-        let db = Firestore.firestore()
         var attendedEvents: Set<String> = []
         
         db.collection(K.FStore.Tickets.collectionName)
@@ -230,9 +246,8 @@ class CustomerHomeViewController: UITableViewController {
             }
     }
     
-    // 8
+    // 8 - gets all the events and removes attended events from them
     func fetchAllEvents(attendedEvents: Set<String>, completion: @escaping ([QueryDocumentSnapshot]) -> Void) {
-        let db = Firestore.firestore()
         db.collection(K.FStore.Events.collectionName)
             .whereField(K.FStore.Events.isDeleted, isEqualTo: false)
             .whereField(K.FStore.Events.status, isEqualTo: EventStatus.ongoing.rawValue)
@@ -250,9 +265,8 @@ class CustomerHomeViewController: UITableViewController {
             }
     }
     
-    // 9
+    // 9 - to get the event score (order), gets the avarage rating of the events and multiplies 1.(avarage) by the category score
     func fetchRatingsAndCalculateScores(events: [QueryDocumentSnapshot], categoryScores: [String: Double], completion: @escaping ([DocumentReference]) -> Void) {
-        let db = Firestore.firestore()
         var recommendedEvents: [(event: DocumentReference, value: Double)] = []
         let group = DispatchGroup()
         
@@ -276,7 +290,8 @@ class CustomerHomeViewController: UITableViewController {
                     let averageRating = snapshot.get(AggregateField.average(K.FStore.Ratings.rating)) as? Double ?? 0.0
                     
                     let value = categoryScore * (1 + (1 / max(averageRating, 1)) )// to not devide by 0
-                    recommendedEvents.append((event: doc.reference, value: value))
+//                    print(value, categoryScore, (1 + (1 / max(averageRating, 1))), (1 / max(averageRating, 1)), max(averageRating, 1), averageRating )
+                        recommendedEvents.append((event: doc.reference, value: value))
                 } catch {
                     print("Error calculating average rating for event \(eventID): \(error)")
                 }
@@ -449,7 +464,7 @@ extension CustomerHomeViewController {
         guard currentIndex < allRecommendedEvents.count else { return } // Prevent out-of-bounds
         
         let finalIndex = min(currentIndex + interval, allRecommendedEvents.count)
-//        print("Loading events from index \(currentIndex) to \(finalIndex)")
+        print("Loading events from index \(currentIndex) to \(finalIndex)")
         
             for index in currentIndex..<finalIndex {
                 Task {
