@@ -17,7 +17,7 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         setupTableView()
         
         // Set a default user ID (this will be removed after setting the application)
-        UserDefaults.standard.set("xsc9s10sj0JKqpoEJH59", forKey: K.bundleUserID)
+        UserDefaults.standard.set("r91ayZkyBvM21oL4akWY", forKey: K.bundleUserID)
         
         // Add target to segmented control for filtering
         activeExpired.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
