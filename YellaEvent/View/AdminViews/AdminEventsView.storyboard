@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ft0-sw-tzJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ft0-sw-tzJ">
     <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -69,11 +69,11 @@
             </objects>
             <point key="canvasLocation" x="1020.6106870229007" y="-2.1126760563380285"/>
         </scene>
-        <!--Admin Events View Controller-->
+        <!--View Controller-->
         <scene sceneID="RPs-NW-CUo">
             <objects>
-                <viewController id="2sn-u2-gWa" customClass="AdminEventsViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="X1r-RQ-PPz">
+                <viewController id="2sn-u2-gWa" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="X1r-RQ-PPz" customClass="AdminEventView" customModule="YellaEvent" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -255,25 +255,28 @@
                             <constraint firstAttribute="trailing" secondItem="1cR-mj-XIO" secondAttribute="trailing" constant="30" id="wWw-dP-E0Y"/>
                             <constraint firstItem="X4x-oa-fd9" firstAttribute="leading" secondItem="UcK-NK-3YJ" secondAttribute="leading" constant="16" id="yFR-Uo-Ifq"/>
                         </constraints>
+                        <connections>
+                            <outlet property="EventDescription" destination="dau-OK-qEp" id="y0C-hh-Le5"/>
+                            <outlet property="Month" destination="K2O-8H-LLm" id="T9Q-gQ-iz7"/>
+                            <outlet property="Venue" destination="SHh-dP-Pts" id="ktk-3w-pcg"/>
+                            <outlet property="dayOfMonth" destination="SSe-4v-8Mt" id="nrG-k5-V6W"/>
+                            <outlet property="dayOfweek" destination="c1c-YC-Q8F" id="2WF-rl-G9s"/>
+                            <outlet property="eventImageView" destination="oO5-7t-0WA" id="jmv-2U-DWV"/>
+                            <outlet property="eventStatus" destination="BOL-27-pmz" id="s0b-UR-EnJ"/>
+                            <outlet property="eventTitle" destination="aZU-ru-OJa" id="ZYO-Pt-dbS"/>
+                            <outlet property="minimumAge" destination="J4E-qq-Fge" id="4On-bA-hbR"/>
+                            <outlet property="price" destination="8DX-pC-spc" id="NRk-xC-jQo"/>
+                            <outlet property="startToEndTime" destination="Cbe-5P-C1s" id="Qxa-D3-ly8"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Rhl-5N-scY">
                         <barButtonItem key="rightBarButtonItem" title="View Organizer" id="rr9-da-yln">
                             <color key="tintColor" name="BrandPurple"/>
+                            <connections>
+                                <action selector="viewOrganizerButtonClicked:" destination="X1r-RQ-PPz" id="otS-LB-rD2"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="EventDescription" destination="dau-OK-qEp" id="mEH-PU-YML"/>
-                        <outlet property="Month" destination="K2O-8H-LLm" id="pi3-0i-TI0"/>
-                        <outlet property="Venue" destination="SHh-dP-Pts" id="n6v-td-Yb5"/>
-                        <outlet property="dayOfMonth" destination="SSe-4v-8Mt" id="qQN-WO-RVK"/>
-                        <outlet property="dayOfweek" destination="c1c-YC-Q8F" id="JPS-HA-KDP"/>
-                        <outlet property="eventImageView" destination="oO5-7t-0WA" id="zgD-LE-6hG"/>
-                        <outlet property="eventStatus" destination="BOL-27-pmz" id="e6U-J9-j1P"/>
-                        <outlet property="eventTitle" destination="aZU-ru-OJa" id="gZH-Q4-kwa"/>
-                        <outlet property="minimumAge" destination="J4E-qq-Fge" id="Tny-Ge-3ki"/>
-                        <outlet property="price" destination="8DX-pC-spc" id="aS2-Hd-tvN"/>
-                        <outlet property="startToEndTime" destination="Cbe-5P-C1s" id="eQB-qj-wvR"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="blO-WG-l84" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
