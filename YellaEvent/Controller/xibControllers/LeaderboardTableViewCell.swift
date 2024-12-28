@@ -35,33 +35,45 @@ class LeaderboardTableViewCell: UITableViewCell {
     }
 
     func setup(
-        rank: Int, username: String, score: String, isCurrentUser: Bool,
-        userID: String
-    ) {
-        self.userID = userID
-        rankLabel.text = "\(rank)"
-        self.username.text = username
-        self.badgesBtn.isEnabled = isCurrentUser
+            rank: Int, username: String, score: String, isCurrentUser: Bool,
+            userID: String
+        ) {
+            self.userID = userID
+            rankLabel.text = "\(rank)"
+            self.username.text = username
 
-        if isCurrentUser {
-            let blackFont = UIFont.systemFont(
-                ofSize: self.badgesBtn.titleLabel?.font.pointSize ?? 17,
-                weight: .black)
-            let blackTitle = NSAttributedString(
-                string: "My Badges",
-                attributes: [
-                    .font: blackFont
-                ])
-            self.badgesBtn.setAttributedTitle(blackTitle, for: .normal)
-            self.rankingBack.tintColor = UIColor(named: K.BrandColors.blue)
-            self.view.backgroundColor = UIColor(
-                named: K.BrandColors.backgroundGray)
-        } else {
-            self.badgesBtn.setTitle(score, for: .disabled)
-            self.rankingBack.tintColor = UIColor(named: K.BrandColors.purple)
-            self.view.backgroundColor = .white
+            // Reset button states explicitly
+            badgesBtn.isEnabled = isCurrentUser
+            if isCurrentUser {
+                let blackFont = UIFont.systemFont(
+                    ofSize: self.badgesBtn.titleLabel?.font.pointSize ?? 17,
+                    weight: .black)
+                let blackTitle = NSAttributedString(
+                    string: "My Badges",
+                    attributes: [
+                        .font: blackFont
+                    ])
+                self.badgesBtn.setAttributedTitle(blackTitle, for: .normal)
+
+                self.rankingBack.tintColor = UIColor(named: K.BrandColors.blue)
+                self.view.backgroundColor = UIColor(
+                    named: K.BrandColors.backgroundGray)
+            } else {
+                // Reset button title for non-current users
+                let normalFont = UIFont.systemFont(
+                    ofSize: self.badgesBtn.titleLabel?.font.pointSize ?? 17,
+                    weight: .regular)
+                let normalTitle = NSAttributedString(
+                    string: score,
+                    attributes: [
+                        .font: normalFont
+                    ])
+                self.badgesBtn.setAttributedTitle(normalTitle, for: .disabled)
+
+                self.rankingBack.tintColor = UIColor(named: K.BrandColors.purple)
+                self.view.backgroundColor = .white
+            }
         }
-    }
 
     @IBAction func badgesButtonTapped(_ sender: UIButton) {
         delegate?.didTapMyBadges(for: userID)  // Notify delegate
