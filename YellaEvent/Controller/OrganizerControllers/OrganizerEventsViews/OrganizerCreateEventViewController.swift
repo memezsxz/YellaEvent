@@ -11,8 +11,8 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
     var Badgeimage : UIImage?
     var imagePickerSource: String?
     var organizer: Organizer?
-    
-    //    @IBOutlet var startDateTextField: UITextField!
+
+//    @IBOutlet var startDateTextField: UITextField!
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var eventTitleTextField: UITextField!
     @IBOutlet weak var eventDescriptionTextView: UITextView!
@@ -35,7 +35,7 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
     // Error outlets
     @IBOutlet weak var lblErrorEventTitle: UILabel!
     @IBOutlet weak var lblErrorDescription: UILabel!
-    
+
     @IBOutlet var lblErrorStartDate: UILabel!
     
     @IBOutlet weak var lblErrorEndDate: UILabel!
@@ -73,8 +73,8 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        UserDefaults.standard.set("0VtULKI77gvWkSnnHF45", forKey: K.bundleUserID) // this will be removed after seting the application
-        
+//        UserDefaults.standard.set("0VtULKI77gvWkSnnHF45", forKey: K.bundleUserID) // this will be removed after seting the application
+
         // Load categories asynchronously
         Task {
             
@@ -85,8 +85,8 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
                 print(self.categoryList) // Debugging: Check if categories are loaded correctly
                 self.StringCategoryList = self.categoryList.compactMap({ $0.name })
                 // Update the category menu after loading the data
-                //                self.showDropdown(options: self.StringCategoryList, for: self.categoryButton, title: "Select Category")
-                
+//                self.showDropdown(options: self.StringCategoryList, for: self.categoryButton, title: "Select Category")
+               
                 if let categoryButton = categoryButton {
                     categoryButton.setTitle("Select Category", for: .normal)
                 }
@@ -125,20 +125,20 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
         button.menu = menu
         button.showsMenuAsPrimaryAction = true
         button.setTitle("Select Category", for: .normal)
-        
+
     }
-    
+
     
     func highlightField(_ textField: UIView?) {
-        textField?.layer.borderWidth = 1
-        textField?.layer.borderColor = UIColor.red.cgColor
-        textField?.layer.cornerRadius = 5
-    }
-    
-    func resetFieldHighlight(_ textField: UIView?) {
-        textField?.layer.borderWidth = 0
-        textField?.layer.borderColor = UIColor.clear.cgColor
-    }
+            textField?.layer.borderWidth = 1
+            textField?.layer.borderColor = UIColor.red.cgColor
+            textField?.layer.cornerRadius = 5
+        }
+
+        func resetFieldHighlight(_ textField: UIView?) {
+            textField?.layer.borderWidth = 0
+            textField?.layer.borderColor = UIColor.clear.cgColor
+        }
     
     
     // Function to update the menu with the selected option
@@ -148,22 +148,22 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
             print("Invalid selected option: \(selectedOption).")
             return
         }
-        
+
         // Update the button's title to the selected option
         button.setTitle(selectedOption, for: .normal)
     }
     
     // Category selection
-    //    @IBAction func optionSelection(_ sender: UIAction) {
-    //        let title = sender.title
-    //        print(title)
-    //
-    //        if let button = self.categoryButton {
-    ////            button.setTitle(title, for: .normal)
-    //        } else {
-    //            print("categoryButton is nil")
-    //        }
-    //    }
+//    @IBAction func optionSelection(_ sender: UIAction) {
+//        let title = sender.title
+//        print(title)
+//        
+//        if let button = self.categoryButton {
+////            button.setTitle(title, for: .normal)
+//        } else {
+//            print("categoryButton is nil")
+//        }
+//    }
     
     func setupDatePickers() {
         // Initialize the date and time pickers
@@ -176,9 +176,9 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
         endDatePicker = UIDatePicker()
         endDatePicker.datePickerMode = .date
         endDatePicker.preferredDatePickerStyle = .wheels
-        
-        //        endDateTextField.inputView = endDatePicker
-        //        endDateTextField.inputAccessoryView = createToolbar()
+
+//        endDateTextField.inputView = endDatePicker
+//        endDateTextField.inputAccessoryView = createToolbar()
         
         startTimePicker = UIDatePicker()
         startTimePicker.datePickerMode = .time
@@ -277,11 +277,11 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
-        
+
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .none
         timeFormatter.timeStyle = .short
-        
+
         guard let startDate = dateFormatter.date(from: sd),
               let endDate = dateFormatter.date(from: sd),
               let startTime = timeFormatter.date(from: st),
@@ -289,25 +289,25 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
             print("Invalid date or time format")
             return
         }
-        
+
         let calendar = Calendar.current
-        
+
         // Combine date and time
         let startDateTime = calendar.date(bySettingHour: calendar.component(.hour, from: startTime),
                                           minute: calendar.component(.minute, from: startTime),
                                           second: 0,
                                           of: startDate)
-        
+
         let endDateTime = calendar.date(bySettingHour: calendar.component(.hour, from: endTime),
                                         minute: calendar.component(.minute, from: endTime),
                                         second: 0,
                                         of: endDate)
-        
+
         guard let validStartDateTime = startDateTime, let validEndDateTime = endDateTime else {
             print("Failed to combine date and time")
             return
         }
-        
+
         for seletcted in categoryList{
             if seletcted.name == categoryButton.titleLabel?.text{
                 selectedCategory = seletcted
@@ -319,7 +319,7 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
             print("Category is not selected")
             return
         }
-        
+
         // Create Event object
         var newEvent = Event(
             organizerID: organizer!.userID,
@@ -342,7 +342,7 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
         
         Task{
             
-            let id = try await EventsManager.createNewEvent(event: newEvent)
+           let id = try await EventsManager.createNewEvent(event: newEvent)
             newEvent.eventID = id
             
             PhotoManager.shared.uploadPhoto(self.Coverimage!, to: "events/\(organizer!.userID)/\(id)/", withNewName: "CoverImage", completion: { result in
@@ -390,14 +390,14 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
             
         }
         
-        
+
         print("Event successfully created: \(newEvent)")
         let alert = UIAlertController(
             title: "Event Created",
             message: "Your event has been successfully created.",
             preferredStyle: .alert
         )
-        
+
         alert.addAction(UIAlertAction(
             title: "OK",
             style: .default,
@@ -406,7 +406,7 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
                 self.navigationController?.popViewController(animated: true)
             }
         ))
-        
+
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -416,16 +416,16 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
         navigationController?.popViewController(animated: true)
     }
     
-    //    func showAlert(message: String) {
-    //        let alert = UIAlertController(title: "Validation Error", message: message, preferredStyle: .alert)
-    //        alert.addAction(UIAlertAction(title: "OK", style: .default))
-    //        present(alert, animated: true)
-    //    }
-    //
+//    func showAlert(message: String) {
+//        let alert = UIAlertController(title: "Validation Error", message: message, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default))
+//        present(alert, animated: true)
+//    }
+//
     @IBAction func EventCoverBtn(_ sender: Any) {
         imagePickerSource = "cover"
         presentImageImagePicker()
-        
+
     }
     
     @IBAction func EventBadgeBtn(_ sender: Any) {
@@ -442,192 +442,158 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {return}
-        
+
         if let source = imagePickerSource {
-            switch source {
-            case "cover":
-                // Handle cover image selection
-                Coverimage = selectedImage
-                lblErrorEventCover.text = "EventCover.jpg"
-                lblErrorEventCover.textColor = .brandBlue
-            case "badge":
-                // Handle location image selection
-                // Set the image for location (example: locationImage)
-                Badgeimage = selectedImage
-                lblErrorBadgeCover.text = "Badgeimage.jpg"
-                lblErrorBadgeCover.textColor = .brandBlue
-            default:
-                break
+                switch source {
+                case "cover":
+                    // Handle cover image selection
+                    Coverimage = selectedImage
+                    lblErrorEventCover.text = "EventCover.jpg"
+                    lblErrorEventCover.textColor = .brandBlue
+                case "badge":
+                    // Handle location image selection
+                    // Set the image for location (example: locationImage)
+                    Badgeimage = selectedImage
+                    lblErrorBadgeCover.text = "Badgeimage.jpg"
+                    lblErrorBadgeCover.textColor = .brandBlue
+                default:
+                    break
+                }
             }
-        }
-        
-        dismiss(animated: true, completion: nil)
-        
+            
+            dismiss(animated: true, completion: nil)
+
     }
     
     
     func validateCreateFields() -> Bool {
-        var isValid = true
-        
-        // Helper function for trimming and checking empty fields
-        func isEmptyOrWhitespace(_ text: String?) -> Bool {
-            return text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true
-        }
-        
-        // Helper function to create a DateFormatter
-        let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            return formatter
-        }()
-        
-        // Helper function to validate URLs
-        func isValidURL(_ string: String) -> Bool {
-            guard let url = URL(string: string) else { return false }
-            return UIApplication.shared.canOpenURL(url)
-        }
-        
-        // Event Title Validation
-        if let eventName = eventTitleTextField?.text, isEmptyOrWhitespace(eventName) {
-            lblErrorEventTitle.text = "Event name is required and must be at least 3 characters."
-            highlightField(eventTitleTextField)
-            isValid = false
-        } else if let eventName = eventTitleTextField?.text, eventName.count < 3 {
-            lblErrorEventTitle.text = "Event name must be at least 3 characters."
-            highlightField(eventTitleTextField)
-            isValid = false
-        } else {
-            lblErrorEventTitle.text = ""
-            resetFieldHighlight(eventTitleTextField)
-        }
-        
-        // Event Description Validation
-        if let eventDescription = eventDescriptionTextView?.text, isEmptyOrWhitespace(eventDescription) {
-            lblErrorDescription.text = "Event description is required and must be at least 10 characters."
-            highlightField(eventDescriptionTextView)
-            isValid = false
-        } else if let eventDescription = eventDescriptionTextView?.text, eventDescription.count < 10 {
-            lblErrorDescription.text = "Event description must be at least 10 characters."
-            highlightField(eventDescriptionTextView)
-            isValid = false
-        } else {
-            lblErrorDescription.text = ""
-            resetFieldHighlight(eventDescriptionTextView)
-        }
-        
-        // Start Date Validation
-        if let startDateText = startDateTextField?.text, isEmptyOrWhitespace(startDateText) {
-            lblErrorStartDate.text = "Start date is required."
-            highlightField(startDateTextField)
-            isValid = false
-        } else if let startDateText = startDateTextField?.text,
-                  let startDate = dateFormatter.date(from: startDateText),
-                  Calendar.current.isDateInToday(startDate) {
-            lblErrorStartDate.text = "Start date cannot be today."
-            highlightField(startDateTextField)
-            isValid = false
-        } else {
-            lblErrorStartDate.text = ""
-            resetFieldHighlight(startDateTextField)
-        }
-        
-        // Start Time Validation
-        if let startTime = startTimeTextField?.text, startTime.isEmpty {
-            lblErrorStartTime.text = "Start time is required."
-            highlightField(startTimeTextField)
-            isValid = false
-        } else {
-            lblErrorStartTime.text = ""
-            resetFieldHighlight(startTimeTextField)
-        }
+            var isValid = true
 
-        // End Time Validation
-                   if let endTime = endTimeTextField?.text, endTime.isEmpty {
-                       lblErrorEndTime.text = "End time is required."
-                       highlightField(endTimeTextField)
-                       isValid = false
-                   } else {
-                       lblErrorEndTime.text = ""
-                       resetFieldHighlight(endTimeTextField)
-                   }
+            // Event Title Validation
+            if let eventName = eventTitleTextField?.text, eventName.isEmpty {
+                lblErrorEventTitle.text = "Event name is required."
+                highlightField(eventTitleTextField)
+                isValid = false
+            } else {
+                lblErrorEventTitle.text = ""
+                resetFieldHighlight(eventTitleTextField)
+            }
 
+            // Event Description Validation
+            if let eventDescription = eventDescriptionTextView?.text, eventDescription.isEmpty {
+                lblErrorDescription.text = "Event description is required."
+                highlightField(eventDescriptionTextView)
+                isValid = false
+            } else {
+                lblErrorDescription.text = ""
+                resetFieldHighlight(eventDescriptionTextView)
+            }
+
+            // Start Date Validation
+            if let startDate = startDateTextField?.text, startDate.isEmpty {
+                lblErrorStartDate.text = "Start date is required."
+                highlightField(startDateTextField)
+                isValid = false
+            } else {
+                lblErrorStartDate.text = ""
+                resetFieldHighlight(startDateTextField)
+            }
         
-        // Category Validation
-        if let categoryText = categoryButton?.titleLabel?.text, categoryText == "Select Category" || isEmptyOrWhitespace(categoryText) {
-            lblErrorCategory.text = "Please select a valid category."
+        if let catogarybutton = categoryButton?.titleLabel?.text, catogarybutton == "Select Category" {
+            lblErrorCategory.text = "Category is required."
             highlightField(categoryButton)
             isValid = false
-        } else {
+        }else {
             lblErrorCategory.text = ""
             resetFieldHighlight(categoryButton)
         }
-        
-        // Venue Name Validation
-        if let venueName = VanueNameTextField?.text, isEmptyOrWhitespace(venueName) {
-            lblErrorVenueName.text = "Venue name is required."
+
+            
+        if let vn = VanueNameTextField?.text, vn.isEmpty {
+                lblErrorVenueName.text = "Venue name is required."
             highlightField(VanueNameTextField)
             isValid = false
-        } else {
-            lblErrorVenueName.text = ""
+        }else{
             resetFieldHighlight(VanueNameTextField)
+            lblErrorVenueName.text = ""
         }
-        
-        // Ticket Price Validation
-                  if let ticketPriceText = ticketPriceTextField?.text, ticketPriceText.isEmpty {
-                      lblErrorTicketPrice.text = "Ticket price is required."
-                      highlightField(ticketPriceTextField)
-                      isValid = false
-                  } else {
-                      lblErrorTicketPrice.text = ""
-                      resetFieldHighlight(ticketPriceTextField)
-                  }
+            // Start Time Validation
+            if let startTime = startTimeTextField?.text, startTime.isEmpty {
+                lblErrorStartTime.text = "Start time is required."
+                highlightField(startTimeTextField)
+                isValid = false
+            } else {
+                lblErrorStartTime.text = ""
+                resetFieldHighlight(startTimeTextField)
+            }
+
+            // End Time Validation
+            if let endTime = endTimeTextField?.text, endTime.isEmpty {
+                lblErrorEndTime.text = "End time is required."
+                highlightField(endTimeTextField)
+                isValid = false
+            } else {
+                lblErrorEndTime.text = ""
+                resetFieldHighlight(endTimeTextField)
+            }
+
+            // Ticket Price Validation
+            if let ticketPriceText = ticketPriceTextField?.text, ticketPriceText.isEmpty {
+                lblErrorTicketPrice.text = "Ticket price is required."
+                highlightField(ticketPriceTextField)
+                isValid = false
+            } else {
+                lblErrorTicketPrice.text = ""
+                resetFieldHighlight(ticketPriceTextField)
+            }
+
+            // Max Tickets Validation
+            if let maxTicketsText = maxTicketsTextField?.text, maxTicketsText.isEmpty {
+                lblErrorMaxTickets.text = "Maximum tickets are required."
+                highlightField(maxTicketsTextField)
+                isValid = false
+            } else {
+                lblErrorMaxTickets.text = ""
+                resetFieldHighlight(maxTicketsTextField)
+            }
 
         
-        // Max Tickets Validation
-                  if let maxTicketsText = maxTicketsTextField?.text, maxTicketsText.isEmpty {
-                      lblErrorMaxTickets.text = "Maximum tickets are required."
-                      highlightField(maxTicketsTextField)
-                      isValid = false
-                  } else {
-                      lblErrorMaxTickets.text = ""
-                      resetFieldHighlight(maxTicketsTextField)
-                  }
-        
-        // Min Age Validation
-                   if let minAgeText = minAgeTextField?.text, minAgeText.isEmpty {
-                       lblErrorMinAge.text = "Minimum age is required."
-                       highlightField(minAgeTextField)
-                       isValid = false
-                   } else {
-                       lblErrorMinAge.text = ""
-                       resetFieldHighlight(minAgeTextField)
-                   }
-
-        // Location URL Validation
-        if let locationURL = locationURLTextField?.text, isEmptyOrWhitespace(locationURL) || !isValidURL(locationURL) {
-            lblErrorLocation.text = "Please enter a valid URL."
-            highlightField(locationURLTextField)
-            isValid = false
-        } else {
-            lblErrorLocation.text = ""
-            resetFieldHighlight(locationURLTextField)
-        }
-        
-        // Event Cover Image Validation
-        if let eventCoverText = lblErrorEventCover.text, eventCoverText.isEmpty || eventCoverText == "Cover is required." {
+        if let eventcover = lblErrorEventCover.text, eventcover.isEmpty || eventcover == "Cover is required." {
             lblErrorEventCover.textColor = .red
             lblErrorEventCover.text = "Cover is required."
-            isValid = false
+                isValid = false
         }
         
-        // Badge Image Validation
-        if let badgeCoverText = lblErrorBadgeCover.text, badgeCoverText.isEmpty || badgeCoverText == "Badge is required." {
+        
+        if let eventBadge = lblErrorBadgeCover.text, eventBadge.isEmpty || eventBadge == "Badge is required." {
             lblErrorBadgeCover.textColor = .red
             lblErrorBadgeCover.text = "Badge is required."
-            isValid = false
+                isValid = false
         }
         
-        return isValid
-    }
+            // Min Age Validation
+            if let minAgeText = minAgeTextField?.text, minAgeText.isEmpty {
+                lblErrorMinAge.text = "Minimum age is required."
+                highlightField(minAgeTextField)
+                isValid = false
+            } else {
+                lblErrorMinAge.text = ""
+                resetFieldHighlight(minAgeTextField)
+            }
 
-}
+            // Location URL Validation
+            if let locationURL = locationURLTextField?.text, locationURL.isEmpty {
+                lblErrorLocation.text = "Location URL is required."
+                highlightField(locationURLTextField)
+                isValid = false
+            } else {
+                lblErrorLocation.text = ""
+                resetFieldHighlight(locationURLTextField)
+            }
+
+            return isValid
+        }
+    
+    
+    
+    }
