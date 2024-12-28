@@ -8,7 +8,7 @@
 import UIKit
 
 class EventSummaryTableViewCell: UITableViewCell {
-    
+    var image : UIImage? = nil
     @IBOutlet var loading: UIActivityIndicatorView!
     @IBOutlet weak var catagoryWrapper: UIView!
     @IBOutlet weak var view: UIView!
@@ -31,7 +31,6 @@ class EventSummaryTableViewCell: UITableViewCell {
     }
     
     func setup(with event: EventSummary) {
-        if eventImage.image == nil {
             loading.startAnimating()
             let find = "@"
             
@@ -48,21 +47,36 @@ class EventSummaryTableViewCell: UITableViewCell {
             }
             
             descriptionLabel.attributedText = attributedString
-            if let url = URL(string: event.coverImageURL) {
-                PhotoManager.shared.downloadImage(from: url) { result in
-                    switch result {
-                    case .success(let image):
-                        self.eventImage.image = image
-                        self.loading.removeFromSuperview()
-                        
-                    case .failure(let error):
-                        print(error)
-                    }
+//        if self.image != nil {
+//            self.eventImage.image = self.image
+//        }
+        if let cachedImage = ImageCache.shared.object(forKey: event.coverImageURL as NSString) {
+            self.eventImage.image = cachedImage
+            self.loading.removeFromSuperview()
+        }
+       else if let url = URL(string: event.coverImageURL) {
+            
+            task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+                guard let self = self, let data = data, let image = UIImage(data: data) else { return }
+                DispatchQueue.main.async {
+                    ImageCache.shared.setObject(image, forKey: event.coverImageURL as NSString)
+                    self.eventImage.image = image
+                    self.loading.removeFromSuperview()
                 }
-                
-                eventName.text = event.name
-                priceLabel.text = "\(event.price)BD"
-                catagoryLabel.text = "\(event.categoryName) \(event.categoryIcon)"
+            }
+            task?.resume()
+
+//            PhotoManager.shared.downloadImage(from: url) { result in
+//                    switch result {
+//                    case .success(let image):
+//                        self.eventImage.image = image
+//                        self.loading.removeFromSuperview()
+//                        self.image = image
+//                    case .failure(let error):
+//                        print(error)
+//                    }
+//                }
+//                
             } else {
                 print(event.coverImageURL)
                 print(event)
@@ -70,6 +84,22 @@ class EventSummaryTableViewCell: UITableViewCell {
                 self.loading.removeFromSuperview()
             }
             
-        }
+        eventName.text = event.name
+        priceLabel.text = "\(event.price)BD"
+        catagoryLabel.text = "\(event.categoryName) \(event.categoryIcon)"
+
     }
+    
+    private var task: URLSessionDataTask?
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        task?.cancel()
+        eventImage.image = nil
+    }
+    
+    class ImageCache {
+        static let shared = NSCache<NSString, UIImage>()
+    }
+
 }
