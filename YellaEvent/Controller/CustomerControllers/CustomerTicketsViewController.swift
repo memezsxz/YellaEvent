@@ -8,12 +8,13 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activeExpired: UISegmentedControl!
+    
+    let userId = UserDefaults.standard.string(forKey: K.bundleUserID)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
 
-        UserDefaults.standard.set("r91ayZkyBvM21oL4akWY", forKey: K.bundleUserID)
         activeExpired.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
 
         Task {
@@ -32,7 +33,7 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         activeTickets.removeAll()
         expiredTickets.removeAll()
 
-        TicketsManager.getUserTickets(userId: UserDefaults.standard.string(forKey: K.bundleUserID)!) { snapshot, error in
+        TicketsManager.getUserTickets(userId: userId) { snapshot, error in
             guard error == nil else { return }
             guard let snapshot = snapshot else { return }
 

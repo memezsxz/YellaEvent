@@ -36,41 +36,53 @@ class CustomerRegistrationViewController: UIViewController {
         hideErrorLabels()
         var isValid = true
 
+        // Validate card number
         if !validateCardNumber(inputCardNumber.text) {
             lblErrorCardNumber.text = "*Invalid card number"
             lblErrorCardNumber.isHidden = false
             isValid = false
         }
+
+        // Validate card name
         if !validateCardName(inputCardName.text) {
             lblErrorCardName.text = "*Invalid card name"
             lblErrorCardName.isHidden = false
             isValid = false
         }
+
+        // Validate card expiry
         if !validateCardExpiry(inputCardExpiry.text) {
             lblErrorCardExpiry.text = "*Invalid expiry date (MM/YY)"
             lblErrorCardExpiry.isHidden = false
             isValid = false
         }
+
+        // Validate card CVV
         if !validateCardCVV(inputCardCVV.text) {
             lblErrorCardcvv.text = "*Invalid CVV"
             lblErrorCardcvv.isHidden = false
             isValid = false
         }
 
+        // Proceed with ticket creation only if all validations pass
         if isValid {
             createTicket()
+        } else {
+            showAlert(message: "Please correct the highlighted errors and try again.")
         }
     }
 
+
     private func createTicket() {
+        print("I am creating a ticket")
         Task {
             do {
                 // Fetch event details using the eventID
                 let event = try await EventsManager.getEvent(eventID: eventID)
 
-                // Create ticket with fetched event details
+                // Create ticket object (temporary, without Firestore ID)
                 let ticket = Ticket(
-                    ticketID: UUID().uuidString,
+                    ticketID: "1", // Placeholder, will be updated after retrieval
                     eventID: eventID,
                     customerID: UserDefaults.standard.string(forKey: K.bundleUserID) ?? "unknown",
                     organizerID: event.organizerID,
@@ -88,11 +100,27 @@ class CustomerRegistrationViewController: UIViewController {
                 // Save ticket to Firestore
                 try await TicketsManager.createNewTicket(ticket: ticket)
 
+                // Fetch the newly created ticket by querying Firestore
+                let query = try await Firestore.firestore()
+                    .collection(K.FStore.Tickets.collectionName)
+                    .whereField("customerID", isEqualTo: ticket.customerID)
+                    .whereField("eventID", isEqualTo: ticket.eventID)
+                    .limit(to: 1)
+                    .getDocuments()
+
+                guard let document = query.documents.first else {
+                    throw NSError(domain: "TicketError", code: 404, userInfo: [NSLocalizedDescriptionKey: "Ticket not found"])
+                }
+
+                // Decode the ticket
+                let savedTicket = try await Ticket(from: document.data())
+                print("this is the ticketID",savedTicket.ticketID)
+
                 // Notify the delegate about the ticket creation
-                delegate?.didCreateTicket(ticket)
+                delegate?.didCreateTicket(savedTicket)
 
                 // Show success alert and navigate to details page
-                await showSuccessAlertAndNavigate(ticket: ticket)
+                await showSuccessAlertAndNavigate(ticket: savedTicket)
 
             } catch {
                 showAlert(message: "Failed to create ticket: \(error.localizedDescription)")
@@ -100,13 +128,26 @@ class CustomerRegistrationViewController: UIViewController {
         }
     }
 
+
     private func showSuccessAlertAndNavigate(ticket: Ticket) async {
         await MainActor.run {
             showAlert(message: "Payment Successful!") {
-                self.performSegue(withIdentifier: "ShowTicketDetail", sender: ticket)
+                // Instantiate the destination view controller
+                let storyboard = UIStoryboard(name: "CustomerTicketsView", bundle: nil)
+                if let ticketDetailsVC = storyboard.instantiateViewController(withIdentifier: "CustomerTicketDetailsView") as? CustomerTicketDetailsViewController {
+                    
+                    // Pass the ticket object to the destination view controller
+                    ticketDetailsVC.ticket = ticket
+                    
+                    // Present the destination view controller
+                    self.navigationController?.pushViewController(ticketDetailsVC, animated: true)
+                } else {
+                    print("Failed to instantiate CustomerTicketDetailsViewController")
+                }
             }
         }
     }
+
     func hideErrorLabels() {
         lblErrorCardNumber.isHidden = true
         lblErrorCardName.isHidden = true

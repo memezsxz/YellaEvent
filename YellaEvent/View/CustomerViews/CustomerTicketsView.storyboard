@@ -271,6 +271,7 @@
                         <outlet property="lblQuantity" destination="XY2-4c-0X4" id="2Kp-gP-UIS"/>
                         <outlet property="lblTime" destination="SYk-6N-ldK" id="SFD-wU-FR5"/>
                         <outlet property="lblTotal" destination="d7o-WP-Xpw" id="ADS-Fn-sx6"/>
+                        <outlet property="qrCode" destination="lNs-7m-z0e" id="icX-ps-3gk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iel-Dg-ISN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

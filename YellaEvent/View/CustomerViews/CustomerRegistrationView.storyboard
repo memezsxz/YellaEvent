@@ -174,7 +174,6 @@ Fun Begin!</string>
                                         <buttonConfiguration key="configuration" style="filled" image="ticket" catalog="system" title="Pay"/>
                                         <connections>
                                             <action selector="payButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="nLo-q7-vaf"/>
-                                            <segue destination="SC8-Gt-n1a" kind="presentation" id="mN3-zd-E14"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -214,14 +213,6 @@ Fun Begin!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="115.26717557251908" y="-2.1126760563380285"/>
-        </scene>
-        <!--CustomerTicketDetailsView-->
-        <scene sceneID="HnE-sm-Ies">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CustomerTicketsView" referencedIdentifier="CustomerTicketDetailsView" id="SC8-Gt-n1a" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IMR-Y4-Aqe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="163" y="469"/>
         </scene>
     </scenes>
     <resources>
