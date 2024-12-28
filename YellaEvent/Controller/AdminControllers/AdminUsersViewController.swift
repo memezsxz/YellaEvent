@@ -179,14 +179,7 @@ class AdminUsersViewController: UIViewController {
     
 
     }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-  
-    }
 
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ViewCustomerPage" {
             viewCustomerDetailsView = segue.destination.view as? ViewCustomerDetailsView
@@ -222,7 +215,7 @@ class AdminUsersViewController: UIViewController {
         super.prepare(for: segue, sender: sender)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         if let userListSections = userListSections{
             userListSections.selectedSegmentIndex = 0
@@ -230,6 +223,9 @@ class AdminUsersViewController: UIViewController {
         }
     }
     
+    @IBAction func unwindfromFAQs(for unwindSegue: UIStoryboardSegue, towards subsequentVC: UIViewController) {
+        
+    }
 }
 
 

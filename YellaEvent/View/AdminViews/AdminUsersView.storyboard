@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mzc-sj-T3I">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mzc-sj-T3I">
     <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -91,7 +91,7 @@
                         <segue destination="yXY-tj-GaV" kind="show" identifier="ViewOrganizerPage" id="JZX-h3-MFH"/>
                         <segue destination="S2w-G6-e57" kind="show" identifier="ViewAdminPage" id="b2Q-gQ-nlD"/>
                         <segue destination="nzk-E5-Xey" kind="show" identifier="BanPage" id="i8V-rG-W4l"/>
-                        <segue destination="EwN-z7-x1K" kind="show" identifier="GoToFAQs" id="qzB-zJ-ewD"/>
+                        <segue destination="xs0-Oc-FyE" kind="presentation" identifier="GoToFAQs" modalPresentationStyle="fullScreen" id="qzB-zJ-ewD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G5K-dN-OI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -315,6 +315,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mzc-sj-T3I" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="MGg-af-ftg"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Z3K-4g-cce">
                         <rect key="frame" x="0.0" y="62" width="440" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2021,7 +2022,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q7A-FJ-Fov" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Maq-Og-NdH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="-1240"/>
+            <point key="canvasLocation" x="1899.5454545454547" y="-1240.1673640167364"/>
         </scene>
         <!--FAQ -->
         <scene sceneID="BNI-YS-8lC">
@@ -2050,7 +2051,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="FAQ " largeTitleDisplayMode="always" id="Mh9-V2-VHI">
+                        <barButtonItem key="leftBarButtonItem" title="Back" image="chevron.backward" catalog="system" id="8kR-c4-wer">
+                            <color key="tintColor" name="BrandPurple"/>
+                            <connections>
+                                <segue destination="CeI-Eb-7gG" kind="unwind" unwindAction="unwindfromFAQsFor:towards:" id="cUR-pb-2X9"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="UmQ-JA-oL6">
+                            <color key="tintColor" name="BrandPurple"/>
                             <connections>
                                 <segue destination="ETC-Lz-tcx" kind="show" identifier="add" destinationCreationSelector="add:sender:" id="B6j-Rz-fSf"/>
                             </connections>
@@ -2061,6 +2069,25 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JKn-rH-PqL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="CeI-Eb-7gG" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="756.81818181818187" y="-1240.1673640167364"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Rpd-IF-LjP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xs0-Oc-FyE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="o2R-4N-rq0">
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="EwN-z7-x1K" kind="relationship" relationship="rootViewController" id="Qle-pU-dg5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uI7-K2-Mvf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-135" y="-1240.1673640167364"/>
         </scene>
@@ -2069,10 +2096,11 @@
         <segue reference="6pA-lP-85K"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="icloud.and.arrow.up" catalog="system" width="128" height="117"/>
         <image name="person.2" catalog="system" width="128" height="87"/>
         <image name="person.2.fill" catalog="system" width="128" height="86"/>
-        <image name="square.and.arrow.down" catalog="system" width="112" height="128"/>
+        <image name="square.and.arrow.down" catalog="system" width="114" height="128"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
         <namedColor name="BackgroundGray">
             <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
