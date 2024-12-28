@@ -8,7 +8,7 @@
 import UIKit
 
 class CustomerEventViewController: UIViewController {
-    
+
     // MARK: - Outlets
     @IBOutlet weak var eventImageView: UIImageView!
     @IBOutlet weak var eventNameLabel: UILabel!
@@ -33,7 +33,7 @@ class CustomerEventViewController: UIViewController {
     var ticketCount: Int = 0 // Keeps track of the current ticket count
     var organizer: Organizer? // This will hold the organizer data for this screen.
     var delegate : UIViewController?
-    
+
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +45,11 @@ class CustomerEventViewController: UIViewController {
         
         backButton.title = "Back"
         navigationItem.leftBarButtonItem = backButton
-        //        backButto????n.
+//        backButto????n.
         // Fetch and populate event data
         fetchEventAndUpdateUI()
     }
-    
+
     // MARK: - Fetch Event
     func fetchEventAndUpdateUI() {
         Task {
@@ -57,7 +57,7 @@ class CustomerEventViewController: UIViewController {
                 // Fetch the event using the EventsManager
                 let fetchedEvent = try await EventsManager.getEvent(eventID: eventID)
                 self.event = fetchedEvent
-                
+
                 // Update the UI on the main thread
                 DispatchQueue.main.async {
                     self.populateEventData()
@@ -67,11 +67,11 @@ class CustomerEventViewController: UIViewController {
             }
         }
     }
-    
+
     // MARK: - Populate Data
     func populateEventData() {
         guard let event = event else { return }
-        
+
         // Load event image
         if let url = URL(string: event.coverImageURL) {
             loadImage(from: url) { [weak self] image in
@@ -80,34 +80,34 @@ class CustomerEventViewController: UIViewController {
                 }
             }
         }
-        
+
         // Set event name
         if let eventNameLabel = eventNameLabel {
             eventNameLabel.text = event.name
         }
-        
+
         // Set event price
         if let eventPriceLabel = eventPriceLabel {
             eventPriceLabel.text = "\(event.price) per ticket"
         }
-        
+
         // Format date components
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d" // Day of the month
         if let dayOfMonthLabel = dayOfMonthLabel {
             dayOfMonthLabel.text = dateFormatter.string(from: event.startTimeStamp)
         }
-        
+
         dateFormatter.dateFormat = "MMM" // Month (short)
         if let monthLabel = monthLabel {
             monthLabel.text = dateFormatter.string(from: event.startTimeStamp)
         }
-        
+
         dateFormatter.dateFormat = "EEEE" // Day of the week
         if let dayOfWeekLabel = dayOfWeekLabel {
             dayOfWeekLabel.text = dateFormatter.string(from: event.startTimeStamp)
         }
-        
+
         // Format event time
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "h:mm a" // Time in 12-hour format with AM/PM
@@ -116,23 +116,23 @@ class CustomerEventViewController: UIViewController {
         if let eventTimeLabel = eventTimeLabel {
             eventTimeLabel.text = "\(startTime) - \(endTime)"
         }
-        
+
         // Set event description
         if let eventDescriptionTextView = eventDescriptionTextView {
             eventDescriptionTextView.text = event.description
         }
-        
+
         // Set event status
         if let eventStatusLabel = eventStatusLabel {
             eventStatusLabel.text = event.status.rawValue.capitalized
             updateStatusLabelAppearance(status: event.status)
         }
-        
+
         // Set age range label
         if let eventAgeLabel = eventAgeLabel {
             eventAgeLabel.text = "\(event.minimumAge)-\(event.maximumAge)"
         }
-        
+
         // Set venue name label
         if let eventVenueLabel = eventVenueLabel {
             eventVenueLabel.text = event.venueName
@@ -142,10 +142,10 @@ class CustomerEventViewController: UIViewController {
         if let organizerNameLabel = organizerNameLabel {
             organizerNameLabel.text = event.organizerName
         }
-        
-        
+
+
     }
-    
+
     // MARK: - Helper Functions
     func updateStatusLabelAppearance(status: EventStatus) {
         if let eventStatusLabel = eventStatusLabel {
@@ -161,7 +161,7 @@ class CustomerEventViewController: UIViewController {
             }
         }
     }
-    
+
     func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
@@ -175,23 +175,23 @@ class CustomerEventViewController: UIViewController {
             }
         }
     }
-    
+
     // MARK: - Ticket Count Actions
     @IBAction func TicketIncrease(_ sender: UIButton) {
         // Optional placeholder for functionality
     }
-    
+
     @IBAction func TicketIderease(_ sender: UIButton) {
         // Optional placeholder for functionality
     }
-    
+
     @IBAction func TicketStepperValueChanged(_ sender: UIStepper) {
         if let ticketStepper = ticketStepper, let ticketCountLabel = ticketCountLabel {
             ticketCount = Int(ticketStepper.value) // Update ticket count from stepper's value
             ticketCountLabel.text = "\(ticketCount) Ticket"
         }
     }
-    
+
     // MARK: - Show Organizer Profile
     @IBAction func showPage(_ sender: Any) {
         // Check if organizer exists
@@ -204,7 +204,7 @@ class CustomerEventViewController: UIViewController {
             updateOrganizerProfileView(with: organizer)
         }
     }
-    
+
     
     func updateOrganizerProfileView(with organizer: Organizer) {
         // Update the UI with organizer details
@@ -212,8 +212,8 @@ class CustomerEventViewController: UIViewController {
         organizerNameLabel.text = event?.organizerName
         // Add any other UI elements or logic needed to display organizer's info
     }
-    
-    
+
+
     // MARK: - Fetch Events by Organizer
     func fetchEventsByOrganizerID(organizerID: String) {
         Task {
@@ -232,92 +232,62 @@ class CustomerEventViewController: UIViewController {
         print("Segue triggered!")
         performSegue(withIdentifier: "goToTicket", sender: self)
     }
-    
-    // MARK: - Prepare for Segue
 
-        
+    // MARK: - Prepare for Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toOrganizerView" {
-            // Handle the "toOrganizerView" segue
-            if let organizerView = segue.destination.view as? CustomerEventOrganizerView {
-                organizerView.organizerID = event!.organizerID
-                organizerView.organizerNameLabel.text = event?.organizerName
-                organizerView.delegate = self
-                organizerView.load()
-            }
-        } else if segue.identifier == "goToTicket" {
-            // Handle the "goToTicket" segue
+        if segue.identifier == "goToTicket" {
+            // Get the destination view controller
             if let ticketDetailsVC = segue.destination as? CustomerRegistrationViewController {
                 
-                var eventObject : Event?
-                Task{
-                    var eventObject = try await EventsManager.getEvent(eventID: self.eventID)
-                }
-                var organizerID = eventObject?.organizerID
-                
+                print("Preparing to pass data:")
+                           print("Event ID: \(self.eventID)")
+                print("Organizer ID: \(self.organizer?.userID ?? "No Organizer ID")")
+                           print("Ticket Quantity: \(self.ticketCount)")
+                           print("Ticket Price: \(self.event?.price ?? 0.0)")
+                           
                 
                 // Pass the required values to the destination view controller
                 ticketDetailsVC.eventID = self.eventID
-                ticketDetailsVC.organizerID = self.organizer?.userID ?? ""
+                ticketDetailsVC.organizerID = self.organizer!.userID
                 ticketDetailsVC.ticketQuantity = self.ticketCount
-                ticketDetailsVC.ticketPrice = self.event?.price ?? 0.0
+                ticketDetailsVC.ticketPrice = self.event?.price ?? 0.0  
             }
         }
     }
 
-        
-        
-        
-        func backClicked(_ sender: UIBarButtonItem) {
-            navigationController?.dismiss(animated: true, completion: nil)
-        }
+
+
+
+
+    @IBAction func backClicked(_ sender: UIBarButtonItem) {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
-    
-    
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        if segue.identifier == "toOrganizerView" {
-    //            // Handle the "toOrganizerView" segue
-    //            if let organizerView = segue.destination.view as? CustomerEventOrganizerView {
-    //                organizerView.organizerID = event!.organizerID
-    //                organizerView.organizerNameLabel.text = event?.organizerName
-    //                organizerView.delegate = self
-    //                organizerView.load()
-    //            }
-    //        }
-    //
-    ////                // Pass the organizer ID to the destination view controller
-    ////                ticketViewController.organizerID = self.event?.organizerID
-    ////
-    ////                // Pass the ticket quantity to the destination view controller
-    ////                ticketViewController.ticketQuantity = self.event?.ticketQuantity
-    ////
-    ////                // Pass the ticket price to the destination view controller
-    ////                ticketViewController.ticketPrice = self.event?.ticketPrice
-    //            }
-    //        }
-    //    }
+}
+
+
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "goToTicket" {
-//            // Get the destination view controller
-//            if let ticketDetailsVC = segue.destination as? CustomerRegistrationViewController {
-//                print("Preparing to pass data:")
-//                print("Event ID: \(self.eventID)")
-//                print("Organizer ID: \(self.organizer?.userID ?? "No Organizer ID")")
-//                print("Ticket Quantity: \(self.ticketCount)")
-//                print("Ticket Price: \(self.event?.price ?? 0.0)")
-//
-//                // Pass the required values to the destination view controller
-//                ticketDetailsVC.eventID = self.eventID
-//                ticketDetailsVC.organizerID = self.organizer?.userID ?? ""
-//                ticketDetailsVC.ticketQuantity = self.ticketCount
-//                ticketDetailsVC.ticketPrice = self.event?.price ?? 0.0
+//        if segue.identifier == "toOrganizerView" {
+//            // Handle the "toOrganizerView" segue
+//            if let organizerView = segue.destination.view as? CustomerEventOrganizerView {
+//                organizerView.organizerID = event!.organizerID
+//                organizerView.organizerNameLabel.text = event?.organizerName
+//                organizerView.delegate = self
+//                organizerView.load()
 //            }
-//        } else if segue.identifier == "toOrganizerView" {
-//            if let organizerViewController = segue.destination as? CustomerEventOrganizerView {
-//                guard let event = event else {
-//                    print("Error: Event is nil.")
-//                    return
-//                }
+//        } else if segue.identifier == "goToTicket" {
+//            // Handle the "goToTicket" segue
+//            if let ticketViewController = segue.destination as? CustomerTicketsViewController {
+//                // Pass the event ID to the destination view controller
+//            //    ticketViewController.organizerID = event!.organizerID
+//
+////                // Pass the organizer ID to the destination view controller
+////                ticketViewController.organizerID = self.event?.organizerID
+////
+////                // Pass the ticket quantity to the destination view controller
+////                ticketViewController.ticketQuantity = self.event?.ticketQuantity
+////
+////                // Pass the ticket price to the destination view controller
+////                ticketViewController.ticketPrice = self.event?.ticketPrice
 //            }
 //        }
-        
+//    }
