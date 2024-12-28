@@ -149,9 +149,6 @@ class CustomerProfileViewController: UIViewController, UITextFieldDelegate {
             answer.text = faq.answer
         }
         
-        
-        print(currentUser?.type)
-        print(currentUser?.userID)
     }
     
     
@@ -817,9 +814,5 @@ extension CustomerProfileViewController{
         }
         
     }
-    
-    
-
-
     
 }

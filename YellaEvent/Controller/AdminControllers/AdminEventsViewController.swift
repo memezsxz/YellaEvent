@@ -16,10 +16,20 @@ class AdminEventsViewController: UIViewController  {
     @IBOutlet var tableView: UITableView!
     var currentSegment : EventStatus? = nil
     
+    var orgName: String?{
+        didSet {
+            if let orgName{
+                setOrganizerName(orgName)
+            }
+        }
+    }
+    
     var events : [(eventID: String, eventName : String, organizerID: String, status: String)] = []
     var segmentEvents : [(eventID: String, eventName : String, organizerID: String, status: String)] = []
     var searchEvents : [(eventID: String, eventName : String, organizerID: String, status: String)] = []
 
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -27,6 +37,8 @@ class AdminEventsViewController: UIViewController  {
         tableView.register(UINib(nibName: "MainTableViewCell", bundle: .main), forCellReuseIdentifier: "MainTableViewCell")
         
         searchBar.delegate = self
+        
+        
         
         Task {
         EventsManager.getAllEvents { snapshot, error in
@@ -61,6 +73,14 @@ class AdminEventsViewController: UIViewController  {
             
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let orgName = orgName{
+            setOrganizerName(orgName)
+            searchBar(searchBar, textDidChange: searchBar.text ?? "")
+        }
+    }
+    
     
     @IBAction func segmentClick(_ sender: Any) {
         
@@ -119,4 +139,15 @@ extension AdminEventsViewController : UISearchBarDelegate {
         }
         tableView.reloadData()
     }
+    
+    
+    func setOrganizerName(_ name: String?){
+        
+        if let name = name{
+            if let searchBar = searchBar{
+                searchBar.text = name
+            }
+        }
+    }
+    
 }
