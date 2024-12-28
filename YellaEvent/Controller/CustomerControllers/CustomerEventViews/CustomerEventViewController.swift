@@ -248,11 +248,13 @@ class CustomerEventViewController: UIViewController {
         } else if segue.identifier == "goToTicket" {
             // Handle the "goToTicket" segue
             if let ticketDetailsVC = segue.destination as? CustomerRegistrationViewController {
-                print("Preparing to pass data:")
-                print("Event ID: \(self.eventID)")
-                print("Organizer ID: \(self.organizer?.userID ?? "No Organizer ID")")
-                print("Ticket Quantity: \(self.ticketCount)")
-                print("Ticket Price: \(self.event?.price ?? 0.0)")
+                
+                var eventObject : Event?
+                Task{
+                    var eventObject = try await EventsManager.getEvent(eventID: self.eventID)
+                }
+                var organizerID = eventObject?.organizerID
+                
                 
                 // Pass the required values to the destination view controller
                 ticketDetailsVC.eventID = self.eventID
