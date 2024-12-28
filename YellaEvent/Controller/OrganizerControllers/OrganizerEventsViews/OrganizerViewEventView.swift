@@ -92,10 +92,31 @@ class OrganizerViewEventView: UIViewController {
     }
     
     @IBAction func optionSelectionCnacel(_ sender: UIAction) {
-        let title = sender.title
-        print(title)
-    
+        guard let event = event else { return }
+
+        // Create an event copy with the status set to 'cancelled'
+        var updatedEvent = event
+        updatedEvent.status = .cancelled
+
+        // Update the event status in Firestore
+        Task {
+            do {
+                try await EventsManager.updateEvent(event: updatedEvent)
+                
+                // Update the status label
+                self.eventStatus.text = EventStatus.cancelled.rawValue.capitalized
+
+                // Change the status icon to red
+                
+                self.statusCircle.tintColor = .red
+                self.statusCircle.image = UIImage(systemName: "circle.fill")?.withTintColor(.red)
+
+            } catch {
+                print("Failed to cancel event: \(error)")
+            }
+        }
     }
+
     
     
     
