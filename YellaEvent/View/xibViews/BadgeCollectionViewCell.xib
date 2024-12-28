@@ -55,7 +55,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" name="BackgroundGray"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bBA-hc-7S7" firstAttribute="height" secondItem="8Ze-i0-p1M" secondAttribute="height" multiplier="0.9" id="KdW-Bb-VmI"/>
                             <constraint firstItem="bBA-hc-7S7" firstAttribute="centerY" secondItem="8Ze-i0-p1M" secondAttribute="centerY" id="Zay-zC-7b2"/>
@@ -82,9 +82,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <namedColor name="BackgroundGray">
-            <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="BrandPurple">
             <color red="0.51800000667572021" green="0.36899998784065247" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

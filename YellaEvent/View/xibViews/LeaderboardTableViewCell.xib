@@ -51,7 +51,7 @@
                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="30"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HoQ-HN-XOq">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HoQ-HN-XOq">
                                 <rect key="frame" x="202" y="0.0" width="111" height="34"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="My Badges" titleAlignment="automatic">
@@ -71,10 +71,10 @@
                             <constraint firstItem="vpF-lV-5pK" firstAttribute="leading" secondItem="ff0-jR-cJ5" secondAttribute="leading" constant="5" id="AOV-XM-lRw"/>
                             <constraint firstItem="HoQ-HN-XOq" firstAttribute="centerY" secondItem="ff0-jR-cJ5" secondAttribute="centerY" id="BL9-PO-1mk"/>
                             <constraint firstItem="vpF-lV-5pK" firstAttribute="height" secondItem="ff0-jR-cJ5" secondAttribute="height" multiplier="0.8" id="CsM-v4-zir"/>
-                            <constraint firstItem="HoQ-HN-XOq" firstAttribute="width" secondItem="ff0-jR-cJ5" secondAttribute="width" multiplier="0.26" constant="12.920000000000002" id="FOG-qI-NaG"/>
-                            <constraint firstAttribute="trailing" secondItem="HoQ-HN-XOq" secondAttribute="trailing" id="Hur-rA-hG7"/>
+                            <constraint firstItem="HoQ-HN-XOq" firstAttribute="width" secondItem="ff0-jR-cJ5" secondAttribute="width" multiplier="0.26" constant="30.920000000000002" id="FOG-qI-NaG"/>
+                            <constraint firstAttribute="trailing" secondItem="HoQ-HN-XOq" secondAttribute="trailing" constant="-5" id="Hur-rA-hG7"/>
                             <constraint firstItem="wbY-QE-rHq" firstAttribute="width" secondItem="vpF-lV-5pK" secondAttribute="width" id="ZyG-US-lqJ"/>
-                            <constraint firstItem="HoQ-HN-XOq" firstAttribute="leading" secondItem="qLG-WU-WbV" secondAttribute="trailing" constant="-13" id="dSL-Zz-zQp"/>
+                            <constraint firstItem="HoQ-HN-XOq" firstAttribute="leading" secondItem="qLG-WU-WbV" secondAttribute="trailing" constant="-26" id="dSL-Zz-zQp"/>
                             <constraint firstItem="vpF-lV-5pK" firstAttribute="centerY" secondItem="ff0-jR-cJ5" secondAttribute="centerY" id="eah-J3-bPM"/>
                             <constraint firstItem="qLG-WU-WbV" firstAttribute="centerY" secondItem="ff0-jR-cJ5" secondAttribute="centerY" id="fYQ-Dc-AuA"/>
                             <constraint firstItem="qLG-WU-WbV" firstAttribute="leading" secondItem="vpF-lV-5pK" secondAttribute="trailing" constant="10" id="kTw-Uf-b1x"/>

@@ -13,6 +13,8 @@ class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, 
     var badges: [Badge?] = [] // Array to hold optional Badge data
     var userID: String = ""
     
+    @IBOutlet weak var badgesCount: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,6 +49,7 @@ class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, 
                 DispatchQueue.main.async {
                     self.badges = Array(repeating: nil, count: customer.badgesArray.count)
                     self.collectionView.reloadData()
+                    self.badgesCount.text = "You own \(customer.badgesArray.count) Badges"
                 }
                 
                 // Fetch badges concurrently using Task Groups
@@ -68,7 +71,7 @@ class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, 
     }
 
     func fetchBadgesConcurrently(badgeIDs: [String]) async throws -> [Badge] {
-        return try await withTaskGroup(of: Badge?.self) { group in
+        return await withTaskGroup(of: Badge?.self) { group in
             // Add tasks for each badge ID
             for badgeID in badgeIDs {
                 group.addTask {

@@ -67,8 +67,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eXu-TH-FS6">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="393" id="ClQ-6z-KwE"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9Uy-2X-BOL">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -86,23 +89,39 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You own - Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FY5-Go-l00">
+                                <rect key="frame" x="16" y="74" width="152.33333333333334" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
+                                <color key="textColor" name="BrandPurple"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="32"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8Nn-ls-myS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eXu-TH-FS6" firstAttribute="bottom" secondItem="8Nn-ls-myS" secondAttribute="bottom" id="JWh-eF-Mxf"/>
-                            <constraint firstItem="eXu-TH-FS6" firstAttribute="top" secondItem="8Nn-ls-myS" secondAttribute="top" id="OEX-zd-yU9"/>
+                            <constraint firstItem="8Nn-ls-myS" firstAttribute="trailing" secondItem="FY5-Go-l00" secondAttribute="trailing" constant="224.66999999999999" id="OGD-C8-GRZ"/>
                             <constraint firstItem="8Nn-ls-myS" firstAttribute="trailing" secondItem="eXu-TH-FS6" secondAttribute="trailing" id="Vq9-Hi-mNd"/>
+                            <constraint firstItem="FY5-Go-l00" firstAttribute="top" secondItem="8Nn-ls-myS" secondAttribute="top" constant="15" id="YAI-12-802"/>
+                            <constraint firstItem="eXu-TH-FS6" firstAttribute="top" secondItem="FY5-Go-l00" secondAttribute="bottom" constant="8" symbolic="YES" id="ZLh-IR-uOs"/>
                             <constraint firstItem="eXu-TH-FS6" firstAttribute="leading" secondItem="8Nn-ls-myS" secondAttribute="leading" id="oZa-f6-7fL"/>
+                            <constraint firstItem="FY5-Go-l00" firstAttribute="leading" secondItem="8Nn-ls-myS" secondAttribute="leading" constant="16" id="rhC-Xg-YaH"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="badgesCount" destination="FY5-Go-l00" id="kBC-wE-311"/>
                         <outlet property="collectionView" destination="eXu-TH-FS6" id="tct-b1-uj0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MkG-Gl-tLa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1808" y="-29"/>
+            <point key="canvasLocation" x="1806.8702290076335" y="-29.577464788732396"/>
         </scene>
         <!--Leaderboard-->
         <scene sceneID="w1e-qR-qGD">
@@ -136,7 +155,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
