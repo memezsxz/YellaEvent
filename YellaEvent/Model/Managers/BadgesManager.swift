@@ -25,6 +25,10 @@ final class BadgesManager {
         try await Badge(from: badgeDocument(eventID: eventID).getDocument().data()!)
     }
     
+    static func getBadgeForEvent(eventID: String) async throws -> Badge{
+        try await Badge(from: badgesCollection.whereField(K.FStore.Badges.eventID, isEqualTo: eventID).getDocuments().documents.first!.data())
+    }
+    
     static func getUserBadges(badgesArray: [String]) async throws -> [Badge] {
         let snapshot = try await badgesCollection.whereField(K.FStore.Badges.badgeID, in: badgesArray).getDocuments()
 

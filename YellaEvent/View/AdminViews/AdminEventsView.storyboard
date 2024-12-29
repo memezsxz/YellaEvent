@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ft0-sw-tzJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ft0-sw-tzJ">
     <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -205,6 +205,9 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Delete Event">
                                             <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="21"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="DeleteEvent:" destination="X1r-RQ-PPz" eventType="touchUpInside" id="DEk-i2-twd"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Bg-Pb-k1k">
                                         <rect key="frame" x="0.0" y="288" width="380" height="39.333333333333314"/>
@@ -213,6 +216,9 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Ban Event">
                                             <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="21"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="BanEvent:" destination="X1r-RQ-PPz" eventType="touchUpInside" id="Icn-Cl-kpu"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
