@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mzc-sj-T3I">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mzc-sj-T3I">
     <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -74,6 +74,12 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Users" image="person.2" catalog="system" selectedImage="person.2.fill" id="nmL-LD-8YX"/>
                     <navigationItem key="navigationItem" title="Users" id="Iwy-kY-D6G">
+                        <barButtonItem key="leftBarButtonItem" title="Manage FAQ" id="AeE-jK-FuF">
+                            <color key="tintColor" name="BrandPurple"/>
+                            <connections>
+                                <segue destination="EwN-z7-x1K" kind="show" id="zE2-Rt-Bit"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ple-4Y-bCR">
                             <connections>
                                 <action selector="CreateButtonTapped:" destination="q1V-aj-IzI" id="OaV-Ln-KPA"/>
@@ -92,6 +98,7 @@
                         <segue destination="S2w-G6-e57" kind="show" identifier="ViewAdminPage" id="b2Q-gQ-nlD"/>
                         <segue destination="nzk-E5-Xey" kind="show" identifier="BanPage" id="i8V-rG-W4l"/>
                         <segue destination="xs0-Oc-FyE" kind="presentation" identifier="GoToFAQs" modalPresentationStyle="fullScreen" id="qzB-zJ-ewD"/>
+                        <segue destination="kh7-M8-OJr" kind="show" identifier="showEvents" id="0DV-Ix-fA6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G5K-dN-OI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -346,7 +353,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xGD-Yk-r6a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-626" y="1237"/>
+            <point key="canvasLocation" x="-637" y="648"/>
         </scene>
         <!--Organizer Name-->
         <scene sceneID="dym-SU-ig6">
@@ -494,7 +501,6 @@
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="ViewOrganizerEvents:" destination="6w2-gH-k9e" eventType="touchUpInside" id="I48-VN-3aV"/>
-                                                    <segue destination="kh7-M8-OJr" kind="show" identifier="viewEvents" id="QuI-D9-Wyr"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NhL-vs-TOd">
@@ -805,6 +811,8 @@
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pB8-xH-ix2">
                                                                 <rect key="frame" x="0.0" y="28" width="396" height="47"/>
+                                                                <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <variation key="heightClass=regular-widthClass=regular">
@@ -2032,6 +2040,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="BackgroundGray"/>
+                        <color key="tintColor" name="BrandPurple"/>
                         <color key="sectionIndexBackgroundColor" name="BackgroundGray"/>
                         <color key="sectionIndexTrackingBackgroundColor" name="BackgroundGray"/>
                         <prototypes>
@@ -2093,6 +2102,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="zE2-Rt-Bit"/>
         <segue reference="6pA-lP-85K"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -2100,7 +2110,7 @@
         <image name="icloud.and.arrow.up" catalog="system" width="128" height="117"/>
         <image name="person.2" catalog="system" width="128" height="87"/>
         <image name="person.2.fill" catalog="system" width="128" height="86"/>
-        <image name="square.and.arrow.down" catalog="system" width="114" height="128"/>
+        <image name="square.and.arrow.down" catalog="system" width="112" height="128"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
         <namedColor name="BackgroundGray">
             <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2121,10 +2131,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

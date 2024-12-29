@@ -46,7 +46,7 @@ class AdminUsersViewController: UIViewController {
     @IBOutlet weak var searchbar: UISearchBar!
     var users : [User] = []
     var currentSegment : UserType?
-    
+    var organizerName: String?
 
     
     
@@ -206,10 +206,15 @@ class AdminUsersViewController: UIViewController {
             createOrganizerView = segue.destination.view as? createOrganizerView
             createOrganizerView.delegate = self
             createOrganizerView.setup()
-        }else if (segue.identifier == "viewEvents"){
-            print("2")
-
-//            (segue.destination as? AdminEventsViewController)?.searchBar.text = orgName
+        }else if (segue.identifier == "showEvents"){
+            if let navController = segue.destination as? UINavigationController,
+               let destination = navController.topViewController as? AdminEventsViewController {
+                // Successfully accessed AdminEventsViewController
+                destination.orgName = organizerName
+            }
+            
+            
+            
         }
         
         super.prepare(for: segue, sender: sender)
@@ -736,10 +741,7 @@ extension AdminUsersViewController{
     
     
     func showEvents(){
-        print("1")
-        performSegue(withIdentifier: "viewEvents", sender: self)
-        print("2")
-
+        performSegue(withIdentifier: "showEvents", sender: self)
     }
     
     

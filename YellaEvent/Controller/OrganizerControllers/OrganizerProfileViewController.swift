@@ -420,7 +420,7 @@ extension OrganizerProfileViewController: UIImagePickerControllerDelegate, UINav
                     
                     
                     user.delete { error in
-                      if let error = error {
+                      if let _ = error {
                         // An error happened.
                       } else {
                         // Account deleted.
