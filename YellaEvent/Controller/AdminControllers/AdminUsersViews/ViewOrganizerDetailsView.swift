@@ -107,6 +107,13 @@ class ViewOrganizerDetailsView: UIView {
     
     @IBAction func ViewOrganizerEvents(_ sender: UIButton) {
         //TODO_FATIMA
+        
+        if let name = currentOrganizer?.fullName{
+            delegate?.organizerName = name
+        }
+        
+        delegate?.organizerName = currentOrganizer?.fullName
+        delegate?.showEvents()
     }
     
     @IBAction func DownloadDocumnets(_ sender: UIButton) {
