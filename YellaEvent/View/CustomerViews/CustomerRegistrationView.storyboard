@@ -9,21 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="R2S-Zn-jQF">
-            <objects>
-                <viewController id="md6-aK-fW3" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="auM-iy-MSE">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="dft-UL-JkV"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bUe-zm-GqT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1708" y="-28"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="eOw-hp-WLT">
             <objects>
@@ -47,7 +32,7 @@
         <!--Payment-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="CustomerRegistrationViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CustomerRegistrationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="CustomerRegistrationViewController" customModule="YellaEvent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -188,8 +173,7 @@ Fun Begin!</string>
                                         <state key="normal" title="Button" backgroundImage="ticket" catalog="system"/>
                                         <buttonConfiguration key="configuration" style="filled" image="ticket" catalog="system" title="Pay"/>
                                         <connections>
-                                            <action selector="payButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kxE-G4-nOH"/>
-                                            <segue destination="Do7-d8-JXh" kind="presentation" identifier="ShowCustomerTickets" id="vlW-pX-Mnr"/>
+                                            <action selector="payButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="nLo-q7-vaf"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -214,29 +198,21 @@ Fun Begin!</string>
                     </view>
                     <navigationItem key="navigationItem" title="Payment" id="1lB-Q3-Vk4"/>
                     <connections>
-                        <outlet property="CardCCV" destination="iGd-mn-k5G" id="XlZ-Ls-SHn"/>
-                        <outlet property="CardExpiry" destination="axS-cw-ud6" id="T80-rc-CmV"/>
-                        <outlet property="CardHolder" destination="iQO-Ab-RCW" id="SUE-tm-4hL"/>
-                        <outlet property="CardNumber" destination="Zrq-2m-VmE" id="onC-Jj-kRp"/>
-                        <outlet property="cardCCVErrorLabel" destination="kXI-Ta-F7v" id="GEx-mw-t8i"/>
-                        <outlet property="cardExpiryErrorLabel" destination="UoZ-Bb-fAT" id="81M-bm-Dbw"/>
-                        <outlet property="cardHolderErrorLabel" destination="RkK-cQ-Wg7" id="47U-hl-PR7"/>
-                        <outlet property="cardNumberErrorLabel" destination="gs0-U0-a4K" id="vfV-gm-3cf"/>
-                        <outlet property="lblTicketAmount" destination="Ich-66-sx4" id="JLG-1h-nu1"/>
-                        <outlet property="lblTicketQuantity" destination="kD6-xT-YFR" id="EW2-78-soO"/>
+                        <outlet property="inputCardCVV" destination="iGd-mn-k5G" id="ZKw-tI-dqO"/>
+                        <outlet property="inputCardExpiry" destination="axS-cw-ud6" id="N0A-40-yfr"/>
+                        <outlet property="inputCardName" destination="iQO-Ab-RCW" id="qXI-Bs-SoM"/>
+                        <outlet property="inputCardNumber" destination="Zrq-2m-VmE" id="7On-do-C46"/>
+                        <outlet property="lblErrorCardExpiry" destination="UoZ-Bb-fAT" id="oYy-1Q-eVO"/>
+                        <outlet property="lblErrorCardName" destination="RkK-cQ-Wg7" id="6JB-w9-rfy"/>
+                        <outlet property="lblErrorCardNumber" destination="gs0-U0-a4K" id="ikc-vj-5E3"/>
+                        <outlet property="lblErrorCardcvv" destination="kXI-Ta-F7v" id="QhN-gs-Ayh"/>
+                        <outlet property="lblTicketPrice" destination="Ich-66-sx4" id="GlR-rI-uaI"/>
+                        <outlet property="lblTicketQuantity" destination="kD6-xT-YFR" id="8Is-1f-He4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="115.26717557251908" y="-2.1126760563380285"/>
-        </scene>
-        <!--CustomerTicketDetailsView-->
-        <scene sceneID="EXQ-CW-N6V">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CustomerTicketsView" referencedIdentifier="CustomerTicketDetailsView" id="Do7-d8-JXh" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hCT-LG-C6T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="127" y="432"/>
         </scene>
     </scenes>
     <resources>
