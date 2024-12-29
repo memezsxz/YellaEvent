@@ -265,8 +265,12 @@ extension CustomerSearchViewController: UITableViewDelegate,
             tableView.deselectRow(at: indexPath, animated: true)
         } else {
             selectedEventID = eventsList[indexPath.row].eventID
+            let storyboard = UIStoryboard(name: "CustomerEventView", bundle: nil) // Replace "Main" with your storyboard name
+                    guard let customerEventVC = storyboard.instantiateViewController(withIdentifier: "CustomerEventView") as? CustomerEventViewController else { return }
+            customerEventVC.eventID = selectedEventID!
+                    customerEventVC.delegate = self
+                    navigationController?.pushViewController(customerEventVC, animated: true)
         }
-        performSegue(withIdentifier: "toEvent", sender: self)
         
     }
 
@@ -294,12 +298,7 @@ extension CustomerSearchViewController: UITableViewDelegate,
                 // Update the collection view's selected interests
             }
         }
-        if segue.identifier == "toEvent" {
-            let vc = (segue.destination as! UINavigationController).topViewController as! CustomerEventViewController
-            navigationController?.pushViewController(vc, animated: true)
-            vc.delegate = self
-            vc.eventID = selectedEventID!
-        }
+        
     }
     
 }
