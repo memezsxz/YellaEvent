@@ -23,7 +23,7 @@ class AdminEventView: UIView {
         
         if let userIndex = userIndex {
             usersController.tableView.scrollToRow(at: IndexPath(row: userIndex, section: 0), at: .middle, animated: true)
-        
+            
             usersController.tableView(usersController.tableView, didSelectRowAt: IndexPath(row: userIndex, section: 0))
         }
         
@@ -32,7 +32,7 @@ class AdminEventView: UIView {
     
     @IBOutlet var eventStatus: UILabel!
     @IBOutlet var eventTitle: UILabel!
-//    @IBOutlet var statusCircle: UIImageView!
+    //    @IBOutlet var statusCircle: UIImageView!
     @IBOutlet var dayOfMonth: UILabel!
     @IBOutlet var Month: UILabel!
     @IBOutlet var dayOfweek: UILabel!
@@ -47,9 +47,9 @@ class AdminEventView: UIView {
         super.init(coder: coder)
     }
     
-
     
-
+    
+    
     func fetchEventAndUpdateUI() {
         Task {
             do {
@@ -74,6 +74,17 @@ class AdminEventView: UIView {
                     eventImageView.image = image
                 }
             }
+        }
+        
+        // Set Event Name
+        if let eventTitle = eventTitle {
+            eventTitle.text = event.name // Assuming `event.name` contains the event name
+        }
+        
+        // Set Event Status
+        if let eventStatus = eventStatus {
+            eventStatus.text = event.status.rawValue.capitalized // Convert status to a readable format
+            updateStatusLabelAppearance(status: event.status) // Update color based on status
         }
         
         
@@ -156,4 +167,102 @@ class AdminEventView: UIView {
             }
         }
     }
+    
+    @IBAction func DeleteEvent(_ sender: Any) {
+        guard let event = event else { return }
+        
+        let alert = UIAlertController(
+            title: "Delete Event",
+            message: "Are you sure you want to delete this event? This action cannot be undone.",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            
+            Task {
+                do {
+                    // Mark the event as deleted
+                    try await EventsManager.deleteEvent(eventID: event.eventID)
+                    
+                    // Inform the delegate to pop or refresh the view
+                    DispatchQueue.main.async {
+                        self.delegate?.navigationController?.popViewController(animated: true)
+                    }
+                } catch {
+                    print("Failed to delete event: \(error)")
+                }
+            }
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        delegate?.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func BanEvent(_ sender: Any) {
+        guard let event = event else { return }
+        
+        let alert = UIAlertController(
+            title: "Ban Event",
+            message: "Please provide a reason and description for banning this event.",
+            preferredStyle: .alert
+        )
+
+        // Add a text field for the reason
+        alert.addTextField { textField in
+            textField.placeholder = "Reason for ban"
+        }
+
+        // Add a text field for additional description
+        alert.addTextField { textField in
+            textField.placeholder = "Additional description (optional)"
+        }
+
+        alert.addAction(UIAlertAction(title: "Ban", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            guard let reason = alert.textFields?[0].text, !reason.isEmpty else {
+                // If the reason field is empty, show an error and return
+                let errorAlert = UIAlertController(
+                    title: "Error",
+                    message: "The reason for banning cannot be empty.",
+                    preferredStyle: .alert
+                )
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.delegate?.present(errorAlert, animated: true, completion: nil)
+                return
+            }
+
+            let description = alert.textFields?[1].text ?? ""
+
+            Task {
+                do {
+                    // Ban the event
+                    try await EventsManager.banEvent(event: event, reason: reason, description: description)
+
+                    // Inform the delegate to pop or refresh the view
+                    DispatchQueue.main.async {
+                        self.delegate?.navigationController?.popViewController(animated: true)
+                    }
+                } catch {
+                    print("Failed to ban event: \(error)")
+
+                    // Show an error message
+                    let errorAlert = UIAlertController(
+                        title: "Error",
+                        message: "Failed to ban the event. Please try again later.",
+                        preferredStyle: .alert
+                    )
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.delegate?.present(errorAlert, animated: true, completion: nil)
+                }
+            }
+        })
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        delegate?.present(alert, animated: true, completion: nil)
+    }
+
 }

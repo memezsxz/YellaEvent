@@ -10,6 +10,8 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
     @IBOutlet weak var tableView: UITableView! // Outlet for the table view
     @IBOutlet weak var activeExpired: UISegmentedControl! // Segment control to toggle between active and expired tickets
     
+    
+    
     let userId = UserDefaults.standard.string(forKey: K.bundleUserID)! // Retrieve user ID from UserDefaults
 
     // Called after the view has been loaded into memory
@@ -18,8 +20,8 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         setupTableView() // Set up the table view
 
         // Set automatic row height for the table view
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 100 // Provide an estimated height for better performance
+//        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.estimatedRowHeight = 100 // Provide an estimated height for better performance
 
         // Add target for segmented control to handle value changes
         activeExpired.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
@@ -81,6 +83,9 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
         updateVisibleTickets() // Refresh the visible tickets based on selected segment
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height / 8.5
+    }
     // Data source method to determine the number of rows in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return activeExpired.selectedSegmentIndex == 0 ? activeTickets.count : expiredTickets.count // Return count based on selected segment

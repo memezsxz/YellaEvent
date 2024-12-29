@@ -48,11 +48,11 @@
                                 <rect key="frame" x="16" y="215" width="361" height="554"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TicketsTableViewCell" id="6Ta-Jc-hqx">
-                                        <rect key="frame" x="0.0" y="50" width="361" height="47.666667938232422"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TicketsTableViewCell" rowHeight="197" id="6Ta-Jc-hqx">
+                                        <rect key="frame" x="0.0" y="50" width="361" height="197"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Ta-Jc-hqx" id="wGi-Wv-WHh">
-                                            <rect key="frame" x="0.0" y="0.0" width="361" height="47.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="361" height="197"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -84,7 +84,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rWB-xJ-1NP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1115" y="-365"/>
+            <point key="canvasLocation" x="-1115.2671755725191" y="-365.49295774647891"/>
         </scene>
         <!--Event Name-->
         <scene sceneID="XSu-tY-aQS">
@@ -223,33 +223,54 @@
                                     <constraint firstItem="lNs-7m-z0e" firstAttribute="centerY" secondItem="hOJ-lG-hvF" secondAttribute="centerY" id="wsE-01-Z8H"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G5e-cR-ARX">
-                                <rect key="frame" x="52.666666666666657" y="726.66666666666663" width="288" height="39"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="39" id="Yi2-h6-tMB"/>
-                                </constraints>
-                                <color key="tintColor" name="BrandPurple"/>
-                                <state key="normal" title="Button" backgroundImage="location.fill" catalog="system"/>
-                                <buttonConfiguration key="configuration" style="filled" title="  View Event Details" cornerStyle="capsule">
-                                    <imageReference key="image" image="info.circle.fill" catalog="system" symbolScale="medium"/>
-                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="0.0"/>
-                                    <color key="baseBackgroundColor" name="BrandPurple"/>
-                                </buttonConfiguration>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aUR-1A-Vrs">
+                                <rect key="frame" x="30" y="727" width="333" height="39"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G5e-cR-ARX" userLabel="View Event Details">
+                                        <rect key="frame" x="0.0" y="0.0" width="162.66666666666666" height="39"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="39" id="Yi2-h6-tMB"/>
+                                        </constraints>
+                                        <color key="tintColor" name="BrandPurple"/>
+                                        <state key="normal" title="Button" backgroundImage="location.fill" catalog="system"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="  View Event Details" cornerStyle="capsule">
+                                            <imageReference key="image" image="info.circle.fill" catalog="system" symbolScale="medium"/>
+                                            <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="0.0"/>
+                                            <color key="baseBackgroundColor" name="BrandPurple"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="MHr-gI-RlV" kind="presentation" identifier="showEventDetails" id="znx-lK-fud"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVZ-Mh-jT6">
+                                        <rect key="frame" x="170.66666666666663" y="0.0" width="162.33333333333337" height="39"/>
+                                        <color key="tintColor" name="BrandPurple"/>
+                                        <state key="normal" title="Button" backgroundImage="info.circle.fill" catalog="system"/>
+                                        <buttonConfiguration key="configuration" style="filled" image="info.circle.fill" catalog="system" title="Rate Event" cornerStyle="capsule">
+                                            <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="0.0"/>
+                                            <color key="baseBackgroundColor" name="BrandPurple"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="btnRateEvent:" destination="uBa-51-B3b" eventType="touchUpInside" id="z7w-M0-FOA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eZZ-g4-dZe"/>
                         <color key="backgroundColor" name="BackgroundGray"/>
                         <constraints>
                             <constraint firstItem="401-pa-mY2" firstAttribute="leading" secondItem="eZZ-g4-dZe" secondAttribute="leading" constant="16" id="2Xu-as-b92"/>
                             <constraint firstItem="eZZ-g4-dZe" firstAttribute="trailing" secondItem="401-pa-mY2" secondAttribute="trailing" constant="16" id="7NF-oN-MaL"/>
+                            <constraint firstItem="eZZ-g4-dZe" firstAttribute="trailing" secondItem="aUR-1A-Vrs" secondAttribute="trailing" constant="30" id="BAj-mV-QiQ"/>
+                            <constraint firstItem="aUR-1A-Vrs" firstAttribute="top" secondItem="401-pa-mY2" secondAttribute="bottom" constant="26.329999999999998" id="EwH-o3-tW4"/>
                             <constraint firstItem="hOJ-lG-hvF" firstAttribute="height" secondItem="KUV-cj-wdv" secondAttribute="height" multiplier="0.319249" id="H7u-oT-mhk"/>
-                            <constraint firstItem="G5e-cR-ARX" firstAttribute="centerX" secondItem="KUV-cj-wdv" secondAttribute="centerX" id="PmQ-gy-rFY"/>
+                            <constraint firstItem="aUR-1A-Vrs" firstAttribute="centerX" secondItem="KUV-cj-wdv" secondAttribute="centerX" id="MEB-Cu-cIq"/>
                             <constraint firstItem="eZZ-g4-dZe" firstAttribute="trailing" secondItem="xUv-Mz-od5" secondAttribute="trailing" constant="30" id="WBt-vl-nUm"/>
                             <constraint firstItem="401-pa-mY2" firstAttribute="centerX" secondItem="KUV-cj-wdv" secondAttribute="centerX" id="b68-h5-QTn"/>
                             <constraint firstItem="401-pa-mY2" firstAttribute="top" secondItem="hOJ-lG-hvF" secondAttribute="bottom" constant="8" symbolic="YES" id="d4T-Lu-RRa"/>
-                            <constraint firstItem="G5e-cR-ARX" firstAttribute="top" secondItem="401-pa-mY2" secondAttribute="bottom" constant="26" id="kx6-Pc-7Xe"/>
+                            <constraint firstItem="aUR-1A-Vrs" firstAttribute="leading" secondItem="eZZ-g4-dZe" secondAttribute="leading" constant="30" id="kT1-NT-hnk"/>
                             <constraint firstItem="xUv-Mz-od5" firstAttribute="top" secondItem="eZZ-g4-dZe" secondAttribute="top" constant="14" id="nUM-Ux-hyj"/>
-                            <constraint firstItem="G5e-cR-ARX" firstAttribute="width" secondItem="hOJ-lG-hvF" secondAttribute="width" id="qjG-3L-ow1"/>
                             <constraint firstItem="hOJ-lG-hvF" firstAttribute="top" secondItem="xUv-Mz-od5" secondAttribute="bottom" constant="25" id="qoC-HB-Qqb"/>
                             <constraint firstItem="xUv-Mz-od5" firstAttribute="leading" secondItem="eZZ-g4-dZe" secondAttribute="leading" constant="30" id="rdU-XC-AyG"/>
                             <constraint firstItem="hOJ-lG-hvF" firstAttribute="centerX" secondItem="KUV-cj-wdv" secondAttribute="centerX" id="zhG-dc-r2L"/>
@@ -265,6 +286,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnRateEvent" destination="BVZ-Mh-jT6" id="HTO-OK-aGh"/>
+                        <outlet property="btnViewEvent" destination="G5e-cR-ARX" id="Hsd-Qj-MyI"/>
                         <outlet property="lblBtnCancelTicket" destination="OGE-1s-CYL" id="fot-qO-O8i"/>
                         <outlet property="lblDate" destination="6hH-aG-waz" id="Clr-tg-NKu"/>
                         <outlet property="lblEventName" destination="YlQ-YV-e98" id="P9f-aT-vWA"/>
@@ -277,6 +300,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iel-Dg-ISN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-202.29007633587784" y="-365.49295774647891"/>
+        </scene>
+        <!--CustomerEventView-->
+        <scene sceneID="Ahz-t6-n03">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CustomerEventView" id="MHr-gI-RlV" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jhr-f6-222" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-569" y="22"/>
         </scene>
     </scenes>
     <resources>

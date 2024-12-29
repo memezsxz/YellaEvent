@@ -21,10 +21,14 @@ class OrganizerEventEditViewController: UITableViewController {
     @IBOutlet weak var eventCoverButton: UIButton!
     @IBOutlet weak var eventBadgeButton: UIButton!
     @IBOutlet var btnDelete: UIButton!
-
+    
+    
+    var eventID: String = "3jCdiZ7OrVUAksiBrZwr"
     
     var selectedCategory: Category?
     var organizer: Organizer?
+    var categoryList: [Category] = []
+    var StringCategoryList: [String] = []
     
     // Error labels
     @IBOutlet var lblErrorEventTitle: UILabel!
@@ -51,64 +55,111 @@ class OrganizerEventEditViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        //setup()
-        
         if let status = StringStatusList.first {
-                btnStatus.setTitle(status, for: .normal)
-            }
+            btnStatus.setTitle(status, for: .normal)
+        }
+        
+        Task {
+                self.organizer = try await UsersManager.getOrganizer(organizerID: UserDefaults.standard.string(forKey: K.bundleUserID)!)
+                
+                if let status = StringStatusList.first {
+                    btnStatus.setTitle(status, for: .normal)
+                }
+
+                do {
+                    self.categoryList = try await CategoriesManager.getActiveCatigories()
+                    print(self.categoryList) // Debugging: Check if categories are loaded correctly
+                    self.StringCategoryList = self.categoryList.compactMap({ $0.name })
+                    
+                    DispatchQueue.main.async {
+                        self.showDropdown(options: self.StringCategoryList, for: self.btnCategory, title: "Select Category")
+                    }
+                    
+                } catch {
+                    print("Failed to fetch categories: \(error.localizedDescription)")
+                }
+                
+                // Load status options
+                self.StringStatusList = ["Ongoing", "Completed", "Cancelled"]
+                
+                DispatchQueue.main.async {
+                    self.showDropdown(options: self.StringStatusList, for: self.btnStatus, title: "Select Status")
+                }
+            
+            
+        
+        setup()
     }
 
-//    func setup() {
-//        if let event = event {
-//            txtEventName.text = event.name
-//            btnDelete.isEnabled = !event.isDeleted
-//            textEventDescription.text = event.description
-//
-//            // Set up date and time formatters
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateStyle = .medium
-//            dateFormatter.timeStyle = .none
-//
-//            let timeFormatter = DateFormatter()
-//            timeFormatter.dateStyle = .none
-//            timeFormatter.timeStyle = .short
-//
-//            // Populate date and time fields
-//            textStartDate.text = dateFormatter.string(from: event.startTimeStamp)
-//            textStartTime.text = timeFormatter.string(from: event.startTimeStamp)
-//            textEndTime.text = timeFormatter.string(from: event.endTimeStamp)
-//
-//            btnCategory.setTitle(event.category.name, for: .normal)
-//            btnStatus.setTitle(event.status.rawValue, for: .normal)
-//
-//            let priceFormatter = NumberFormatter()
-//            priceFormatter.numberStyle = .currency
-//            textTicketPrice.text = priceFormatter.string(from: NSNumber(value: event.price))
-//
-//            textVenueName.text = event.venueName
-//            textMaxTicketNum.text = String(event.maximumTickets)
-//            textLocation.text = event.locationURL
-//            textMinAge.text = String(event.minimumAge)
-//
-//            // Load event cover image
-//            if let coverImageURL = URL(string: event.coverImageURL),
-//               let imageData = try? Data(contentsOf: coverImageURL),
-//               let coverImage = UIImage(data: imageData) {
-//                eventCoverButton.setBackgroundImage(coverImage, for: .normal)
-//            } else {
-//                eventCoverButton.setBackgroundImage(UIImage(named: "defaultCoverImage"), for: .normal)
-//            }
-//
-//            // Load badge image
-//            if let badgeImagePath = badge?.image, let badgeImage = UIImage(contentsOfFile: badgeImagePath) {
-//                eventBadgeButton.setBackgroundImage(badgeImage, for: .normal)
-//            } else {
-//                eventBadgeButton.setBackgroundImage(UIImage(named: "defaultBadgeImage"), for: .normal)
-//            }
-//        }
-//    }
+    func setup() {
+        if let event = event {
+            txtEventName.text = event.name
+            btnDelete.isEnabled = !event.isDeleted
+            textEventDescription.text = event.description
 
+            // Set up date and time formatters
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateStyle = .none
+            timeFormatter.timeStyle = .short
+
+            // Populate date and time fields
+            textStartDate.text = dateFormatter.string(from: event.startTimeStamp)
+            textStartTime.text = timeFormatter.string(from: event.startTimeStamp)
+            textEndTime.text = timeFormatter.string(from: event.endTimeStamp)
+
+            btnCategory.setTitle(event.category.name, for: .normal)
+            btnStatus.setTitle(event.status.rawValue, for: .normal)
+
+            let priceFormatter = NumberFormatter()
+            priceFormatter.numberStyle = .currency
+            textTicketPrice.text = priceFormatter.string(from: NSNumber(value: event.price))
+
+            textVenueName.text = event.venueName
+            textMaxTicketNum.text = String(event.maximumTickets)
+            textLocation.text = event.locationURL
+            textMinAge.text = String(event.minimumAge)
+
+            // Load event cover image if available
+            Task {
+                PhotoManager.shared.downloadImage(from: URL(string: event.coverImageURL)!) { result in
+                    switch result {
+                    case .success(let coverImage):
+                        self.eventCoverButton.setBackgroundImage(coverImage, for: .normal)
+                    case .failure(let error):
+                        print("error", error.localizedDescription)
+                    }
+                }
+
+            }
+                    if let coverImageURL = URL(string: event.coverImageURL),
+                       let imageData = try? Data(contentsOf: coverImageURL),
+                       let coverImage = UIImage(data: imageData) {
+                        eventCoverButton.setBackgroundImage(coverImage, for: .normal)
+                    } else {
+                        eventCoverButton.setBackgroundImage(UIImage(named: "defaultCoverImage"), for: .normal)
+                    }
+
+            // Load badge image if available
+            Task {
+                print(eventID)
+                badge = try await BadgesManager.getBadgeForEvent(eventID: eventID)
+                           if !badge!.image.isEmpty,
+                              let badgeImage = UIImage(contentsOfFile: badge!.image) {
+                               eventBadgeButton.setBackgroundImage(badgeImage, for: .normal)
+                           } else {
+                               eventBadgeButton.setBackgroundImage(UIImage(named: "defaultBadgeImage"), for: .normal)
+                           }
+                print(badge)
+            }
+               }
+        
+               
+        }
+    }
     func setupDatePickers() {
         // Initialize the date and time pickers with wheel style
         let startDatePicker = UIDatePicker()
@@ -133,6 +184,7 @@ class OrganizerEventEditViewController: UITableViewController {
         startDatePicker.addTarget(self, action: #selector(startDatePickerChanged), for: .valueChanged)
         startTimePicker.addTarget(self, action: #selector(startTimePickerChanged), for: .valueChanged)
         endTimePicker.addTarget(self, action: #selector(endTimePickerChanged), for: .valueChanged)
+        
     }
 
     @objc func startDatePickerChanged(sender: UIDatePicker) {
@@ -192,17 +244,17 @@ class OrganizerEventEditViewController: UITableViewController {
                 lblErrorEventCover.textColor = .systemGreen
                 print("Cover image selected: \(selectedImage)")
             case "badge":
-                Badgeimage = selectedImage
-                lblErrorBadgeCover.text = "Badge image updated."
-                lblErrorBadgeCover.textColor = .systemGreen
-                print("Badge image selected: \(selectedImage)")
-            default: break
+                        Badgeimage = selectedImage
+                        lblErrorBadgeCover.text = "Badge image updated."
+                        lblErrorBadgeCover.textColor = .systemGreen
+                        print("Badge image selected: \(selectedImage)")
+                    default: break
+
             }
         }
 
         dismiss(animated: true, completion: nil)
     }
-
 
     @IBAction func SaveChanges(_ sender: Any) {
         guard validateCreateFields() else { return }
@@ -306,6 +358,11 @@ class OrganizerEventEditViewController: UITableViewController {
                         do {
                             // Save updated badge
                             try await BadgesManager.createNewBadge(badge: newBadge)
+                            
+                            // Update the badge image button with the new badge image
+                            DispatchQueue.main.async {
+                                self.eventBadgeButton.setBackgroundImage(updatedBadgeImage, for: .normal)
+                            }
                         } catch {
                             print("Error creating badge: \(error)")
                         }
@@ -493,20 +550,53 @@ class OrganizerEventEditViewController: UITableViewController {
             resetFieldHighlight(textLocation)
         }
 
-        if eventCoverButton.currentBackgroundImage == nil {
+//        if eventCoverButton.currentBackgroundImage == nil {
+//            lblErrorEventCover.textColor = .red
+//            lblErrorEventCover.text = "Event cover image is required."
+//            isValid = false
+//        } else {
+//            lblErrorEventCover.text = ""
+//        }
+//
+//        if eventBadgeButton.currentBackgroundImage == nil {
+//            lblErrorBadgeCover.textColor = .red
+//            lblErrorBadgeCover.text = "Badge image is required."
+//            isValid = false
+//        } else {
+//            lblErrorBadgeCover.text = ""
+//        }
+//
+        
+        if let eventcover = lblErrorEventCover.text, eventcover.isEmpty || eventcover == "Cover is required." {
             lblErrorEventCover.textColor = .red
-            lblErrorEventCover.text = "Event cover image is required."
+            lblErrorEventCover.text = "Cover is required."
+                isValid = false
+        }
+        
+        
+        if let eventBadge = lblErrorBadgeCover.text, eventBadge.isEmpty || eventBadge == "Badge is required." {
+            lblErrorBadgeCover.textColor = .red
+            lblErrorBadgeCover.text = "Badge is required."
+                isValid = false
+        }
+        
+        if btnCategory.title(for: .normal) == nil || btnCategory.title(for: .normal)?.isEmpty ?? true {
+            lblErrorCategory.text = "Category is required."
+            lblErrorCategory.textColor = .red
             isValid = false
         } else {
-            lblErrorEventCover.text = ""
+            lblErrorCategory.text = ""
+            lblErrorCategory.textColor = .clear
         }
 
-        if eventBadgeButton.currentBackgroundImage == nil {
-            lblErrorBadgeCover.textColor = .red
-            lblErrorBadgeCover.text = "Badge image is required."
+        
+        if btnStatus.title(for: .normal) == nil || btnStatus.title(for: .normal)?.isEmpty ?? true {
+            lblErrorStatus.text = "Status is required."
+            lblErrorStatus.textColor = .red
             isValid = false
         } else {
-            lblErrorBadgeCover.text = ""
+            lblErrorStatus.text = ""
+            lblErrorStatus.textColor = .clear
         }
 
         return isValid
