@@ -23,6 +23,10 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8U5-bx-9yH">
                                 <rect key="frame" x="0.0" y="0.0" width="377" height="194"/>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="XMX-2u-wVh">
+                                <rect key="frame" x="170" y="78.666666666666671" width="37" height="37"/>
+                                <color key="color" name="BrandPurple"/>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dUY-ct-Xlm">
                                 <rect key="frame" x="0.0" y="136" width="377" height="58"/>
                                 <subviews>
@@ -139,7 +143,9 @@
                             <constraint firstAttribute="bottom" secondItem="dUY-ct-Xlm" secondAttribute="bottom" id="Ci6-fP-kh2"/>
                             <constraint firstItem="dUY-ct-Xlm" firstAttribute="height" secondItem="dQ6-Td-OkN" secondAttribute="height" multiplier="0.3" id="Rye-jN-6Wi"/>
                             <constraint firstItem="JjF-om-Uns" firstAttribute="top" secondItem="dQ6-Td-OkN" secondAttribute="top" constant="15" id="WuG-6X-fvB"/>
+                            <constraint firstItem="XMX-2u-wVh" firstAttribute="centerY" secondItem="dQ6-Td-OkN" secondAttribute="centerY" id="bmX-l6-DYe"/>
                             <constraint firstItem="dUY-ct-Xlm" firstAttribute="leading" secondItem="dQ6-Td-OkN" secondAttribute="leading" id="gUE-QX-2CJ"/>
+                            <constraint firstItem="XMX-2u-wVh" firstAttribute="centerX" secondItem="dQ6-Td-OkN" secondAttribute="centerX" id="gVM-Sq-wjX"/>
                             <constraint firstItem="8U5-bx-9yH" firstAttribute="top" secondItem="dQ6-Td-OkN" secondAttribute="top" id="guE-rl-VEa"/>
                             <constraint firstAttribute="bottom" secondItem="8U5-bx-9yH" secondAttribute="bottom" id="i09-wa-aq6"/>
                             <constraint firstAttribute="width" secondItem="dQ6-Td-OkN" secondAttribute="height" multiplier="324:167" id="jLj-ZI-VJD"/>
@@ -168,6 +174,7 @@
                 <outlet property="descriptionLabel" destination="GBX-ut-2wH" id="8uL-df-sVy"/>
                 <outlet property="eventImage" destination="8U5-bx-9yH" id="eLY-XJ-uy8"/>
                 <outlet property="eventName" destination="yhD-eM-o88" id="eTR-DA-oXG"/>
+                <outlet property="loading" destination="XMX-2u-wVh" id="Hoq-EY-C2q"/>
                 <outlet property="priceLabel" destination="O71-iF-j8Y" id="Skt-Vg-TNf"/>
                 <outlet property="view" destination="dQ6-Td-OkN" id="wSD-Eb-A3V"/>
             </connections>
@@ -177,6 +184,9 @@
     <resources>
         <namedColor name="BackgroundGray">
             <color red="0.9649999737739563" green="0.9649999737739563" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BrandPurple">
+            <color red="0.51800000667572021" green="0.36899998784065247" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

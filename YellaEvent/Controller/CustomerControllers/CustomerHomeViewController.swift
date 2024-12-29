@@ -21,7 +21,7 @@ class CustomerHomeViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-                UserDefaults.standard.set("1OJ9cN1iMAG5pjNocI7Z", forKey: K.bundleUserID) // this will be removed after seting the application
+//                UserDefaults.standard.set("1OJ9cN1iMAG5pjNocI7Z", forKey: K.bundleUserID) // this will be removed after seting the application
 
         
         tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
