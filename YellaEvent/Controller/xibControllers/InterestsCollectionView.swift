@@ -7,11 +7,15 @@
 
 import UIKit
 
+protocol InterestsCollectionViewDelegate {
+    func setInterests()
+}
+
 class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
-    
+    public var controllerDelegate : InterestsCollectionViewDelegate?
     private var interests: [Category] = []
     private var selectedIndices = Set<Int>()
-    public var selectForCustomer = true
+    static public var selectForCustomer = true
     // MARK: - setup
     
     var currentCustomer : Customer?
@@ -46,20 +50,21 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
             flowLayout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         }
         
-        if selectForCustomer {
-            Task {
-                self.interests = try await  CategoriesManager.getActiveCatigories()
+        Task {
+            self.interests = try await  CategoriesManager.getActiveCatigories()
+            if InterestsCollectionView.selectForCustomer {
                 self.currentCustomer =  try await UsersManager.getUser(userID: UserDefaults.standard.string(forKey: K.bundleUserID)!) as? Customer
-                
-                DispatchQueue.main.async {
-                    if self.selectForCustomer {
-                        
-                        self.setSelectedInterests(self.currentCustomer?.interestsArray ?? [])
-                    }
-                    self.reloadData()
-                        
-                }
             }
+            DispatchQueue.main.async {
+                if InterestsCollectionView.selectForCustomer {
+                    self.setSelectedInterests(self.currentCustomer?.interestsArray ?? [])
+                } else {
+                    self.controllerDelegate?.setInterests()
+                }
+                self.reloadData()
+                InterestsCollectionView.selectForCustomer = true
+            }
+            
         }
     }
     
@@ -70,12 +75,12 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
         reloadData()
     }
     
-//    func getInterests() -> [Category] {
-//        selectedIndices.compactMap { index in
-//            interests[index]
-//        }
-//    }
-//    
+    //    func getInterests() -> [Category] {
+    //        selectedIndices.compactMap { index in
+    //            interests[index]
+    //        }
+    //    }
+    //
     func getInterests() -> [String] {
         selectedIndices.compactMap { index in
             interests[index].categoryID
@@ -100,9 +105,10 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     
     func setSelectedInterests(_ selectedInterests: [String]) {
         selectedIndices.removeAll()
-
+        
         let interestIndexMap = Dictionary(uniqueKeysWithValues: interests.enumerated().map { ($0.element.categoryID, $0.offset) })
-
+        
+        print(interestIndexMap)
         for selectedCategoryID in selectedInterests {
             if let index = interestIndexMap[selectedCategoryID] {
                 selectedIndices.insert(index)
@@ -111,7 +117,7 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
         
         reloadData()
     }
-
+    
     // MARK: - data source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -141,24 +147,24 @@ class InterestsCollectionView: UICollectionView, UICollectionViewDelegate, UICol
     
     // MARK: - each item size
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let category = interests[indexPath.item]
-//        let text = "\(category.name) \(category.icon)"
-//        let font = UIFont.systemFont(ofSize: InterstsCollectionViewCell.fontSize, weight: .medium)
-//        
-//        // Calculate the size of the text
-//        let maxSize = CGSize(width: frame.width - 40, height: CGFloat.greatestFiniteMagnitude)
-//        let textBoundingBox = NSString(string: text).boundingRect(
-//            with: maxSize,
-//            options: .usesLineFragmentOrigin,
-//            attributes: [.font: font],
-//            context: nil
-//        )
-//        
-//        let textWidth = ceil(textBoundingBox.width)
-//        let width = max(textWidth, 150)
-//        return CGSize(width: width, height: 120)
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    //        let category = interests[indexPath.item]
+    //        let text = "\(category.name) \(category.icon)"
+    //        let font = UIFont.systemFont(ofSize: InterstsCollectionViewCell.fontSize, weight: .medium)
+    //
+    //        // Calculate the size of the text
+    //        let maxSize = CGSize(width: frame.width - 40, height: CGFloat.greatestFiniteMagnitude)
+    //        let textBoundingBox = NSString(string: text).boundingRect(
+    //            with: maxSize,
+    //            options: .usesLineFragmentOrigin,
+    //            attributes: [.font: font],
+    //            context: nil
+    //        )
+    //
+    //        let textWidth = ceil(textBoundingBox.width)
+    //        let width = max(textWidth, 150)
+    //        return CGSize(width: width, height: 120)
+    //    }
 }
 
 // MAARK: flow to the left
