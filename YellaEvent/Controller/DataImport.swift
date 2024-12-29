@@ -546,37 +546,33 @@ final class DataImport {
             
             var updatedBadge = badge
             if let eventID = badge[K.FStore.Badges.eventID] as? String {
+                let oldID = badge[K.FStore.Badges.badgeID] as? String ?? ""
                 updatedBadge[K.FStore.Badges.eventID] = idMappings[eventID] ?? eventID
+                updatedBadge[K.FStore.Badges.badgeID] = idMappings[eventID] ?? eventID
+                self.idMappings[oldID] = idMappings[eventID] ?? eventID
             }
+            
             
             if let categoryID = badge[K.FStore.Badges.categoryID] as? String {
                 updatedBadge[K.FStore.Events.categoryID] = idMappings[categoryID] ?? categoryID
             }
             
-            let ref = db.collection(K.FStore.Badges.collectionName).addDocument(data: updatedBadge) { error in
+            let ref: Void = db.collection(K.FStore.Badges.collectionName).document(updatedBadge[K.FStore.Badges.badgeID] as! String).setData(updatedBadge) { error in
                 if let error = error {
                     print("Error uploading badge: \(error.localizedDescription)")
                 } else {
-                    print("Successfully uploaded a badge.")
-                }
-            }
-            
-            ref.getDocument { (document, error) in
-                if let documentID = document?.documentID {
-                    ref.updateData([K.FStore.Badges.badgeID: documentID])
-                    let oldUserID = badge[K.FStore.Badges.badgeID] as? String ?? ""
-                    self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
-                    
                     if let localImagePath = updatedBadge[K.FStore.Badges.image] as? String {
-                        let storagePath = "events/\(documentID)/Badge.jpg"
+                        let storagePath = "events/\(updatedBadge[K.FStore.Badges.eventID] as! String)/Badge.jpg"
                         uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
                             if let imageUrl = imageUrl {
                                 updatedBadge[K.FStore.Badges.image] = imageUrl
-                                ref.updateData([K.FStore.Badges.image: imageUrl])
+                                db.collection(K.FStore.Badges.collectionName).document(updatedBadge[K.FStore.Badges.badgeID] as! String).updateData([K.FStore.Badges.image: imageUrl])
                             }
                         }
                     }
+                    print("Successfully uploaded a badge.")
                 }
+            
                 dispatchGroup.leave() // Finish tracking this operation
             }
         }
