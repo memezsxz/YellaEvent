@@ -1,10 +1,12 @@
 import UIKit
 import FirebaseFirestore
 
+// View controller for displaying details of a selected ticket
 class CustomerTicketDetailsViewController: UIViewController {
     var ticket: Ticket? // Property to hold the selected ticket
     var ticketDeletedCallback: (() -> Void)? // Callback to notify when a ticket is deleted
 
+    // Outlets for UI elements
     @IBOutlet weak var lblBtnCancelTicket: UIBarButtonItem! // Cancel ticket button
     @IBOutlet weak var lblEventName: UINavigationItem! // Label for the event name
     @IBOutlet weak var lblTotal: UILabel! // Label for the total price
@@ -13,6 +15,7 @@ class CustomerTicketDetailsViewController: UIViewController {
     @IBOutlet weak var lblTime: UILabel! // Label for the event time
     @IBOutlet weak var qrCode: UIImageView! // QR code image view
 
+    // Called after the view has been loaded into memory
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI() // Update user interface with ticket details
@@ -28,41 +31,50 @@ class CustomerTicketDetailsViewController: UIViewController {
         }
     }
 
+    // Action for the cancel ticket button
     @IBAction func cancelBTN(_ sender: Any) {
         self.deleteTicket() // Call function to delete the ticket
     }
 
+    // Action for the location button that opens the event location in a browser
     @IBAction func btnLocation(_ sender: Any) {
         guard let url = URL(string: ticket?.locationURL ?? "") else {
-            print("Invalid location URL.")
+            print("Invalid location URL.") // Print error if URL is invalid
             return
         }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil) // Open the URL
     }
 
+    // Updates the UI with ticket details
     private func updateUI() {
-        print ("here 1")
-        guard let ticket = ticket else { return }
-        print ("here 2")
+        print ("here 1") // Debugging statement
+        guard let ticket = ticket else { return } // Ensure ticket exists
+        print ("here 2") // Debugging statement
+
+        // Populate UI elements with ticket information
         lblEventName.title = ticket.eventName
         lblTotal.text = String(format: "$%.2f", ticket.totalPrice) // Display total price
         lblQuantity.text = "\(ticket.quantity)" // Display quantity
 
+        // Format and display the start date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        lblDate.text = dateFormatter.string(from: ticket.startTimeStamp) // Display start date
+        lblDate.text = dateFormatter.string(from: ticket.startTimeStamp)
 
+        // Format and display the event time range
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "hh:mm a"
         lblTime.text = "\(timeFormatter.string(from: ticket.startTimeStamp)) - \(timeFormatter.string(from: ticket.endTimeStamp))" // Display start and end times
 
+        // Generate and display the QR code for the ticket
         if let qrImage = generateQRCode(from: ticket.ticketID) {
             qrCode.image = qrImage
         } else {
-            qrCode.image = nil
+            qrCode.image = nil // Clear QR code if generation fails
         }
     }
 
+    // Function to delete the ticket with a confirmation alert
     private func deleteTicket() {
         let alertController = UIAlertController(
             title: "Confirm Cancelation",
@@ -70,47 +82,51 @@ class CustomerTicketDetailsViewController: UIViewController {
             preferredStyle: .alert
         )
         
+        // Action for confirming ticket deletion
         let yesAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
             Task {
                 guard var ticketToDelete = self.ticket else { return }
                 ticketToDelete.status = .refunded // Update ticket status to refunded
                 try await TicketsManager.updateTicket(ticket: ticketToDelete) // Update ticket in Firestore
-                self.navigationController?.popViewController(animated: true)
-                self.ticketDeletedCallback?()
+                self.navigationController?.popViewController(animated: true) // Navigate back
+                self.ticketDeletedCallback?() // Notify that the ticket was deleted
             }
-            self.lblBtnCancelTicket.isHidden = true
+            self.lblBtnCancelTicket.isHidden = true // Hide cancel button after deletion
         }
         
+        // Action for canceling deletion
         let noAction = UIAlertAction(title: "No", style: .cancel)
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-        self.present(alertController, animated: true, completion: nil)
+        alertController.addAction(yesAction) // Add yes action to alert
+        alertController.addAction(noAction) // Add no action to alert
+        self.present(alertController, animated: true, completion: nil) // Present alert
     }
 
+    // Function to fetch and open the location URL
     private func fetchLocationURL(for eventID: String) {
         guard let url = URL(string: ticket?.locationURL ?? "") else {
-            print("Invalid URL.")
+            print("Invalid URL.") // Print error if URL is invalid
             return
         }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil) // Open the URL
     }
 
+    // Function to generate a QR code from the ticket ID
     private func generateQRCode(from ticketID: String) -> UIImage? {
-        guard let data = ticketID.data(using: .ascii) else { return nil }
+        guard let data = ticketID.data(using: .ascii) else { return nil } // Convert ticket ID to data
 
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
-            filter.setValue(data, forKey: "inputMessage")
-            filter.setValue("H", forKey: "inputCorrectionLevel")
+            filter.setValue(data, forKey: "inputMessage") // Set QR code input message
+            filter.setValue("H", forKey: "inputCorrectionLevel") // Set error correction level
             
             if let outputImage = filter.outputImage {
-                let transform = CGAffineTransform(scaleX: 10, y: 10)
+                let transform = CGAffineTransform(scaleX: 10, y: 10) // Scale the QR code
                 let scaledImage = outputImage.transformed(by: transform)
                 let context = CIContext()
                 if let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) {
-                    return UIImage(cgImage: cgImage)
+                    return UIImage(cgImage: cgImage) // Return generated QR code image
                 }
             }
         }
-        return nil
+        return nil // Return nil if QR code generation fails
     }
 }

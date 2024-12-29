@@ -14,67 +14,70 @@ class CustomerRegistrationViewController: UIViewController {
     var ticketQuantity: Int = 1 // Ticket Quantity
     weak var delegate: CustomerRegistrationDelegate? // Delegate for ticket creation
 
-    @IBOutlet weak var inputCardNumber: UITextField!
-    @IBOutlet weak var lblErrorCardNumber: UILabel!
-    @IBOutlet weak var inputCardName: UITextField!
-    @IBOutlet weak var lblErrorCardName: UILabel!
-    @IBOutlet weak var inputCardExpiry: UITextField!
-    @IBOutlet weak var lblErrorCardExpiry: UILabel!
-    @IBOutlet weak var inputCardCVV: UITextField!
-    @IBOutlet weak var lblErrorCardcvv: UILabel!
-    @IBOutlet weak var lblTicketQuantity: UILabel!
-    @IBOutlet weak var lblTicketPrice: UILabel!
+    // Outlets for UI elements
+    @IBOutlet weak var inputCardNumber: UITextField! // Input field for card number
+    @IBOutlet weak var lblErrorCardNumber: UILabel! // Label for card number error message
+    @IBOutlet weak var inputCardName: UITextField! // Input field for cardholder name
+    @IBOutlet weak var lblErrorCardName: UILabel! // Label for card name error message
+    @IBOutlet weak var inputCardExpiry: UITextField! // Input field for card expiry date
+    @IBOutlet weak var lblErrorCardExpiry: UILabel! // Label for expiry date error message
+    @IBOutlet weak var inputCardCVV: UITextField! // Input field for card CVV
+    @IBOutlet weak var lblErrorCardcvv: UILabel! // Label for CVV error message
+    @IBOutlet weak var lblTicketQuantity: UILabel! // Label to display ticket quantity
+    @IBOutlet weak var lblTicketPrice: UILabel! // Label to display total ticket price
 
+    // Called after the view has been loaded into memory
     override func viewDidLoad() {
         super.viewDidLoad()
-        hideErrorLabels()
-        lblTicketQuantity.text = "Quantity: \(ticketQuantity)"
-        lblTicketPrice.text = String(format: "Total Price: $%.2f", ticketPrice * Double(ticketQuantity))
+        hideErrorLabels() // Hide error labels on load
+        lblTicketQuantity.text = "Quantity: \(ticketQuantity)" // Display selected ticket quantity
+        lblTicketPrice.text = String(format: "Total Price: $%.2f", ticketPrice * Double(ticketQuantity)) // Calculate and display total price
     }
 
+    // Action for the pay button
     @IBAction func payButton(_ sender: Any) {
-        hideErrorLabels()
-        var isValid = true
+        hideErrorLabels() // Hide any previous error messages
+        var isValid = true // Flag to track validation status
 
         // Validate card number
         if !validateCardNumber(inputCardNumber.text) {
-            lblErrorCardNumber.text = "*Invalid card number"
-            lblErrorCardNumber.isHidden = false
-            isValid = false
+            lblErrorCardNumber.text = "*Invalid card number" // Show error message
+            lblErrorCardNumber.isHidden = false // Make error label visible
+            isValid = false // Set validity to false
         }
 
         // Validate card name
         if !validateCardName(inputCardName.text) {
-            lblErrorCardName.text = "*Invalid card name"
-            lblErrorCardName.isHidden = false
-            isValid = false
+            lblErrorCardName.text = "*Invalid card name" // Show error message
+            lblErrorCardName.isHidden = false // Make error label visible
+            isValid = false // Set validity to false
         }
 
         // Validate card expiry
         if !validateCardExpiry(inputCardExpiry.text) {
-            lblErrorCardExpiry.text = "*Invalid expiry date (MM/YY)"
-            lblErrorCardExpiry.isHidden = false
-            isValid = false
+            lblErrorCardExpiry.text = "*Invalid expiry date (MM/YY)" // Show error message
+            lblErrorCardExpiry.isHidden = false // Make error label visible
+            isValid = false // Set validity to false
         }
 
         // Validate card CVV
         if !validateCardCVV(inputCardCVV.text) {
-            lblErrorCardcvv.text = "*Invalid CVV"
-            lblErrorCardcvv.isHidden = false
-            isValid = false
+            lblErrorCardcvv.text = "*Invalid CVV" // Show error message
+            lblErrorCardcvv.isHidden = false // Make error label visible
+            isValid = false // Set validity to false
         }
 
         // Proceed with ticket creation only if all validations pass
         if isValid {
-            createTicket()
+            createTicket() // Call function to create the ticket
         } else {
-            showAlert(message: "Please correct the highlighted errors and try again.")
+            showAlert(message: "Please correct the highlighted errors and try again.") // Show alert for errors
         }
     }
 
-
+    // Function to create a ticket
     private func createTicket() {
-        print("I am creating a ticket")
+        print("I am creating a ticket") // Debugging statement
         Task {
             do {
                 // Fetch event details using the eventID
@@ -84,7 +87,7 @@ class CustomerRegistrationViewController: UIViewController {
                 let ticket = Ticket(
                     ticketID: "1", // Placeholder, will be updated after retrieval
                     eventID: eventID,
-                    customerID: UserDefaults.standard.string(forKey: K.bundleUserID) ?? "unknown",
+                    customerID: UserDefaults.standard.string(forKey: K.bundleUserID) ?? "unknown", // Get customer ID from UserDefaults
                     organizerID: event.organizerID,
                     eventName: event.name,
                     organizerName: event.organizerName,
@@ -94,7 +97,7 @@ class CustomerRegistrationViewController: UIViewController {
                     totalPrice: ticketPrice * Double(ticketQuantity), // Calculate total price
                     locationURL: event.locationURL,
                     quantity: ticketQuantity,
-                    status: .paid
+                    status: .paid // Set initial status to paid
                 )
 
                 // Save ticket to Firestore
@@ -109,12 +112,12 @@ class CustomerRegistrationViewController: UIViewController {
                     .getDocuments()
 
                 guard let document = query.documents.first else {
-                    throw NSError(domain: "TicketError", code: 404, userInfo: [NSLocalizedDescriptionKey: "Ticket not found"])
+                    throw NSError(domain: "TicketError", code: 404, userInfo: [NSLocalizedDescriptionKey: "Ticket not found"]) // Handle ticket not found error
                 }
 
                 // Decode the ticket
                 let savedTicket = try await Ticket(from: document.data())
-                print("this is the ticketID",savedTicket.ticketID)
+                print("this is the ticketID", savedTicket.ticketID) // Debugging statement
 
                 // Notify the delegate about the ticket creation
                 delegate?.didCreateTicket(savedTicket)
@@ -123,12 +126,12 @@ class CustomerRegistrationViewController: UIViewController {
                 await showSuccessAlertAndNavigate(ticket: savedTicket)
 
             } catch {
-                showAlert(message: "Failed to create ticket: \(error.localizedDescription)")
+                showAlert(message: "Failed to create ticket: \(error.localizedDescription)") // Show error alert
             }
         }
     }
 
-
+    // Function to show a success alert and navigate to the ticket details page
     private func showSuccessAlertAndNavigate(ticket: Ticket) async {
         await MainActor.run {
             showAlert(message: "Payment Successful!") {
@@ -142,12 +145,13 @@ class CustomerRegistrationViewController: UIViewController {
                     // Present the destination view controller
                     self.navigationController?.pushViewController(ticketDetailsVC, animated: true)
                 } else {
-                    print("Failed to instantiate CustomerTicketDetailsViewController")
+                    print("Failed to instantiate CustomerTicketDetailsViewController") // Debugging statement
                 }
             }
         }
     }
 
+    // Function to hide error labels
     func hideErrorLabels() {
         lblErrorCardNumber.isHidden = true
         lblErrorCardName.isHidden = true
@@ -155,56 +159,61 @@ class CustomerRegistrationViewController: UIViewController {
         lblErrorCardcvv.isHidden = true
     }
 
+    // Function to validate the card number
     func validateCardNumber(_ cardNumber: String?) -> Bool {
         guard let cardNumber = cardNumber, cardNumber.count == 16, CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: cardNumber)) else {
-            return false
+            return false // Return false if validation fails
         }
-        return true
+        return true // Return true if validation succeeds
     }
 
+    // Function to validate the cardholder name
     func validateCardName(_ cardName: String?) -> Bool {
         guard let cardName = cardName, !cardName.isEmpty else {
-            return false
+            return false // Return false if validation fails
         }
-        return CharacterSet.letters.isSuperset(of: CharacterSet(charactersIn: cardName))
+        return CharacterSet.letters.isSuperset(of: CharacterSet(charactersIn: cardName)) // Return true if validation succeeds
     }
 
+    // Function to validate the card expiry date
     func validateCardExpiry(_ expiry: String?) -> Bool {
-        guard let expiry = expiry, expiry.count == 5 else { return false }
-        let components = expiry.split(separator: "/")
+        guard let expiry = expiry, expiry.count == 5 else { return false } // Check format MM/YY
+        let components = expiry.split(separator: "/") // Split month and year
         guard components.count == 2,
               let month = Int(components[0]), month >= 1 && month <= 12,
               let year = Int(components[1]), year >= 0 && year <= 99 else {
-            return false
+            return false // Return false if validation fails
         }
-        return true
+        return true // Return true if validation succeeds
     }
 
+    // Function to validate the CVV
     func validateCardCVV(_ cvv: String?) -> Bool {
         guard let cvv = cvv, cvv.count == 3, CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: cvv)) else {
-            return false
+            return false // Return false if validation fails
         }
-        return true
+        return true // Return true if validation succeeds
     }
 
+    // Function to show an alert with a message
     func showAlert(message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: "Payment", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
             completion?() // Execute the completion block after dismissing the alert
         }))
         if self.presentedViewController == nil {
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil) // Present the alert
         } else {
-            print("Another view controller is already presented.")
+            print("Another view controller is already presented.") // Debugging statement
         }
     }
 
-
+    // Prepare for segue to the ticket details view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowTicketDetail",
            let destinationVC = segue.destination as? CustomerTicketDetailsViewController,
            let newTicket = sender as? Ticket {
-            destinationVC.ticket = newTicket
+            destinationVC.ticket = newTicket // Pass the new ticket to the destination view controller
         }
     }
 }
