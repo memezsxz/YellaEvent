@@ -6,7 +6,7 @@
       "email": "alice.johnson@company.com",
       "dateCreated": "1 January 2023 at 10:00:00 UTC+3",
       "phoneNumber": 987643210,
-      "profileImageURL": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+      "profileImageURL": "/Users/meme/photos/person1.jpg",
       "type": "admin",
       "isDeleted": false
     },
@@ -16,7 +16,7 @@
       "email": "bob.smith@company.com",
       "dateCreated": "5 January 2023 at 12:00:00 UTC+3",
       "phoneNumber": 91256789,
-      "profileImageURL": "/Users/meme/photos/Family of Saltimbanques [1905].jpeg",
+      "profileImageURL": "/Users/meme/photos/portrait-upset-american-black-person_23-2148749581.jpg",
       "type": "admin",
       "isDeleted": false
     },
@@ -26,7 +26,7 @@
       "email": "clara.davis@company.com",
       "dateCreated": "10 January 2023 at 08:00:00 UTC+3",
       "phoneNumber": 91256788,
-      "profileImageURL": "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
+      "profileImageURL": "/Users/meme/photos/premium_photo-1689530775582-83b8abdb5020.jpeg",
       "type": "admin",
       "isDeleted": false
     }
@@ -34,16 +34,16 @@
   "organizers": [
     {
       "userID": "organizer1",
-      "fullName": "Event Pros Inc.",
-      "email": "info@eventpros.com",
+      "fullName": "Tamkeen",
+      "email": "info@tamkeen.bh",
       "dateCreated": "10 February 2023 at 14:00:00 UTC+3",
       "phoneNumber": 82345678,
-      "profileImageURL": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+      "profileImageURL": "/Users/meme/photos/tamkeen_logo.jpeg",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "10 February 2023 at 14:00:00 UTC+3",
       "endDate": "10 February 2024 at 14:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Family of Saltimbanques [1905].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer2",
@@ -51,25 +51,25 @@
       "email": "contact@eventhub.org",
       "dateCreated": "20 February 2023 at 15:00:00 UTC+3",
       "phoneNumber": 83456789,
-      "profileImageURL": "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
+      "profileImageURL": "/Users/meme/photos/Live-Hub-Events-Logo-1473x1080.png",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "20 February 2023 at 15:00:00 UTC+3",
       "endDate": "20 February 2024 at 15:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Boy with a Pipe [1905].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer3",
-      "fullName": "Festive Gatherings Ltd.",
+      "fullName": "Startup Bahrain",
       "email": "support@festivegatherings.com",
       "dateCreated": "5 March 2023 at 11:00:00 UTC+3",
       "phoneNumber": 81234567,
-      "profileImageURL": "/Users/meme/photos/Figures by the Sea (The Kiss) [1931].jpeg",
+      "profileImageURL": "/Users/meme/photos/startupbahrain_logo.jpeg",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "5 March 2023 at 11:00:00 UTC+3",
       "endDate": "5 March 2024 at 11:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Goat's Skull, Bottle, and Candle [1952].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer4",
@@ -77,90 +77,90 @@
       "email": "info@eventnexus.com",
       "dateCreated": "15 March 2023 at 10:30:00 UTC+3",
       "phoneNumber": 89345678,
-      "profileImageURL": "/Users/meme/photos/Harlequin [1918].jpeg",
+      "profileImageURL": "/Users/meme/photos/images.png",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "15 March 2023 at 10:30:00 UTC+3",
       "endDate": "15 March 2024 at 10:30:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/La Vie [1903].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer5",
-      "fullName": "World Gala Events",
-      "email": "contact@worldgalaevents.com",
+      "fullName": "BIBF",
+      "email": "info@bibf.com",
       "dateCreated": "1 April 2023 at 09:45:00 UTC+3",
       "phoneNumber": 89346789,
-      "profileImageURL": "/Users/meme/photos/Guitar, Gas-Jet and Bottle [1913].jpeg",
+      "profileImageURL": "/Users/meme/photos/thebibf_logo.jpeg",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "1 April 2023 at 09:45:00 UTC+3",
       "endDate": "1 April 2024 at 09:45:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer6",
-      "fullName": "Party Planet Co.",
-      "email": "help@partyplanet.net",
+      "fullName": "Zain Bahrain",
+      "email": "info@bh.zain.com",
       "dateCreated": "10 April 2023 at 16:00:00 UTC+3",
       "phoneNumber": 84345678,
-      "profileImageURL": "/Users/meme/photos/Nude in an Armchair (Seated Woman) [1909].jpeg",
+      "profileImageURL": "/Users/meme/photos/images_zain.png",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "10 April 2023 at 16:00:00 UTC+3",
       "endDate": "10 April 2024 at 16:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Nude [1910].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer7",
-      "fullName": "Event Connection Group",
-      "email": "support@eventconnection.com",
+      "fullName": "Batelco",
+      "email": "info@batelco.com",
       "dateCreated": "20 April 2023 at 14:30:00 UTC+3",
       "phoneNumber": 81235678,
-      "profileImageURL": "/Users/meme/photos/Nude against a Red Background [1906].jpeg",
+      "profileImageURL": "/Users/meme/photos/images_batelco.png",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "20 April 2023 at 14:30:00 UTC+3",
       "endDate": "20 April 2024 at 14:30:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer8",
-      "fullName": "Great Events Network",
-      "email": "info@greatevents.org",
+      "fullName": "STC",
+      "email": "info@STC.org",
       "dateCreated": "1 May 2023 at 12:00:00 UTC+3",
       "phoneNumber": 84356789,
-      "profileImageURL": "/Users/meme/photos/Pitcher, Candle and Casserole [1945].jpeg",
+      "profileImageURL": "/Users/meme/photos/stc.jpg",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "1 May 2023 at 12:00:00 UTC+3",
       "endDate": "1 May 2024 at 12:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Pedro Manach [1901].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer9",
-      "fullName": "Gala Network Solutions",
-      "email": "contact@galanetwork.com",
+      "fullName": "Gulf Air",
+      "email": "contact@gulfair.com",
       "dateCreated": "10 May 2023 at 10:15:00 UTC+3",
       "phoneNumber": 81234578,
-      "profileImageURL": "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg",
+      "profileImageURL": "/Users/meme/photos/gulf_air.jpeg",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "10 May 2023 at 10:15:00 UTC+3",
-      "endDate": "10 May 2024 at 10:15:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg"
+      "endDate": "10 May 2025 at 10:15:00 UTC+3",
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer10",
-      "fullName": "FutureFest Inc.",
-      "email": "support@futurefest.com",
+      "fullName": "Bahrain Polytechnic",
+      "email": "info@polytechnic.bh",
       "dateCreated": "20 May 2023 at 09:00:00 UTC+3",
       "phoneNumber": 84346789,
-      "profileImageURL": "/Users/meme/photos/Portrait of Olga [1923].jpeg",
+      "profileImageURL": "/Users/meme/photos/bahrain_polytechnic_logo.jpeg",
       "type": "organizer",
       "isDeleted": false,
       "startDate": "20 May 2023 at 09:00:00 UTC+3",
       "endDate": "20 May 2024 at 09:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Seated Bather [1930].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer11",
@@ -173,7 +173,7 @@
       "isDeleted": false,
       "startDate": "25 May 2023 at 14:00:00 UTC+3",
       "endDate": "25 May 2024 at 14:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Self Portrait- 'Yo Picasso'.jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer12",
@@ -186,7 +186,7 @@
       "isDeleted": false,
       "startDate": "30 May 2023 at 10:30:00 UTC+3",
       "endDate": "30 May 2024 at 10:30:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Self-Portrait with Palette [1906].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer13",
@@ -199,7 +199,7 @@
       "isDeleted": false,
       "startDate": "1 June 2023 at 09:00:00 UTC+3",
       "endDate": "1 June 2024 at 09:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/The Artist and his Model [1963].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer14",
@@ -212,7 +212,7 @@
       "isDeleted": false,
       "startDate": "5 June 2023 at 14:15:00 UTC+3",
       "endDate": "5 June 2024 at 14:15:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/The Rape [1920].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer15",
@@ -225,7 +225,7 @@
       "isDeleted": false,
       "startDate": "10 June 2023 at 10:00:00 UTC+3",
       "endDate": "10 June 2024 at 10:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/The Old Guitarist [1903].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer16",
@@ -238,7 +238,7 @@
       "isDeleted": false,
       "startDate": "15 June 2023 at 12:30:00 UTC+3",
       "endDate": "15 June 2024 at 12:30:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/The Sculptor [1931].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer17",
@@ -251,7 +251,7 @@
       "isDeleted": false,
       "startDate": "20 June 2023 at 11:45:00 UTC+3",
       "endDate": "20 June 2024 at 11:45:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/The Tragedy [1903].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer18",
@@ -264,7 +264,7 @@
       "isDeleted": false,
       "startDate": "25 June 2023 at 14:00:00 UTC+3",
       "endDate": "25 June 2024 at 14:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Three Musicians [1921].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer19",
@@ -277,7 +277,7 @@
       "isDeleted": false,
       "startDate": "1 July 2023 at 10:00:00 UTC+3",
       "endDate": "1 July 2024 at 10:00:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Three Women [1907-8].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     },
     {
       "userID": "organizer20",
@@ -290,7 +290,7 @@
       "isDeleted": false,
       "startDate": "5 July 2023 at 13:15:00 UTC+3",
       "endDate": "5 July 2024 at 13:15:00 UTC+3",
-      "LicenseDocumentURL": "/Users/meme/photos/Weeping Woman [1937].jpeg"
+      "LicenseDocumentURL": "/Users/meme/photos/SMEs-Classification-Certificate_page0_image-1080x675.jpeg"
     }
   ],
   "categories": [
@@ -431,108 +431,6 @@
       "name": "Animals",
       "icon": "🐾",
       "status": "enabled"
-    },
-    {
-      "categoryID": "category24",
-      "name": "Business",
-      "icon": "📈",
-      "status": "history"
-    },
-    {
-      "categoryID": "category25",
-      "name": "Crafts",
-      "icon": "🧵",
-      "status": "disabled"
-    },
-    {
-      "categoryID": "category26",
-      "name": "Home & Garden",
-      "icon": "🏡",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category27",
-      "name": "Politics",
-      "icon": "🏛️",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category28",
-      "name": "Religion & Spirituality",
-      "icon": "🕊️",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category29",
-      "name": "Networking",
-      "icon": "🤝",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category30",
-      "name": "Family",
-      "icon": "👨‍👩‍👧‍👦",
-      "status": "history"
-    },
-    {
-      "categoryID": "category31",
-      "name": "Environmentalism",
-      "icon": "🌍",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category32",
-      "name": "Coding & Programming",
-      "icon": "👨‍💻",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category33",
-      "name": "Martial Arts",
-      "icon": "🥋",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category34",
-      "name": "Fitness Challenges",
-      "icon": "🤼‍♀️",
-      "status": "history"
-    },
-    {
-      "categoryID": "category35",
-      "name": "Automobiles",
-      "icon": "🚗",
-      "status": "disabled"
-    },
-    {
-      "categoryID": "category36",
-      "name": "Startup & Innovation",
-      "icon": "🚀",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category37",
-      "name": "Sustainability",
-      "icon": "🌱",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category38",
-      "name": "Cooking",
-      "icon": "🍳",
-      "status": "enabled"
-    },
-    {
-      "categoryID": "category39",
-      "name": "Wine & Beverages",
-      "icon": "🍷",
-      "status": "disabled"
-    },
-    {
-      "categoryID": "category40",
-      "name": "Magic Shows",
-      "icon": "🪄",
-      "status": "enabled"
     }
   ],
   "events": [
@@ -551,7 +449,7 @@
       "maximumAge": 70,
       "maximumTickets": 300,
       "price": 50,
-      "coverImageURL": "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
+      "coverImageURL": "/Users/meme/photos/The-Oracle-at-Bridgewater-Hall.-Photo-by-Gaelle-Beri-2.jpg",
       "mediaArray": [
         "/Users/meme/photos/Cat Devouring a Bird [1939].jpeg",
         "/Users/meme/photos/Family of Saltimbanques [1905].jpeg",
@@ -574,7 +472,7 @@
       "maximumAge": 99,
       "maximumTickets": 500,
       "price": 20,
-      "coverImageURL": "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
+      "coverImageURL": "/Users/meme/photos/OCFL-Mayor-Jazz-in-the-Park-42-scaled.jpg",
       "mediaArray": [
         "/Users/meme/photos/Child Holding a Dove [1901].jpeg",
         "/Users/meme/photos/Figures by the Sea (The Kiss) [1931].jpeg",
@@ -597,7 +495,7 @@
       "maximumAge": 50,
       "maximumTickets": 1000,
       "price": 100,
-      "coverImageURL": "/Users/meme/photos/Harlequin [1918].jpeg",
+      "coverImageURL": "/Users/meme/photos/PODGORICA_2014_JOVANOVIC_DARKO-ElectronicBeats_1240.jpeg",
       "mediaArray": [
         "/Users/meme/photos/Harlequin [1918].jpeg",
         "/Users/meme/photos/La Vie [1903].jpeg",
@@ -620,7 +518,7 @@
       "maximumAge": 65,
       "maximumTickets": 800,
       "price": 30,
-      "coverImageURL": "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
+      "coverImageURL": "/Users/meme/photos/74f754d41f0b427abfcef1d5a3787801.png",
       "mediaArray": [
         "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
         "/Users/meme/photos/Nude in an Armchair (Seated Woman) [1909].jpeg",
@@ -643,7 +541,7 @@
       "maximumAge": 70,
       "maximumTickets": 600,
       "price": 120,
-      "coverImageURL": "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
+      "coverImageURL": "/Users/meme/photos/images_ai.jpeg",
       "mediaArray": [
         "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
         "/Users/meme/photos/Pitcher, Candle and Casserole [1945].jpeg",
@@ -666,7 +564,7 @@
       "maximumAge": 60,
       "maximumTickets": 400,
       "price": 10,
-      "coverImageURL": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "coverImageURL": "/Users/meme/photos/career-fair-crowd-scene-vertical1200.jpg",
       "mediaArray": [
         "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
         "/Users/meme/photos/Seated Bather [1930].jpeg",
@@ -689,7 +587,7 @@
       "maximumAge": 70,
       "maximumTickets": 300,
       "price": 25,
-      "coverImageURL": "/Users/meme/photos/The Muse [1935].jpeg",
+      "coverImageURL": "/Users/meme/photos/23RENAISSANCE_SPAN-jumbo-v2.jpg",
       "mediaArray": [
         "/Users/meme/photos/The Muse [1935].jpeg",
         "/Users/meme/photos/The Old Guitarist [1903].jpeg",
@@ -714,7 +612,7 @@
       "maximumAge": 65,
       "maximumTickets": 400,
       "price": 30,
-      "coverImageURL": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "coverImageURL": "/Users/meme/photos/0*GmdpXijbdWrF6IC_.jpg",
       "mediaArray": [
         "/Users/meme/photos/The Three Dancers [1925].jpeg",
         "/Users/meme/photos/The Tragedy [1903].jpeg",
@@ -739,7 +637,7 @@
       "maximumAge": 60,
       "maximumTickets": 200,
       "price": 15,
-      "coverImageURL": "/Users/meme/photos/Three Women [1907-8].jpeg",
+      "coverImageURL": "/Users/meme/photos/Abstract-Expressionism.jpg",
       "mediaArray": [
         "/Users/meme/photos/Three Women [1907-8].jpeg",
         "/Users/meme/photos/Vase of Flowers [1901].jpeg",
@@ -763,7 +661,7 @@
       "maximumAge": 70,
       "maximumTickets": 150,
       "price": 50,
-      "coverImageURL": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+      "coverImageURL": "/Users/meme/photos/Taste_Carolina_Food_Tours-21.b2c07543.jpg",
       "mediaArray": [
         "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
         "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
@@ -787,7 +685,7 @@
       "maximumAge": 99,
       "maximumTickets": 600,
       "price": 20,
-      "coverImageURL": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "coverImageURL": "/Users/meme/photos/WhatsApp-Image-2024-10-04-at-1.50.49-PM.jpeg",
       "mediaArray": [
         "/Users/meme/photos/Vase of Flowers [1901].jpeg",
         "/Users/meme/photos/Weeping Woman [1937].jpeg",
@@ -812,7 +710,7 @@
       "maximumAge": 60,
       "maximumTickets": 300,
       "price": 40,
-      "coverImageURL": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "coverImageURL": "/Users/meme/photos/cd.jpg",
       "mediaArray": [
         "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
         "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg",
@@ -836,7 +734,7 @@
       "maximumAge": 65,
       "maximumTickets": 250,
       "price": 15,
-      "coverImageURL": "/Users/meme/photos/Three Musicians [1921].jpeg",
+      "coverImageURL": "/Users/meme/photos/images_photography.jpeg",
       "mediaArray": [
         "/Users/meme/photos/Three Musicians [1921].jpeg",
         "/Users/meme/photos/Three Women [1907-8].jpeg",
@@ -861,7 +759,7 @@
       "maximumAge": 50,
       "maximumTickets": 100,
       "price": 25,
-      "coverImageURL": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "coverImageURL": "/Users/meme/photos/photography-students-workshop-taunton.jpg",
       "mediaArray": [
         "/Users/meme/photos/The Three Dancers [1925].jpeg",
         "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
@@ -885,7 +783,7 @@
       "maximumAge": 55,
       "maximumTickets": 150,
       "price": 30,
-      "coverImageURL": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "coverImageURL": "/Users/meme/photos/pexels-sam-forson-154243.jpg",
       "mediaArray": [
         "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
         "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg",
@@ -909,7 +807,7 @@
       "maximumAge": 65,
       "maximumTickets": 200,
       "price": 50,
-      "coverImageURL": "/Users/meme/photos/Vase of Flowers [1901].jpeg",
+      "coverImageURL": "/Users/meme/photos/1000_1674505982.jpg",
       "mediaArray": [
         "/Users/meme/photos/Vase of Flowers [1901].jpeg",
         "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
@@ -934,7 +832,7 @@
       "maximumAge": 60,
       "maximumTickets": 80,
       "price": 20,
-      "coverImageURL": "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+      "coverImageURL": "/Users/meme/photos/Yoga-Under-the-Stars-e1535494922132.jpg",
       "mediaArray": [
         "/Users/meme/photos/Violin and Grapes [1912].jpeg",
         "/Users/meme/photos/The Muse [1935].jpeg",
@@ -958,7 +856,7 @@
       "maximumAge": 60,
       "maximumTickets": 100,
       "price": 10,
-      "coverImageURL": "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
+      "coverImageURL": "/Users/meme/photos/iStock-511951221.jpg",
       "mediaArray": [
         "/Users/meme/photos/Three Dutch Girls [1905].jpeg",
         "/Users/meme/photos/Three Musicians [1921].jpeg",
@@ -982,7 +880,7 @@
       "maximumAge": 40,
       "maximumTickets": 150,
       "price": 25,
-      "coverImageURL": "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+      "coverImageURL": "/Users/meme/photos/GAME-DEVELOPERS-MEETUP-GREECE-BANNER.png",
       "mediaArray": [
         "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
         "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
@@ -1007,7 +905,7 @@
       "maximumAge": 35,
       "maximumTickets": 200,
       "price": 30,
-      "coverImageURL": "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
+      "coverImageURL": "/Users/meme/photos/EWC_PRImage_Final-large.png",
       "mediaArray": [
         "/Users/meme/photos/Woman in a Chemise [1905].jpeg",
         "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
@@ -1031,7 +929,7 @@
       "maximumAge": 70,
       "maximumTickets": 300,
       "price": 20,
-      "coverImageURL": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "coverImageURL": "/Users/meme/photos/1725048535247.jpg",
       "mediaArray": [
         "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
         "/Users/meme/photos/The Three Dancers [1925].jpeg",
@@ -1055,7 +953,7 @@
       "maximumAge": 60,
       "maximumTickets": 500,
       "price": 15,
-      "coverImageURL": "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
+      "coverImageURL": "/Users/meme/photos/1*z9tBy-x-AxWFykgoIiDywQ.png",
       "mediaArray": [
         "/Users/meme/photos/Woman in a Fish Hat [1942].jpeg",
         "/Users/meme/photos/Three Women [1907-8].jpeg",
@@ -1080,7 +978,7 @@
       "maximumAge": 50,
       "maximumTickets": 400,
       "price": 25,
-      "coverImageURL": "/Users/meme/photos/The Sculptor [1931].jpeg",
+      "coverImageURL": "/Users/meme/photos/AI+Summit+Blog+Post+4324.png",
       "mediaArray": [
         "/Users/meme/photos/The Sculptor [1931].jpeg",
         "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
@@ -1104,7 +1002,7 @@
       "maximumAge": 99,
       "maximumTickets": 1000,
       "price": 10,
-      "coverImageURL": "/Users/meme/photos/The Dryad [1908].jpeg",
+      "coverImageURL": "/Users/meme/photos/lille-street-food-festival-1-2000x1400.jpg",
       "mediaArray": [
         "/Users/meme/photos/The Dryad [1908].jpeg",
         "/Users/meme/photos/Seated Bather [1930].jpeg",
@@ -1128,7 +1026,7 @@
       "maximumAge": 60,
       "maximumTickets": 50,
       "price": 50,
-      "coverImageURL": "/Users/meme/photos/Still Life with Cards, Glasses and a Bottle of Rum- 'Vive la France' [1914-5].jpeg",
+      "coverImageURL": "/Users/meme/photos/MADPAWAM3_16.10.jpg",
       "mediaArray": [
         "/Users/meme/photos/Still Life with Cards, Glasses and a Bottle of Rum- 'Vive la France' [1914-5].jpeg",
         "/Users/meme/photos/The Tragedy [1903].jpeg",
@@ -1152,7 +1050,7 @@
       "maximumAge": 50,
       "maximumTickets": 30,
       "price": 35,
-      "coverImageURL": "/Users/meme/photos/The Three Dancers [1925].jpeg",
+      "coverImageURL": "/Users/meme/photos/calamari-creole-photography-dubai.jpg",
       "mediaArray": [
         "/Users/meme/photos/The Three Dancers [1925].jpeg",
         "/Users/meme/photos/The Muse [1935].jpeg",
@@ -1176,7 +1074,7 @@
       "maximumAge": 70,
       "maximumTickets": 400,
       "price": 25,
-      "coverImageURL": "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
+      "coverImageURL": "/Users/meme/photos/672821ae498eec7e131da4e8.jpeg",
       "mediaArray": [
         "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
         "/Users/meme/photos/Still Life on a Table [1920].jpeg",
@@ -1200,7 +1098,7 @@
       "maximumAge": 60,
       "maximumTickets": 350,
       "price": 20,
-      "coverImageURL": "/Users/meme/photos/Three Women [1907-8].jpeg",
+      "coverImageURL": "/Users/meme/photos/dsc11462.jpg",
       "mediaArray": [
         "/Users/meme/photos/Three Women [1907-8].jpeg",
         "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
@@ -1224,7 +1122,7 @@
       "maximumAge": 50,
       "maximumTickets": 500,
       "price": 30,
-      "coverImageURL": "/Users/meme/photos/Violin and Grapes [1912].jpeg",
+      "coverImageURL": "/Users/meme/photos/images_dance.jpeg",
       "mediaArray": [
         "/Users/meme/photos/Violin and Grapes [1912].jpeg",
         "/Users/meme/photos/The Smoker [1953].jpeg",
@@ -1249,7 +1147,7 @@
       "maximumAge": 60,
       "maximumTickets": 150,
       "price": 10,
-      "coverImageURL": "/Users/meme/photos/The Artist and his Model [1963].jpeg",
+      "coverImageURL": "/Users/meme/photos/fullsizeoutput_1d44.jpeg",
       "mediaArray": [
         "/Users/meme/photos/The Artist and his Model [1963].jpeg",
         "/Users/meme/photos/Les Demoiselles d'Avignon [1907].jpeg",
@@ -1274,7 +1172,7 @@
       "maximumAge": 50,
       "maximumTickets": 80,
       "price": 25,
-      "coverImageURL": "/Users/meme/photos/The Old Guitarist [1903].jpeg",
+      "coverImageURL": "/Users/meme/photos/PilatesWorkshopSF_3.jpg",
       "mediaArray": [
         "/Users/meme/photos/The Old Guitarist [1903].jpeg",
         "/Users/meme/photos/The Three Dancers [1925].jpeg",
@@ -1298,7 +1196,7 @@
       "maximumAge": 70,
       "maximumTickets": 100,
       "price": 15,
-      "coverImageURL": "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg",
+      "coverImageURL": "/Users/meme/photos/How-Long-Should-I-Meditate-If-I'm-A-Beginner.jpg",
       "mediaArray": [
         "/Users/meme/photos/Portrait of Daniel-Henry Kahnweiler [1910].jpeg",
         "/Users/meme/photos/The Three Dancers [1925].jpeg",
@@ -1322,7 +1220,7 @@
       "maximumAge": 60,
       "maximumTickets": 250,
       "price": 40,
-      "coverImageURL": "/Users/meme/photos/Weeping Woman [1937].jpeg",
+      "coverImageURL": "/Users/meme/photos/SIFF_NoirCity24_1600x900.jpg",
       "mediaArray": [
         "/Users/meme/photos/Weeping Woman [1937].jpeg",
         "/Users/meme/photos/Women of Algiers, after Delacroix [1955].jpeg",
@@ -1347,7 +1245,7 @@
       "maximumAge": 65,
       "maximumTickets": 200,
       "price": 30,
-      "coverImageURL": "/Users/meme/photos/Self-Portrait with Palette [1906].jpeg",
+      "coverImageURL": "/Users/meme/photos/image11.jpg",
       "mediaArray": [
         "/Users/meme/photos/Self-Portrait with Palette [1906].jpeg",
         "/Users/meme/photos/The Dryad [1908].jpeg",
@@ -1372,7 +1270,7 @@
       "maximumAge": 70,
       "maximumTickets": 300,
       "price": 50,
-      "coverImageURL": "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
+      "coverImageURL": "/Users/meme/photos/hq720.jpg",
       "mediaArray": [
         "/Users/meme/photos/Woman on the Banks of the Seine, After Courbet [1950].jpeg",
         "/Users/meme/photos/Woman Asleep in an Armchair (The Dream) [1932].jpeg",
@@ -1397,7 +1295,7 @@
       "maximumAge": 55,
       "maximumTickets": 100,
       "price": 20,
-      "coverImageURL": "/Users/meme/photos/Guitar, Gas-Jet and Bottle [1913].jpeg",
+      "coverImageURL": "/Users/meme/photos/images_getar.jpeg",
       "mediaArray": [
         "/Users/meme/photos/Guitar, Gas-Jet and Bottle [1913].jpeg",
         "/Users/meme/photos/Nude Woman in a Red Armchair [1932].jpeg",
@@ -1421,7 +1319,7 @@
       "maximumAge": 50,
       "maximumTickets": 150,
       "price": 35,
-      "coverImageURL": "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
+      "coverImageURL": "/Users/meme/photos/Malta-masterclass-poster_SML.jpg",
       "mediaArray": [
         "/Users/meme/photos/Portrait of Gertrude Stein [1905-6].jpeg",
         "/Users/meme/photos/The Old Guitarist [1903].jpeg",
@@ -1445,7 +1343,7 @@
       "maximumAge": 65,
       "maximumTickets": 200,
       "price": 45,
-      "coverImageURL": "/Users/meme/photos/The Smoker [1953].jpeg",
+      "coverImageURL": "/Users/meme/photos/eric-benet.jpg",
       "mediaArray": [
         "/Users/meme/photos/The Smoker [1953].jpeg",
         "/Users/meme/photos/The Muse [1935].jpeg",
