@@ -25,6 +25,7 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
     @IBOutlet var categoriesCollectioView: InterestsCollectionView!
 
     @IBOutlet weak var catButtons: UIStackView!
+    
 
     var prevSearch: [String] = []
     let userDefaults = UserDefaults.standard
@@ -36,7 +37,8 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
     var age: Int = 5
     var price: Int = 5
     var filterApplied: Bool = false
-
+    var selectedEventID : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,24 +107,6 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
         age = 5
         price = 5
         searchMade()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "filter" {
-            InterestsCollectionView.selectForCustomer = false
-            if let vc = segue.destination as? CustomerSearchViewController {
-                _ = vc.view // Force the view to load
-
-                // Pass the selected filters
-                vc.selectedFilters = self.selectedFilters
-                
-                vc.ageTextField.text = String(self.age)
-                vc.priceTextField.text = String(self.price)
-                vc.ageSlider.value = Float(self.age)
-                vc.priceSlider.value = Float(self.price)
-                // Update the collection view's selected interests
-            }
-        }
     }
 
     func setInterests() {
@@ -279,7 +263,11 @@ extension CustomerSearchViewController: UITableViewDelegate,
 
             // Optional: Deselect the cell after selection
             tableView.deselectRow(at: indexPath, animated: true)
+        } else {
+            selectedEventID = eventsList[indexPath.row].eventID
         }
+        performSegue(withIdentifier: "toEvent", sender: self)
+        
     }
 
     func tableView(
@@ -290,6 +278,30 @@ extension CustomerSearchViewController: UITableViewDelegate,
         }
         return 50
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "filter" {
+            InterestsCollectionView.selectForCustomer = false
+            if let vc = segue.destination as? CustomerSearchViewController {
+                _ = vc.view // Force the view to load
+
+                // Pass the selected filters
+                vc.selectedFilters = self.selectedFilters
+                
+                vc.ageTextField.text = String(self.age)
+                vc.priceTextField.text = String(self.price)
+                vc.ageSlider.value = Float(self.age)
+                vc.priceSlider.value = Float(self.price)
+                // Update the collection view's selected interests
+            }
+        }
+        if segue.identifier == "toEvent" {
+            let vc = (segue.destination as! UINavigationController).topViewController as! CustomerEventViewController
+            navigationController?.pushViewController(vc, animated: true)
+            vc.delegate = self
+            vc.eventID = selectedEventID!
+        }
+    }
+    
 }
 
 extension CustomerSearchViewController: UISearchBarDelegate {
