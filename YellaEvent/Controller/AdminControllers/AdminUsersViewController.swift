@@ -11,11 +11,11 @@ import FirebaseFirestore
 //MARK: local Exception
 struct RuntimeError: LocalizedError {
     private let message: String
-
+    
     init(_ message: String) {
         self.message = message
     }
-
+    
     var errorDescription: String? {
         return message
     }
@@ -47,7 +47,7 @@ class AdminUsersViewController: UIViewController {
     var users : [User] = []
     var currentSegment : UserType?
     var organizerName: String?
-
+    var backFromCell = false
     
     
     //form the main page + button
@@ -57,7 +57,7 @@ class AdminUsersViewController: UIViewController {
     
     
     
- //Ban Account Page
+    //Ban Account Page
     //outlets
     @IBOutlet weak var txtDescription: UITextView!
     @IBOutlet weak var txtBanReason: UIButton!
@@ -84,23 +84,23 @@ class AdminUsersViewController: UIViewController {
         guard validationBan() else {
             return
         }
-            // 2. Get the selected duration and convert it into days
-            let selectedDurationText = txtBanduration.titleLabel?.text ?? ""
-            let selectedDurationInDays = getDurationInDays(from: selectedDurationText)
-            
-            // 3. Calculate the end date by adding the duration to today's date
-            let startDate = Date()  // today's date
-            let endDate = calculateEndDate(from: startDate, durationInDays: selectedDurationInDays)
-            
-            // 4. Call the UsersManager.banUser method with startDate and endDate
-            let txt = (txtBanReason.titleLabel?.text)!
-            
-            Task{
-                try UsersManager.banUser(userID: currentUser!.userID, userType: currentUser!.type, reason: txt, description: txtDescription.text, startDate: startDate, endDate: endDate)
-            }
-            
-            // 5. Show the confirmation alert
-            banConformation()
+        // 2. Get the selected duration and convert it into days
+        let selectedDurationText = txtBanduration.titleLabel?.text ?? ""
+        let selectedDurationInDays = getDurationInDays(from: selectedDurationText)
+        
+        // 3. Calculate the end date by adding the duration to today's date
+        let startDate = Date()  // today's date
+        let endDate = calculateEndDate(from: startDate, durationInDays: selectedDurationInDays)
+        
+        // 4. Call the UsersManager.banUser method with startDate and endDate
+        let txt = (txtBanReason.titleLabel?.text)!
+        
+        Task{
+            try UsersManager.banUser(userID: currentUser!.userID, userType: currentUser!.type, reason: txt, description: txtDescription.text, startDate: startDate, endDate: endDate)
+        }
+        
+        // 5. Show the confirmation alert
+        banConformation()
         
     }
     
@@ -117,24 +117,24 @@ class AdminUsersViewController: UIViewController {
         super.viewDidLoad()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         
-
+        
         //load for the list user page
         do {
             // Ensure tableView exists
             guard let tableView = tableView else {
                 throw RuntimeError("TableView is not connected.")
             }
-
+            
             tableView.delegate = self
             tableView.dataSource = self
-
+            
             // Ensure the NIB file exists
             
             let nibName = "UsersTableViewCell"
             guard Bundle.main.path(forResource: nibName, ofType: "nib") != nil else {
                 throw RuntimeError("Nib file \(nibName) not found in the bundle.")
             }
-
+            
             tableView.register(UINib(nibName: nibName, bundle: Bundle.main), forCellReuseIdentifier: "UsersTableViewCell")
         } catch {
             print("Error setting up tableView: \(error.localizedDescription)")
@@ -151,7 +151,7 @@ class AdminUsersViewController: UIViewController {
             do{
                 // Safely check and handle `userListSections` and `addOrganizer`
                 if let userListSections = userListSections {
-                   
+                    
                     if userListSections.selectedSegmentIndex == 2 {
                         addOrganizer?.isEnabled = true // Use optional chaining for `addOrganizer`
                     } else {
@@ -167,8 +167,8 @@ class AdminUsersViewController: UIViewController {
                 usersUpdate()
             }
         }
-
-
+        
+        
         do{
             if let _ = txtBanReason {
                 txtBanReason.setTitle("Select Ban Reason", for: .normal)
@@ -176,10 +176,10 @@ class AdminUsersViewController: UIViewController {
                 lastField.isHidden = true
             }
         }
-    
-
+        
+        
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ViewCustomerPage" {
             viewCustomerDetailsView = segue.destination.view as? ViewCustomerDetailsView
@@ -223,8 +223,12 @@ class AdminUsersViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         
         if let userListSections = userListSections{
-            userListSections.selectedSegmentIndex = 0
-            clickOnSegment(userListSections)
+            if !backFromCell {
+                userListSections.selectedSegmentIndex = 0
+                clickOnSegment(userListSections)
+            } else {
+                backFromCell = false
+            }
         }
     }
     
@@ -289,18 +293,19 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
         
         let user = users[indexPath.row]
         currentUser = user
-
+        
         if (user.type == .admin){
             performSegue(withIdentifier: "ViewAdminPage", sender: self)
+            backFromCell = true
             
-
             
         }else if (user.type == .customer){
             performSegue(withIdentifier: "ViewCustomerPage", sender: self)
-            
+            backFromCell = true
             
         }else if (user.type == .organizer){
             performSegue(withIdentifier: "ViewOrganizerPage", sender: self)
+            backFromCell = true
         }
         
     }
@@ -312,26 +317,26 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
                 throw RuntimeError("userListSections is not available.")
             }
             let section = userListSections.selectedSegmentIndex
-
+            
             // Clear users and reset the search bar
             
             users.removeAll()
             users = []
             searchbar?.text = "" // Use optional chaining to handle missing search bar
-
+            
             // Handle the selected segment and call appropriate methods
             switch section {
             case 0:
-                 UsersManager.getAllUsers(listener: listner())
+                UsersManager.getAllUsers(listener: listner())
                 currentSegment = nil
             case 1:
-                 UsersManager.addUsersListener(userType: .customer, listener: listner())
+                UsersManager.addUsersListener(userType: .customer, listener: listner())
                 currentSegment = .customer
             case 2:
-                 UsersManager.addUsersListener(userType: .organizer, listener: listner())
+                UsersManager.addUsersListener(userType: .organizer, listener: listner())
                 currentSegment = .organizer
             case 3:
-                 UsersManager.addUsersListener(userType: .admin, listener: listner())
+                UsersManager.addUsersListener(userType: .admin, listener: listner())
                 currentSegment = .admin
             default:
                 print("Unhandled section index: \(section)")
@@ -340,56 +345,56 @@ extension AdminUsersViewController : UITableViewDelegate, UITableViewDataSource{
             print("Error occurred during usersUpdate: \(error.localizedDescription)")
         }
     }
-
+    
+    
+    func listner()  -> ((QuerySnapshot?, (any Error)?) -> Void)  {
+        self.users = []
         
-        func listner()  -> ((QuerySnapshot?, (any Error)?) -> Void)  {
-            self.users = []
-
-            return { snapshot, error in
-                guard error == nil else {
-                    // fatima add error handeling here
-                    print("Error: \(error!)")
-                    return
-                }
-                
-                guard let snapshot = snapshot else {
-                    print("No data available.")
-                    return
-                }
-                
-                if self.currentSegment != nil { // if the current segment is on all tap do not emptied the user list
-                    self.users = []
-                }
-                for doc in snapshot.documents {
-                    do {
-                        if let userType = doc.data()[K.FStore.User.type] as? String {
-                            let user: User
-                            
-                            switch userType {
-                            case UserType.admin.rawValue:
-                                user = try doc.data(as: Admin.self)
-                            case UserType.customer.rawValue:
-                                user = try doc.data(as: Customer.self)
-                            case UserType.organizer.rawValue:
-                                user = try doc.data(as: Organizer.self)
-                            default:
-                                print("Unknown user type: \(userType)")
-                                continue
-                            }
-                            self.users.append(user)
+        return { snapshot, error in
+            guard error == nil else {
+                // fatima add error handeling here
+                print("Error: \(error!)")
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                print("No data available.")
+                return
+            }
+            
+            if self.currentSegment != nil { // if the current segment is on all tap do not emptied the user list
+                self.users = []
+            }
+            for doc in snapshot.documents {
+                do {
+                    if let userType = doc.data()[K.FStore.User.type] as? String {
+                        let user: User
+                        
+                        switch userType {
+                        case UserType.admin.rawValue:
+                            user = try doc.data(as: Admin.self)
+                        case UserType.customer.rawValue:
+                            user = try doc.data(as: Customer.self)
+                        case UserType.organizer.rawValue:
+                            user = try doc.data(as: Organizer.self)
+                        default:
+                            print("Unknown user type: \(userType)")
+                            continue
                         }
-                    } catch {
-                        print(error.localizedDescription)
+                        self.users.append(user)
                     }
-                }
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    //                self.searchBar(self.searchbar, textDidChange: self.searchbar.text ?? "")
+                } catch {
+                    print(error.localizedDescription)
                 }
             }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                //                self.searchBar(self.searchbar, textDidChange: self.searchbar.text ?? "")
+            }
         }
-        
+    }
+    
 }
 
 // MARK: Search delegate
@@ -407,7 +412,7 @@ extension AdminUsersViewController : UISearchBarDelegate{
                                      ? UsersManager.getAllUsers()
                                      : UsersManager.getUsers(ofType: currentSegment!))
             
-
+            
             self.users = searchArray.filter { user in
                 let searchText = searchText.lowercased()
                 let fullName = user.fullName.lowercased()
@@ -421,7 +426,7 @@ extension AdminUsersViewController : UISearchBarDelegate{
                 
                 return nameMatches || fullNameContains || emailContains
             }
-
+            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -433,39 +438,39 @@ extension AdminUsersViewController : UISearchBarDelegate{
 // extention for filds validations for create oragnizer --> inclide the function that related to the validation
 extension AdminUsersViewController{
     
-        
-        func isValidFullName(_ fullName: String) -> Bool {
-            let fullNameRegex = "^[a-zA-Z ]+$"
-            let fullNameTest = NSPredicate(format: "SELF MATCHES %@", fullNameRegex)
-            return fullNameTest.evaluate(with: fullName)
-        }
-        
-        func isValidPhoneNumber(_ phoneNumber: String) -> Bool {
-            let phoneNumberRegex = "^[0-9]{8}$"
-            let phoneNumberTest = NSPredicate(format: "SELF MATCHES %@", phoneNumberRegex)
-            return phoneNumberTest.evaluate(with: phoneNumber)
-        }
-        
-        func isValidEmail(_ email: String) -> Bool {
-            let emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-            let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-            return emailTest.evaluate(with: email)
-        }
-        
-        
-    func highlightField(_ textField: UIView?) {
-            textField?.layer.borderWidth = 1
-            textField?.layer.borderColor = UIColor.red.cgColor
-            textField?.layer.cornerRadius = 5
-        }
-
-        func resetFieldHighlight(_ textField: UIView?) {
-            textField?.layer.borderWidth = 0
-            textField?.layer.borderColor = UIColor.clear.cgColor
-        }
-        
-
+    
+    func isValidFullName(_ fullName: String) -> Bool {
+        let fullNameRegex = "^[a-zA-Z ]+$"
+        let fullNameTest = NSPredicate(format: "SELF MATCHES %@", fullNameRegex)
+        return fullNameTest.evaluate(with: fullName)
     }
+    
+    func isValidPhoneNumber(_ phoneNumber: String) -> Bool {
+        let phoneNumberRegex = "^[0-9]{8}$"
+        let phoneNumberTest = NSPredicate(format: "SELF MATCHES %@", phoneNumberRegex)
+        return phoneNumberTest.evaluate(with: phoneNumber)
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailTest.evaluate(with: email)
+    }
+    
+    
+    func highlightField(_ textField: UIView?) {
+        textField?.layer.borderWidth = 1
+        textField?.layer.borderColor = UIColor.red.cgColor
+        textField?.layer.cornerRadius = 5
+    }
+    
+    func resetFieldHighlight(_ textField: UIView?) {
+        textField?.layer.borderWidth = 0
+        textField?.layer.borderColor = UIColor.clear.cgColor
+    }
+    
+    
+}
 
 
 

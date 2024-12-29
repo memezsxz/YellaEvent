@@ -11,7 +11,7 @@ import FirebaseFirestore
 class CustomerLeaderboardViewController: UIViewController {
     
     var customers: [Customer] = []
-    var currentUserID = "r91ayZkyBvM21oL4akWY"
+    var currentUserID = UserDefaults.standard.string(forKey: K.bundleUserID)!
     @IBOutlet weak var tableView: UITableView!
 
     
@@ -20,6 +20,7 @@ class CustomerLeaderboardViewController: UIViewController {
         setupTableView()
         fetchLeaderboard()
     }
+    
     
     private func setupTableView() {
         tableView.delegate = self

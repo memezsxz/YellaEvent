@@ -72,7 +72,7 @@
                                                 <rect key="frame" x="10" y="12.666666666666629" width="39" height="39"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gearshape" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="K0C-lM-zz6">
-                                                        <rect key="frame" x="4.9999999999999964" y="5.3333333333333321" width="29.000000000000004" height="28.666666666666668"/>
+                                                        <rect key="frame" x="4.9999999999999964" y="5.3333333333333321" width="29.000000000000004" height="28.666666666666654"/>
                                                         <color key="tintColor" red="0.29411764709999999" green="0.2666666667" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <gestureRecognizers/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="15"/>
