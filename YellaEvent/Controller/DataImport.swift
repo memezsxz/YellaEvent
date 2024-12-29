@@ -8,20 +8,19 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseStorage
-import FirebaseAuth
 
 final class DataImport {
     static private var idMappings: [String: String] = [:] // Stores mappings for all referenced IDs (userID, eventID, badgeID, etc.)
     static private let db = Firestore.firestore()
     static private let storage = Storage.storage()
-    
+
     static private func uploadImage(localPath: String, storagePath: String, completion: @escaping (String?) -> Void) {
         guard let imageData = FileManager.default.contents(atPath: localPath) else {
             print("Image not found at path: \(localPath)")
             completion(nil)
             return
         }
-        
+
         let storageRef = Storage.storage().reference().child(storagePath)
         storageRef.putData(imageData, metadata: nil) { _, error in
             if let error = error {
@@ -39,7 +38,7 @@ final class DataImport {
             }
         }
     }
-    
+
     static func uploadData() {
         // Locate the JSON file in the app bundle
         guard let path = Bundle.main.path(forResource: "file2", ofType: "json") else {
@@ -54,27 +53,27 @@ final class DataImport {
             let data = try Data(contentsOf: url)
             if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                 // Start uploading collections in the correct order
-//                uploadAdmins(json: json) {
+                uploadAdmins(json: json) {
                     self.uploadOrganizers(json: json) {
-                        //                        self.uploadCategories(json: json) {
-                        //                            self.uploadEvents(json: json) {
-                        //                                self.uploadBadges(json: json) {
-                        //                                    self.uploadCustomers(json: json) {
-                        //                                        self.uploadRatings(json: json) {
-                        //                                            self.uploadTickets(json: json) {
-                        //                                                self.uploadUserBans(json: json) {
-                        //                                                    self.uploadEventBans(json: json) {
-                        //                                                        self.uploadFAQs(json: json)
-                        //                                                    }
-                        //                                                }
-                        //                                            }
-                        //                                        }
-                        //                                    }
-                        //                                }
-                        //                            }
-                        //                        }
+                        self.uploadCategories(json: json) {
+                            self.uploadEvents(json: json) {
+                                self.uploadBadges(json: json) {
+                                    self.uploadCustomers(json: json) {
+                                        self.uploadRatings(json: json) {
+                                            self.uploadTickets(json: json) {
+                                                self.uploadUserBans(json: json) {
+                                                    self.uploadEventBans(json: json) {
+                                                        self.uploadFAQs(json: json)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-//                }
+                }
             }
         } catch {
             print("Error reading or parsing JSON: \(error.localizedDescription)")
@@ -90,69 +89,40 @@ final class DataImport {
         }
         
         for admin in admins {
+            
             var updatedAdmin = admin
             if let dateCreated = admin[K.FStore.User.dateCreated] as? String {
                 updatedAdmin[K.FStore.User.dateCreated] = K.DFormatter.date(from: dateCreated)!
             }
             
-            Auth.auth().createUser(withEmail: admin[K.FStore.User.email] as! String, password: "123456") { result, error in
-                guard let user = result?.user else {
-                    if let error {
-                        print("Error creating user: \(error.localizedDescription)")
-                    }
-                    return
+            let ref = db.collection(K.FStore.Admins.collectionName).addDocument(data: updatedAdmin) { error in
+                if let error = error {
+                    print("Error uploading admin: \(error.localizedDescription)")
+                } else {
+                    print("Successfully uploaded an admin.")
                 }
-                
-                let oldUserID = admin[K.FStore.User.userID] as? String ?? ""
-                
-                self.idMappings[oldUserID] = user.uid // Mapping the old userID to the new document ID
-                updatedAdmin[K.FStore.User.userID] = user.uid
-                
-                db.collection(K.FStore.Admins.collectionName).document(user.uid).setData(updatedAdmin) { error in
+            }
+            
+            ref.getDocument { (document, error) in
+                if let documentID = document?.documentID {
+                    ref.updateData([K.FStore.User.userID: documentID])
+                    let oldUserID = admin[K.FStore.User.userID] as? String ?? ""
+                    self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
+
                     if let localImagePath = updatedAdmin[K.FStore.User.profileImageURL] as? String {
-                        let storagePath = "admins/\(user.uid)/profile.jpg"
+                        let storagePath = "admins/\(documentID)/profile.jpg"
                         uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
                             if let imageUrl = imageUrl {
                                 updatedAdmin[K.FStore.User.profileImageURL] = imageUrl
-                                db.collection(K.FStore.Admins.collectionName).document(user.uid).updateData([K.FStore.User.profileImageURL: imageUrl])
-                                print("Admin uploaded with ID: \(user.uid)")
+                                ref.updateData([K.FStore.User.profileImageURL: imageUrl])
                             }
                         }
                         
                     } else {
-                        print("Admin uploaded with ID: \(user.uid) and no profile photo URL.")
+                        print("Admin uploaded with ID: \(documentID) and no profile photo URL.")
                     }
                 }
             }
-            
-            //            let ref = db.collection(K.FStore.Admins.collectionName).addDocument(data: updatedAdmin) { error in
-            //                if let error = error {
-            //                    print("Error uploading admin: \(error.localizedDescription)")
-            //                } else {
-            //                    print("Successfully uploaded an admin.")
-            //                }
-            //            }
-            //
-            //            ref.getDocument { (document, error) in
-            //                if let documentID = document?.documentID {
-            //                    ref.updateData([K.FStore.User.userID: documentID])
-            //                    let oldUserID = admin[K.FStore.User.userID] as? String ?? ""
-            //                    self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
-            //
-            //                    if let localImagePath = updatedAdmin[K.FStore.User.profileImageURL] as? String {
-            //                        let storagePath = "admins/\(documentID)/profile.jpg"
-            //                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
-            //                            if let imageUrl = imageUrl {
-            //                                updatedAdmin[K.FStore.User.profileImageURL] = imageUrl
-            //                                ref.updateData([K.FStore.User.profileImageURL: imageUrl])
-            //                            }
-            //                        }
-            //
-            //                    } else {
-            //                        print("Admin uploaded with ID: \(documentID) and no profile photo URL.")
-            //                    }
-            //                }
-            //            }
         }
         completion()
     }
@@ -182,55 +152,46 @@ final class DataImport {
                 updatedOrganizer[K.FStore.Organizers.endDate] = K.DFormatter.date(from: endDate)!
             }
             
-            
-            Auth.auth().createUser(withEmail: updatedOrganizer[K.FStore.User.email] as! String, password: "123456") { result, error in
-                guard let user = result?.user else {
-                    if let error {
-                        print("Error creating user: \(error.localizedDescription)")
-                    }
-                    return
-                }
-                
-                let oldUserID = updatedOrganizer[K.FStore.User.userID] as? String ?? ""
-                
-                self.idMappings[oldUserID] = user.uid // Mapping the old userID to the new document ID
-                
-                updatedOrganizer[K.FStore.User.userID] = user.uid
-                
-                db.collection(K.FStore.Organizers.collectionName).document(user.uid).setData(updatedOrganizer) { error in
-                    if let localImagePath = updatedOrganizer[K.FStore.User.profileImageURL] as? String {
-                        let storagePath = "organizers/\(user.uid)/Profile.jpg"
-                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
-                            if let imageUrl = imageUrl {
-                                updatedOrganizer[K.FStore.User.profileImageURL] = imageUrl
-                                db.collection(K.FStore.Organizers.collectionName).document(user.uid).updateData([K.FStore.User.profileImageURL: imageUrl])
-                                print("Organizer uploaded with ID: \(user.uid)")
-                            }
-                        }
-                        
-                    } else {
-                        print("Organizer uploaded with ID: \(user.uid) and no profile photo URL.")
-                    }
-                    
-                    if let localImagePath = updatedOrganizer[K.FStore.Organizers.LicenseDocumentURL] as? String {
-                        let storagePath = "organizers/\(user.uid)/Profile.jpg"
-                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
-                            if let imageUrl = imageUrl {
-                                updatedOrganizer[K.FStore.Organizers.LicenseDocumentURL] = imageUrl
-                                db.collection(K.FStore.Organizers.collectionName).document(user.uid).updateData([K.FStore.Organizers.LicenseDocumentURL: imageUrl])
-                                print("Organizer uploaded with ID: \(user.uid)")
-                            }
-                        }
-                        
-                    } else {
-                        print("Organizer uploaded with ID: \(user.uid) and no profile photo URL.")
-                    }
-
+            let ref = db.collection(K.FStore.Organizers.collectionName).addDocument(data: updatedOrganizer) { error in
+                if let error = error {
+                    print("Error uploading organizer: \(error.localizedDescription)")
+                } else {
+                    print("Successfully uploaded an organizer.")
                 }
             }
             
-            dispatchGroup.leave()  // Leave the DispatchGroup after the async task completes
+            ref.getDocument { (document, error) in
+                if let documentID = document?.documentID {
+                    ref.updateData([K.FStore.User.userID: documentID])
+                    let oldUserID = organizer[K.FStore.User.userID] as? String ?? ""
+                    self.idMappings[oldUserID] = documentID
+
+                    if let localImagePath = updatedOrganizer[K.FStore.User.profileImageURL] as? String {
+                        let storagePath = "organizers/\(documentID)/Profile.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedOrganizer[K.FStore.User.profileImageURL] = imageUrl
+                                ref.updateData([K.FStore.User.profileImageURL: imageUrl])
+                            }
+                        }
+                    }
+                    
+                    if let localImagePath = updatedOrganizer[K.FStore.Organizers.LicenseDocumentURL] as? String {
+                        let storagePath = "organizers/\(documentID)/License.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedOrganizer[K.FStore.Organizers.LicenseDocumentURL] = imageUrl
+                                ref.updateData([K.FStore.Organizers.LicenseDocumentURL: imageUrl])
+                            }
+                        }
+                    }
+                    
+                    print("Mapped old organizer ID \(oldUserID) to new document ID \(documentID)")
+                }
+                dispatchGroup.leave()  // Leave the DispatchGroup after the async task completes
+            }
         }
+        
         // Wait for all tasks to complete before calling the completion closure
         dispatchGroup.notify(queue: .main) {
             completion()  // This will be called once all organizers have been processed
@@ -272,38 +233,32 @@ final class DataImport {
                 updatedCustomer[K.FStore.Customers.intrestArray] = newCategoryIDs
             }
             
-            Auth.auth().createUser(withEmail: updatedCustomer[K.FStore.User.email] as! String, password: "123456") { result, error in
-                guard let user = result?.user else {
-                    if let error {
-                        print("Error creating user: \(error.localizedDescription)")
-                    }
-                    return
-                }
-                
-                let oldUserID = updatedCustomer[K.FStore.User.userID] as? String ?? ""
-                
-                self.idMappings[oldUserID] = user.uid // Mapping the old userID to the new document ID
-                
-                updatedCustomer[K.FStore.User.userID] = user.uid
-                
-                db.collection(K.FStore.Customers.collectionName).document(user.uid).setData(updatedCustomer) { error in
-                    if let localImagePath = updatedCustomer[K.FStore.User.profileImageURL] as? String {
-                        let storagePath = "customers/\(user.uid)/Profile.jpg"
-                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
-                            if let imageUrl = imageUrl {
-                                updatedCustomer[K.FStore.User.profileImageURL] = imageUrl
-                                db.collection(K.FStore.Customers.collectionName).document(user.uid).updateData([K.FStore.User.profileImageURL: imageUrl])
-                                print("Customer uploaded with ID: \(user.uid)")
-                            }
-                        }
-                        
-                    } else {
-                        print("Customer uploaded with ID: \(user.uid) and no profile photo URL.")
-                    }
+            let ref = db.collection(K.FStore.Customers.collectionName).addDocument(data: updatedCustomer) { error in
+                if let error = error {
+                    print("Error uploading customer: \(error.localizedDescription)")
+                } else {
+                    print("Successfully uploaded a customer.")
                 }
             }
             
-            dispatchGroup.leave()  // Leave the DispatchGroup after the async task completes
+            ref.getDocument { (document, error) in
+                if let documentID = document?.documentID {
+                    ref.updateData([K.FStore.User.userID: documentID])
+                    let oldUserID = customer[K.FStore.User.userID] as? String ?? ""
+                    self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
+
+                    if let localImagePath = updatedCustomer[K.FStore.User.profileImageURL] as? String {
+                        let storagePath = "customers/\(documentID)/profile.jpg"
+                        uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
+                            if let imageUrl = imageUrl {
+                                updatedCustomer[K.FStore.User.profileImageURL] = imageUrl
+                                ref.updateData([K.FStore.User.profileImageURL: imageUrl])
+                            }
+                        }
+                    }
+                }
+                dispatchGroup.leave()  // Leave the DispatchGroup after the async task completes
+            }
         }
         
         // Wait for all tasks to complete before calling the completion closure
@@ -405,7 +360,7 @@ final class DataImport {
                         }
                     }
                     var mediaArray: [String] = []
-                    var i = 0
+var i = 0
                     (updatedEvent[K.FStore.Events.mediaArray] as? [String])?.forEach({ localImagePath in
                         let storagePath = "events/\(updatedEvent[K.FStore.Events.organizerID] as! String)/\(documentID)/media\(i).jpg"
                         i += 1
@@ -415,7 +370,7 @@ final class DataImport {
                                 ref.updateData([K.FStore.Events.mediaArray: mediaArray])
                             }
                         }
-                        
+
                     })
                     
                 }
@@ -561,6 +516,19 @@ final class DataImport {
                 if let error = error {
                     print("Error uploading badge: \(error.localizedDescription)")
                 } else {
+<<<<<<< HEAD
+=======
+                    print("Successfully uploaded a badge.")
+                }
+            }
+            
+            ref.getDocument { (document, error) in
+                if let documentID = document?.documentID {
+                    ref.updateData([K.FStore.Badges.badgeID: documentID])
+                    let oldUserID = badge[K.FStore.Badges.badgeID] as? String ?? ""
+                    self.idMappings[oldUserID] = documentID // Mapping the old userID to the new document ID
+
+>>>>>>> parent of 4b92300 (data import updated)
                     if let localImagePath = updatedBadge[K.FStore.Badges.image] as? String {
                         let storagePath = "events/\(updatedBadge[K.FStore.Badges.eventID] as! String)/Badge.jpg"
                         uploadImage(localPath: localImagePath, storagePath: storagePath) { imageUrl in
