@@ -16,7 +16,7 @@ class AdminEventsViewController: UIViewController  {
     @IBOutlet var tableView: UITableView!
     var currentSegment : EventStatus? = nil
     var organizerCache: [String: String] = [:] // Cache for organizer names (organizerID -> organizerName)
-
+    var selectedEventID: String?
     
     var orgName: String?{
         didSet {
@@ -30,9 +30,15 @@ class AdminEventsViewController: UIViewController  {
     var segmentEvents : [(eventID: String, eventName : String, organizerID: String, status: String)] = []
     var searchEvents : [(eventID: String, eventName : String, organizerID: String, status: String)] = []
 
-
     
     override func viewDidLoad() {
+        
+        //for page 2
+        tableView.delegate = self
+                tableView.dataSource = self
+                tableView.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: "MainTableViewCell")
+
+        
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
@@ -91,10 +97,7 @@ class AdminEventsViewController: UIViewController  {
                performSearch(with: orgName) // Trigger the search programmatically
            }
     }
-    
-    
-    
-    
+
     @IBAction func segmentClick(_ sender: Any) {
         
         switch eventsStatusSegment.selectedSegmentIndex {
@@ -117,32 +120,47 @@ class AdminEventsViewController: UIViewController  {
         }
         searchBar(searchBar, textDidChange: searchBar.text ?? "")
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEvent" {
+            let destination = segue.destination.view as! AdminEventView
+            destination.delegate = self
+            destination.eventID = selectedEventID
+            destination.fetchEventAndUpdateUI()
+        }
+    }
 }
 
 // MARK: table view
-extension AdminEventsViewController : UITableViewDelegate, UITableViewDataSource {
+extension AdminEventsViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  searchEvents.count
+        return searchEvents.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as! MainTableViewCell
-        cell.title.text = "\(searchEvents[indexPath.row].eventName)"
+        cell.title.text = searchEvents[indexPath.row].eventName
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        tableView.frame.width / 6
+        return tableView.frame.width / 6
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedEventID = searchEvents[indexPath.row].eventID
+        performSegue(withIdentifier: "showEvent", sender: self)
     }
 }
 
 // MARK: searchbar
 extension AdminEventsViewController : UISearchBarDelegate {
     
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let searchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() // Convert search text to lowercase
-
+        
         guard !searchText.isEmpty else {
             searchEvents = segmentEvents
             tableView.reloadData()
@@ -152,7 +170,7 @@ extension AdminEventsViewController : UISearchBarDelegate {
         // Filter events synchronously using the preloaded cache
         searchEvents = segmentEvents.filter { event in
             let eventNameMatches = event.eventName.lowercased().contains(searchText) || // Convert event name to lowercase
-                event.eventName.split(separator: " ").contains { $0.lowercased().contains(searchText) } // Split and compare in lowercase
+            event.eventName.split(separator: " ").contains { $0.lowercased().contains(searchText) } // Split and compare in lowercase
             
             let organizerNameMatches = organizerCache[event.organizerID]?.contains(searchText) ?? false
             return eventNameMatches || organizerNameMatches
@@ -215,5 +233,23 @@ extension AdminEventsViewController : UISearchBarDelegate {
         }
     }
     
+    //page 2
     
+  
+    
+    //            func updateOrganizerProfileView(with organizer: Organizer) {
+    //                // Assuming organizerNameLabel is the outlet for organizer name
+    //                if let organizerNameLabel = organizerNameLabel {
+    //                    organizerNameLabel.text = event?.organizerName
+    //                    // Additional UI updates for organizer profile view
+    //                }
+    //}
+    
+    //        @IBAction func showPage(_ sender: Any) {
+    //            if let organizer = organizer {
+    //                updateOrganizerProfileView(with: organizer)
+    //            }
+    //        }
+    //
+  
 }

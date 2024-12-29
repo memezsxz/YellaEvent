@@ -73,7 +73,7 @@
         <scene sceneID="RPs-NW-CUo">
             <objects>
                 <viewController id="2sn-u2-gWa" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="X1r-RQ-PPz">
+                    <view key="view" contentMode="scaleToFill" id="X1r-RQ-PPz" customClass="AdminEventView" customModule="YellaEvent" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -255,10 +255,26 @@
                             <constraint firstAttribute="trailing" secondItem="1cR-mj-XIO" secondAttribute="trailing" constant="30" id="wWw-dP-E0Y"/>
                             <constraint firstItem="X4x-oa-fd9" firstAttribute="leading" secondItem="UcK-NK-3YJ" secondAttribute="leading" constant="16" id="yFR-Uo-Ifq"/>
                         </constraints>
+                        <connections>
+                            <outlet property="EventDescription" destination="dau-OK-qEp" id="y0C-hh-Le5"/>
+                            <outlet property="Month" destination="K2O-8H-LLm" id="T9Q-gQ-iz7"/>
+                            <outlet property="Venue" destination="SHh-dP-Pts" id="ktk-3w-pcg"/>
+                            <outlet property="dayOfMonth" destination="SSe-4v-8Mt" id="nrG-k5-V6W"/>
+                            <outlet property="dayOfweek" destination="c1c-YC-Q8F" id="2WF-rl-G9s"/>
+                            <outlet property="eventImageView" destination="oO5-7t-0WA" id="jmv-2U-DWV"/>
+                            <outlet property="eventStatus" destination="BOL-27-pmz" id="s0b-UR-EnJ"/>
+                            <outlet property="eventTitle" destination="aZU-ru-OJa" id="ZYO-Pt-dbS"/>
+                            <outlet property="minimumAge" destination="J4E-qq-Fge" id="4On-bA-hbR"/>
+                            <outlet property="price" destination="8DX-pC-spc" id="NRk-xC-jQo"/>
+                            <outlet property="startToEndTime" destination="Cbe-5P-C1s" id="Qxa-D3-ly8"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Rhl-5N-scY">
                         <barButtonItem key="rightBarButtonItem" title="View Organizer" id="rr9-da-yln">
                             <color key="tintColor" name="BrandPurple"/>
+                            <connections>
+                                <action selector="viewOrganizerButtonClicked:" destination="X1r-RQ-PPz" id="otS-LB-rD2"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
@@ -308,7 +324,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
