@@ -30,7 +30,7 @@ class CustomerEventViewController: UIViewController {
     // MARK: - Properties
     var eventID: String = "3jCdiZ7OrVUAksiBrZwr" // The event ID to fetch
     var event: Event? // This will hold the event data for this screen.
-    var ticketCount: Int = 0 // Keeps track of the current ticket count
+    var ticketCount: Int = 1 // Keeps track of the current ticket count
     var organizer: Organizer? // This will hold the organizer data for this screen.
     var delegate : UIViewController?
 
@@ -246,20 +246,24 @@ class CustomerEventViewController: UIViewController {
         }
         
         if segue.identifier == "goToTicket" {
-            if let ticketDetailsVC = segue.destination as? CustomerRegistrationViewController {
-                
-                print("Preparing to pass data:")
-                           print("Event ID: \(self.eventID)")
-                print("Organizer ID: \(self.organizer?.userID ?? "No Organizer ID")")
-                           print("Ticket Quantity: \(self.ticketCount)")
-                           print("Ticket Price: \(self.event?.price ?? 0.0)")
-                           
-                
-                // Pass the required values to the destination view controller
-                ticketDetailsVC.eventID = self.eventID
-                ticketDetailsVC.organizerID = self.organizer!.userID
-                ticketDetailsVC.ticketQuantity = self.ticketCount
-                ticketDetailsVC.ticketPrice = self.event?.price ?? 0.0  
+            print(segue.destination)
+            
+            if let ticketDetailsNC = segue.destination as? UINavigationController {
+                if let ticketDetailsVC = ticketDetailsNC.viewControllers.first as? CustomerRegistrationViewController {
+                    
+                    print("Preparing to pass data:")
+                    print("Event ID: \(eventID)")
+                    print("Organizer ID: \(organizer?.userID ?? "No Organizer ID")")
+                    print("Ticket Quantity: \(ticketCount)")
+                    print("Ticket Price: \(event?.price ?? 0.0)")
+                    
+                    
+                    // Pass the required values to the destination view controller
+                    ticketDetailsVC.eventID = eventID
+                    ticketDetailsVC.organizerID = event?.organizerID ?? ""
+                    ticketDetailsVC.ticketQuantity = ticketCount
+                    ticketDetailsVC.ticketPrice = event?.price ?? 0.0
+                }
             }
         }
     }

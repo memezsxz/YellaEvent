@@ -60,6 +60,7 @@ class OrganizerEventsViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.setSegmentEvents()
+                    self.moveToSelection()
                 }
                 
             }
@@ -82,6 +83,10 @@ class OrganizerEventsViewController: UIViewController {
         setSegmentEvents()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        moveToSelection()
+    }
+    
     func setSegmentEvents() {
         if let currentSegment = currentSegment  {
             segmentEvents = events.filter { $0.status == currentSegment.rawValue}
@@ -94,7 +99,8 @@ class OrganizerEventsViewController: UIViewController {
     func moveToSelection() {
         if selectedEventID != nil {
             let index = searchEvents.firstIndex { $0.eventID == selectedEventID! }
-            print(index, selectedEventID, searchEvents)
+            if index == nil { return }
+//            print(index, selectedEventID, searchEvents)
             tableView.selectRow(at: IndexPath(row: index!, section: 0), animated: true, scrollPosition: .middle)
             selectedEventID = nil
         }

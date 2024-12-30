@@ -16,7 +16,7 @@ class OrganizerDashboardViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefaults.standard.set("VxVB0GrEFw5ToXf2dO6q", forKey: K.bundleUserID) // this will be removed after seting the application
+//        UserDefaults.standard.set("VxVB0GrEFw5ToXf2dO6q", forKey: K.bundleUserID) // this will be removed after seting the application
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,14 +73,14 @@ extension OrganizerDashboardViewController {
             self.tabBarController?.selectedViewController = eventsNavigationController
             eventsNavigationController.popToRootViewController(animated: true)
             
-            //            let eventsViewController  = eventsViews?.first as? OrganizerEventsViewController
-            //            print(eventsViews)
-            //            eventsViewController?.selectedEventID = eventID
-            
-            //            eventsViewController?.tableView.selectRow(at: IndexPath(row: <#T##Int#>, section: 0), animated: <#T##Bool#>, scrollPosition: <#T##UITableView.ScrollPosition#>)
-            // navigate to the event's details screen
-            
-            //            eventsViewController?.sea
+//                        let eventsViewController  = eventsViews?.first as? OrganizerEventsViewController
+//                        print(eventsViews)
+//                        eventsViewController?.selectedEventID = eventID
+//            
+//                        eventsViewController?.tableView.selectRow(at: IndexPath(row: <#T##Int#>, section: 0), animated: <#T##Bool#>, scrollPosition: <#T##UITableView.ScrollPosition#>)
+//             navigate to the event's details screen
+//            
+//                        eventsViewController?.sea
             
         }
     }

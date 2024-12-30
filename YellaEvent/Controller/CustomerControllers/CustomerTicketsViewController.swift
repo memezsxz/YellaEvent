@@ -41,14 +41,15 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
 
     // Asynchronous function to fetch tickets from Firestore
     func fetchTickets() async {
-        ticketsList.removeAll() // Clear previous ticket lists
-        activeTickets.removeAll()
-        expiredTickets.removeAll()
 
         // Fetch user tickets using TicketsManager
         TicketsManager.getUserTickets(userId: userId) { snapshot, error in
             guard error == nil else { return } // Handle errors
             guard let snapshot = snapshot else { return }
+
+            self.ticketsList.removeAll() // Clear previous ticket lists
+            self.activeTickets.removeAll()
+            self.expiredTickets.removeAll()
 
             // Iterate through documents in the snapshot
             for doc in snapshot.documents {
@@ -58,7 +59,7 @@ class CustomerTicketsViewController: UIViewController, UITableViewDelegate, UITa
                     self.ticketsList.append(ticket) // Add ticket to the list
 
                     // Check if the ticket is active or expired
-                    if ticket.endTimeStamp > Date() {
+                    if ticket.endTimeStamp > Date() && ticket.status == .paid {
                         self.activeTickets.append(ticket) // Add to active tickets
                     } else {
                         self.expiredTickets.append(ticket) // Add to expired tickets

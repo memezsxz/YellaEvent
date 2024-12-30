@@ -121,7 +121,7 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
         tableView.dataSource = self
         tableView.register(UINib(nibName: "EventSummaryTableViewCell", bundle: .main), forCellReuseIdentifier: "EventSummaryTableViewCell")
         
-//        DataImport.uploadData()
+        DataImport.uploadData()
         
 //        Task {
 //            try await EventsManager.getAllEvents { snapshot, error in
@@ -139,13 +139,13 @@ class test: UIViewController, UITableViewDelegate, UITableViewDataSource, UIColl
 //                    }
 //                }
 //            }
+////        }
+//        
+//        Task {
+//            print(try await FAQsManager.getAllFAQs())
+//            print(try await FAQsManager.deleteFAQ(FAQID: "1I0iiAacm6rD2K02m7HU"))
 //        }
-        
-        Task {
-            print(try await FAQsManager.getAllFAQs())
-            print(try await FAQsManager.deleteFAQ(FAQID: "1I0iiAacm6rD2K02m7HU"))
-        }
-//
+////
 //        Task {
 //           try await  UsersManager.createNewUser(user: Admin(userID: "1", fullName: "das dsa", email: "d@as", dateCreated: Date.now, phoneNumber: 2312312123, profileImageURL: "https://firebasestorage.googleapis.com/v0/b/yellaevent.firebasestorage.app/o/lN1LrxyBfnNjr45KRmz5VPc4cw13%2FProfile.jpg?alt=media&token=14905f26-66a5-41cb-9bda-77ab6a7bcb74"))
 //            

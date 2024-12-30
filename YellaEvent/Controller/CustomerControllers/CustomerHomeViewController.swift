@@ -11,7 +11,7 @@ import FirebaseFirestore
 class CustomerHomeViewController: UITableViewController {
     let db = Firestore.firestore()
     let userID = UserDefaults.standard.string(forKey: K.bundleUserID)!
-    var debug = true
+    var debug = false
     var user : Customer?
     var currentIndex = 0
     var allRecommendedEvents: [DocumentReference] = []
@@ -320,8 +320,6 @@ class CustomerHomeViewController: UITableViewController {
     
     
     func displayEvents(events: [EventSummary]) {
-        // Implement your tableView.reloadData() or collectionView.reloadData() here.
-        // For now, just print the event names.
         events.forEach { event in
             print("Event Name: \(event.name) , \(event.categoryID)")
         }
@@ -338,7 +336,7 @@ class CustomerHomeViewController: UITableViewController {
 // MARK: Table view work
 extension CustomerHomeViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3 // or the total number of sections you expect
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -378,14 +376,13 @@ extension CustomerHomeViewController {
         
         Task {
             self.user =  try await  UsersManager.getCustomer(customerID:self.userID)
-            cell.hayLabel.text = "Hey \(user!.fullName) 👋🏻"
+            cell.hayLabel.text = "Hey \(user!.fullName.split(separator: " ")[0]) 👋🏻"
         }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: need dalal section to move to
         if indexPath.section == 1 {
             selectedEventID =  newEvent[indexPath.row].eventID
         }
@@ -393,6 +390,7 @@ extension CustomerHomeViewController {
         if indexPath.section == 2 {
             selectedEventID =  events[indexPath.row].eventID
         }
+        
         performSegue(withIdentifier: "toEvent", sender: self)
     }
     
