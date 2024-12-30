@@ -16,7 +16,6 @@ extension UIImageView {
         // Define the hexagon path
         let width = self.bounds.width
         let height = self.bounds.height
-        let sideLength = width / 2.0
         
         path.move(to: CGPoint(x: width / 2.0, y: 0))
         path.addLine(to: CGPoint(x: width, y: height * 0.25))

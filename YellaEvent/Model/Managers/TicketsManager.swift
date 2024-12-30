@@ -135,7 +135,7 @@ final class TicketsManager {
                      do {
                          let ticket = try await Ticket(from: doc.data())
                          do {
-                             let user = try await UsersManager.getUser(userID: ticket.customerID)
+                             _ = try await UsersManager.getUser(userID: ticket.customerID)
                              if ticket.didAttend {attendedTickets += 1}
                              totalTickets += 1
                          } catch {
@@ -171,7 +171,7 @@ final class TicketsManager {
 
     
     static func updateEventStartTimeStamp(eventID: String, startTimeStamp: Date) async throws {
-        let tickets = try await getEventTickets(eventID: eventID)
+        _ = try await getEventTickets(eventID: eventID)
 //        for ticket in tickets {
 //            try await ticketDocument(ticketId: ticket.ticketID).updateData([
 //                K.FStore.Tickets.startTimeStamp: startTimeStamp,

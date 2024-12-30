@@ -343,7 +343,7 @@ class OrganizerEventEditViewController: UITableViewController {
             PhotoManager.shared.uploadPhoto(updatedBadgeImage, to: "events/\(organizer!.userID)/\(event!.eventID)/", withNewName: "Badge", completion: { result in
                 switch result {
                 case .success(let url):
-                    var newBadge = Badge(image: "\(url)", eventID: "\(self.event!.eventID)", eventName: "\(self.event!.name)", category: self.event!.category)
+                    let newBadge = Badge(image: "\(url)", eventID: "\(self.event!.eventID)", eventName: "\(self.event!.name)", category: self.event!.category)
                     
                     Task {
                         do {

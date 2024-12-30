@@ -31,7 +31,7 @@ class CustomerTicketDetailsViewController: UIViewController {
             if let navController = segue.destination as? UINavigationController,
                let destination = navController.topViewController as? CustomerEventViewController {
                 // Successfully accessed AdminEventsViewController
-                print(eventObject?.name)
+//                print(eventObject?.name)
                 destination.eventID = eventObject!.eventID
             }
 
@@ -107,9 +107,9 @@ class CustomerTicketDetailsViewController: UIViewController {
     // Submit the rating to the backend
     private func submitRating(rating: Int) {
         guard let ticket = ticket else { return }
-        var current = Auth.auth().currentUser
+        let current = Auth.auth().currentUser
         
-        var currentRating = Rating(userID: current!.uid, eventID: ticket.eventID, organizerID: ticket.organizerID, rating: Double(rating))
+        let currentRating = Rating(userID: current!.uid, eventID: ticket.eventID, organizerID: ticket.organizerID, rating: Double(rating))
         print(currentRating.eventID)
         Task{
             try await RatingManager.createNewRating(rating: currentRating)

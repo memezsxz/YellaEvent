@@ -65,14 +65,11 @@ class MainUISegmentedControl: UISegmentedControl {
             .font: UIFont.boldSystemFont(ofSize: fontSize) // Customize font size for selected
         ]
         
-        // loop over the segment items
         for i in 0..<numberOfSegments{
             
-            //if the tab selected the text could should be white
             if selectedSegmentIndex == i {
                 setTitleTextAttributes(textAttributesSelected, for: .selected)
             }
-            //if the tab not selected the text must be brandDarkPurple (defind color in the assets)
             else{
                 setTitleTextAttributes(textAttributesNormal, for: .normal)
             }

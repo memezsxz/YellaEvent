@@ -371,7 +371,7 @@ class OrganizerCreateEventViewController: UITableViewController, UIImagePickerCo
                 switch result {
                 case .success(let url):
                     
-                    var newBadge = Badge(image: "\(url)", eventID: "\(newEvent.eventID)", eventName: "\(newEvent.name)", category: newEvent.category)
+                    let newBadge = Badge(image: "\(url)", eventID: "\(newEvent.eventID)", eventName: "\(newEvent.name)", category: newEvent.category)
                     
                     Task{
                         try await BadgesManager.createNewBadge(badge: newBadge)

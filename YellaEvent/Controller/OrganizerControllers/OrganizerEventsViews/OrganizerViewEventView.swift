@@ -82,7 +82,6 @@ class OrganizerViewEventView: UIViewController {
                 
                 // Update the remaining tickets on the main thread
                 await MainActor.run {
-                    let remainingTickets = totalCount - attendedCount
                     self.ticketsSold.text = "\(totalCount)"
                     self.totalAttendens.text = "\(attendedCount)"
                     self.remainingTickets.text = "\(event!.maximumTickets - totalCount)"

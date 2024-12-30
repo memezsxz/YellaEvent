@@ -106,7 +106,7 @@ struct Event : EventProtocol, Codable {
         self.name = data[K.FStore.Events.name] as? String ?? ""
         self.description = data[K.FStore.Events.description] as? String ?? ""
         self.startTimeStamp =  ((data[K.FStore.Events.startTimeStamp] as? Timestamp) ?? Timestamp()).dateValue()
-        self.endTimeStamp = ((data[K.FStore.Events.endTimeStamp] as? Timestamp) ?? Timestamp()).dateValue() ?? Date()
+        self.endTimeStamp = ((data[K.FStore.Events.endTimeStamp] as? Timestamp) ?? Timestamp()).dateValue()
         self.status = {
             switch data[K.FStore.Events.status] as? String ?? "" {
             case EventStatus.ongoing.rawValue:
@@ -163,9 +163,9 @@ struct Event : EventProtocol, Codable {
                 }
         })
         
-        var remainingTickets = 0
-        var ticketsSold = 0
-        var attendedTickets = 0
+        let remainingTickets = 0
+        let ticketsSold = 0
+        let attendedTickets = 0
         
 //        await TicketsManager.getEventAttendance(eventId: event.eventID) { totalTickets, attendedTicketsTotal in
 //            remainingTickets = totalTickets - attendedTickets

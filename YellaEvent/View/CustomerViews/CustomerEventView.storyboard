@@ -364,16 +364,6 @@
             </objects>
             <point key="canvasLocation" x="1032.824427480916" y="3.5211267605633805"/>
         </scene>
-        <!--CustomerEventView-->
-        <scene sceneID="AF8-cf-Z3j">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CustomerEventView" id="7tO-zh-7xo" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="w0Z-93-fLb"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6wK-rI-A6w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1871" y="-10"/>
-        </scene>
     </scenes>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>

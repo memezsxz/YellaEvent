@@ -19,7 +19,7 @@ class AdminEventView: UIView {
         let userIndex = usersController.users.firstIndex {
             $0.userID == event?.organizerID
         }
-        print(userIndex)
+//        print(userIndex)
         
         if let userIndex = userIndex {
             usersController.tableView.scrollToRow(at: IndexPath(row: userIndex, section: 0), at: .middle, animated: true)
