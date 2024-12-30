@@ -135,25 +135,16 @@ class OrganizerEventEditViewController: UITableViewController {
                 }
 
             }
-                    if let coverImageURL = URL(string: event.coverImageURL),
-                       let imageData = try? Data(contentsOf: coverImageURL),
-                       let coverImage = UIImage(data: imageData) {
-                        eventCoverButton.setBackgroundImage(coverImage, for: .normal)
-                    } else {
-                        eventCoverButton.setBackgroundImage(UIImage(named: "defaultCoverImage"), for: .normal)
-                    }
 
             // Load badge image if available
             Task {
-                print(eventID)
-                badge = try await BadgesManager.getBadgeForEvent(eventID: eventID)
+                badge = try await BadgesManager.getBadgeForEvent(eventID: event.eventID)
                            if !badge!.image.isEmpty,
                               let badgeImage = UIImage(contentsOfFile: badge!.image) {
                                eventBadgeButton.setBackgroundImage(badgeImage, for: .normal)
                            } else {
                                eventBadgeButton.setBackgroundImage(UIImage(named: "defaultBadgeImage"), for: .normal)
                            }
-                print(badge)
             }
                }
         

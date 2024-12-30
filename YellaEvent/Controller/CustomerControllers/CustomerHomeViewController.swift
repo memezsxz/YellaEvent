@@ -418,7 +418,7 @@ extension CustomerHomeViewController {
         }
         // Find the UILabel inside the default header view (if it exists)
         let headerView = UIView()
-        headerView.backgroundColor = .clear // Or set to a desired background color
+        headerView.backgroundColor = .clear
         
         // Add a new UILabel
         let label = UILabel()

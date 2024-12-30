@@ -134,6 +134,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="ziD-W2-jgG">
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" name="BrandPurple"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
