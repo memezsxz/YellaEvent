@@ -65,13 +65,12 @@ class AuthenticationViewController: UIViewController {
                // Successful sign-in
                if let firebaseUser = authResult?.user {
                    print("User signed in with Google: \(firebaseUser.email ?? "No email")")
-            
+                   
                    // Check if the user is banned
                    Task {
                        do {
                            let isNotBanned = try await UsersManager.isUserBanned(userID: firebaseUser.uid)
                            if !isNotBanned {
-                               // Show banned user message and sign out
                                let alertController = UIAlertController(
                                    title: "Account Banned",
                                    message: "Your account has been banned. Please contact support.",
@@ -84,67 +83,67 @@ class AuthenticationViewController: UIViewController {
                            }
                            
                            self.saveUserIdInUserDefaults(firebaseUser.uid)
-                           
                            let db = Firestore.firestore()
                            
-                           // Check if user exists in the 'admins' collection
-                           db.collection("admins").document(firebaseUser.uid).getDocument { [weak self] document, error in
-                               guard let self = self else { return }
+                           do {
+                               let adminDoc = try await db.collection("admins").document(firebaseUser.uid).getDocument()
+                               if adminDoc.exists {
+                                   await MainActor.run {
+                                       self.performSegue(withIdentifier: "goToAdmin", sender: self)
+                                   }
+                                   return
+                               }
                                
-                               if let document = document, document.exists {
-                                   // Navigate to Admin screen
-                                   self.performSegue(withIdentifier: "goToAdmin", sender: self)
+                               let organizerDoc = try await db.collection("organizers").document(firebaseUser.uid).getDocument()
+                               if organizerDoc.exists {
+                                   await MainActor.run {
+                                       self.performSegue(withIdentifier: "goToOrganizer", sender: self)
+                                   }
+                                   return
+                               }
+                               
+                               let customerDoc = try await db.collection("customers").document(firebaseUser.uid).getDocument()
+                               if customerDoc.exists {
+                                   await MainActor.run {
+                                       self.performSegue(withIdentifier: "goToCustomer", sender: self)
+                                   }
                                } else {
-                                   // Check if user exists in the 'organizers' collection
-                                   db.collection("organizers").document(firebaseUser.uid).getDocument { [weak self] document, error in
-                                       guard let self = self else { return }
-                                       
-                                       if let document = document, document.exists {
-                                           // Navigate to Organizer screen
-                                           self.performSegue(withIdentifier: "goToOrganizer", sender: self)
-                                       } else {
-                                           // Check if user exists in the 'customers' collection
-                                           print(firebaseUser)
-                                           db.collection("customers").document(firebaseUser.uid).getDocument { [weak self] document, error in
-                                               guard let self = self else { return }
-                                               
-                                               if let document = document, document.exists {
-                                                   // Navigate to Normal User screen
-                                                   self.performSegue(withIdentifier: "goToCustomer", sender: self)
-                                               } else {
-                                                   // Create a new account for the user
-                                                   let customer = Customer(
-                                                       userID: firebaseUser.uid,
-                                                       fullName: user.profile?.name ?? "No Name",
-                                                       email: user.profile?.email ?? "No email",
-                                                       dob: Date(), // Default DOB if not available
-                                                       dateCreated: Date.now,
-                                                       phoneNumber:  00, // Default phone number if not available
-                                                       profileImageURL: user.profile?.imageURL(withDimension: 200)?.absoluteString ?? "",
-                                                       badgesArray: [],
-                                                       interestsArray: []
-                                                   )
-                                                   
-                                                   Task {
-                                                       do {
-                                                           try await UsersManager.createNewUser(user: customer)
-                                                           // Navigate to Interest Picker
-                                                           self.performSegue(withIdentifier: "goToInterestPicker", sender: self)
-                                                       } catch {
-                                                           let alertController = UIAlertController(
-                                                               title: "Error",
-                                                               message: "Failed to create user: \(error.localizedDescription)",
-                                                               preferredStyle: .alert
-                                                           )
-                                                           alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                                           self.present(alertController, animated: true, completion: nil)
-                                                       }
-                                                   }
-                                               }
-                                           }
+                                   // Create a new account for the user
+                                   let customer = Customer(
+                                       userID: firebaseUser.uid,
+                                       fullName: user.profile?.name ?? "No Name",
+                                       email: user.profile?.email ?? "No email",
+                                       dob: Date(), // Default DOB if not available
+                                       dateCreated: Date.now,
+                                       phoneNumber: 00, // Default phone number if not available
+                                       profileImageURL: user.profile?.imageURL(withDimension: 200)?.absoluteString ?? "",
+                                       badgesArray: [],
+                                       interestsArray: []
+                                   )
+                                   
+                                   do {
+                                       try await UsersManager.createNewUser(user: customer)
+                                       await MainActor.run {
+                                           self.performSegue(withIdentifier: "goToInterestPicker", sender: self)
                                        }
+                                   } catch {
+                                       let alertController = UIAlertController(
+                                           title: "Error",
+                                           message: "Failed to create user: \(error.localizedDescription)",
+                                           preferredStyle: .alert
+                                       )
+                                       alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                       self.present(alertController, animated: true, completion: nil)
                                    }
                                }
+                           } catch {
+                               let alertController = UIAlertController(
+                                   title: "Error",
+                                   message: "An error occurred while checking user roles: \(error.localizedDescription)",
+                                   preferredStyle: .alert
+                               )
+                               alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                               self.present(alertController, animated: true, completion: nil)
                            }
                        } catch {
                            let alertController = UIAlertController(
@@ -159,6 +158,7 @@ class AuthenticationViewController: UIViewController {
                }
            }
        }
+
 
     }
     override func viewDidLoad() {
@@ -236,9 +236,9 @@ class AuthenticationViewController: UIViewController {
         Auth.auth().signIn(withEmail: emailNoSpace, password: loginPasswordField.text!) { [weak self] authResult, error in
             guard let self = self else { return }
             
-            loginBtn.isEnabled = true
-            loginBtn.setTitle("Login", for: .normal)
-            signInThroughGoogle.isEnabled = true
+            self.loginBtn.isEnabled = true
+            self.loginBtn.setTitle("Login", for: .normal)
+            self.signInThroughGoogle.isEnabled = true
 
             if let error = error {
                 // Handle error
@@ -264,30 +264,36 @@ class AuthenticationViewController: UIViewController {
                         self.saveUserIdInUserDefaults(user.uid)
                         let db = Firestore.firestore()
                         PushNotificationService.showNotification(title: "Welcome Back!", description: "Nice to see you always!")
+                        
                         // Check if user exists in the 'admins' collection
-                        db.collection("admins").document(user.uid).getDocument { [weak self] document, error in
-                            guard let self = self else { return }
-
-                            if let document = document, document.exists {
+                        do {
+                            let adminDoc = try await db.collection("admins").document(user.uid).getDocument()
+                            if adminDoc.exists {
                                 // Navigate to Admin screen
-                                self.performSegue(withIdentifier: "goToAdmin", sender: self)
+                                await MainActor.run {
+                                    self.performSegue(withIdentifier: "goToAdmin", sender: self)
+                                }
                             } else {
                                 // Check if user exists in the 'organizers' collection
-                                db.collection("organizers").document(user.uid).getDocument { [weak self] document, error in
-                                    guard let self = self else { return }
-
-                                    if let document = document, document.exists {
-                                        // Navigate to Organizer screen
+                                let organizerDoc = try await db.collection("organizers").document(user.uid).getDocument()
+                                if organizerDoc.exists {
+                                    // Navigate to Organizer screen
+                                    await MainActor.run {
                                         self.performSegue(withIdentifier: "goToOrganizer", sender: self)
-                                    } else {
-                                        // Navigate to Normal User screen
+                                    }
+                                } else {
+                                    // Navigate to Normal User screen
+                                    await MainActor.run {
                                         self.performSegue(withIdentifier: "goToCustomer", sender: self)
                                     }
                                 }
                             }
+                        } catch {
+                            // Handle Firestore error
+                            self.showAlert(message: "An error occurred while checking user role: \(error.localizedDescription)")
                         }
                     } catch {
-                        // Handle error
+                        // Handle ban status error
                         self.showAlert(message: "An error occurred while checking ban status: \(error.localizedDescription)")
                     }
                 }
