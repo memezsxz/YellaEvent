@@ -10,7 +10,7 @@ import UIKit
 class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet var collectionView: UICollectionView!
     
-    var badges: [Badge?] = [] // Array to hold optional Badge data
+    var badges: [Badge?] = []
     var userID: String = ""
     
     @IBOutlet weak var badgesCount: UILabel!
@@ -21,20 +21,15 @@ class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, 
         collectionView.delegate = self
         collectionView.dataSource = self
 
-        // Setup the collection view layout
         collectionView.collectionViewLayout = generateGridLayout()
         
         collectionView.register(UINib(nibName: "BadgeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "BadgeCollectionViewCell")
         
-        // Show placeholder cells
         loadPlaceholders()
-        
-        // Fetch badges using Task Groups
         loadBadges()
     }
     
     func loadPlaceholders() {
-        // Add placeholder items to the badges array (e.g., 10 empty slots)
         badges = Array(repeating: nil, count: 10)
         collectionView.reloadData()
     }
@@ -42,44 +37,36 @@ class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, 
     func loadBadges() {
         Task {
             do {
-                // Fetch customer using userID
                 let customer = try await UsersManager.getCustomer(customerID: userID)
                 
-                // Update the badges array size to match the number of badges
                 DispatchQueue.main.async {
                     self.badges = Array(repeating: nil, count: customer.badgesArray.count)
                     self.collectionView.reloadData()
                     self.badgesCount.text = "You own \(customer.badgesArray.count) Badges"
                 }
                 
-                // Fetch badges concurrently using Task Groups
                 let fetchedBadges = try await fetchBadgesConcurrently(badgeIDs: customer.badgesArray)
                 
-                // Update the badges array with the fetched data
                 for (index, badge) in fetchedBadges.enumerated() {
                     DispatchQueue.main.async {
                         self.badges[index] = badge
-                        // Reload individual cell to update the placeholder
                         let indexPath = IndexPath(item: index, section: 0)
                         self.collectionView.reloadItems(at: [indexPath])
                     }
                 }
             } catch {
-                print("Failed to load badges: \(error.localizedDescription)")
             }
         }
     }
 
     func fetchBadgesConcurrently(badgeIDs: [String]) async throws -> [Badge] {
         return await withTaskGroup(of: Badge?.self) { group in
-            // Add tasks for each badge ID
             for badgeID in badgeIDs {
                 group.addTask {
                     try? await BadgesManager.getBadge(eventID: badgeID)
                 }
             }
             
-            // Collect all results
             var results: [Badge] = []
             for await badge in group {
                 if let badge = badge {
@@ -98,10 +85,8 @@ class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BadgeCollectionViewCell", for: indexPath) as! BadgeCollectionViewCell
         
         if let badge = badges[indexPath.row] {
-            // Update cell with actual badge data
             cell.update(with: badge)
         } else {
-            // Show placeholder cell
             cell.showPlaceholder()
         }
         
@@ -111,12 +96,10 @@ class CustomerBadgesViewController: UIViewController, UICollectionViewDelegate, 
     func generateGridLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
 
-        // Define the spacing between items and rows
         let spacing: CGFloat = 10
         layout.minimumInteritemSpacing = spacing
         layout.minimumLineSpacing = spacing
 
-        // Define the size of the cells
         let numberOfItemsPerRow: CGFloat = 2
         let totalSpacing = spacing * (numberOfItemsPerRow + 1)
         let itemWidth = (UIScreen.main.bounds.width - totalSpacing) / numberOfItemsPerRow

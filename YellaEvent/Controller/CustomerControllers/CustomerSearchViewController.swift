@@ -45,12 +45,12 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
         prevSearch = userDefaults.array(forKey: "prevSearch") as? [String] ?? []
         filteredSearch = prevSearch.reversed()
 
-        // check whether the user in filter or in search page
+        // check if user in filter or in search page
         if tableView != nil {
+            // in the tabele page
             tableView.register(
                 UINib(nibName: "EventSummaryTableViewCell", bundle: nil),
                 forCellReuseIdentifier: "EventSummaryTableViewCell")
-            // in the tabele page
             tableView.delegate = self
             tableView.dataSource = self
             if prevSearch.isEmpty {
@@ -81,7 +81,6 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
                 return
             }
 
-            // Safely retrieve age and price
             if let ageText = sourceVC.ageTextField.text, let ageValue = Int(ageText) {
                 self.age = ageValue
             }
@@ -90,7 +89,6 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
                 self.price = priceValue
             }
 
-            // Retrieve the selected filters from the source view controller
             self.selectedFilters = sourceVC.categoriesCollectioView.getInterests()
             self.filterApplied = true
             searchMade()
@@ -112,7 +110,7 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
     func setInterests() {
         categoriesCollectioView.setSelectedInterests(self.selectedFilters)
     }
-    // Search button logic
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             searchMade()
     }
@@ -122,10 +120,11 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
             // Allow empty input if filterApplied is true
             if !filterApplied {
                 guard let searchBar = searchBar, let searchText = searchBar.text, !searchText.isEmpty else {
-                    print("Search text is empty")
                     return
                 }
             }
+            
+            searchBar.resignFirstResponder()
 
             if prevSearch.count >= 5 {
                 prevSearch = Array(prevSearch.suffix(4)) // Keep only the last 4 elements
@@ -162,7 +161,7 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
                             if matchesSearchText {
                                 if filterApplied {
                                     let matchesCategory = selectedFilters.isEmpty || selectedFilters.contains(event.categoryID)
-                                    let matchesAge = age >= 0 // Replace with actual age logic if needed
+                                    let matchesAge = age >= 0
                                     let matchesPrice = price >= Int(event.price)
                                     if matchesCategory && matchesAge && matchesPrice {
                                         results.append(event)
@@ -181,29 +180,22 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
                     self.tableView.reloadData()
                 }
             } catch {
-                print("Error fetching events: \(error)")
+                
             }
         }
-
-        print("search")
     }
 
-    // Cancel button logic
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         filteredSearch = prevSearch.reversed()
 
-        // Hide the keyboard and restore UI
         searchBar.resignFirstResponder()
         showHide(condition: false)
         changesMade = false
         tableView.reloadData()
-        print("cancel")
     }
 
-    // Perform search from selected cell
     func performSearch(for text: String) {
-        // Update the search bar text with the selected cell's content
         searchBar.text = text
         showHide(condition: true)
     }
@@ -214,7 +206,6 @@ class CustomerSearchViewController: UIViewController, InterestsCollectionViewDel
         } else {
             previousLbl.text = "Previous Search"
         }
-        //        tableView.isHidden = condition
         searchBar.showsCancelButton = condition
     }
 
@@ -257,15 +248,13 @@ extension CustomerSearchViewController: UITableViewDelegate,
         if !changesMade {
             let selectedText = filteredSearch[indexPath.row]
 
-            // Perform the search logic here
             performSearch(for: selectedText)
             searchMade()
 
-            // Optional: Deselect the cell after selection
             tableView.deselectRow(at: indexPath, animated: true)
         } else {
             selectedEventID = eventsList[indexPath.row].eventID
-            let storyboard = UIStoryboard(name: "CustomerEventView", bundle: nil) // Replace "Main" with your storyboard name
+            let storyboard = UIStoryboard(name: "CustomerEventView", bundle: nil)
                     guard let customerEventVC = storyboard.instantiateViewController(withIdentifier: "CustomerEventView") as? CustomerEventViewController else { return }
             customerEventVC.eventID = selectedEventID!
                     customerEventVC.delegate = self
@@ -286,16 +275,14 @@ extension CustomerSearchViewController: UITableViewDelegate,
         if segue.identifier == "filter" {
             InterestsCollectionView.selectForCustomer = false
             if let vc = segue.destination as? CustomerSearchViewController {
-                _ = vc.view // Force the view to load
+                _ = vc.view
 
-                // Pass the selected filters
                 vc.selectedFilters = self.selectedFilters
                 
                 vc.ageTextField.text = String(self.age)
                 vc.priceTextField.text = String(self.price)
                 vc.ageSlider.value = Float(self.age)
                 vc.priceSlider.value = Float(self.price)
-                // Update the collection view's selected interests
             }
         }
         
