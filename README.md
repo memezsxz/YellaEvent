@@ -23,8 +23,6 @@ Yalla Event is an all-in-one platform designed to streamline the discovery, book
 
 ## Features
 
-Architecture
-
 ### Husain Sabba (Developer) & Ahmed Ali (Tester)
 - **Search, Filtering, and Browsing**: Advanced search and filtering options to find events tailored to your interests.
 - **Leaderboard and Badges**: Earn badges for attending events and climb the leaderboard to unlock discounts.
@@ -103,6 +101,7 @@ Both devices are running on iOS 18.0.
    - Click the run button in Xcode.
    - Wait for the simulator to launch and deploy the app.
 
+**Note**: To mark a customer ticket as attnded it needs to be scanned, `https://dbsaw.github.io/qrcodeTest/` is a simple site we created intended to do just that. 
 
 ## Possible Issues
 
