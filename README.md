@@ -1,3 +1,7 @@
+[![Repository](https://img.shields.io/badge/Repository-Firebase%20iOS%20SDK-blue)](https://github.com/firebase/firebase-ios-sdk)
+[![Repository](https://img.shields.io/badge/Repository-GoogleSignIn%20iOS-blue)](https://github.com/google/GoogleSignIn-iOS)
+![Repository](https://img.shields.io/badge/Xcode-v.16-blue)
+![Repository](https://img.shields.io/badge/Platforms-iOS%20|%20iPadOS-blue)
 
 # <h1 style="text-align:center"><pur>Yalla Event</h1>
 
@@ -11,11 +15,15 @@ Yalla Event is an all-in-one platform designed to streamline the discovery, book
 &nbsp;&nbsp;&nbsp;&nbsp;[Setup Instructions](#setup-instructions)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[Possible Issues](#possible-issues)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[Login Credentials](#login-credentials)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;[Used Libraries](#used-libraries)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[Dependencies](#dependencies)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[Architecture](#architecture)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;[Structure](#structure)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[Contributors](#contributors)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[License](#license)<br/>
 
 ## Features
+
+Architecture
 
 ### Husain Sabba (Developer) & Ahmed Ali (Tester)
 - **Search, Filtering, and Browsing**: Advanced search and filtering options to find events tailored to your interests.
@@ -35,7 +43,7 @@ Yalla Event is an all-in-one platform designed to streamline the discovery, book
 ### Alanood Alkhateeb (Developer) & Fatima Hasan (Tester)
 - **Seamless Registration**: Register for events, make secure payments, and access digital tickets with QR codes.
 - **Rating System**: Allows users to provide feedback on events.
-- **Ticket Cancellation**: Cancel tickets with ease when necessary. <sub>**EXTRA**</sub>
+- **Ticket Cancellation**: Cancel tickets with ease when necessary. **EXTRA**
 
 ### Dalal Tarrda (Developer) & Husain Sabba (Tester)
 - **View Event Details**: Access detailed information about events as well as view live events hosted by organizers.
@@ -47,6 +55,8 @@ Yalla Event is an all-in-one platform designed to streamline the discovery, book
 - **Statistics**: Provides performance insights in app and event data for both the admin and organizer.
 - **Google Signup**: Allows users to sign in using Google accounts. **EXTRA**
 
+### **FireBase**
+Serves as an extra feature for each member as the central database and authentication tool of chose for the app.
 
 ## Design Changes
 
@@ -81,7 +91,7 @@ Both devices are running on iOS 18.0.
 1. **Clone the Repository**:
    - Open Xcode and select "Clone Git Repository…". <br>
    ![Alt text](./images/setup1.png)
-   - Enter the repository URL: [`https://github.com/memezsxz/YellaEvent.git`](https://github.com/memezsxz/YellaEvent.git).
+   - Enter the repository URL: [`https://github.com/memezsxz/YellaEvent.git`](https://github.com/memezsxz/YellaEvent.git) and click on "Clone".
      ![Alt text](./images/setup3.png)
    - Select the "main" branch and choose a local directory to save the project.
      ![Alt text](./images/setup4.png)
@@ -119,6 +129,7 @@ Both devices are running on iOS 18.0.
 
 
 ## Login Credentials
+To experience all the app can offer, log in with the following users and see the diffrent dashboards and capabilities the app offers for each one
 
 - **Customer**:
   - Email: [liam.miller@gmail.com](mailto:liam.miller@gmail.com)
@@ -130,28 +141,48 @@ Both devices are running on iOS 18.0.
   - Email: [alice.johnson@company.com](mailto:alice.johnson@company.com)
   - Password: 123456
 
-## Used Libraries
+## Dependencies
+Swift Package Manager (SPM) is used as the Dependency manager.
 
 This project utilizes several libraries to provide enhanced functionality and support:
 
 ### [Firebase](https://firebase.google.com/docs/) - Retrieved from [Firebase iOS SDK](https://github.com/firebase/firebase-ios-sdk).
 
 - **FirebaseCore**
-    - This library is used to set up and initialize Firebase services in your app. It connects the app to Firebase and enables features like analytics, push notifications, and cloud functions to work correctly.
+    - This library is used to set up and initialize Firebase services in the app. It connects the app to Firebase and enables features like analytics, push notifications, and cloud functions to work correctly.
 
 - **FirebaseFirestore**
-    - FirebaseFirestore is a cloud-based database that helps store and manage your app's data. It offers real-time updates, meaning your app's data syncs automatically across devices.
+    - FirebaseFirestore is the cloud-based database that helps store and manage app data. It offers real-time updates, meaning the app data syncs automatically across devices.
 
 - **FirebaseAuth**
     - FirebaseAuth is used to handle user authentication. It makes it easy to allow users to sign up, log in, and reset passwords.
 
 - **Firebase Storage**
-    - Firebase Storage provides a robust, secure, and scalable solution to store user-generated content, such as photos and videos, and manage file uploads and downloads.
+    - Firebase Storage provides a robust, secure, and scalable solution to store content, such as photos or videos, and manage file uploads and downloads.
 
 ### [GoogleSignIn-iOS](https://developers.google.com/identity/sign-in/ios) - Retrieved from [GoogleSignIn-iOS](https://github.com/google/GoogleSignIn-iOS).
 
 - **Google Sign-In**
-    - Google Sign-In allows users to authenticate with your app using their Google account, making it easier and faster for users to sign in.
+    - Google Sign-In allows users to authenticate with the app using their Google account, making it easier and faster for users to sign in.
+
+## Architecture
+
+The app is built using the **Model-View-Controller (MVC)** architecture pattern, which ensures a clear separation of concerns, making the codebase easier to maintain and extend.
+
+- **Model**: Includes all the data logic for the application.
+- **View**: Displays information to the user and contains reusable UI elements and layouts for the app's interface.
+- **Controller**: Bridges the Model and View, handling user inputs and updating the app dynamically.
+
+## Structure
+
+The project's code is organizes into well-defined folders:
+
+- **Controller**: Contains all the controllers for the application. It is divided into sections for managing the customer, admin, and organizer view controllers.
+- **View**: Includes all the UI components for the customer, admin, and organizer screens, ensuring a clear separation of presentation logic.
+- **Model**: Holds the data models for the app. These models represent data fetched from Firebase and include managers that serve as intermediaries between the app's controllers and Firebase integration code.
+- **xibControllers**: Contains the template controllers for reusable table or collection view cells.
+- **xibViews**: Stores the design templates (XIB files) for reusable UI cells.
+- **K.swift**: Stores the constants used throughout the app, such as brand colors and Firebase collection templates.
 
 ## Contributors
 
@@ -162,7 +193,7 @@ This project utilizes several libraries to provide enhanced functionality and su
 - **Dalal Tarrda** – 202201271
 - **Maryam Ali** – 202200403
 
-Professor: **Ghassan AlShajjar**
+Instructor: **Ghassan AlShajjar**
 
 ## License
 
