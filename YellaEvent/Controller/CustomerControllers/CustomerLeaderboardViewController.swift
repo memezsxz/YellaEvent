@@ -38,14 +38,12 @@ class CustomerLeaderboardViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     
-                    // Automatically scroll to the current user's cell
                     if let currentUserIndex = self.indexOfCurrentUser() {
                         let indexPath = IndexPath(row: currentUserIndex, section: 0)
                         self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
                     }
                 }
             } catch {
-                print("Error fetching leaderboard: \(error.localizedDescription)")
             }
         }
     }
@@ -85,14 +83,9 @@ extension CustomerLeaderboardViewController: LeaderboardTableViewCellDelegate {
         guard let badgesVC = storyboard?.instantiateViewController(withIdentifier: "CustomerBadgesViewController") as? CustomerBadgesViewController else {
             return
         }
-
-        // Fetch the badges asynchronously
         
-            
-            // Pass the fetched badges to the next view controller
         badgesVC.userID = currentUserID
 
-            // Navigate to the badges view controller on the main thread
             DispatchQueue.main.async {
                 self.navigationController?.pushViewController(badgesVC, animated: true)
             }
