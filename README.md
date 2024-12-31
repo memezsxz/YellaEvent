@@ -1,8 +1,4 @@
-<style>
-h2, h1 { color: #845EC2 }
-a {color: #06949E}
-li::marker {color: #B39CD0 }
-</style>
+
 # <h1 style="text-align:center"><pur>Yalla Event</h1>
 
 Yalla Event is an all-in-one platform designed to streamline the discovery, booking, and organization of events. Leveraging Firebase for secure data storage and real-time updates, the app offers personalized event recommendations, user profiles, seamless ticketing, and more.
