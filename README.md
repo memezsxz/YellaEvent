@@ -33,7 +33,7 @@ Architecture
 ### Fatima Hasan (Developer) & Dalal Tarrda (Tester)
 - **Users’ Profiles**: Showcase your preferences, reviews, and photos.
 - **User Management**: Oversee user accounts and manage them effectively.
-- **FAQ Section**: Access frequently asked questions for assistance. **EXTRA**
+- **FAQ Section**: Access frequently asked questions for assistance, while admins can add, edit and delete FAQs whenever needed. **EXTRA**
 
 ### Ahmed Ali (Developer) & Maryam Ali (Tester)
 - **Authentication**: Handles user authentication, enabling sign-up, login, and password resets.
